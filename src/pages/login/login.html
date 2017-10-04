@@ -6,8 +6,9 @@
 -->
 <ion-content padding class="transparent-header" [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
   <ion-header>
-    <ion-navbar>
-    </ion-navbar>
+
+
+
   </ion-header>
   <div padding>
     <ion-row>
@@ -36,14 +37,14 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <div (click)="goToSignup()">
-          <span>Or create a new account.</span>
-        </div>
+
+
+        <button ion-button class="sign-up-button" (click)="goToSignup()">sign up</button>
+
+        <button ion-button class="find-reset-pw-button" (click)="goToResetPassword()">Find/reset password</button>
       </ion-col>
-      <ion-row>
-        <button ion-button class="sign-up-button" (click)="login()">sign up</button>
-      </ion-row>
     </ion-row>
+
   </div>
 </ion-content>
 

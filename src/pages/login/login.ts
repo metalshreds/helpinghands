@@ -13,8 +13,8 @@ import { AlertController, App, LoadingController, IonicPage } from 'ionic-angula
 //@IonicPage()
 @Component({
 
+  selector: 'page-login',
   templateUrl: 'login.html',
-  //selector: 'page-login-one',
 })
 export class LoginPage {
 
