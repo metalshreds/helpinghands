@@ -23,7 +23,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
   goToSignup() {
-    // this.navCtrl.push(ResetPasswordPage);
+    // sign up logic
   }
   backToLogin(){
     this.navCtrl.push(LoginPage);
