@@ -14,9 +14,9 @@ import { NavController } from 'ionic-angular';
 
 //@IonicPage()
 @Component({
+
   selector: 'page-login',
   templateUrl: 'login.html',
-
 })
 export class LoginPage {
 
