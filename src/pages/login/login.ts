@@ -9,6 +9,8 @@
 
 import { Component } from '@angular/core';
 import { AlertController, App, LoadingController, IonicPage } from 'ionic-angular';
+import {SignupPage} from '../signup/signup';
+import { NavController } from 'ionic-angular';
 
 //@IonicPage()
 @Component({
@@ -24,7 +26,8 @@ export class LoginPage {
   constructor(
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public app: App
+    public app: App,
+    public navCtrl: NavController
   ) { }
 
   login() {
@@ -46,7 +49,7 @@ export class LoginPage {
   }
 
   goToSignup() {
-    // this.navCtrl.push(SignupPage);
+     this.navCtrl.push(SignupPage);
   }
 
   goToResetPassword() {
