@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
+import { User } from "../../models/user";
+import { AngularFireAuth} from "angularfire2/auth";
+
 
 /**
  * Generated class for the SignupPage page.
@@ -15,16 +18,65 @@ import {LoginPage} from "../login/login";
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  user = {} as User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private authp: AngularFireAuth,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController,) {
+
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
+
+  signUp(user : User, passwordRe) {
+    console.log(user.password.length);
+
+    if(user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
+    {
+      const loading = this.loadingCtrl.create({
+        duration: 500
+      });
+
+      loading.onDidDismiss(() => {
+        const alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: 'Two passwords are not the same',
+          buttons: ['Dismiss']
+        });
+        alert.present();
+      });
+      loading.present();
+    }
+    /*
+    else if()  //not a valid wisc email
+    {
+
+    }*/
+    else if(user.password.length < 6) //passwaord is at least 6 digits.
+    {
+      const loading = this.loadingCtrl.create({
+        duration: 500
+      });
+
+      loading.onDidDismiss(() => {
+        const alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: 'Password should have at least 6 letters',
+          buttons: ['Dismiss']
+        });
+        alert.present();
+      });
+      loading.present();
+    }
+    else
+    {
+      const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password);
+    }
   }
-  goToSignup() {
-    // sign up logic
-  }
+
   backToLogin(){
     this.navCtrl.push(LoginPage);
   }

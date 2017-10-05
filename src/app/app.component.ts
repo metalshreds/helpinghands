@@ -6,7 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {SignupPage} from "../pages/signup/signup";
-
+import firebase from 'firebase';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,6 +19,14 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
+    firebase.initializeApp({
+      apiKey: "AIzaSyBBTfSBnl0l-h78b_RKVLeYUvs36S4G6s4",
+      authDomain: "helpinghands-d5675.firebaseapp.com",
+      databaseURL: "https://helpinghands-d5675.firebaseio.com",
+      projectId: "helpinghands-d5675",
+      storageBucket: "helpinghands-d5675.appspot.com",
+      messagingSenderId: "674782339133"
+    })
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -29,6 +37,8 @@ export class MyApp {
     ];
 
   }
+
+
 
   initializeApp() {
     this.platform.ready().then(() => {

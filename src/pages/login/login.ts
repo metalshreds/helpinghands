@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 import { AlertController, App, LoadingController, IonicPage } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
 import { NavController } from 'ionic-angular';
-
+import { User } from '../../models/user';
 //@IonicPage()
 @Component({
 
@@ -19,6 +19,8 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
+  user = {} as User;    //initialie an object as user.
 
   public loginForm: any;
   public backgroundImage = 'assets/img/background/background-5.jpg';
