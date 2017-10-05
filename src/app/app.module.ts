@@ -28,7 +28,8 @@ import { AuthProvider } from '../providers/auth/auth';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    SignupPage
   ],
   providers: [
     StatusBar,
