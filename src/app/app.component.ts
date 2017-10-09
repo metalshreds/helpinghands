@@ -20,12 +20,12 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
     firebase.initializeApp({
-      apiKey: "AIzaSyBBTfSBnl0l-h78b_RKVLeYUvs36S4G6s4",
-      authDomain: "helpinghands-d5675.firebaseapp.com",
-      databaseURL: "https://helpinghands-d5675.firebaseio.com",
-      projectId: "helpinghands-d5675",
-      storageBucket: "helpinghands-d5675.appspot.com",
-      messagingSenderId: "674782339133"
+      apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
+      authDomain: "helpinghands506.firebaseapp.com",
+      databaseURL: "https://helpinghands506.firebaseio.com",
+      projectId: "helpinghands506",
+      storageBucket: "helpinghands506.appspot.com",
+      messagingSenderId: "652958427997"
     })
 
     // used for an example of ngFor and navigation

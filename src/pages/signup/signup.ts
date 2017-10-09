@@ -29,13 +29,13 @@ export class SignupPage {
 
 
   }
-<<<<<<< HEAD
+
 
 
   signUp = function(user : User, passwordRe) {
     console.log(user);
 
-    if(user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
+    if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
       const loading = this.loadingCtrl.create({
         duration: 500
@@ -57,7 +57,7 @@ export class SignupPage {
       //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#special-word-boundary
     }*/
     //TODO catch the error that the email acc is already used.
-    else if(user.password.length < 6) //passwaord is at least 6 digits.
+    else if (user.password.length < 6) //passwaord is at least 6 digits.
     {
       const loading = this.loadingCtrl.create({
         duration: 500
@@ -73,26 +73,19 @@ export class SignupPage {
       });
       loading.present();
     }
-    else
-    {
-      try
-      {
+    else {
+      try {
         //https://firebase.google.com/docs/reference/js/firebase.User
         //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
         const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password);
 
       }
-      catch(e)
-      {
+      catch (e) {
         console.log(e);
       }
     }
-    //
-=======
-  goToSignup() {
-    // sign up logic
->>>>>>> master
   }
+
 
   backToLogin(){
     this.navCtrl.push(LoginPage);
