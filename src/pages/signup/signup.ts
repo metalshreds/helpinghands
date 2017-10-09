@@ -29,6 +29,7 @@ export class SignupPage {
 
 
   }
+<<<<<<< HEAD
 
 
   signUp = function(user : User, passwordRe) {
@@ -87,6 +88,10 @@ export class SignupPage {
       }
     }
     //
+=======
+  goToSignup() {
+    // sign up logic
+>>>>>>> master
   }
 
   backToLogin(){
