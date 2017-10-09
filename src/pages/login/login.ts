@@ -8,10 +8,12 @@
  */
 
 import { Component } from '@angular/core';
-import { AlertController, App, LoadingController, IonicPage } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
-import { NavController } from 'ionic-angular';
+
 import { User } from '../../models/user';
+import {AngularFireAuth} from "angularfire2/auth";
+
 //@IonicPage()
 @Component({
 
@@ -26,13 +28,25 @@ export class LoginPage {
   public backgroundImage = 'assets/img/background/background-5.jpg';
 
   constructor(
+    private authp: AngularFireAuth,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController
   ) { }
 
-  login() {
+  async login(user: User) {
+    try{
+      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password);
+      if(result)
+      {
+        this.navCtrl.push('HomePage');
+      }
+    }
+    catch(e)
+    {
+      console.error(e);
+    }
     const loading = this.loadingCtrl.create({
       duration: 500
     });

@@ -31,8 +31,8 @@ export class SignupPage {
   }
 
 
-  signUp(user : User, passwordRe) {
-    console.log(user.password.length);
+  signUp = function(user : User, passwordRe) {
+    console.log(user);
 
     if(user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
@@ -53,8 +53,9 @@ export class SignupPage {
     /*
     else if()  //not a valid wisc email
     {
-
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#special-word-boundary
     }*/
+    //TODO catch the error that the email acc is already used.
     else if(user.password.length < 6) //passwaord is at least 6 digits.
     {
       const loading = this.loadingCtrl.create({
@@ -73,8 +74,19 @@ export class SignupPage {
     }
     else
     {
-      const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password);
+      try
+      {
+        //https://firebase.google.com/docs/reference/js/firebase.User
+        //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
+        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password);
+
+      }
+      catch(e)
+      {
+        console.log(e);
+      }
     }
+    //
   }
 
   backToLogin(){
