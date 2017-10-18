@@ -74,17 +74,28 @@ export class SignupPage {
       loading.present();
     }
     else {
-      try {
+
         //https://firebase.google.com/docs/reference/js/firebase.User
         //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
-        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password);
+        //https://javebratt.com/ionic-firebase-authentication/
+        //https://www.djamware.com/post/586bb16680aca70c73934116/ionic-2-firebase-email-authentication-tutorial
+
+        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error)
+        {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if(errorCode == 'auth/email-already-in-use')
+          {
+            alert('re-enter info');
+          }
+          else {
+            alert (errorMessage);
+          }
+        });
 
       }
-      catch (e) {
-        console.log(e);
-      }
     }
-  }
+
 
 
   backToLogin(){
