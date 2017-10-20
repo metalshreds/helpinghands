@@ -37,7 +37,9 @@ export class SignupPage {
 
     if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
+      //console.log("thisss is ", this ," dsadasd ");
       const loading = this.loadingCtrl.create({
+
         duration: 500
       });
 
@@ -80,17 +82,30 @@ export class SignupPage {
         //https://javebratt.com/ionic-firebase-authentication/
         //https://www.djamware.com/post/586bb16680aca70c73934116/ionic-2-firebase-email-authentication-tutorial
 
+
+
+       let alert = this.alertCtrl.create({
+          title: '',
+          subTitle: '',
+          buttons: ['OK']
+        });
+
+
+        //let alert = this.alerCtrl.create();
+
         const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error)
         {
           var errorCode = error.code;
           var errorMessage = error.message;
-          if(errorCode == 'auth/email-already-in-use')
-          {
-            alert('re-enter info');
-          }
-          else {
-            alert (errorMessage);
-          }
+
+           //alert (errorMessage);
+            alert.setTitle(errorCode);
+            alert.setMessage(errorMessage);
+
+            alert.present();
+
+
+
         });
 
       }
