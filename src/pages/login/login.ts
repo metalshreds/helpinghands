@@ -10,7 +10,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
-
+import { HomePage } from '../home/home'
 import { User } from '../../models/user';
 import {AngularFireAuth} from "angularfire2/auth";
 
@@ -35,32 +35,31 @@ export class LoginPage {
     public navCtrl: NavController
   ) { }
 
-  async login(user: User) {
-    try{
-      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password);
-      if(result)
-      {
-        this.navCtrl.push('HomePage');
-      }
-    }
-    catch(e)
-    {
-      console.error(e);
-    }
-    const loading = this.loadingCtrl.create({
-      duration: 500
+  login = async function(user: User) {
+    var _this = this;
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: '',
+      buttons: ['OK']
     });
+    var pass: number;
+    this.pass = 1;
 
-    loading.onDidDismiss(() => {
-      const alert = this.alertCtrl.create({
-        title: 'Logged in!',
-        subTitle: 'Thanks for logging in.',
-        buttons: ['Dismiss']
-      });
-      alert.present();
-    });
+    console.log("this is pass0", this.pass);
+      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+        .then(function(){
+          _this.navCtrl.push(HomePage);
+        })
+        .catch(function(error)
+        {
 
-    loading.present();
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert.setTitle(errorCode);
+            alert.setMessage(errorMessage);
+            alert.present();
+
+        });
 
   }
 

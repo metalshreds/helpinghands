@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
+
 import { User } from "../../models/user";
 import { AngularFireAuth} from "angularfire2/auth";
+import {HomePage} from "../home/home";
 
 
 /**
@@ -37,19 +39,15 @@ export class SignupPage {
 
     if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
-      const loading = this.loadingCtrl.create({
-        duration: 500
-      });
+      //console.log("thisss is ", this ," dsadasd ");
 
-      loading.onDidDismiss(() => {
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Two passwords are not the same',
-          buttons: ['Dismiss']
+          buttons: ['OK']
         });
         alert.present();
-      });
-      loading.present();
+
     }
     /*
     else if()  //not a valid wisc email
@@ -59,40 +57,40 @@ export class SignupPage {
     //TODO catch the error that the email acc is already used.
     else if (user.password.length < 6) //passwaord is at least 6 digits.
     {
-      const loading = this.loadingCtrl.create({
-        duration: 500
-      });
 
-      loading.onDidDismiss(() => {
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Password should have at least 6 letters',
-          buttons: ['Dismiss']
+          buttons: ['OK']
         });
         alert.present();
-      });
-      loading.present();
+
     }
     else {
 
         //https://firebase.google.com/docs/reference/js/firebase.User
         //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
-        //https://javebratt.com/ionic-firebase-authentication/
-        //https://www.djamware.com/post/586bb16680aca70c73934116/ionic-2-firebase-email-authentication-tutorial
-
-        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error)
+       let alert = this.alertCtrl.create({
+          title: '',
+          subTitle: '',
+          buttons: ['OK']
+        });
+       var _this = this;
+        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
+          .then(function(){
+            _this.navCtrl.push(HomePage);
+          })
+          .catch(function (error)
         {
           var errorCode = error.code;
           var errorMessage = error.message;
-          if(errorCode == 'auth/email-already-in-use')
-          {
-            alert('re-enter info');
-          }
-          else {
-            alert (errorMessage);
-          }
-        });
 
+           //alert (errorMessage);
+            alert.setTitle(errorCode);
+            alert.setMessage(errorMessage);
+
+            alert.present();
+        });
       }
     }
 
