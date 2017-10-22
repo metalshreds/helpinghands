@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 testing deployment
 v3
+=======
+testing ionic view app
+testv2
+
+>>>>>>> 80f342023c9f7834e9991cf24a6d2c6d8d3a1fd4
