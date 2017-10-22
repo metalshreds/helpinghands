@@ -36,37 +36,36 @@ export class LoginPage {
   ) { }
 
   login = async function(user: User) {
-
+    var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
-    let pass = 1;
+    var pass: number;
+    this.pass = 1;
 
-      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password).catch(function(error)
-      {
+    console.log("this is pass0", this.pass);
+      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+        .then(function(){
+          _this.navCtrl.push(HomePage);
+        })
+        .catch(function(error)
+        {
 
             var errorCode = error.code;
             var errorMessage = error.message;
-            if(errorCode != null)
-              pass = 0;
-            console.log("this is error", error);
+              _this.pass = 0;
+
+
+            console.log("this is pass", _this.pass);
             console.log("this is errorcode", errorCode);
            //alert (errorMessage);
             alert.setTitle(errorCode);
             alert.setMessage(errorMessage);
             alert.present();
 
-
-      });
-      console.log("this is result", result);
-      if(result.za != null)
-      {
-        this.navCtrl.push(HomePage);
-      }
-
-
+        });
 
   }
 

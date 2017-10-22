@@ -38,20 +38,14 @@ export class SignupPage {
     if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
       //console.log("thisss is ", this ," dsadasd ");
-      const loading = this.loadingCtrl.create({
 
-        duration: 500
-      });
-
-      loading.onDidDismiss(() => {
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Two passwords are not the same',
-          buttons: ['Dismiss']
+          buttons: ['OK']
         });
         alert.present();
-      });
-      loading.present();
+
     }
     /*
     else if()  //not a valid wisc email
@@ -61,19 +55,14 @@ export class SignupPage {
     //TODO catch the error that the email acc is already used.
     else if (user.password.length < 6) //passwaord is at least 6 digits.
     {
-      const loading = this.loadingCtrl.create({
-        duration: 500
-      });
 
-      loading.onDidDismiss(() => {
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Password should have at least 6 letters',
-          buttons: ['Dismiss']
+          buttons: ['OK']
         });
         alert.present();
-      });
-      loading.present();
+
     }
     else {
 
