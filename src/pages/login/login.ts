@@ -55,12 +55,6 @@ export class LoginPage {
 
             var errorCode = error.code;
             var errorMessage = error.message;
-              _this.pass = 0;
-
-
-            console.log("this is pass", _this.pass);
-            console.log("this is errorcode", errorCode);
-           //alert (errorMessage);
             alert.setTitle(errorCode);
             alert.setMessage(errorMessage);
             alert.present();

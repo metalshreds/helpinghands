@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
+
 import { User } from "../../models/user";
 import { AngularFireAuth} from "angularfire2/auth";
+import {HomePage} from "../home/home";
 
 
 /**
@@ -68,21 +70,17 @@ export class SignupPage {
 
         //https://firebase.google.com/docs/reference/js/firebase.User
         //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
-        //https://javebratt.com/ionic-firebase-authentication/
-        //https://www.djamware.com/post/586bb16680aca70c73934116/ionic-2-firebase-email-authentication-tutorial
-
-
-
        let alert = this.alertCtrl.create({
           title: '',
           subTitle: '',
           buttons: ['OK']
         });
-
-
-        //let alert = this.alerCtrl.create();
-
-        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error)
+       var _this = this;
+        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
+          .then(function(){
+            _this.navCtrl.push(HomePage);
+          })
+          .catch(function (error)
         {
           var errorCode = error.code;
           var errorMessage = error.message;
@@ -92,11 +90,7 @@ export class SignupPage {
             alert.setMessage(errorMessage);
 
             alert.present();
-
-
-
         });
-
       }
     }
 
