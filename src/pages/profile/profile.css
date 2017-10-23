@@ -1,0 +1,10 @@
+div.profile-picture {
+  margin: 0 auto;
+  width:25vw;
+}
+
+div.top-left {
+  position: relative;
+  top: 200px;
+  left: 1vw;
+}
