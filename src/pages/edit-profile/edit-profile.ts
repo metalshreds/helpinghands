@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import { User } from '../../models/user';
 import {AngularFireAuth} from "angularfire2/auth";
-
+import { AngularFireDatabase} from "angularfire2/database";
+import {UserProfilePage} from '../user-profile/user-profile';
+import firebase from 'firebase';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -21,6 +23,7 @@ export class EditProfilePage {
   //lastName = {} as string;
   constructor(
     private AFcurUser: AngularFireAuth,
+    private AFdatabase: AngularFireDatabase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
@@ -38,7 +41,22 @@ export class EditProfilePage {
       user.firstName = firstName;
       user.userId = result.uid;
       console.log(user);
+      /*
+      this.AFcurUser.authState.take(1).subscribe(auth=>{
+        this.AFdatabase.list(`user/${result.uid}`).push(this.user)
+          //.then(()=>this.navCtrl.push('UserProfilePage'))
+      })*/
+     // var ref = firebase.database();
+      firebase.database().ref('user/'+ result.uid).set({
+        lastName : lastName,
+        firsName : firstName,
+        userId : result.uid
+      });
+
+
+
     }
   }
+
 
 }

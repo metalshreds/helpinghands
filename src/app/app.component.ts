@@ -37,6 +37,7 @@ export class MyApp {
       { title: 'Sign up', component: SignupPage},
     ];
 
+
   }
 
 

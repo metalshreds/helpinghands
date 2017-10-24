@@ -14,6 +14,7 @@ import { FIREBASE_CONFIG} from "./app.firebase.config";
 import { AngularFireAuthModule} from "angularfire2/auth";
 import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import {AngularFireDatabaseModule} from "angularfire2/database";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {EditProfilePage} from "../pages/edit-profile/edit-profile";
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
