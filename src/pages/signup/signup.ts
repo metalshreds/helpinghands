@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
-
+import {EditProfilePage} from "../edit-profile/edit-profile";
 import { User } from "../../models/user";
 import { AngularFireAuth} from "angularfire2/auth";
 import {HomePage} from "../home/home";
@@ -78,7 +78,7 @@ export class SignupPage {
        var _this = this;
         const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
           .then(function(){
-            _this.navCtrl.push(LoginPage);
+            _this.navCtrl.push(EditProfilePage);
           })
           .catch(function (error)
         {
@@ -91,6 +91,15 @@ export class SignupPage {
 
             alert.present();
         });
+        /*
+        var curUser = this.authp.auth.currentUser;
+        if(curUser)
+        {
+          console.log("success is ", curUser.uid);
+        }
+        else {
+          console.log("fail and ", curUser.uid);
+        }*/
       }
     }
 

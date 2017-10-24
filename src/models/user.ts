@@ -15,7 +15,7 @@ export interface User{
   pendingTask: Task[];
 
 }
-
+//https://www.firebase.com/docs/web/guide/user-auth.html#section-storing
 //https://firebase.google.com/docs/auth/web/manage-users#get_a_users_provider-specific_profile_information
 //TODO method to retrieve user info
 

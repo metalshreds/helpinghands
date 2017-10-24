@@ -12,6 +12,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
+import {UserProfilePage} from '../user-profile/user-profile';
 import {AngularFireAuth} from "angularfire2/auth";
 
 //@IonicPage()
@@ -48,7 +49,7 @@ export class LoginPage {
     console.log("this is pass0", this.pass);
       const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
         .then(function(){
-          _this.navCtrl.push(HomePage);
+          _this.navCtrl.push(UserProfilePage);
         })
         .catch(function(error)
         {
