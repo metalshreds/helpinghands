@@ -22,7 +22,7 @@ import {AngularFireAuth} from "angularfire2/auth";
 })
 export class LoginPage {
 
-  user = {} as User;    //initialie an object as user.
+  user = {} as User;    //initialize an object as user.
 
   public loginForm: any;
   public backgroundImage = 'assets/img/background/background-5.jpg';
@@ -64,7 +64,11 @@ export class LoginPage {
   }
 
   goToSignup() {
-     this.navCtrl.push(SignupPage);
+    this.navCtrl.push(SignupPage);
+  }
+
+  goToHome() {
+    this.navCtrl.push(HomePage);
   }
 
   goToResetPassword() {
