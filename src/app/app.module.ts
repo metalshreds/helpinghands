@@ -12,12 +12,13 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { CompletedPage} from '../pages/completed/completed';
-import { CreatePage} from '../pages/create/create';
-import { ConfirmedPage } from '../pages/confirmed/confirmed';
 import { DashboardPage} from '../pages/dashboard/dashboard';
-import { PendingPage} from '../pages/pending/pending';
-import { SuggestedPage} from '../pages/suggested/suggested';
+
+// import { CompletedPage} from '../pages/completed/completed';
+// import { CreatePage} from '../pages/create/create';
+// import { ConfirmedPage } from '../pages/confirmed/confirmed';
+// import { PendingPage} from '../pages/pending/pending';
+// import { SuggestedPage} from '../pages/suggested/suggested';
 
 
 @NgModule({
@@ -27,18 +28,15 @@ import { SuggestedPage} from '../pages/suggested/suggested';
     ListPage,
     LoginPage,
     SignupPage,
-    CreatePage,
-    CompletedPage,
-    ConfirmedPage,
-    DashboardPage,
-    PendingPage,
-    SuggestedPage
+    DashboardPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
+
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,12 +45,8 @@ import { SuggestedPage} from '../pages/suggested/suggested';
     ListPage,
     LoginPage,
     SignupPage,
-    CreatePage,
-    CompletedPage,
-    ConfirmedPage,
-    DashboardPage,
-    PendingPage,
-    SuggestedPage
+    DashboardPage
+
   ],
   providers: [
     StatusBar,
