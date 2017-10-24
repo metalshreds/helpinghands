@@ -78,7 +78,7 @@ export class SignupPage {
        var _this = this;
         const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
           .then(function(){
-            _this.navCtrl.push(HomePage);
+            _this.navCtrl.push(LoginPage);
           })
           .catch(function (error)
         {
