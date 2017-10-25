@@ -14,10 +14,12 @@
 
 
 <ion-content padding>
-  <ion-scroll>
-    <ion-list>
+  <ion-list>
+    <button ion-item *ngFor="let task of tasks" >
 
-    </ion-list>
-  </ion-scroll>
+      <h1>{{task.name}}</h1>
+
+    </button>
+  </ion-list>
 </ion-content>
 
