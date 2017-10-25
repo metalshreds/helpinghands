@@ -13,6 +13,7 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { DashboardPage} from '../pages/dashboard/dashboard';
+import { SearchPage} from '../pages/search/search';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DashboardPage} from '../pages/dashboard/dashboard';
     ListPage,
     LoginPage,
     SignupPage,
-    DashboardPage
+    DashboardPage,
+    SearchPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { DashboardPage} from '../pages/dashboard/dashboard';
     ListPage,
     LoginPage,
     SignupPage,
-    DashboardPage
+    DashboardPage,
+    SearchPage
   ],
   providers: [
     StatusBar,

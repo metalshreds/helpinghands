@@ -7,8 +7,9 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {SignupPage} from "../pages/signup/signup";
 import firebase from 'firebase';
+import { DashboardPage} from "../pages/dashboard/dashboard";
+import { SearchPage} from '../pages/search/search';
 
-import {DashboardPage} from "../pages/dashboard/dashboard";
 @Component({
   templateUrl: 'app.html'
 })
@@ -36,11 +37,10 @@ export class MyApp {
       { title: 'List', component: ListPage },
       { title: 'Login', component: LoginPage},
       { title: 'Sign up', component: SignupPage},
-      { title: 'Dashboard', component: DashboardPage}
+      { title: 'Dashboard', component: DashboardPage},
+      { title: 'Search', component: SearchPage}
     ];
-
   }
-
 
 
   initializeApp() {
