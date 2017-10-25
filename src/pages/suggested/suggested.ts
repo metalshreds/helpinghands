@@ -17,7 +17,6 @@ import { User } from '../../models/user';
   templateUrl: 'suggested.html',
 })
 export class SuggestedPage {
-  tasks: Array(Task);
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
