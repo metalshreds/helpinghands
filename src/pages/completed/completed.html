@@ -14,5 +14,11 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let task of tasks" >
 
+      <h1>{{task.name}}</h1>
+
+    </button>
+  </ion-list>
 </ion-content>
