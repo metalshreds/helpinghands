@@ -15,7 +15,7 @@ import { AngularFireAuthModule} from "angularfire2/auth";
 import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import {AngularFireDatabaseModule} from "angularfire2/database";
-import { ProfileProvider } from '../providers/profile/profile';
+import { ProfileProvider } from '../providers/profile/profile'; //provider
 
 @NgModule({
   declarations: [

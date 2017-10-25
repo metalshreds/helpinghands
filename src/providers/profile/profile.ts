@@ -11,23 +11,27 @@ import {Task} from "../../models/task";
 */
 @Injectable()
 export class ProfileProvider {
-
-  constructor(    email: string,     //type string
-                  password: string,
-                  userId: string,
-                  lastName: string,
-                  firstName: string,
-                  introduction: string,
-                  //interests: string[];
-                  skills: boolean[],
-                  ownedTask: Task[],
-                  blackListTask: Task[],
-                  confirmTask: Task[],
-                  pendingTask: Task[])
-  {
-
+  public email: string;  //type string
+  public password: string;
+  public userId: string;
+  public lastName: string;
+  public firstName: string;
+  public introduction: string;
+  //interests: string[];
+  public skills: boolean[];
+  public ownedTask : Task[];
+  public blackListTask: Task[];
+  public confirmTask: Task[];
+  public pendingTask: Task[];
+  constructor( ) {
+    this.ownedTask = [];
   }
 
+                  createTask(){
+                    var skill = [ true, false, true, false];
+                    var task = new Task( 10, 10, "thisisintroduction", "wanted", skill )
+                    this.ownedTask.push(task);
+                  }
 
 //TODO method to retrieve user info
 
