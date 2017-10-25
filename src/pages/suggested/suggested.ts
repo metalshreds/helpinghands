@@ -17,8 +17,15 @@ import { User } from '../../models/user';
   templateUrl: 'suggested.html',
 })
 export class SuggestedPage {
+  tasks = Array<Task>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    var userA = {'email':'email', 'password':'pw'} as User;
+    var taskA = {'user':userA} as Task;
+    var userB = {'email':'asdf', 'password':'pw'} as User;
+    var taskB = {'user':userB} as Task;
+    this.tasks = [];
+    this.tasks.push(taskA, taskB);
   }
 
   ionViewDidLoad() {

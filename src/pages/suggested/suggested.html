@@ -9,6 +9,10 @@
 
 
 <ion-content padding>
-  <button onclick="goToHome()">Test</button>
+  <ion-list>
+    <button ion-item *ngFor="let task of tasks" >
+      <h1>{{task.user.email}}</h1>
+    </button>
+  </ion-list>
 
 </ion-content>
