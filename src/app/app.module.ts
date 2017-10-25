@@ -14,6 +14,10 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { DashboardPage} from '../pages/dashboard/dashboard';
 import { SearchPage} from '../pages/search/search';
+import {UserProfilePage} from '../pages/user-profile/user-profile';
+import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import { ProfileProvider } from '../providers/profile/profile'; //provider
 
 @NgModule({
   declarations: [
@@ -23,15 +27,17 @@ import { SearchPage} from '../pages/search/search';
     LoginPage,
     SignupPage,
     DashboardPage,
-    SearchPage
+    SearchPage,
+    UserProfilePage,
+    EditProfilePage
+
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
-
-
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,12 +47,15 @@ import { SearchPage} from '../pages/search/search';
     LoginPage,
     SignupPage,
     DashboardPage,
-    SearchPage
+    SearchPage,
+    UserProfilePage,
+    EditProfilePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ProfileProvider,
   ]
 })
 export class AppModule {}

@@ -12,8 +12,9 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
+import {UserProfilePage} from '../user-profile/user-profile';
 import {AngularFireAuth} from "angularfire2/auth";
-
+import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()
 @Component({
 
@@ -25,7 +26,7 @@ export class LoginPage {
   user = {} as User;    //initialize an object as user.
 
   public loginForm: any;
-  public backgroundImage = 'assets/img/background/background-5.jpg';
+
 
   constructor(
     private authp: AngularFireAuth,
@@ -48,7 +49,7 @@ export class LoginPage {
     console.log("this is pass0", this.pass);
       const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
         .then(function(){
-          _this.navCtrl.push(HomePage);
+          _this.navCtrl.push(EditProfilePage);
         })
         .catch(function(error)
         {
@@ -71,7 +72,30 @@ export class LoginPage {
     this.navCtrl.push(HomePage);
   }
 
-  goToResetPassword() {
-    // this.navCtrl.push(ResetPasswordPage);
+  /*
+  /function that let user reset password by sending an
+  /email to user's register email using firebase's built-in
+  /function.  **this piece of code is from firebase document.
+   */
+  goToResetPassword(user : User) {
+    this.authp.auth.sendPasswordResetEmail(user.email).then(function() {
+      // Password Reset Email Sent!
+      // [START_EXCLUDE]
+      alert('Password Reset Email Sent!');
+      // [END_EXCLUDE]
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // [START_EXCLUDE]
+      if (errorCode == 'auth/invalid-email') {
+        alert(errorMessage);
+      } else if (errorCode == 'auth/user-not-found') {
+        alert(errorMessage);
+      }
+      console.log(error);
+      // [END_EXCLUDE]
+    });
+    // [END sendpasswordemail];
   }
 }
