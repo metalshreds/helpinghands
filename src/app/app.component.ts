@@ -6,7 +6,6 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {SignupPage} from "../pages/signup/signup";
-import { DashboardPage } from "../pages/dashboard/dashboard";
 import firebase from 'firebase';
 import {DashboardPage} from "../pages/dashboard/dashboard";
 @Component({
@@ -36,11 +35,7 @@ export class MyApp {
       { title: 'List', component: ListPage },
       { title: 'Login', component: LoginPage},
       { title: 'Sign up', component: SignupPage},
-<<<<<<< HEAD
-      { title: 'Dashboard', component: DashboardPage},
-=======
       { title: 'Dashboard', component: DashboardPage}
->>>>>>> master
     ];
 
   }
