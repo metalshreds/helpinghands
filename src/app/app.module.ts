@@ -13,6 +13,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { AngularFireModule} from "angularfire2";
 import { FIREBASE_CONFIG} from "./app.firebase.config";
 import { AngularFireAuthModule} from "angularfire2/auth";
+import {DashboardPage} from "../pages/dashboard/dashboard";
 
 @NgModule({
   declarations: [
