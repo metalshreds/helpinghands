@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import { User } from '../../models/user';
+import { Task} from "../../models/task";
+import { userProfile} from "../../models/userProfile";
+import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import {AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase} from "angularfire2/database";
 import {UserProfilePage} from '../user-profile/user-profile';
@@ -27,31 +30,50 @@ export class EditProfilePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public  userP : ProfileProvider  //for provider
   ) { }
 
   update = function(firstName, lastName)
   {
-    var user = {} as User;
+   // var user = {} as userProfile;               //use userProfile in models folder
     var result = this.AFcurUser.auth.currentUser;
     if(result)
     {
       console.log(result);
+      //this block of code works with provider;
+      this.userP.lastName = lastName;
+      this.userP.firstName = firstName;
+      this.userP.userId = result.uid;
+      this.userP.email = result.uid;
+      this.userP.createTask();
+      /*
       user.lastName = lastName;
       user.firstName = firstName;
       user.userId = result.uid;
-      console.log(user);
+      user.email = result.email;
+      user.createTask();*/
       /*
       this.AFcurUser.authState.take(1).subscribe(auth=>{
         this.AFdatabase.list(`user/${result.uid}`).push(this.user)
           //.then(()=>this.navCtrl.push('UserProfilePage'))
       })*/
      // var ref = firebase.database();
+
+
+      console.log( "user is ",this.userP);
       firebase.database().ref('user/'+ result.uid).set({
         lastName : lastName,
         firsName : firstName,
-        userId : result.uid
+        userId : result.uid,
+        email : result.email,
+        //task : user.ownedTask
+        task :  this.userP.ownedTask   //works with provider
       });
+
+
+
+
 
 
 

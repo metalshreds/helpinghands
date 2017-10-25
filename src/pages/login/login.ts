@@ -14,7 +14,7 @@ import { HomePage } from '../home/home'
 import { User } from '../../models/user';
 import {UserProfilePage} from '../user-profile/user-profile';
 import {AngularFireAuth} from "angularfire2/auth";
-
+import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()
 @Component({
 
@@ -49,7 +49,7 @@ export class LoginPage {
     console.log("this is pass0", this.pass);
       const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
         .then(function(){
-          _this.navCtrl.push(UserProfilePage);
+          _this.navCtrl.push(EditProfilePage);
         })
         .catch(function(error)
         {
