@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import { User } from '../../models/user';
+import { userProfile} from "../../models/userProfile";
 import {AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase} from "angularfire2/database";
 import {UserProfilePage} from '../user-profile/user-profile';
@@ -32,7 +33,7 @@ export class EditProfilePage {
 
   update = function(firstName, lastName)
   {
-    var user = {} as User;
+    var user = {} as userProfile;
     var result = this.AFcurUser.auth.currentUser;
     if(result)
     {
@@ -47,11 +48,18 @@ export class EditProfilePage {
           //.then(()=>this.navCtrl.push('UserProfilePage'))
       })*/
      // var ref = firebase.database();
+
+      user.createTask();
       firebase.database().ref('user/'+ result.uid).set({
         lastName : lastName,
         firsName : firstName,
-        userId : result.uid
+        userId : result.uid,
+        task : user.ownedTask
       });
+
+
+
+
 
 
 
