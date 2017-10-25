@@ -28,9 +28,9 @@ export class ProfileProvider {
   }
 
                   createTask(){
-                    var skill = [ true, false, true, false];
-                    var task = new Task( 10, 10, "thisisintroduction", "wanted", skill )
-                    this.ownedTask.push(task);
+                    // var skill = [ true, false, true, false];
+                    // var task = new Task( 10, 10, "thisisintroduction", "wanted", skill )
+                    // this.ownedTask.push(task);
                   }
 
 //TODO method to retrieve user info

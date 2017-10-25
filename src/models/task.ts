@@ -17,4 +17,4 @@ export class Task {
     public helpers: User[],
     public appliedHelpers: User[]
   ){}
-}g
+}

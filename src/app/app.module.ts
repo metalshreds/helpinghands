@@ -17,7 +17,8 @@ import { SearchPage} from '../pages/search/search';
 import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import {AngularFireDatabaseModule} from "angularfire2/database";
-import { ProfileProvider } from '../providers/profile/profile'; //provider
+import { ProfileProvider } from '../providers/profile/profile';
+import { FirebaseProvider } from '../providers/firebase/firebase'; //provider
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ProfileProvider } from '../providers/profile/profile'; //provider
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProfileProvider,
+    FirebaseProvider,
   ]
 })
 export class AppModule {}
