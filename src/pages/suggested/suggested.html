@@ -10,7 +10,7 @@
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let task of tasks" >
+    <button ion-item ng-for = "let task of tasks">
       <h1>{{task.user.email}}</h1>
     </button>
   </ion-list>
