@@ -14,13 +14,6 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { DashboardPage} from '../pages/dashboard/dashboard';
 
-// import { CompletedPage} from '../pages/completed/completed';
-// import { CreatePage} from '../pages/create/create';
-// import { ConfirmedPage } from '../pages/confirmed/confirmed';
-// import { PendingPage} from '../pages/pending/pending';
-// import { SuggestedPage} from '../pages/suggested/suggested';
-
-
 @NgModule({
   declarations: [
     MyApp,
@@ -46,7 +39,6 @@ import { DashboardPage} from '../pages/dashboard/dashboard';
     LoginPage,
     SignupPage,
     DashboardPage
-
   ],
   providers: [
     StatusBar,
