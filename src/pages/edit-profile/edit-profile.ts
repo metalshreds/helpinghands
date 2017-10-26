@@ -72,15 +72,21 @@ export class EditProfilePage {
         userId : result.uid,
         email : result.email,
       });
-      /*
-      for( let ownedTask in this.userP.oTask)
+      //TODO modularize following code
+      userRef = firebase.database().ref('user/'+ result.uid + 'owenedTask');
+      for( let ownedTask of this.userP.oTask)
       {
-          var owenTaskRef = userRef.push();
-          owenTaskRef.set({
-            ownedTask : ownedTask,
-          })
+
+        var ownedTaskRef = userRef.push().key;
+        console.log("owntask is ", ownedTask);
+
+        var updates = {};
+        updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask;
+        firebase.database().ref().update(updates);
       }
-      */
+      //https://firebase.google.com/docs/database/web/read-and-write
+
+
 
 
 

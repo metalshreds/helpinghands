@@ -33,7 +33,9 @@ export class ProfileProvider {
   createTask(){
     var skill = [ true, false, true, false];
     let Task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", skill, false, this.userId);
+    let Task1 = new TaskObjectProvider( "taskname1", 10, "startdate1", "introduction1", "requirment1", skill, false, this.userId);
     this.oTask.push(Task);
+    this.oTask.push(Task1);
   }
 
 //TODO method to retrieve user info
