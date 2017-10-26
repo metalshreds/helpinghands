@@ -15,7 +15,8 @@ import { AngularFireAuthModule} from "angularfire2/auth";
 import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import {AngularFireDatabaseModule} from "angularfire2/database";
-import { ProfileProvider } from '../providers/profile/profile'; //provider
+import { ProfileProvider } from '../providers/profile/profile';
+import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ProfileProvider } from '../providers/profile/profile'; //provider
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProfileProvider,
+    TaskObjectProvider,
   ]
 })
 export class AppModule {}

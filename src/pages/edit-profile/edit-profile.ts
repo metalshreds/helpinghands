@@ -4,11 +4,12 @@ import { User } from '../../models/user';
 import { Task} from "../../models/task";
 import { userProfile} from "../../models/userProfile";
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
+import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import {AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase} from "angularfire2/database";
 import {UserProfilePage} from '../user-profile/user-profile';
 import firebase from 'firebase';
-/**
+ /**
  * Generated class for the EditProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
@@ -22,11 +23,9 @@ import firebase from 'firebase';
 })
 export class EditProfilePage {
 
-  //firstName = {} as string;
-  //lastName = {} as string;
   constructor(
     private AFcurUser: AngularFireAuth,
-    private AFdatabase: AngularFireDatabase,
+    //private AFdatabase: AngularFireDatabase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
@@ -36,11 +35,15 @@ export class EditProfilePage {
 
   update = function(firstName, lastName)
   {
-   // var user = {} as userProfile;               //use userProfile in models folder
-    var result = this.AFcurUser.auth.currentUser;
+
+    var result = this.AFcurUser.auth.currentUser;   //get current logged in user
     if(result)
     {
-      console.log(result);
+      /*this is how we construct new object instead using userP from constructor.
+      var newUser = new ProfileProvider();
+      newUser.createTask();
+      console.log( "user111 is ", newUser);
+      console.log(result);*/
       //this block of code works with provider;
       this.userP.lastName = lastName;
       this.userP.firstName = firstName;
@@ -62,15 +65,22 @@ export class EditProfilePage {
 
 
       console.log( "user is ",this.userP);
-      firebase.database().ref('user/'+ result.uid).set({
-        lastName : lastName,
+      var userRef = firebase.database().ref('user/'+ result.uid);
+      userRef.set({                                                 //write user object to database
+        lastName : lastName,                                      // as an user node.
         firsName : firstName,
         userId : result.uid,
         email : result.email,
-        //task : user.ownedTask
-        task :  this.userP.ownedTask   //works with provider
       });
-
+      /*
+      for( let ownedTask in this.userP.oTask)
+      {
+          var owenTaskRef = userRef.push();
+          owenTaskRef.set({
+            ownedTask : ownedTask,
+          })
+      }
+      */
 
 
 

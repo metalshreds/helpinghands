@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { ProfileProvider } from "../../providers/profile/profile";  //provider
+import {AngularFireAuth} from "angularfire2/auth";
+import firebase from 'firebase';
 /**
  * Generated class for the UserProfilePage page.
  *
@@ -15,11 +17,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UserProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(
+    private AFcurUser: AngularFireAuth,
+    //private AFdatabase: AngularFireDatabase,
+    public app: App,
+    public navCtrl: NavController,
+    public userP : ProfileProvider  //for provider
+  ) { }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserProfilePage');
-  }
+    var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('/user/' + userId).once('value').then(function(snapshot) {
+      var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+      document.getElementById("userName").innerHTML = username;
+    });
 
+  }
 }

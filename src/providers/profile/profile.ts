@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Task} from "../../models/task";
+import { TaskObjectProvider } from '../task-object/task-object'; //provider
 
 /*
   Generated class for the ProfileProvider provider.
@@ -19,19 +20,21 @@ export class ProfileProvider {
   public introduction: string;
   //interests: string[];
   public skills: boolean[];
-  public ownedTask : Task[];
-  public blackListTask: Task[];
-  public confirmTask: Task[];
-  public pendingTask: Task[];
+  public oTask : Array<TaskObjectProvider> = [];
+  public ownedTask : TaskObjectProvider[] = [];
+  public blackListTask: Task[] = [];
+  public confirmTask: Task[] = [];
+  public pendingTask: Task[] = [];
+
   constructor( ) {
-    this.ownedTask = [];
+
   }
 
-                  createTask(){
-                    var skill = [ true, false, true, false];
-                    var task = new Task( 10, 10, "thisisintroduction", "wanted", skill )
-                    this.ownedTask.push(task);
-                  }
+  createTask(){
+    var skill = [ true, false, true, false];
+    let Task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", skill, false, this.userId);
+    this.oTask.push(Task);
+  }
 
 //TODO method to retrieve user info
 
