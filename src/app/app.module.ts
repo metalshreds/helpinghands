@@ -12,7 +12,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule} from "angularfire2";
 import { FIREBASE_CONFIG} from "./app.firebase.config";
 import { AngularFireAuthModule} from "angularfire2/auth";
+
+import {UserProfilePage} from '../pages/user-profile/user-profile';
+import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import { ProfileProvider } from '../providers/profile/profile';
+import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
+
 import {DashboardPage} from "../pages/dashboard/dashboard";
+
 
 @NgModule({
   declarations: [
@@ -21,13 +29,17 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
+    UserProfilePage,
+    EditProfilePage,
     DashboardPage
+
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,12 +48,16 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
+    UserProfilePage,
+    EditProfilePage,
     DashboardPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ProfileProvider,
+    TaskObjectProvider,
   ]
 })
 export class AppModule {}

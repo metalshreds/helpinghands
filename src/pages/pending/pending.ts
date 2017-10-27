@@ -14,6 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'pending.html',
 })
 export class PendingPage {
+
     tasks: Array<{title: string, time: string, location: string, description: string}>;
 
 
@@ -33,6 +34,7 @@ export class PendingPage {
                   ' moves so I can impress my friend!' });
 
 }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PendingPage');
   }

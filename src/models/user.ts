@@ -15,7 +15,7 @@ export interface User{
   pendingTask: Task[];
 
 }
-
+//https://www.firebase.com/docs/web/guide/user-auth.html#section-storing
 //https://firebase.google.com/docs/auth/web/manage-users#get_a_users_provider-specific_profile_information
 //TODO method to retrieve user info
 
@@ -24,13 +24,5 @@ export interface User{
 //TODO create a new task (return new task object)
 
 //TODO update a new task (doesn't return)
-/*create new user
-function createUser(user: User): { email : string; password : string;}
-{
-  let newUser = {email : user.email,
-                password : user.password};
-  return newUser;
-}
-*/
 
 //TODO method to retrieve user info
