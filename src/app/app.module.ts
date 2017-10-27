@@ -12,11 +12,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule} from "angularfire2";
 import { FIREBASE_CONFIG} from "./app.firebase.config";
 import { AngularFireAuthModule} from "angularfire2/auth";
+
 import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import { ProfileProvider } from '../providers/profile/profile';
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
+
+import {DashboardPage} from "../pages/dashboard/dashboard";
+
 
 @NgModule({
   declarations: [
@@ -26,8 +30,8 @@ import { TaskObjectProvider } from '../providers/task-object/task-object'; //pro
     LoginPage,
     SignupPage,
     UserProfilePage,
-    EditProfilePage
-
+    EditProfilePage,
+    DashboardPage
 
   ],
   imports: [
@@ -45,7 +49,8 @@ import { TaskObjectProvider } from '../providers/task-object/task-object'; //pro
     LoginPage,
     SignupPage,
     UserProfilePage,
-    EditProfilePage
+    EditProfilePage,
+    DashboardPage
   ],
   providers: [
     StatusBar,

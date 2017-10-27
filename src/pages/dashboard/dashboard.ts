@@ -16,9 +16,9 @@ import { IonicPage, NavController } from 'ionic-angular';
 export class DashboardPage {
 
   completedRoot = 'CompletedPage'
+  pendingRoot = 'PendingPage'
   suggestedRoot = 'SuggestedPage'
   createRoot = 'CreatePage'
-  pendingRoot = 'PendingPage'
   confirmedRoot = 'ConfirmedPage'
 
 
