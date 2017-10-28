@@ -11,8 +11,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule} from "angularfire2";
 import { FIREBASE_CONFIG} from "./app.firebase.config";
 import { AngularFireAuthModule} from "angularfire2/auth";
-import {UserProfilePage} from '../pages/user-profile/user-profile';
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import { ProfilePage } from "../pages/profile/profile";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import { ProfileProvider } from '../providers/profile/profile';
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
@@ -26,10 +26,9 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
-    UserProfilePage,
     EditProfilePage,
-    DashboardPage
-
+    DashboardPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -45,9 +44,9 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
-    UserProfilePage,
     EditProfilePage,
-    DashboardPage
+    DashboardPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,

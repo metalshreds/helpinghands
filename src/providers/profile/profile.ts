@@ -26,8 +26,12 @@ export class ProfileProvider {
   public confirmTask: Task[] = [];
   public pendingTask: Task[] = [];
 
-  constructor( ) {
-
+  constructor(
+    lastName : string,
+    firstName : string
+  ) {
+    this.lastName = lastName;
+    this.firstName = firstName;
   }
 
   createTask(){

@@ -19,11 +19,11 @@ export class userProfile{
     this.ownedTask = [];
   }
 
-                createTask(){
-                  var skill = [ true, false, true, false];
-                  var task = new Task( 10, 10, "thisisintroduction", "wanted", skill );
-                  this.ownedTask.push(task);
-                }
+                //createTask(){
+                  //var skill = [ true, false, true, false];
+                  //var task = new Task( 10, 10, "thisisintroduction", "wanted", skill );
+                  //this.ownedTask.push(task);
+                //}
       //TODO method to retrieve user info
 
     //TODO method to edit/update user info
