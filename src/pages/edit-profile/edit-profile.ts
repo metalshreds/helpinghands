@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import { User } from '../../models/user';
-import { Task} from "../../models/task";
-import { userProfile} from "../../models/userProfile";
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import {AngularFireAuth} from "angularfire2/auth";

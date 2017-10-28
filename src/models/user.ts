@@ -1,4 +1,5 @@
-import { Task } from './task';
+
+import {TaskObjectProvider} from "../providers/task-object/task-object";
 
 export interface User{
   email: string;     //type string
@@ -9,10 +10,10 @@ export interface User{
   introduction: string;
   //interests: string[];
   skills: boolean[];
-  ownedTask: Task[];
-  blackListTask: Task[];
-  confirmTask: Task[];
-  pendingTask: Task[];
+  ownedTask: TaskObjectProvider[];
+  blackListTask: TaskObjectProvider[];
+  confirmTask: TaskObjectProvider[];
+  pendingTask: TaskObjectProvider[];
 
 }
 //https://www.firebase.com/docs/web/guide/user-auth.html#section-storing

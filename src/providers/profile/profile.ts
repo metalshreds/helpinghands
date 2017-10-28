@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Task} from "../../models/task";
 import { TaskObjectProvider } from '../task-object/task-object'; //provider
 
 /*
@@ -22,9 +21,9 @@ export class ProfileProvider {
   public skills: boolean[];
   public oTask : Array<TaskObjectProvider> = [];
   public ownedTask : TaskObjectProvider[] = [];
-  public blackListTask: Task[] = [];
-  public confirmTask: Task[] = [];
-  public pendingTask: Task[] = [];
+  public blackListTask: TaskObjectProvider[] = [];
+  public confirmTask: TaskObjectProvider[] = [];
+  public pendingTask: TaskObjectProvider[] = [];
 
   constructor( ) {
 
