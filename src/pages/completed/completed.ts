@@ -17,9 +17,6 @@ import {Task} from "../../models/task";
 })
 export class CompletedPage {
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-
   tasks: Array<Task>;
   skills: Array<boolean>;
   helpers: Array<User>;
