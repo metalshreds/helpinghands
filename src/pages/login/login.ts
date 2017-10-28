@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
-import {UserProfilePage} from '../user-profile/user-profile';
+import {ProfilePage} from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()

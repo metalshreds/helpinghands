@@ -5,7 +5,7 @@ import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import {AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase} from "angularfire2/database";
-import {UserProfilePage} from '../user-profile/user-profile';
+import {ProfilePage} from '../profile/profile';
 import firebase from 'firebase';
  /**
  * Generated class for the EditProfilePage page.
