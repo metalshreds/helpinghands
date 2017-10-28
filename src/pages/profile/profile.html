@@ -1,5 +1,5 @@
 <!--
-  Generated template for the CompletedPage page.
+  Generated template for the ProfilePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,20 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Suggested</ion-title>
+    <ion-title>profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
-
-  <ion-list>
-    <button ion-item *ngFor="let task of tasks" >
-
-      <h1>{{task.name}}</h1>
-
-    </button>
-  </ion-list>
+  <h1>{{profile.firstName}} {{profile.lastName}}</h1>
 </ion-content>
