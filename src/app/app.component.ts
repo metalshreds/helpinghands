@@ -7,10 +7,10 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {SignupPage} from "../pages/signup/signup";
 import { ProfilePage } from "../pages/profile/profile";
-
 import firebase from 'firebase';
 import { DashboardPage} from "../pages/dashboard/dashboard";
 import { SearchPage} from '../pages/search/search';
+import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +18,7 @@ import { SearchPage} from '../pages/search/search';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ProfilePage;
+  rootPage: any = TaskEditPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -41,7 +41,8 @@ export class MyApp {
       { title: 'Sign up', component: SignupPage},
       { title: 'Dashboard', component: DashboardPage},
       { title: 'Search', component: SearchPage},
-      { title: 'Profile', component: ProfilePage}
+      { title: 'Profile', component: ProfilePage},
+      { title: 'Task Edit', component: TaskEditPage}
     ];
 
   }
