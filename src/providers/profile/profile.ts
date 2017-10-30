@@ -27,10 +27,16 @@ export class ProfileProvider {
 
   constructor(
     lastName : string,
-    firstName : string
+    firstName : string,
+    email: string,
+    introduction: string,
+    skills: boolean[]
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
+    this.email = email;
+    this.introduction = introduction;
+    this.skills = skills;
   }
 
   createTask(){

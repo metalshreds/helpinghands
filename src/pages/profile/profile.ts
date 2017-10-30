@@ -16,8 +16,13 @@ import { ProfileProvider } from '../../providers/profile/profile'
 })
 export class ProfilePage {
   profile;
+  skills : Array<boolean>;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.profile = new ProfileProvider("Muffin", "Stud");
+    this.skills = [true, false, true, false, false, true];
+    this.profile = new ProfileProvider("ABCDEFGHIJK", "LMNOPQRSTUVWXYZ", "test@mail.com",
+      "This is the intro to this person and will probably be somewhere along the lines of a 1 or 2 sentences, " +
+      "this max may be enforced but who knows I'm just trying to make this somewhat long for the sake of testing.",
+      this.skills);
   }
 
   ionViewDidLoad() {
