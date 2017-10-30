@@ -28,7 +28,7 @@ export class EditProfilePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    public  userP : ProfileProvider  //for provider
+    //public  userP : ProfileProvider  //for provider
   ) { }
 
   update = function(firstName, lastName)
@@ -37,33 +37,18 @@ export class EditProfilePage {
     var result = this.AFcurUser.auth.currentUser;   //get current logged in user
     if(result)
     {
-      /*this is how we construct new object instead using userP from constructor.
-      var newUser = new ProfileProvider();
+      //this is how we construct new object instead using userP from constructor.
+      var newUser = new ProfileProvider(lastName, firstName);
+      newUser.userId = result.uid;
       newUser.createTask();
-      console.log( "user111 is ", newUser);
-      console.log(result);*/
-      //this block of code works with provider;
-      this.userP.lastName = lastName;
-      this.userP.firstName = firstName;
-      this.userP.userId = result.uid;
-      this.userP.email = result.uid;
-      this.userP.createTask();
-      /*
-      user.lastName = lastName;
-      user.firstName = firstName;
-      user.userId = result.uid;
-      user.email = result.email;
-      user.createTask();*/
-      /*
-      this.AFcurUser.authState.take(1).subscribe(auth=>{
-        this.AFdatabase.list(`user/${result.uid}`).push(this.user)
-          //.then(()=>this.navCtrl.push('UserProfilePage'))
-      })*/
-     // var ref = firebase.database();
+      newUser.email = result.email;
 
 
-      console.log( "user is ",this.userP);
+
+      //console.log( "user is ", newUser);
       var userRef = firebase.database().ref('user/'+ result.uid);
+      //console.log('user/'+ result.uid);
+      //console.log(userRef, "is old userRef")
       userRef.set({                                                 //write user object to database
         lastName : lastName,                                      // as an user node.
         firsName : firstName,
@@ -71,13 +56,15 @@ export class EditProfilePage {
         email : result.email,
       });
       //TODO modularize following code
-      userRef = firebase.database().ref('user/'+ result.uid + 'owenedTask');
-      for( let ownedTask of this.userP.oTask)
+      userRef = firebase.database().ref('user/'+ result.uid + '/' + 'owenedTask');
+      //console.log(userRef, "is new userRef")
+      for( let ownedTask of newUser.oTask)
       {
 
         var ownedTaskRef = userRef.push().key;
-        console.log("owntask is ", ownedTask);
-
+        //console.log("owntask is ", ownedTask);
+        //console.log('user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef);
+        //console.log(ownedTaskRef);
         var updates = {};
         updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask;
         firebase.database().ref().update(updates);
