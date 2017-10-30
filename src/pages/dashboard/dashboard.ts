@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
+
+
 /**
  * Generated class for the DashboardPage tabs.
  *
@@ -15,11 +17,11 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class DashboardPage {
 
-  completedRoot = 'CompletedPage'
-  pendingRoot = 'PendingPage'
-  suggestedRoot = 'SuggestedPage'
-  createRoot = 'CreatePage'
-  confirmedRoot = 'ConfirmedPage'
+  completedRoot = 'CompletedPage';
+  pendingRoot = 'PendingPage';
+  suggestedRoot = 'SuggestedPage';
+  createRoot = 'CreatePage';
+  confirmedRoot = 'ConfirmedPage';
 
 
   constructor(public navCtrl: NavController) {}

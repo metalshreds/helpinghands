@@ -9,7 +9,9 @@ import {SignupPage} from "../pages/signup/signup";
 import { ProfilePage } from "../pages/profile/profile";
 
 import firebase from 'firebase';
-import {DashboardPage} from "../pages/dashboard/dashboard";
+import { DashboardPage} from "../pages/dashboard/dashboard";
+import { SearchPage} from '../pages/search/search';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -38,12 +40,11 @@ export class MyApp {
       { title: 'Login', component: LoginPage},
       { title: 'Sign up', component: SignupPage},
       { title: 'Dashboard', component: DashboardPage},
+      { title: 'Search', component: SearchPage},
       { title: 'Profile', component: ProfilePage}
     ];
 
-
   }
-
 
 
   initializeApp() {

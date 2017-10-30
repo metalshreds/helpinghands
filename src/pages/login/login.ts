@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
-import {UserProfilePage} from '../user-profile/user-profile';
+import {ProfilePage} from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()
@@ -23,7 +23,7 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 })
 export class LoginPage {
 
-  user = {} as User;    //initialie an object as user.
+  user = {} as User;    //initialize an object as user.
 
   public loginForm: any;
 
@@ -65,7 +65,11 @@ export class LoginPage {
   }
 
   goToSignup() {
-     this.navCtrl.push(SignupPage);
+    this.navCtrl.push(SignupPage);
+  }
+
+  goToHome() {
+    this.navCtrl.push(HomePage);
   }
 
   /*
