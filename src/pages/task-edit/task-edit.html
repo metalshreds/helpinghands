@@ -9,8 +9,22 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-input type="text" placeholder="Task Title"></ion-input>
+    <ion-input type="text" placeholder={{task.name}}></ion-input>
   </ion-item>
+  <button class="mid-field-button">Add a picture</button>
+  <ion-item class="description-box">
+    <ion-textarea rows="10" type="text" placeholder={{task.introduction}}></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="location"></ion-input>
+  </ion-item>
+  <select class="discipline-dropdown">
+    <option value="Major Discipline 1">Major Discipline 1</option>
+    <option value="Major Discipline 2">Major Discipline 2</option>
+    <option value="Major Discipline 3">Major Discipline 3</option>
+    <option value="Major Discipline 4">Major Discipline 4</option>
+  </select>
+  <button class="mid-field-button">Edit Discipline</button>
   <button class="end-button" style="background-color: red">Discard</button>
   <button class="end-button" style="background-color: #2ec95c">Save</button>
 </ion-content>
