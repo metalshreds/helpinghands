@@ -37,13 +37,11 @@ export class EditProfilePage {
     var result = this.AFcurUser.auth.currentUser;   //get current logged in user
     if(result)
     {
-      //this is how we construct new object instead using userP from constructor.
-      var newUser = new ProfileProvider(lastName, firstName);
-      newUser.userId = result.uid;
+
+      var newUser = new ProfileProvider(lastName, firstName, result.uid, result.email);
+      //newUser.userId = result.uid;
       newUser.createTask();
-      newUser.email = result.email;
-
-
+      //newUser.email = result.email;
 
       //console.log( "user is ", newUser);
       var userRef = firebase.database().ref('user/'+ result.uid);

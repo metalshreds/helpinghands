@@ -27,12 +27,19 @@ export class ProfileProvider {
 
   constructor(
     lastName : string,
-    firstName : string
+    firstName : string,
+    uid : string,
+    email : string,
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
+    this.userId = uid;
+    this.email = email;
   }
 
+  /*
+  /
+   */
   createTask(){
     var skill = [ true, false, true, false];
     let Task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", skill, false, this.userId);
