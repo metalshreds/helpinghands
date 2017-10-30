@@ -17,7 +17,7 @@ import { ProfileProvider } from '../../providers/profile/profile'
 export class ProfilePage {
   profile;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.profile = new ProfileProvider("Muffin", "Stud");
+    this.profile = new ProfileProvider("Muffin", "Stud", "uid", "email");
   }
 
   ionViewDidLoad() {
