@@ -26,4 +26,8 @@ export class DashboardPage {
 
   constructor(public navCtrl: NavController) {}
 
+  backButtonClick(){
+    this.navCtrl.pop();
+  }
+
 }

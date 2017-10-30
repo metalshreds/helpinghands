@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {User} from "../../models/user";
 import {TaskObjectProvider} from "../../providers/task-object/task-object";
+import {TaskViewPage} from "../task-view/task-view";
 
 /**
  * Generated class for the CompletedPage page.
@@ -26,13 +27,19 @@ export class CompletedPage {
     this.tasks =[];
     this.skills = [];
     this.helpers = [];
-    let task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", this.skills, false, 'user1');
+    let task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", this.skills, true, 'user1');
     this.tasks.push(task);
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompletedPage');
+  }
+  taskClicked(event, task) {
+    this.navCtrl.push(TaskViewPage, {
+      task: task
+    });
+
   }
 
 }

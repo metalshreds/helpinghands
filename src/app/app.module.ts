@@ -20,6 +20,8 @@ import { ProfileProvider } from '../providers/profile/profile';
 import { FirebaseProvider } from '../providers/firebase/firebase'; //provider
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 import {DashboardPage} from "../pages/dashboard/dashboard";
+import {TaskViewPage} from "../pages/task-view/task-view";
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     SearchPage,
     EditProfilePage,
     DashboardPage,
-    ProfilePage
+    ProfilePage,
+    TaskViewPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     SearchPage,
     EditProfilePage,
     DashboardPage,
-    ProfilePage
+    ProfilePage,
+    TaskViewPage
   ],
   providers: [
     StatusBar,

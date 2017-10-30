@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {TaskObjectProvider} from '../../providers/task-object/task-object';
+import {TaskViewPage} from "../task-view/task-view";
 
 
 /**
@@ -27,6 +28,13 @@ export class SuggestedPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SuggestedPage');
+  }
+
+  taskClicked(event, task) {
+    this.navCtrl.push(TaskViewPage, {
+      task: task
+    });
+
   }
 
 }

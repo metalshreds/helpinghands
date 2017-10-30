@@ -17,7 +17,7 @@
 
 
   <ion-list>
-    <button ion-item *ngFor="let task of tasks" >
+    <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
 
       <h1>{{task.name}}</h1>
       <h2>{{task.timeStart}}</h2>
