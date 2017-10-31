@@ -21,6 +21,7 @@ import firebase from 'firebase';
 })
 export class EditProfilePage {
 
+  //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
     //private AFdatabase: AngularFireDatabase,
@@ -28,7 +29,6 @@ export class EditProfilePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    //public  userP : ProfileProvider  //for provider
   ) { }
 
   update = function(firstName, lastName)
@@ -37,37 +37,27 @@ export class EditProfilePage {
     var result = this.AFcurUser.auth.currentUser;   //get current logged in user
     if(result)
     {
-
+      //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(lastName, firstName, result.uid, result.email);
-      //newUser.userId = result.uid;
-      newUser.createTask();
-      //newUser.email = result.email;
-
-      //console.log( "user is ", newUser);
+      newUser.createTask();                                         //create test task list
       var userRef = firebase.database().ref('user/'+ result.uid);
-      //console.log('user/'+ result.uid);
-      //console.log(userRef, "is old userRef")
       userRef.set({                                                 //write user object to database
-        lastName : lastName,                                      // as an user node.
+        lastName : lastName,                                        // as an user node.
         firsName : firstName,
         userId : result.uid,
         email : result.email,
       });
       //TODO modularize following code
       userRef = firebase.database().ref('user/'+ result.uid + '/' + 'owenedTask');
-      //console.log(userRef, "is new userRef")
       for( let ownedTask of newUser.oTask)
       {
-
-        var ownedTaskRef = userRef.push().key;
-        //console.log("owntask is ", ownedTask);
-        //console.log('user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef);
-        //console.log(ownedTaskRef);
-        var updates = {};
-        updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask;
-        firebase.database().ref().update(updates);
+        var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
+        var updates = {};                         // declare update var to hold update data.
+        updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask; //set path for current task
+        firebase.database().ref().update(updates);                                      // update to specified path
+                                                                                        // in database.
       }
-      //https://firebase.google.com/docs/database/web/read-and-write
+
 
 
 
