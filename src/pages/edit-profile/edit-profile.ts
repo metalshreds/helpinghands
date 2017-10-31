@@ -30,44 +30,44 @@ export class EditProfilePage {
     public app: App,
     public navCtrl: NavController,
   ) { }
+  result = this.AFcurUser.auth.currentUser;   //get current logged in user
 
+  /*
+  / This funtion will take all the user inputs and update it to corresponding node.
+  */
   update = function(firstName, lastName)
   {
-
-    var result = this.AFcurUser.auth.currentUser;   //get current logged in user
-    if(result)
+    if(this.result)
     {
       //initialize new User object using input lastname, firstname and current author's uid and email.
-      var newUser = new ProfileProvider(lastName, firstName, result.uid, result.email);
+      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email);
       newUser.createTask();                                         //create test task list
-      var userRef = firebase.database().ref('user/'+ result.uid);
-      userRef.set({                                                 //write user object to database
-        lastName : lastName,                                        // as an user node.
-        firsName : firstName,
-        userId : result.uid,
-        email : result.email,
-      });
+
+      this.singleStringUpdate('lastName', lastName);    //update user's last name to the server.
+      this.singleStringUpdate('firstName', firstName);
       //TODO modularize following code
-      userRef = firebase.database().ref('user/'+ result.uid + '/' + 'owenedTask');
-      for( let ownedTask of newUser.oTask)
-      {
+      var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask');
+      for( let ownedTask of newUser.oTask) {
         var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
         var updates = {};                         // declare update var to hold update data.
-        updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask; //set path for current task
+        updates['user/' + this.result.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
         firebase.database().ref().update(updates);                                      // update to specified path
-                                                                                        // in database.
-      }
-
-
-
-
-
-
-
-
-
+      }                                                                                  // in database.
     }
+  }
+
+  /*
+  / This function is to add updateMessage to the specified sub path of the user node
+  / that represents current user.
+   */
+  singleStringUpdate = function(subPath : string, updateMessage : string)
+  {
+    var updateMsg = {}
+    updateMsg['user/' + this.result.uid + '/' + subPath] = updateMessage;
+    firebase.database().ref().update(updateMsg);
+
   }
 
 
 }
+

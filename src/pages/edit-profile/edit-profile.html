@@ -15,15 +15,14 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-input type="text" placeholder = "First name" [(ngModel)] = "firstName"></ion-input>  //input txt field for
-                                                                                              //  last name
+    <ion-input type="text" placeholder = "First name" [(ngModel)] = "firstName"></ion-input>
+
   </ion-item>
   <ion-item>
-    <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>    //input txt field for
-                                                                                              //  first name
+    <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
+
   </ion-item>
   <ion-col>
-    //button that triggers update function.
     <button ion-button class="update-button" (click)="update(firstName, lastName)">update</button>
   </ion-col>
 </ion-content>
