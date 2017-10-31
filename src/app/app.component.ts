@@ -13,12 +13,12 @@ import { DashboardPage} from "../pages/dashboard/dashboard";
 import { SearchPage} from '../pages/search/search';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html'    //TODO change app.html's content. currently it has sidebar created.
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = LoginPage;                //set Login page as the first page
 
   pages: Array<{title: string, component: any}>;
 

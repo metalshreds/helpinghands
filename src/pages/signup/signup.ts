@@ -5,7 +5,7 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 import { User } from "../../models/user";
 import { AngularFireAuth} from "angularfire2/auth";
 import {HomePage} from "../home/home";
-
+import firebase from 'firebase';
 
 /**
  * Generated class for the SignupPage page.
@@ -27,10 +27,7 @@ export class SignupPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,) {
-
-
-  }
+    public alertCtrl: AlertController,) {}
 
 
 
@@ -39,8 +36,6 @@ export class SignupPage {
 
     if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
-      //console.log("thisss is ", this ," dsadasd ");
-
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Two passwords are not the same',
@@ -66,22 +61,28 @@ export class SignupPage {
         alert.present();
 
     }
-    else {
-
-        //https://firebase.google.com/docs/reference/js/firebase.User
-        //https://firebase.google.com/docs/reference/js/firebase.auth.Auth
+    else
+    {
+       //declare alert instance
        let alert = this.alertCtrl.create({
           title: '',
           subTitle: '',
           buttons: ['OK']
         });
+       //save current frame
        var _this = this;
-        const result = this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
-          .then(function(){
+       //call create method which is provided by firebase
+       this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
+          .then(result=>{
+            firebase.database().ref('/user').child(result.uid)
+              .set({email : user.email,
+                    userId : result.uid,
+                    lastName : 'Last name',
+                    firstName : 'First name'});
             _this.navCtrl.push(EditProfilePage);
           })
           .catch(function (error)
-        {
+          {
           var errorCode = error.code;
           var errorMessage = error.message;
 
@@ -90,18 +91,9 @@ export class SignupPage {
             alert.setMessage(errorMessage);
 
             alert.present();
-        });
-        /*
-        var curUser = this.authp.auth.currentUser;
-        if(curUser)
-        {
-          console.log("success is ", curUser.uid);
-        }
-        else {
-          console.log("fail and ", curUser.uid);
-        }*/
-      }
+          });
     }
+  }
 
 
 
