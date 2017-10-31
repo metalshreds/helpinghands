@@ -37,6 +37,7 @@ page-profile {
 }
 
 .rating-button {
+  background-color: transparent;
   width: 100vw;
 }
 
@@ -47,17 +48,20 @@ page-profile {
 }
 
 .rating-task-name {
+  text-align: center;
   margin: 2px;
   color: #007aff;
   font-size: 16px;
 }
 
 .rating-feedback {
+  text-align: center;
   margin: 2px;
   font-size: 12px;
 }
 
 .rating-number {
+  text-align: center;
   margin: 2px;
   color: red;
   font-size: 12px;
