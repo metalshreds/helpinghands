@@ -38,13 +38,14 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
-      { title: 'Login', component: LoginPage},
-      { title: 'Sign up', component: SignupPage},
-      { title: 'Dashboard', component: DashboardPage},
-      { title: 'Search', component: SearchPage},
-      { title: 'Profile', component: ProfilePage},
-      { title: 'Task Edit', component: TaskEditPage},
-      { title: 'Edit Profile', component: EditProfilePage}
+      { title: 'Login', component: LoginPage },
+      { title: 'Sign up', component: SignupPage },
+      { title: 'Dashboard', component: DashboardPage },
+      { title: 'Search', component: SearchPage },
+      { title: 'Profile', component: ProfilePage },
+      { title: 'Task Edit', component: TaskEditPage },
+      { title: 'Edit Profile', component: EditProfilePage },
+
 
     ];
 
