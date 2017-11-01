@@ -20,6 +20,8 @@ import { ProfileProvider } from '../providers/profile/profile';
 import { FirebaseProvider } from '../providers/firebase/firebase'; //provider
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 import {DashboardPage} from "../pages/dashboard/dashboard";
+import {TaskViewPage} from "../pages/task-view/task-view";
+
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
@@ -34,7 +36,8 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     EditProfilePage,
     DashboardPage,
     ProfilePage,
-    TaskEditPage
+    TaskEditPage,
+    TaskViewPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     EditProfilePage,
     DashboardPage,
     ProfilePage,
-    TaskEditPage
+    TaskEditPage,
+    TaskViewPage
   ],
   providers: [
     StatusBar,
