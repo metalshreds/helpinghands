@@ -21,6 +21,7 @@ import firebase from 'firebase';
 })
 export class EditProfilePage {
 
+  //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
     //private AFdatabase: AngularFireDatabase,
@@ -28,58 +29,45 @@ export class EditProfilePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    //public  userP : ProfileProvider  //for provider
   ) { }
+  result = this.AFcurUser.auth.currentUser;   //get current logged in user
 
+  /*
+  / This funtion will take all the user inputs and update it to corresponding node.
+  */
   update = function(firstName, lastName)
   {
-
-    var result = this.AFcurUser.auth.currentUser;   //get current logged in user
-    if(result)
+    if(this.result)
     {
-      //this is how we construct new object instead using userP from constructor.
-      var newUser = new ProfileProvider(lastName, firstName);
-      newUser.userId = result.uid;
-      newUser.createTask();
-      newUser.email = result.email;
+      //initialize new User object using input lastname, firstname and current author's uid and email.
+      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email, "intro", [true]);
+      newUser.createTask();                                         //create test task list
 
-
-
-      //console.log( "user is ", newUser);
-      var userRef = firebase.database().ref('user/'+ result.uid);
-      //console.log('user/'+ result.uid);
-      //console.log(userRef, "is old userRef")
-      userRef.set({                                                 //write user object to database
-        lastName : lastName,                                      // as an user node.
-        firsName : firstName,
-        userId : result.uid,
-        email : result.email,
-      });
+      this.singleStringUpdate('lastName', lastName);    //update user's last name to the server.
+      this.singleStringUpdate('firstName', firstName);
       //TODO modularize following code
-      userRef = firebase.database().ref('user/'+ result.uid + '/' + 'owenedTask');
-      //console.log(userRef, "is new userRef")
-      for( let ownedTask of newUser.oTask)
-      {
-
-        var ownedTaskRef = userRef.push().key;
-        //console.log("owntask is ", ownedTask);
-        //console.log('user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef);
-        //console.log(ownedTaskRef);
-        var updates = {};
-        updates['user/'+ result.uid + '/'+'owenedTask' +'/'+ ownedTaskRef] = ownedTask;
-        firebase.database().ref().update(updates);
-      }
-      //https://firebase.google.com/docs/database/web/read-and-write
-
-
-
-
-
-
-
-
+      var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask');
+      for( let ownedTask of newUser.oTask) {
+        var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
+        var updates = {};                         // declare update var to hold update data.
+        updates['user/' + this.result.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
+        firebase.database().ref().update(updates);                                      // update to specified path
+      }                                                                                  // in database.
     }
+  }
+
+  /*
+  / This function is to add updateMessage to the specified sub path of the user node
+  / that represents current user.
+   */
+  singleStringUpdate = function(subPath : string, updateMessage : string)
+  {
+    var updateMsg = {}
+    updateMsg['user/' + this.result.uid + '/' + subPath] = updateMessage;
+    firebase.database().ref().update(updateMsg);
+
   }
 
 
 }
+

@@ -22,6 +22,7 @@ import { TaskObjectProvider } from '../providers/task-object/task-object'; //pro
 import {DashboardPage} from "../pages/dashboard/dashboard";
 import {TaskViewPage} from "../pages/task-view/task-view";
 
+import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {TaskViewPage} from "../pages/task-view/task-view";
     EditProfilePage,
     DashboardPage,
     ProfilePage,
+    TaskEditPage,
     TaskViewPage
   ],
   imports: [
@@ -56,6 +58,7 @@ import {TaskViewPage} from "../pages/task-view/task-view";
     EditProfilePage,
     DashboardPage,
     ProfilePage,
+    TaskEditPage,
     TaskViewPage
   ],
   providers: [

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {TaskObjectProvider} from '../../providers/task-object/task-object';
-import {TaskViewPage} from "../task-view/task-view";
-
+import { User } from '../../models/user';
+import {TaskViewPage} from '../task-view/task-view';
 
 /**
  * Generated class for the SuggestedPage page.
@@ -18,6 +18,8 @@ import {TaskViewPage} from "../task-view/task-view";
 })
 export class SuggestedPage {
   tasks = Array<TaskObjectProvider>();
+  skills: Array<boolean>;
+  helpers: Array<User>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     let taskA = new TaskObjectProvider("I Want To Be Lazy", 12, "11:00 am, " +

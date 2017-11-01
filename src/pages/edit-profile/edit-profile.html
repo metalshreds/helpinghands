@@ -16,9 +16,11 @@
 <ion-content padding>
   <ion-item>
     <ion-input type="text" placeholder = "First name" [(ngModel)] = "firstName"></ion-input>
+
   </ion-item>
   <ion-item>
     <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
+
   </ion-item>
   <ion-col>
     <button ion-button class="update-button" (click)="update(firstName, lastName)">update</button>
