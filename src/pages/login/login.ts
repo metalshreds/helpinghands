@@ -43,24 +43,19 @@ export class LoginPage {
       subTitle: '',
       buttons: ['OK']
     });
-    var pass: number;
-    this.pass = 1;
 
-    console.log("this is pass0", this.pass);
-      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
-        .then(function(){
-          _this.navCtrl.push(EditProfilePage);
-        })
-        .catch(function(error)
-        {
-
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert.setTitle(errorCode);
-            alert.setMessage(errorMessage);
-            alert.present();
-
-        });
+    const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(function(){
+        _this.navCtrl.push(EditProfilePage);
+      })
+      .catch(function(error)
+      {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert.setTitle(errorCode);
+          alert.setMessage(errorMessage);
+          alert.present();
+      });
 
   }
 
@@ -69,7 +64,7 @@ export class LoginPage {
   }
 
   goToHome() {
-    this.navCtrl.push(HomePage);
+    this.navCtrl.push(EditProfilePage);
   }
 
   /*
