@@ -1,5 +1,5 @@
 <!--
-  Generated template for the SuggestedPage page.
+  Generated template for the CompletedPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Suggested</ion-title>
   </ion-navbar>
 
@@ -15,4 +18,14 @@
 
 <ion-content padding>
 
+
+  <ion-list>
+    <button ion-item *ngFor="let task of tasks" (click)="taskClicked($event,task)">
+
+      <h1>{{task.name}}</h1>
+      <h2>{{task.timeStart}}</h2>
+      <h3>Expected to last {{task.timeDuration}} hours</h3>
+
+    </button>
+  </ion-list>
 </ion-content>

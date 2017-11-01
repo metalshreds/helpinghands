@@ -9,18 +9,20 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AngularFireModule} from "angularfire2";
-import { FIREBASE_CONFIG} from "./app.firebase.config";
-import { AngularFireAuthModule} from "angularfire2/auth";
-
-import {UserProfilePage} from '../pages/user-profile/user-profile';
-import {EditProfilePage} from "../pages/edit-profile/edit-profile";
-import {AngularFireDatabaseModule} from "angularfire2/database";
+import { AngularFireModule } from "angularfire2";
+import { FIREBASE_CONFIG } from "./app.firebase.config";
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { SearchPage } from '../pages/search/search';
+import { EditProfilePage } from "../pages/edit-profile/edit-profile";
+import { ProfilePage } from "../pages/profile/profile";
+import { AngularFireDatabaseModule } from "angularfire2/database";
 import { ProfileProvider } from '../providers/profile/profile';
+import { FirebaseProvider } from '../providers/firebase/firebase'; //provider
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
+import { DashboardPage } from "../pages/dashboard/dashboard";
+import { TaskViewPage } from "../pages/task-view/task-view";
 
-import {DashboardPage} from "../pages/dashboard/dashboard";
-
+import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
   declarations: [
@@ -29,10 +31,13 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
-    UserProfilePage,
+    DashboardPage,
+    SearchPage,
     EditProfilePage,
-    DashboardPage
-
+    DashboardPage,
+    ProfilePage,
+    TaskEditPage,
+    TaskViewPage
   ],
   imports: [
     BrowserModule,
@@ -48,15 +53,20 @@ import {DashboardPage} from "../pages/dashboard/dashboard";
     ListPage,
     LoginPage,
     SignupPage,
-    UserProfilePage,
+    DashboardPage,
+    SearchPage,
     EditProfilePage,
-    DashboardPage
+    DashboardPage,
+    ProfilePage,
+    TaskEditPage,
+    TaskViewPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProfileProvider,
+    FirebaseProvider,
     TaskObjectProvider,
   ]
 })
