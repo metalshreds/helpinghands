@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
-import {UserProfilePage} from '../user-profile/user-profile';
+import {ProfilePage} from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()
@@ -23,7 +23,7 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 })
 export class LoginPage {
 
-  user = {} as User;    //initialie an object as user.
+  user = {} as User;    //initialize an object as user.
 
   public loginForm: any;
 
@@ -43,29 +43,28 @@ export class LoginPage {
       subTitle: '',
       buttons: ['OK']
     });
-    var pass: number;
-    this.pass = 1;
 
-    console.log("this is pass0", this.pass);
-      const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
-        .then(function(){
-          _this.navCtrl.push(EditProfilePage);
-        })
-        .catch(function(error)
-        {
-
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert.setTitle(errorCode);
-            alert.setMessage(errorMessage);
-            alert.present();
-
-        });
+    const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(function(){
+        _this.navCtrl.push(EditProfilePage);
+      })
+      .catch(function(error)
+      {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert.setTitle(errorCode);
+          alert.setMessage(errorMessage);
+          alert.present();
+      });
 
   }
 
   goToSignup() {
-     this.navCtrl.push(SignupPage);
+    this.navCtrl.push(SignupPage);
+  }
+
+  goToHome() {
+    this.navCtrl.push(EditProfilePage);
   }
 
   /*

@@ -7,49 +7,33 @@
 <ion-header>
 
   <ion-navbar>
-
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Create</ion-title>
-
+    <ion-title>Edit Task<ion-icon name="brush"></ion-icon> </ion-title>
   </ion-navbar>
 
 
-</ion-header>
-
-
-<ion-content padding>
 
   <ion-list no-border>
 
-    <ion-list-header>
-      Part 1
-    </ion-list-header>
-
-
     <ion-item>
-
-      <ion-toggle checked="false"></ion-toggle>
-      <ion-label>
-        Task Name
-      </ion-label>
-      <ion-input type="text" value=""></ion-input>
+      <ion-input type="text" placeholder="Task Name" value=""></ion-input>
       <ion-icon name='body' item-start></ion-icon>
     </ion-item>
 
+    <button ion-button block>Add a Picture</button>
+
     <ion-item>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-label>
-        Task Description
-      </ion-label>
-      <ion-input type="text" value=""></ion-input>
-      <ion-icon name='rose' item-end color="secondary"></ion-icon>
+      <ion-textarea rows="5" type="text" placeholder="Task Description" value=""></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-icon name='flask' item-start></ion-icon>
-      <ion-label>Skills</ion-label>
+      <ion-label style="color: black">
+        Skills
+      </ion-label>
       <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
         <ion-option value="Java" selected="true">Java</ion-option>
         <ion-option value="Python">Python</ion-option>
@@ -66,17 +50,9 @@
 
     </ion-item>
 
-  </ion-list>
-
-  <ion-list>
-
-    <ion-list-header>
-      Part 2
-    </ion-list-header>
-
     <ion-item>
       <ion-icon name='school' item-start></ion-icon>
-      <ion-label>
+      <ion-label style="color: black">
         Recommended Major
       </ion-label>
       <ion-select [(ngModel)]="major" multiple="true" cancelText="Nah" okText="Okay!">
@@ -91,7 +67,9 @@
 
     <ion-item>
       <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-label>Date</ion-label>
+      <ion-label style="color: black">
+        Date
+      </ion-label>
       <ion-select [(ngModel)]="month">
         <ion-option value="01">January</ion-option>
         <ion-option value="02">February</ion-option>
@@ -127,38 +105,19 @@
       </ion-select>
     </ion-item>
 
-
     <ion-item>
       <ion-icon name='pin' item-start></ion-icon>
-      <ion-label>
+      <ion-label style="color: black">
         Location
       </ion-label>
       <ion-input type="text" value=""></ion-input>
     </ion-item>
 
-
-  </ion-list>
-
-
-  <ion-list>
-
-
-    <ion-item>
-      <ion-icon name='pulse' item-start></ion-icon>
-      <ion-label>Difficulty Level</ion-label>
-
-
-      <ion-range min="0" step="1" max = "10"snaps="true" [(ngModel)]="text">
-        <ion-label range-left class="small-text">Easy</ion-label>
-        <ion-label range-right>Hard</ion-label>
-      </ion-range>
-
-    </ion-item>
-
-
     <ion-item>
       <ion-icon name='call' item-start></ion-icon>
-      <ion-label>Contact by</ion-label>
+      <ion-label style="color: black">
+        Contact via
+      </ion-label>
       <ion-select [(ngModel)]="media">
         <ion-option>Email</ion-option>
         <ion-option>Phone</ion-option>
@@ -169,25 +128,25 @@
 
     <ion-item>
 
-      <ion-label>
-        Earn
+      <ion-label style="color: black">
+        Compensation
       </ion-label>
-      <ion-input type="text" value=""></ion-input>
       <ion-icon name='logo-yen' item-start></ion-icon>
-      <ion-input type="text" value=""></ion-input>
+      <ion-input type="number" placeholder="" value=""></ion-input>
       <ion-toggle checked="false"></ion-toggle>
-
-
     </ion-item>
 
 
 
   </ion-list>
 
+  <button ion-button style="background-color: red" block>Discard</button>
+  <button ion-button style="background-color: #2ec95c" block>Save</button>
 
 
+</ion-header>
 
-  <button ion-button block>Saved</button>
-  <button ion-button block>Cancel</button>
+
+<ion-content padding>
 
 </ion-content>
