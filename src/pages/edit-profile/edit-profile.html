@@ -4,26 +4,76 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
-
   <ion-navbar>
-    <ion-title>editProfile</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Edit Profile</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
   <ion-item>
-    <ion-input type="text" placeholder = "First name" value = {{testValue}} [(ngModel)] = "firstName"></ion-input>
-  </ion-item>
-  <ion-item>
+    <ion-input type="text" placeholder = "First name" [(ngModel)] = "firstName"></ion-input>
     <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
+    <ion-icon name="person" item-start></ion-icon>
+   </ion-item>
+
+  <ion-item>
+    <ion-input type="text" placeholder = "Email" [(ngModel)] = "email"></ion-input>
+    <ion-icon ios="ios-mail" md="md-mail" item-start></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="paper"  item-start></ion-icon>
+    <ion-textarea rows="3" type="text" placeholder="Introduction" value=""></ion-textarea>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>Suggest Me as a Helper </ion-label>
+    <ion-checkbox [(ngModel)]="helper" item-right></ion-checkbox>
+    <ion-icon name="hand" item-start></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name='flask' item-start></ion-icon>
+    <ion-label style="color: black">
+      Skills
+    </ion-label>
+    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Save">
+      <ion-option value="Java" selected="true">Java</ion-option>
+      <ion-option value="Python">Python</ion-option>
+      <ion-option value="SQL" selected="true">SQL</ion-option>
+      <ion-option value="R">R</ion-option>
+      <ion-option value="HTML">HTML</ion-option>
+      <ion-option value="CSS">CSS</ion-option>
+      <ion-option value="C++">C++</ion-option>
+      <ion-option value="C">C</ion-option>
+      <ion-option value="Mathlab">Mathlab</ion-option>
+      <ion-option value="Firebase">Firebase</ion-option>
+    </ion-select>
 
   </ion-item>
+
+  <ion-item>
+    <ion-icon name='school' item-start></ion-icon>
+    <ion-label style="color: black">Major</ion-label>
+    <ion-select [(ngModel)]="major" multiple="true" cancelText="Cancel" okText="Save">
+      <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
+      <ion-option value="Math">Math</ion-option>
+      <ion-option value="Business" selected="true">Business</ion-option>
+      <ion-option value="Art">Art</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Update Button -->
   <ion-col>
-    <button ion-button class="update-button" (click)="update(firstName, lastName)">update</button>
+    <button ion-button class="update-button" (click)="update(firstName, lastName)" block >Save</button>
+
   </ion-col>
 </ion-content>
 
