@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Completed</ion-title>
   </ion-navbar>
 
@@ -17,11 +20,11 @@
 
 
   <ion-list>
-    <button ion-item *ngFor="let task of tasks" >
+    <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
 
       <h1>{{task.name}}</h1>
       <h2>{{task.timeStart}}</h2>
-      <h3>{{task.introduction}}</h3>
+      <h3>Expected to last {{task.timeDuration}} hours</h3>
     </button>
   </ion-list>
 </ion-content>
