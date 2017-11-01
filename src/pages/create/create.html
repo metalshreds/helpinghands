@@ -7,11 +7,176 @@
 <ion-header>
 
   <ion-navbar>
+
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Create</ion-title>
+
   </ion-navbar>
+
+
+
+  <ion-list no-border>
+
+    <ion-list-header>
+      Part 1
+    </ion-list-header>
+
+
+    <ion-item>
+      <ion-toggle checked="false"></ion-toggle>
+      <ion-label>
+        Task Name
+      </ion-label>
+      <ion-input type="text" value=""></ion-input>
+      <ion-icon name='body' item-start></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='leaf' item-start></ion-icon>
+      <ion-label>
+      Task Description
+      </ion-label>
+      <ion-input type="text" value=""></ion-input>
+      <ion-icon name='rose' item-end color="secondary"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-label>Skills</ion-label>
+      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Java" selected="true">Java</ion-option>
+        <ion-option value="Python">Python</ion-option>
+        <ion-option value="SQL" selected="true">SQL</ion-option>
+        <ion-option value="R">R</ion-option>
+        <ion-option value="HTML">HTML</ion-option>
+        <ion-option value="CSS">CSS</ion-option>
+        <ion-option value="C++">C++</ion-option>
+        <ion-option value="C">C</ion-option>
+        <ion-option value="Mathlab">Mathlab</ion-option>
+        <ion-option value="Firebase">Firebase</ion-option>
+      </ion-select>
+
+
+    </ion-item>
+  </ion-list>
+  <ion-list>
+
+    <ion-list-header>
+      Part 2
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name='school' item-start></ion-icon>
+      <ion-label>
+        Recommended Major
+      </ion-label>
+      <ion-select [(ngModel)]="major" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
+        <ion-option value="Math">Math</ion-option>
+        <ion-option value="Business" selected="true">Business</ion-option>
+        <ion-option value="Art">Art</ion-option>
+
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name='timer' item-start>   </ion-icon>
+      <ion-label>Date</ion-label>
+      <ion-select [(ngModel)]="month">
+        <ion-option value="01">January</ion-option>
+        <ion-option value="02">February</ion-option>
+        <ion-option value="03">March</ion-option>
+        <ion-option value="04">April</ion-option>
+        <ion-option value="05">May</ion-option>
+        <ion-option value="06">June</ion-option>
+        <ion-option value="07">July</ion-option>
+        <ion-option value="08">August</ion-option>
+        <ion-option value="09">September</ion-option>
+        <ion-option value="10">October</ion-option>
+        <ion-option value="11">November</ion-option>
+        <ion-option value="12" checked="true">December</ion-option>
+      </ion-select>
+      <ion-select [(ngModel)]="day">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+        <ion-option>3</ion-option>
+        <ion-option>4</ion-option>
+        <ion-option>5</ion-option>
+        <ion-option checked="true">6</ion-option>
+        <ion-option>7</ion-option>
+        <ion-option>8</ion-option>
+        <ion-option>9</ion-option>
+        <ion-option>10</ion-option>
+        <ion-option>11</ion-option>
+      </ion-select>
+      <ion-select [(ngModel)]="period">
+        <ion-option>Before 12:00PM</ion-option>
+        <ion-option>Before 6:00PM</ion-option>
+        <ion-option>After 6:00pm</ion-option>
+
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name='pin' item-start></ion-icon>
+      <ion-label>
+        Location
+      </ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+
+
+  </ion-list>
+
+
+  <ion-list>
+
+
+    <ion-item>
+      <ion-icon name='pulse' item-start></ion-icon>
+      <ion-label>Difficulty Level</ion-label>
+
+
+      <ion-range min="0" step="1" max = "10"snaps="true" [(ngModel)]="text">
+        <ion-label range-left class="small-text">Easy</ion-label>
+        <ion-label range-right>Hard</ion-label>
+      </ion-range>
+
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name='call' item-start></ion-icon>
+      <ion-label>Contact by</ion-label>
+      <ion-select [(ngModel)]="media">
+        <ion-option>Email</ion-option>
+        <ion-option>Phone</ion-option>
+        <ion-option>Face to Face</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+
+      <ion-label>
+        Earn
+      </ion-label>
+      <ion-input type="text" value=""></ion-input>
+      <ion-icon name='logo-yen' item-start></ion-icon>
+      <ion-input type="text" value=""></ion-input>
+      <ion-toggle checked="false"></ion-toggle>
+    </ion-item>
+
+
+
+  </ion-list>
+
+  <button ion-button block>Saved</button>
+
 
 </ion-header>
 
