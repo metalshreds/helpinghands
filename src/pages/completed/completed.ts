@@ -21,13 +21,16 @@ export class CompletedPage {
 
   tasks: Array<TaskObjectProvider>;
   skills: Array<boolean>;
-  helpers: Array<User>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tasks =[];
     this.skills = [];
-    this.helpers = [];
-    let task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", this.skills, true, 'user1');
+    let task = new TaskObjectProvider( "Dumb As Dirt", 6.5,
+      "1:00 pm, April 20th", "I am trying to do an experiment that involves " +
+      "using dirts with different pH levels. On my first go, I couldn't get" +
+      " the right pH levels, so I am looking for someone who could get dirt" +
+      " with the right pH level.", "All you need to know is how to get the" +
+      " right pH level in dirt.", this.skills, true, 'Franklin');
     this.tasks.push(task);
 
   }
