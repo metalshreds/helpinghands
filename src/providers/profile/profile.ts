@@ -30,11 +30,15 @@ export class ProfileProvider {
     firstName : string,
     uid : string,
     email : string,
+    introduction : string,
+    skills : boolean[]
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.userId = uid;
     this.email = email;
+    this.introduction = introduction;
+    this.skills = skills;
   }
 
   /*

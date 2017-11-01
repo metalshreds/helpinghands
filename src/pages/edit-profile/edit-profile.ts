@@ -42,8 +42,8 @@ export class EditProfilePage {
     if(this.result)
     {
       //initialize new User object using input lastname, firstname and current author's uid and email.
-      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email);
-      newUser.createTask();                             //create test task list
+      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email, "intro", [true]);
+      newUser.createTask();                                         //create test task list
 
       this.singleStringUpdate('lastName', lastName);    //update user's last name to the server.
       this.singleStringUpdate('firstName', firstName);

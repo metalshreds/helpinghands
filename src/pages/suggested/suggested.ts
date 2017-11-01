@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {TaskObjectProvider} from '../../providers/task-object/task-object';
+import { User } from '../../models/user';
 
 
 /**
@@ -17,12 +18,18 @@ import {TaskObjectProvider} from '../../providers/task-object/task-object';
 })
 export class SuggestedPage {
   tasks = Array<TaskObjectProvider>();
+  skills: Array<boolean>;
+  helpers: Array<User>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    let taskA = new TaskObjectProvider("test1", 10, "today", 'intro', 'req', [false, false], false, "user");
-    let taskB = new TaskObjectProvider("test2", 10, "today", 'intro', 'req', [false, false], false, "user");
+    this.tasks =[];
+    this.skills = [];
+    this.helpers = [];
+    let taskA = new TaskObjectProvider( "taskname1", 10, "startdate", "introduction", "requirment", this.skills, false, 'user1');
+    let taskB = new TaskObjectProvider( "taskname2", 10, "startdate", "introduction", "requirment", this.skills, false, 'user1');
+    let taskC = new TaskObjectProvider( "taskname3", 10, "startdate", "introduction", "requirment", this.skills, false, 'user1');
     this.tasks = [];
-    this.tasks.push(taskA, taskB);
+    this.tasks.push(taskA, taskB, taskC);
   }
 
   ionViewDidLoad() {

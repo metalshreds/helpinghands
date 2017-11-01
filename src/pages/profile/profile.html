@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,5 +8,40 @@
 
 
 <ion-content padding>
-  <h1>{{profile.firstName}} {{profile.lastName}}</h1>
+  <img class="edit-pencil" src="assets/icon/pencil.png" />
+  <div class = "profile-name">{{profile.firstName}} {{profile.lastName}}</div>
+
+  <img class="profile-pic" src="assets/icon/logo-login.png" />
+  <p class="right-of-pic">4.8/5.0 ⭐</p>
+  <p class="right-of-pic">{{profile.email}}</p>
+  <p class="intro">{{profile.introduction}}</p>
+
+  <p class="center-break">My Skills</p>
+  <ul id="skill-list">
+    <li> {{skills[0]}} </li>
+    <ul>
+      <li> {{skills[1]}} </li>
+      <li> {{skills[2]}} </li>
+    </ul>
+    <li> {{skills[3]}} </li>
+    <li> {{skills[4]}} </li>
+    <ul>
+      <li> {{skills[5]}} </li>
+    </ul>
+  </ul>
+  <p class="center-break">My Ratings</p>
+
+  <button class="rating-button">
+    <img class="rater-profile-pic" src="assets/icon/profile-icon.png" />
+    <p class="rating-task-name">Task Name</p>
+    <p class="rating-feedback">"Super good at their job!"</p>
+    <p class="rating-number">5.0/5.0</p>
+  </button>
+
+  <button class="rating-button">
+    <img class="rater-profile-pic" src="assets/icon/profile-icon.png" />
+    <p class="rating-task-name">Task Name</p>
+    <p class="rating-feedback">"Smelled bad."</p>
+    <p class="rating-number">1.0/5.0</p>
+  </button>
 </ion-content>
