@@ -12,12 +12,13 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
-import {ProfilePage} from '../profile/profile';
+import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
+
 //@IonicPage()
 @Component({
 
@@ -26,10 +27,7 @@ import { passwordValidator } from '../../validators/passwordValidator';
 })
 export class LoginPage {
 
- // user = {} as User;    //initialize an object as user.
-
   public loginForm: FormGroup;
-
 
   constructor(
     private authp: AngularFireAuth,
@@ -45,8 +43,15 @@ export class LoginPage {
     });
   }
 
+
+
+  /*
+  / This function takes user input and create an account
+  / using that inputs in firebase. It will navigate user
+  / to profile page on success, or display an error message
+  / on failure.
+   */
   login = async function() {
-    this.loginAttempt = true;
     var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
@@ -60,7 +65,7 @@ export class LoginPage {
     this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
       .then(function(){
         this.loginForm.reset();
-        _this.navCtrl.push(EditProfilePage);
+        _this.navCtrl.push(ProfilePage);
       })
       .catch(function(error)
       {
@@ -73,12 +78,19 @@ export class LoginPage {
 
   }
 
+  /*
+  / This function navigate user to the sign up page
+   */
   goToSignup() {
     this.navCtrl.push(SignupPage);
   }
 
+  /*
+  / This function navigate user to the edit profile page
+  / solely for testing.
+   */
   goToHome() {
-    this.navCtrl.push(EditProfilePage);
+    this.navCtrl.push(HomePage);
   }
 
   /*

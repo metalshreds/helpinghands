@@ -17,21 +17,35 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-input type="text" placeholder = "First name" [(ngModel)] = "firstName"></ion-input>
+    <ion-input type="text" placeholder = "First Name" [(ngModel)] = "firstName"></ion-input>
     <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
     <ion-icon name="person" item-start></ion-icon>
-   </ion-item>
+  </ion-item>
 
   <ion-item>
     <ion-input type="text" placeholder = "Email" [(ngModel)] = "email"></ion-input>
     <ion-icon ios="ios-mail" md="md-mail" item-start></ion-icon>
   </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder = "Phone" [(ngModel)] = "phone"></ion-input>
+    <ion-icon name="call" item-start></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="number" placeholder = "Zip Code " [(ngModel)] = "zipcode"></ion-input>
+    <ion-icon name="pin" item-start></ion-icon>
+    <button ion-button class="gps" item-right>
+      <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+    </button>
+  </ion-item>
+
 
   <ion-item>
     <ion-icon name="paper"  item-start></ion-icon>
     <ion-textarea rows="3" type="text" placeholder="Introduction" value=""></ion-textarea>
   </ion-item>
 
+  <!-- Helper Fields -->
 
   <ion-item>
     <ion-label>Suggest Me as a Helper </ion-label>
@@ -56,7 +70,6 @@
       <ion-option value="Mathlab">Mathlab</ion-option>
       <ion-option value="Firebase">Firebase</ion-option>
     </ion-select>
-
   </ion-item>
 
   <ion-item>
@@ -70,10 +83,17 @@
     </ion-select>
   </ion-item>
 
+
+  <ion-item>
+    <ion-input type="number" placeholder = "Travel Radius(Mi)" [(ngModel)] = "travelRadius"></ion-input>
+    <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
+  </ion-item>
+
+
+
   <!-- Update Button -->
   <ion-col>
     <button ion-button class="update-button" (click)="update(firstName, lastName)" block >Save</button>
-
   </ion-col>
 </ion-content>
 

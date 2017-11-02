@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import { HelpingHands } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
@@ -26,7 +26,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
   declarations: [
-    MyApp,
+    HelpingHands,
     HomePage,
     LoginPage,
     SignupPage,
@@ -49,7 +49,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    HelpingHands,
     HomePage,
     LoginPage,
     SignupPage,
