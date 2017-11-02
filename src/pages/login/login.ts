@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home'
 import { User } from '../../models/user';
-import {ProfilePage} from '../profile/profile';
+import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
 //@IonicPage()
@@ -25,9 +25,9 @@ export class LoginPage {
 
   user = {} as User;    //initialize an object as user.
 
-  public loginForm: any;
+  public loginForm: any;  //need this later when implement input invalidation
 
-
+  //
   constructor(
     private authp: AngularFireAuth,
     public loadingCtrl: LoadingController,
@@ -36,6 +36,13 @@ export class LoginPage {
     public navCtrl: NavController
   ) { }
 
+
+  /*
+  / This function takes user input and create an account
+  / using that inputs in firebase. It will navigate user
+  / to profile page on success, or display an error message
+  / on failure.
+   */
   login = async function(user: User) {
     var _this = this;
     let alert = this.alertCtrl.create({
@@ -46,7 +53,7 @@ export class LoginPage {
 
     const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
       .then(function(){
-        _this.navCtrl.push(EditProfilePage);
+        _this.navCtrl.push(ProfilePage);
       })
       .catch(function(error)
       {
@@ -59,10 +66,17 @@ export class LoginPage {
 
   }
 
+  /*
+  / This function navigate user to the sign up page
+   */
   goToSignup() {
     this.navCtrl.push(SignupPage);
   }
 
+  /*
+  / This function navigate user to the edit profile page
+  / solely for testing.
+   */
   goToHome() {
     this.navCtrl.push(EditProfilePage);
   }
