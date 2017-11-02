@@ -20,6 +20,7 @@ import firebase from 'firebase';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  //used as a container for inputs
   user = {} as User;
 
   constructor(
@@ -30,10 +31,13 @@ export class SignupPage {
     public alertCtrl: AlertController,) {}
 
 
-
+  /*
+  / This function takes user inputs and pass it to firebase server
+  / use firebase API. Which will create a new user in firebase.
+   */
   signUp = function(user : User, passwordRe) {
     console.log(user);
-
+    //validation will be implemented in iteration 2.
     if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
     {
         const alert = this.alertCtrl.create({
@@ -73,7 +77,7 @@ export class SignupPage {
        var _this = this;
        //call create method which is provided by firebase
        this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
-          .then(result=>{
+          .then(result=>{                 //on success, log returned value to the path user/userid
             firebase.database().ref('/user').child(result.uid)
               .set({email : user.email,
                     userId : result.uid,
@@ -81,12 +85,12 @@ export class SignupPage {
                     firstName : 'First name'});
             _this.navCtrl.push(EditProfilePage);
           })
-          .catch(function (error)
+          .catch(function (error)        //on failure, display the error massage.
           {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+            var errorCode = error.code;
+            var errorMessage = error.message;
 
-           //alert (errorMessage);
+            //alert (errorMessage);
             alert.setTitle(errorCode);
             alert.setMessage(errorMessage);
 
@@ -96,7 +100,9 @@ export class SignupPage {
   }
 
 
-
+  /*
+  / This function takes user back to login page
+   */
   backToLogin(){
     this.navCtrl.push(LoginPage);
   }

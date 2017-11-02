@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import { HelpingHands } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -26,7 +26,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
   declarations: [
-    MyApp,
+    HelpingHands,
     HomePage,
     ListPage,
     LoginPage,
@@ -41,14 +41,14 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(HelpingHands),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    HelpingHands,
     HomePage,
     LoginPage,
     SignupPage,
