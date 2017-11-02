@@ -19,42 +19,34 @@
       </ion-col>
     </ion-row>
 
-    <form [formGroup] = "loginForm" (submit)="login()" novalidate>
+    <form [formGroup] = "loginForm"  novalidate>
       <ion-row>
         <ion-col>
           <ion-list inset class="no-border">
 
             <ion-item>
-              <ion-label stacked>Email</ion-label>
-              <ion-input formControlName = "email" type = "text" Placeholder = "login email address"></ion-input>
+              <ion-label floating>Email</ion-label>
+              <ion-input formControlName = "email" type = "text">
+                </ion-input>
             </ion-item>
-            <ion-item class="error-message"
-                      *ngIf = "!loginForm.controls.email.vaild && loginForm.controls.email.dirty && loginAttempt">
-              <p>
-                not valid.
-              </p>
-            </ion-item>
-
 
             <ion-item>
-              <ion-label stacked>Password</ion-label>
-              <ion-input formControlName = "password" type = "text" Placeholder = "password"></ion-input>
+              <ion-label floating>Password</ion-label>
+              <ion-input formControlName = "password" type = "password"></ion-input>
             </ion-item>
-
-
           </ion-list>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <button ion-button block type = "submit" class = "login-button"  [disabled]="!loginForm.valid">Login</button>
+          <button ion-button class = "login-button"  (click)="login()" [disabled]="!loginForm.valid">Login</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
 
           <button ion-button class="sign-up-button" (click)="goToSignup()">sign up</button>
-          <button ion-button class="reset-pw-button" (click)="goToResetPassword(user)">Reset password</button>
+          <button ion-button class="reset-pw-button" (click)="goToResetPassword(user)" [disabled]="!loginForm.controls.email.valid">Reset password</button>
           <button ion-button class="home-page-" (click)="goToHome()">Home</button>
         </ion-col>
       </ion-row>

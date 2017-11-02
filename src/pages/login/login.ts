@@ -41,7 +41,7 @@ export class LoginPage {
   ) {
     this.loginForm = formBuilder.group({
       email : ['', Validators.compose([emailValidator.isValid])],
-      password : ['']
+      password : ['',Validators.required]
     });
   }
 
@@ -86,8 +86,8 @@ export class LoginPage {
   /email to user's register email using firebase's built-in
   /function.  **this piece of code is from firebase document.
    */
-  goToResetPassword(user : User) {
-    this.authp.auth.sendPasswordResetEmail(user.email).then(function() {
+  goToResetPassword() {
+    this.authp.auth.sendPasswordResetEmail(this.loginForm.value.email).then(function() {
       // Password Reset Email Sent!
       // [START_EXCLUDE]
       alert('Password Reset Email Sent!');
