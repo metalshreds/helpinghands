@@ -15,7 +15,9 @@ import { User } from '../../models/user';
 import {ProfilePage} from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
-import { FormBuilder, FormGroup, Validators} from '@angular/forms'  //for validation
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
+import { emailValidator} from '../../validators/emailValidator';
+import { passwordValidator } from '../../validators/passwordValidator';
 //@IonicPage()
 @Component({
 
@@ -24,9 +26,9 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms'  //for valida
 })
 export class LoginPage {
 
-  user = {} as User;    //initialize an object as user.
+ // user = {} as User;    //initialize an object as user.
 
-  public loginForm: any;
+  public loginForm: FormGroup;
 
 
   constructor(
@@ -34,19 +36,30 @@ export class LoginPage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
-    public navCtrl: NavController
-  ) { }
+    public navCtrl: NavController,
+    public formBuilder : FormBuilder
+  ) {
+    this.loginForm = formBuilder.group({
+      email : ['', Validators.compose([emailValidator.isValid])],
+      password : ['']
+    });
+  }
 
-  login = async function(user: User) {
+  login = async function() {
+    this.loginAttempt = true;
     var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
-
-    const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+    if(!this.loginForm.valid)
+    {
+      console.log("invalid input here");
+    }
+    this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
       .then(function(){
+        this.loginForm.reset();
         _this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)

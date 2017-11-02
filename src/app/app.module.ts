@@ -22,6 +22,7 @@ import { DashboardPage } from "../pages/dashboard/dashboard";
 import { TaskViewPage } from "../pages/task-view/task-view";
 import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
+//import { emailValidator} from "../validators/emailValidator";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     DashboardPage,
     ProfilePage,
     TaskEditPage,
-    TaskViewPage
+    TaskViewPage,
+
   ],
   imports: [
     BrowserModule,
