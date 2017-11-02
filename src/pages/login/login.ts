@@ -15,6 +15,7 @@ import { User } from '../../models/user';
 import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
+import {DashboardPage} from "../dashboard/dashboard";
 //@IonicPage()
 @Component({
 
@@ -78,7 +79,7 @@ export class LoginPage {
   / solely for testing.
    */
   goToHome() {
-    this.navCtrl.push(EditProfilePage);
+    this.navCtrl.push(HomePage);
   }
 
   /*
