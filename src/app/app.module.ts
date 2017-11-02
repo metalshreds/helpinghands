@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,14 +20,13 @@ import { FirebaseProvider } from '../providers/firebase/firebase'; //provider
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 import { DashboardPage } from "../pages/dashboard/dashboard";
 import { TaskViewPage } from "../pages/task-view/task-view";
-
+import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
     SignupPage,
     DashboardPage,
@@ -41,6 +39,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
@@ -50,7 +49,6 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
     SignupPage,
     DashboardPage,

@@ -4,8 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import {SignupPage} from "../pages/signup/signup";
+import { SignupPage } from "../pages/signup/signup";
 import { ProfilePage } from "../pages/profile/profile";
 import firebase from 'firebase';
 import { DashboardPage} from "../pages/dashboard/dashboard";
@@ -33,11 +32,10 @@ export class MyApp {
       storageBucket: "helpinghands506.appspot.com",
       messagingSenderId: "652958427997"
     })
-
+    this.splashScreen.hide();
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
       { title: 'Login', component: LoginPage },
       { title: 'Sign up', component: SignupPage },
       { title: 'Dashboard', component: DashboardPage },

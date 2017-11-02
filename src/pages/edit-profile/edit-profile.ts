@@ -6,6 +6,7 @@ import { TaskObjectProvider } from '../../providers/task-object/task-object'; //
 import {AngularFireAuth} from "angularfire2/auth";
 import { AngularFireDatabase} from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
+import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
  /**
  * Generated class for the EditProfilePage page.
@@ -29,6 +30,7 @@ export class EditProfilePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
+    public firebaseModule : FirebaseProvider
   ) { }
   result = this.AFcurUser.auth.currentUser;   //get current logged in user
    //TODO figure out a way to replace placehold value to the database value after the profile been created.
@@ -45,9 +47,9 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email, "intro", [true]);
       newUser.createTask();                                         //create test task list
 
-      this.singleStringUpdate('lastName', lastName);    //update user's last name to the server.
+      this.firebaseModule.singleStringUpdate('lastName', lastName, this.result.uid);    //update user's last name to the server.
       this.singleStringUpdate('firstName', firstName);
-      //TODO modularize following code
+      //TODO: modularize following code
       var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
       for( let ownedTask of newUser.oTask) {
         var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
