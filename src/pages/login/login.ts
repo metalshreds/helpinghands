@@ -15,7 +15,10 @@ import { User } from '../../models/user';
 import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
-import {DashboardPage} from "../dashboard/dashboard";
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
+import { emailValidator} from '../../validators/emailValidator';
+import { passwordValidator } from '../../validators/passwordValidator';
+
 //@IonicPage()
 @Component({
 
@@ -24,18 +27,22 @@ import {DashboardPage} from "../dashboard/dashboard";
 })
 export class LoginPage {
 
-  user = {} as User;    //initialize an object as user.
+  public loginForm: FormGroup;
 
-  public loginForm: any;  //need this later when implement input invalidation
-
-  //
   constructor(
     private authp: AngularFireAuth,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
-    public navCtrl: NavController
-  ) { }
+    public navCtrl: NavController,
+    public formBuilder : FormBuilder
+  ) {
+    this.loginForm = formBuilder.group({
+      email : ['', Validators.compose([emailValidator.isValid])],
+      password : ['',Validators.required]
+    });
+  }
+
 
 
   /*
@@ -44,16 +51,20 @@ export class LoginPage {
   / to profile page on success, or display an error message
   / on failure.
    */
-  login = async function(user: User) {
+  login = async function() {
     var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
-
-    const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
+    if(!this.loginForm.valid)
+    {
+      console.log("invalid input here");
+    }
+    this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
       .then(function(){
+        this.loginForm.reset();
         _this.navCtrl.push(ProfilePage);
       })
       .catch(function(error)
@@ -87,8 +98,8 @@ export class LoginPage {
   /email to user's register email using firebase's built-in
   /function.  **this piece of code is from firebase document.
    */
-  goToResetPassword(user : User) {
-    this.authp.auth.sendPasswordResetEmail(user.email).then(function() {
+  goToResetPassword() {
+    this.authp.auth.sendPasswordResetEmail(this.loginForm.value.email).then(function() {
       // Password Reset Email Sent!
       // [START_EXCLUDE]
       alert('Password Reset Email Sent!');
