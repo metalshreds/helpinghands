@@ -50,7 +50,6 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
   entryComponents: [
     HelpingHands,
     HomePage,
-    ListPage,
     LoginPage,
     SignupPage,
     DashboardPage,
