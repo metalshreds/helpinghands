@@ -14,28 +14,31 @@
         <img class="logo" src="assets/icon/logo-login.png" />
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
 
-          <ion-item>
-            <ion-input type="text" placeholder = "Email" [(ngModel)] = "user.email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input type="password" placeholder = "Password" [(ngModel)] = "user.password"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input type="password" placeholder = "Comfirm Password" [(ngModel)] = "passwordRe"></ion-input>
-          </ion-item>
+    <form [formGroup] = "signUpForm" novalidate>
+      <ion-row>
+        <ion-col>
 
-      </ion-col>
-    </ion-row>
+            <ion-item>
+              <ion-input type="text" placeholder = "Please enter a valid wisc.edu email"  formControlName = "email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="password" placeholder = "Please enter password" formControlName = "password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="password" placeholder = "Comfirm Password" formControlName = "passwordRe"></ion-input>
+            </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <button ion-button class="sign-up-button" (click)="signUp(user, passwordRe)">sign up</button>
-        <button ion-button class="back-log-button" (click)="backToLogin()">Back to Login</button>
-      </ion-col>
-    </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button class="sign-up-button" (click)="signUp(user, passwordRe)">sign up</button>
+          <button ion-button class="back-log-button" (click)="backToLogin()">Back to Login</button>
+        </ion-col>
+      </ion-row>
+    </form>
 
   </div>
 </ion-content>

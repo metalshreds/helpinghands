@@ -6,7 +6,9 @@ import { User } from "../../models/user";
 import { AngularFireAuth} from "angularfire2/auth";
 import {HomePage} from "../home/home";
 import firebase from 'firebase';
-
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
+import { emailValidator} from '../../validators/emailValidator';
+import { passwordValidator } from '../../validators/passwordValidator';
 /**
  * Generated class for the SignupPage page.
  *
@@ -20,49 +22,63 @@ import firebase from 'firebase';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
-  //used as a container for inputs
-  user = {} as User;
+
+  public signUpForm : FormGroup;
 
   constructor(
     private authp: AngularFireAuth,
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,) {}
+    public alertCtrl: AlertController,
+    public formBuilder : FormBuilder)
+    {
+      this.signUpForm = formBuilder.group({
+        email : ['', Validators.compose([emailValidator.isValid])],
+        password : ['',Validators.compose([Validators.required, passwordValidator.isValid])],
+        passwordRe :  ['',Validators.compose([Validators.required, passwordValidator.isValid])],
+      })
+    }
 
 
   /*
   / This function takes user inputs and pass it to firebase server
   / use firebase API. Which will create a new user in firebase.
    */
-  signUp = function(user : User, passwordRe) {
-    console.log(user);
-    //validation will be implemented in iteration 2.
-    if (user.password.localeCompare(passwordRe) != 0)  //password doesn't match the reenter password.
+  signUp = function() {
+
+
+    if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
+
         const alert = this.alertCtrl.create({
           title: 'Error',
-          subTitle: 'Two passwords are not the same',
+          subTitle: 'Please use a valid wisc.edu email',
           buttons: ['OK']
         });
         alert.present();
 
     }
-    /*
-    else if()  //not a valid wisc email
+    //password doesn't match the reenter password.
+    else if (this.signUpForm.value.password.localeCompare(this.signUpForm.value.passwordRe) != 0)
     {
-      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#special-word-boundary
-    }*/
-    //TODO catch the error that the email acc is already used.
-    else if (user.password.length < 6) //passwaord is at least 6 digits.
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Two passwords are not the same',
+        buttons: ['OK']
+      });
+      alert.present();
+
+    }
+    else if (!this.signUpForm.controls.password.valid) //passwaord should be in range 6-20
     {
 
-        const alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: 'Password should have at least 6 letters',
-          buttons: ['OK']
-        });
-        alert.present();
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Password should have at least 6 letters and at most 20 letters',
+        buttons: ['OK']
+      });
+      alert.present();
 
     }
     else
@@ -74,16 +90,16 @@ export class SignupPage {
           buttons: ['OK']
         });
        //save current frame
-       var _this = this;
+
        //call create method which is provided by firebase
-       this.authp.auth.createUserWithEmailAndPassword(user.email, user.password)
+       this.authp.auth.createUserWithEmailAndPassword(this.signUpForm.value.email, this.signUpForm.value.password)
           .then(result=>{                 //on success, log returned value to the path user/userid
             firebase.database().ref('/user').child(result.uid)
-              .set({email : user.email,
+              .set({email : this.signUpForm.value.email,
                     userId : result.uid,
                     lastName : 'Last name',
                     firstName : 'First name'});
-            _this.navCtrl.push(EditProfilePage);
+            this.navCtrl.push(EditProfilePage);
           })
           .catch(function (error)        //on failure, display the error massage.
           {
