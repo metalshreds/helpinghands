@@ -44,7 +44,6 @@ export class HelpingHands {
       { title: 'Task Edit', component: TaskEditPage },
       { title: 'Edit Profile', component: EditProfilePage },
 
-
     ];
 
   }
