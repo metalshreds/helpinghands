@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
-
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
-import {AngularFireAuth} from "angularfire2/auth";
-import { AngularFireDatabase} from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
+import { Observable } from 'rxjs/Observable';
  /**
  * Generated class for the EditProfilePage page.
  *
@@ -25,17 +25,26 @@ export class EditProfilePage {
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
-    //private AFdatabase: AngularFireDatabase,
+    private AFdatabase: AngularFireDatabase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    public firebaseModule : FirebaseProvider
-  ) { }
+    public firebaseModule : FirebaseProvider,
+    //public currUser : ProfileProvider
+  ) {
+    AFdatabase.list<ProfileProvider>('user').valueChanges().subscribe();
+    // AFdatabase.object<ProfileProvider>('user/' + this.result.uid).snapshotChanges().map(action=>{
+    //     const $key = action.payload.key;
+    //     const data = { $key, ...action.payload.val()}
+    //     return data;
+    // }).subscribe(item => console.log(item.data));
+ }
   result = this.AFcurUser.auth.currentUser;   //get current logged in user
    //TODO figure out a way to replace placehold value to the database value after the profile been created.
   testValue = "first name";                   //test value for input field.
 
+  user1 = {} as ProfileProvider;
   /*
   / This funtion will take all the user inputs and update it to corresponding node.
   */
@@ -49,7 +58,15 @@ export class EditProfilePage {
 
       this.firebaseModule.singleStringUpdate('lastName', lastName, this.result.uid);    //update user's last name to the server.
       this.singleStringUpdate('firstName', firstName);
-      this.firebaseModule.getUserByName("wow");
+      console.log("1", newUser);
+      
+      //TODO: find a way to display data in html page
+      var tmpUser;
+      this.getUserProfile(this.result.uid, function(userp){ tmpUser = userp});
+      //this.firebaseModule.getUserProfile(this.result.uid, function(userp){ console.log(userp)});
+      this.user1 = tmpUser;
+     
+      console.log("2", this.user1);
       //TODO: modularize following code
       var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
       for( let ownedTask of newUser.oTask) {
@@ -77,15 +94,19 @@ export class EditProfilePage {
    /  this function will find user node using userId and return value
    /  of the node
     */
-  getUserProfile = function(userId : string)
+  getUserProfile = function(userId : string, profile) : any
   {
+    var user;
     var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value').then(function(snapshot)         // read node value once use firebase API
+    userRef.once('value', function(snapshot)         // read node value once use firebase API
     {
-      var user = snapshot.val()                                               //return node value.
+      user = snapshot.val()                                               //return node value.
+      profile(user);
       return user;
     })
   }
+
+  
 
 
 }

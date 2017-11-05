@@ -4,8 +4,6 @@ export class emailValidator {
     static isValid(control : FormControl)
     {
         const re = /^([\w­]+(?:\.[\w­]+)*)@(wisc.edu){1}$/i.test(control.value);
-        console.log("re is ", re);
-        console.log("value is ", control.value);
         if(re)
             return null;
         else

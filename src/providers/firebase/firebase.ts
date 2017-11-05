@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ProfileProvider } from "../../providers/profile/profile";
 import  firebase  from 'firebase';
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import 'rxjs/add/operator/map';
 
 /*
@@ -12,6 +14,7 @@ import 'rxjs/add/operator/map';
 export class FirebaseProvider {
 
   constructor() {
+
   }
 
 
@@ -30,13 +33,16 @@ export class FirebaseProvider {
   /  this function will find user node using userId and return value
   /  of the node
   */
-  getUserProfile = function(userId : string) : any
+
+  getUserProfile = function(userId : string, profile)
   {
+    var user;
     var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value').then(function(snapshot)                       // read node value once use firebase API
+    userRef.once('value', function(snapshot)         // read node value once use firebase API
     {
-      var user = snapshot.val()                                         //return node value.
-      return user;
+      user = snapshot.val()                                               //return node value.
+      profile(user);
+      
     })
   }
 
@@ -50,4 +56,6 @@ export class FirebaseProvider {
       console.log(snapshot.key);
     });
   }
+
+
 }

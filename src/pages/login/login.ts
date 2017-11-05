@@ -51,20 +51,20 @@ export class LoginPage {
   / on failure.
    */
   login = async function() {
-    var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
+    console.log(this.loginForm.value.email);
     if(!this.loginForm.valid)
     {
       console.log("invalid input here");
     }
     this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
-      .then(function(){
+      .then(result=>{
         this.loginForm.reset();
-        _this.navCtrl.push(ProfilePage);
+        this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)
       {
