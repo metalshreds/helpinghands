@@ -4,7 +4,7 @@ This app allows users with a task to find helpers who have the skills to complet
 
 ## Dependencies 
 * Ionic 
-* Firebase Library
+* Firebase
 
 ## Installation 
 * [Cordova and Ionic](http://ionicframework.com/docs/v1/guide/installation.html)
