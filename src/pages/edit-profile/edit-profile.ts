@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
-import { User } from '../../models/user';
+
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import {AngularFireAuth} from "angularfire2/auth";
@@ -49,6 +49,7 @@ export class EditProfilePage {
 
       this.firebaseModule.singleStringUpdate('lastName', lastName, this.result.uid);    //update user's last name to the server.
       this.singleStringUpdate('firstName', firstName);
+      this.firebaseModule.getUserByName("wow");
       //TODO: modularize following code
       var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
       for( let ownedTask of newUser.oTask) {

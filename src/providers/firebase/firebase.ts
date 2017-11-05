@@ -14,6 +14,11 @@ export class FirebaseProvider {
   constructor() {
   }
 
+
+    /*
+  / This function is to add updateMessage to the specified sub path of the user node
+  / that represents current user.
+   */
   singleStringUpdate = function(subPath : string, updateMessage : string, userId : string) : any
   {
     var updateMsg = {}                                                        //declare and initialize updateMsg variable
@@ -33,5 +38,16 @@ export class FirebaseProvider {
       var user = snapshot.val()                                         //return node value.
       return user;
     })
+  }
+
+  /*
+  / search user using user's name
+  */
+  getUserByName = function(name : string) : any
+  {
+    var userRef = firebase.database().ref('user'); 
+    userRef.orderByChild("lastName").equalTo(name).on("child_added", function(snapshot) {
+      console.log(snapshot.key);
+    });
   }
 }

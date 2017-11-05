@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {TaskObjectProvider} from '../../providers/task-object/task-object';
-import { User } from '../../models/user';
 import {TaskViewPage} from '../task-view/task-view';
 
 /**
