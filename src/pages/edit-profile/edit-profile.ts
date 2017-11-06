@@ -34,17 +34,24 @@ export class EditProfilePage {
     //public currUser : ProfileProvider
   ) {
     AFdatabase.list<ProfileProvider>('user').valueChanges().subscribe();
-    // AFdatabase.object<ProfileProvider>('user/' + this.result.uid).snapshotChanges().map(action=>{
-    //     const $key = action.payload.key;
-    //     const data = { $key, ...action.payload.val()}
-    //     return data;
-    // }).subscribe(item => console.log(item.data));
+    // var tmpUser = this.getUserProfile(this.result.uid, function(userp){ tmpUser = userp});
+    // this.user1 = tmpUser;
+    // console.log("4", this.user1);
+    AFdatabase.object<ProfileProvider>('user/' + this.result.uid).snapshotChanges().map(action=>{
+        const $key = action.payload.key;
+         this.user1 = { $key, ...action.payload.val()}
+        return this.user1;
+     }).subscribe();
+    console.log(this.user1.lastName);
  }
   result = this.AFcurUser.auth.currentUser;   //get current logged in user
    //TODO figure out a way to replace placehold value to the database value after the profile been created.
   testValue = "first name";                   //test value for input field.
 
   user1 = {} as ProfileProvider;
+  
+  
+  
   /*
   / This funtion will take all the user inputs and update it to corresponding node.
   */
@@ -64,7 +71,7 @@ export class EditProfilePage {
       var tmpUser;
       this.getUserProfile(this.result.uid, function(userp){ tmpUser = userp});
       //this.firebaseModule.getUserProfile(this.result.uid, function(userp){ console.log(userp)});
-      this.user1 = tmpUser;
+      //this.user1 = tmpUser;
      
       console.log("2", this.user1);
       //TODO: modularize following code
