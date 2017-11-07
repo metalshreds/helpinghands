@@ -64,7 +64,7 @@ export class LoginPage {
     this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
       .then(result=>{
         this.loginForm.reset();
-        this.navCtrl.push(EditProfilePage);
+        this.navCtrl.push(ProfilePage);
       })
       .catch(function(error)
       {

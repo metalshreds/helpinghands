@@ -8,6 +8,7 @@ import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
+import {ElementRef, ViewChild} from '@angular/core';
  /**
  * Generated class for the EditProfilePage page.
  *
@@ -22,6 +23,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class EditProfilePage {
 
+   curUserToken = this.AFcurUser.auth.currentUser;
+   CURRENT_USER = {} as ProfileProvider;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -37,49 +40,48 @@ export class EditProfilePage {
     // var tmpUser = this.getUserProfile(this.result.uid, function(userp){ tmpUser = userp});
     // this.user1 = tmpUser;
     // console.log("4", this.user1);
-    AFdatabase.object<ProfileProvider>('user/' + this.result.uid).snapshotChanges().map(action=>{
-        const $key = action.payload.key;
-         this.user1 = { $key, ...action.payload.val()}
-        return this.user1;
-     }).subscribe();
-    console.log(this.user1.lastName);
- }
-  result = this.AFcurUser.auth.currentUser;   //get current logged in user
-   //TODO figure out a way to replace placehold value to the database value after the profile been created.
-  testValue = "first name";                   //test value for input field.
+    AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
+      const $key = action.payload.key;
+      this.CURRENT_USER = { $key, ...action.payload.val()}
+      //return this.CURRENT_USER;
 
-  user1 = {} as ProfileProvider;
-  
-  
-  
+    }).subscribe(item =>(console.log("key is ", this.CURRENT_USER)));
+ }
+
+   //
+   // writeUp = function(message : any)
+   // {
+   //   //document.getElementById("FN").textContent = message.firstName;
+   // }
+
   /*
   / This funtion will take all the user inputs and update it to corresponding node.
   */
   update = function(firstName, lastName)
   {
-    if(this.result)
+    if(this.curUserToken)
     {
       //initialize new User object using input lastname, firstname and current author's uid and email.
-      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email, "intro", [true]);
+      var newUser = new ProfileProvider(lastName, firstName, this.curUserToken.uid, this.curUserToken.email, "intro", [true]);
       newUser.createTask();                                         //create test task list
 
-      this.firebaseModule.singleStringUpdate('lastName', lastName, this.result.uid);    //update user's last name to the server.
+      this.firebaseModule.singleStringUpdate('lastName', lastName, this.curUserToken.uid);    //update user's last name to the server.
       this.singleStringUpdate('firstName', firstName);
       console.log("1", newUser);
-      
+
       //TODO: find a way to display data in html page
       var tmpUser;
-      this.getUserProfile(this.result.uid, function(userp){ tmpUser = userp});
+      this.getUserProfile(this.curUserToken.uid, function(userp){ tmpUser = userp});
       //this.firebaseModule.getUserProfile(this.result.uid, function(userp){ console.log(userp)});
       //this.user1 = tmpUser;
-     
+
       console.log("2", this.user1);
       //TODO: modularize following code
-      var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
+      var userRef = firebase.database().ref('user/'+ this.curUserToken.uid + '/' + 'owenedTask'); //get node reference.
       for( let ownedTask of newUser.oTask) {
         var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
         var updates = {};                         // declare update var to hold update data.
-        updates['user/' + this.result.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
+        updates['user/' + this.curUserToken.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
         firebase.database().ref().update(updates);                                      // update to specified path
       }                                                                                  // in database.
     }
@@ -92,7 +94,7 @@ export class EditProfilePage {
   singleStringUpdate = function(subPath : string, updateMessage : string)
   {
     var updateMsg = {}                                                        //declare and initialize updateMsg variable
-    updateMsg['user/' + this.result.uid + '/' + subPath] = updateMessage;     //set correct path using subPath and assign update value
+    updateMsg['user/' + this.curUserToken.uid + '/' + subPath] = updateMessage;     //set correct path using subPath and assign update value
     firebase.database().ref().update(updateMsg);                              // updating to firebase using firebase API
 
   }
@@ -113,7 +115,7 @@ export class EditProfilePage {
     })
   }
 
-  
+
 
 
 }

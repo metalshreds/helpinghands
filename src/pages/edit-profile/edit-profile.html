@@ -16,10 +16,10 @@
 
 
 <ion-content padding>
- 
-  <p *ngIf = "user1"> This is {{user1.lastName}}</p>
-  <ion-item *ngIf = "user1">
-    <ion-input type="text" placeholder = "First Name"  [(ngModel)] = "firstName"></ion-input>
+
+
+  <ion-item *ngIf = "CURRENT_USER">
+    <ion-input id = "FN"   type="text" placeholder = "First Name"  value="{{CURRENT_USER.firstName}}"  [(ngModel)] = "firstName"></ion-input>
     <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
     <ion-icon name="person" item-start></ion-icon>
   </ion-item>
