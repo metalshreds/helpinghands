@@ -12,11 +12,11 @@
 
 <ion-content padding>
   <img class="edit-pencil" src="assets/icon/pencil.png" />
-  <div class = "profile-name">{{profile.firstName}} {{profile.lastName}}</div>
+  <div class = "profile-name">{{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</div>
 
   <img class="profile-pic" src="assets/icon/logo-login.png" />
   <p class="right-of-pic">4.8/5.0 ⭐</p>
-  <p class="right-of-pic">{{profile.email}}</p>
+  <p class="right-of-pic">{{CURRENT_USER.email}}</p>
   <p class="intro">{{profile.introduction}}</p>
 
   <p class="center-break">My Skills</p>
