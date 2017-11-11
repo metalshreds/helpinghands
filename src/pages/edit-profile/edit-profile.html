@@ -14,142 +14,30 @@
   </ion-navbar>
 </ion-header>
 
+
+
 <ion-content padding>
-<<<<<<< HEAD
 
+  <form [formGroup] = "editProfileForm"  (ngSubmit)="update()">
 
-  <form [formGroup] = "editProfileForm" novalidate>
-    <ion-item>
-      <ion-input type="text" placeholder = "First Name"   fromControlName = "firstName"></ion-input>
-      <ion-input type="text" placeholder = "Last name" fromControlName = "lastName"></ion-input>
+      <ion-input type="text" placeholder = "First Name" formControlName = "firstName" ></ion-input>
+
+      <ion-input type="text" placeholder = "Last name" formControlName = "lastName"></ion-input>
       <ion-icon name="person" item-start></ion-icon>
-    </ion-item>
 
     <ion-item>
-      <ion-input type="text" placeholder = "Email" fromControlName = "email"></ion-input>
-      <ion-icon ios="ios-mail" md="md-mail" item-start></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-input type="text" placeholder = "Phone" fromControlName = "phone"></ion-input>
-      <ion-icon name="call" item-start></ion-icon>
+      <ion-input type="text" placeholder = "Please enter a valid wisc.edu email"  formControlName = "email"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-input type="number" placeholder = "Zip Code " fromControlName = "zipcode"></ion-input>
-      <ion-icon name="pin" item-start></ion-icon>
-      <button ion-button class="gps" item-right>
-        <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
-      </button>
-    </ion-item>
-
-
-    <ion-item>
-      <ion-icon name="paper"  item-start></ion-icon>
-      <ion-textarea rows="3" type="text" placeholder="Introduction"  fromControlName = "introduction"></ion-textarea>
-    </ion-item>
-
-    <!-- Helper Fields -->
-
-
-
-
-
-
-    <ion-item>
-      <ion-input type="number" placeholder = "Travel Radius(Mi)" fromControlName = "travelRadius"></ion-input>
-      <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
-    </ion-item>
 
 
 
     <!-- Update Button -->
     <ion-col>
-      <button ion-button class="update-button" (click)="update()" >Save</button>
+      <button ion-button class="submit" >Save</button>
     </ion-col>
   </form>
-=======
- 
-  <p *ngIf = "user1"> This is {{user1.lastName}}</p>
-  <ion-item *ngIf = "user1">
-    <ion-input type="text" placeholder = "First Name"  [(ngModel)] = "firstName"></ion-input>
-    <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
-    <ion-icon name="person" item-start></ion-icon>
-  </ion-item>
 
-  <ion-item>
-    <ion-input type="text" placeholder = "Email" [(ngModel)] = "email"></ion-input>
-    <ion-icon ios="ios-mail" md="md-mail" item-start></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-input type="text" placeholder = "Phone" [(ngModel)] = "phone"></ion-input>
-    <ion-icon name="call" item-start></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-input type="number" placeholder = "Zip Code " [(ngModel)] = "zipcode"></ion-input>
-    <ion-icon name="pin" item-start></ion-icon>
-    <button ion-button class="gps" item-right>
-      <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
-    </button>
-  </ion-item>
-
-
-  <ion-item>
-    <ion-icon name="paper"  item-start></ion-icon>
-    <ion-textarea rows="3" type="text" placeholder="Introduction" value=""></ion-textarea>
-  </ion-item>
-
-  <!-- Helper Fields -->
-
-  <ion-item>
-    <ion-label>Suggest Me as a Helper </ion-label>
-    <ion-checkbox [(ngModel)]="helper" item-right></ion-checkbox>
-    <ion-icon name="hand" item-start></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-icon name='flask' item-start></ion-icon>
-    <ion-label style="color: black">
-      Skills
-    </ion-label>
-    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Save">
-      <ion-option value="Java" selected="true">Java</ion-option>
-      <ion-option value="Python">Python</ion-option>
-      <ion-option value="SQL" selected="true">SQL</ion-option>
-      <ion-option value="R">R</ion-option>
-      <ion-option value="HTML">HTML</ion-option>
-      <ion-option value="CSS">CSS</ion-option>
-      <ion-option value="C++">C++</ion-option>
-      <ion-option value="C">C</ion-option>
-      <ion-option value="Mathlab">Mathlab</ion-option>
-      <ion-option value="Firebase">Firebase</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-icon name='school' item-start></ion-icon>
-    <ion-label style="color: black">Major</ion-label>
-    <ion-select [(ngModel)]="major" multiple="true" cancelText="Cancel" okText="Save">
-      <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
-      <ion-option value="Math">Math</ion-option>
-      <ion-option value="Business" selected="true">Business</ion-option>
-      <ion-option value="Art">Art</ion-option>
-    </ion-select>
-  </ion-item>
-
-
-  <ion-item>
-    <ion-input type="number" placeholder = "Travel Radius(Mi)" [(ngModel)] = "travelRadius"></ion-input>
-    <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
-  </ion-item>
-
-
-
-  <!-- Update Button -->
-  <ion-col>
-    <button ion-button class="update-button" (click)="update(firstName, lastName)" block >Save</button>
-  </ion-col>
->>>>>>> parent of 04c8816... try do subscribe in ogInit
 </ion-content>
 
 

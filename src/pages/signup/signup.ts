@@ -46,7 +46,7 @@ export class SignupPage {
    */
   signUp = function() {
 
-
+    console.log("asd" ,this.signUpForm.value);
     if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
 
