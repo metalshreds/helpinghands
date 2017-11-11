@@ -52,14 +52,6 @@ export class ProfileProvider {
     this.oTask.push(Task1);
   }
 
-//TODO method to retrieve user info
 
-//TODO method to edit/update user info
-
-//TODO create a new task (return new task object)
-
-//TODO update a new task (doesn't return)
-
-//TODO method to retrieve user info
 
 }
