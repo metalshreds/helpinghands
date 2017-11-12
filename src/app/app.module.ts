@@ -24,6 +24,8 @@ import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import { CameraProvider } from '../providers/camera';
 import { Camera } from '@ionic-native/camera';
+import { NativeStorage } from '@ionic-native/native-storage';
+
 //import { emailValidator} from "../validators/emailValidator";
 
 @NgModule({
@@ -71,6 +73,7 @@ import { Camera } from '@ionic-native/camera';
     FirebaseProvider,
     TaskObjectProvider,
     CameraProvider,
-    Camera,]
+    Camera,
+    NativeStorage]
 })
 export class AppModule {}

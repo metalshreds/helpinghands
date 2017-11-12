@@ -6,9 +6,9 @@
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+import { NativeStorage } from '@ionic-native/native-storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController, Platform } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home';
 import { ProfilePage } from '../profile/profile';
@@ -34,12 +34,14 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    public formBuilder : FormBuilder
+    public formBuilder : FormBuilder,
+    private plt : Platform
   ) {
     this.loginForm = formBuilder.group({
       email : ['', Validators.compose([emailValidator.isValid])],
       password : ['',Validators.required]
     });
+    this.plt.ready()
   }
 
 
@@ -66,6 +68,7 @@ export class LoginPage {
         this.loginForm.reset();
         //TODO sent user verification email, add verification checking at login page
         //https://firebase.google.com/docs/auth/web/manage-users
+
         this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)
