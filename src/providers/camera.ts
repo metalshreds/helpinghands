@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
 
 @Injectable()
+/*
+/ credit: https://github.com/yannbf/ionic3-components/blob/master/src/providers/util/camera.provider.ts
+ */
 export class CameraProvider {
 
   constructor(private camera: Camera) {

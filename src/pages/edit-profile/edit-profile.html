@@ -42,6 +42,23 @@
     </ion-item>
 
     <!-- Helper Fields -->
+    <ion-item>
+      <ion-label>Suggest Me as a Helper </ion-label>
+      <ion-checkbox [(ngModel)]="helper" [ngModelOptions]="{standalone: true}" item-right></ion-checkbox>
+      <ion-icon name="hand" item-start></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='school' item-start></ion-icon>
+      <ion-label style="color: black">Major</ion-label>
+      <ion-select [(ngModel)]="major" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
+        <ion-option value="Math">Math</ion-option>
+        <ion-option value="Business" selected="true">Business</ion-option>
+        <ion-option value="Art">Art</ion-option>
+      </ion-select>
+    </ion-item>
+
 
 
     <ion-item>
