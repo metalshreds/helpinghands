@@ -17,9 +17,13 @@
       <ion-icon name="person" item-start></ion-icon>
     </ion-item>
 
+    <ion-avatar (click)="changePicture()">
+      <img [src]="chosenPicture || placeholder" onerror="this.src='assets/img/avatar/girl-avatar.png'" />
+      <button ion-button color="danger">Change image</button>
+    </ion-avatar>
 
     <ion-item>
-      <ion-input type="text" placeholder = "Phone" formControlName = "phone"></ion-input>
+      <ion-input type="text" placeholder = "Phone" value = "{{CURRENT_USER.phone}}" formControlName = "phone"></ion-input>
       <ion-icon name="call" item-start></ion-icon>
     </ion-item>
 
@@ -34,7 +38,7 @@
 
     <ion-item>
       <ion-icon name="paper"  item-start></ion-icon>
-      <ion-textarea rows="3" type="text" placeholder="Introduction"  formControlName = "introduction"></ion-textarea>
+      <ion-textarea rows="3" type="text" placeholder="Introduction" value = "{{CURRENT_USER.introduction}}" formControlName = "introduction"></ion-textarea>
     </ion-item>
 
     <!-- Helper Fields -->
@@ -45,7 +49,7 @@
 
 
     <ion-item>
-      <ion-input type="number" placeholder = "Travel Radius(Mi)" formControlName = "travelRadius"></ion-input>
+      <ion-input type="number" placeholder = "Travel Radius(Mi)" value = "{{CURRENT_USER.travelRadius}}" formControlName = "travelRadius"></ion-input>
       <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
     </ion-item>
 

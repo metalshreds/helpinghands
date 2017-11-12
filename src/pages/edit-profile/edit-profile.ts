@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,
+  Platform, ActionSheetController, AlertController, App, LoadingController } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import { AngularFireAuth } from "angularfire2/auth";
@@ -10,6 +11,8 @@ import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
+//import { CameraProvider } from '../../../providers/util/camera.provider';
+
 
 /**
  * Generated class for the EditProfilePage page.
@@ -28,6 +31,8 @@ export class EditProfilePage {
   curUserToken = this.AFcurUser.auth.currentUser;
   CURRENT_USER = {} as ProfileProvider;
   editProfileForm : FormGroup;
+  storage = firebase.storage();
+  //chosenPicture: any;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -42,11 +47,10 @@ export class EditProfilePage {
   ) {
 
     this.editProfileForm = formBuilder.group({
-      email : [''],
-      lastName : [''],
-      firstName :  [''],
+      lastName : ['', Validators.compose([nameValidator.isValid, Validators.required])],
+      firstName :  ['', Validators.compose([nameValidator.isValid, Validators.required])],
       phone : [''],
-      introduction : [''],
+      introduction : ['', Validators.required],
       travelRadius : [''],
       zipCode : [''],
     });
@@ -70,7 +74,7 @@ export class EditProfilePage {
   update = function()
   {
 
-
+    //if firstName is invalid
     if(!this.editProfileForm.controls.firstName.valid)
     {
 
@@ -81,6 +85,7 @@ export class EditProfilePage {
       });
       alert.present();
     }
+    //if lastname is invalid
     else if(!this.editProfileForm.controls.lastName.valid)
     {
 
@@ -91,6 +96,7 @@ export class EditProfilePage {
       });
       alert.present();
     }
+    //if introduction is invalid
     else if(!this.editProfileForm.controls.introduction.valid)
     {
 
@@ -106,12 +112,25 @@ export class EditProfilePage {
       //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
-        [true], this.editProfileForm.value.zipCode);
+        [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
 
       this.firebaseModule.singleStringUpdate('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
       this.firebaseModule.singleStringUpdate('firstName', newUser.firstName, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('introduction', newUser.introduction, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('zipCode', newUser.zipCode, this.curUserToken.uid);
+      this.firebaseModule.singleStringUpdate('phone', newUser.phone, this.curUserToken.uid);
+      this.firebaseModule.singleStringUpdate('phone', newUser.travelRadius, this.curUserToken.uid);
+
+
+      // var storageRef = this.storage.ref();
+      // this.curUserToken.updateProfile({
+      //   photoURL: "https://example.com/jane-q-user/profile.jpg"
+      // }).then(function() {
+      //   // Update successful.
+      // }).catch(function(error) {
+      //   // An error happened.
+      // });
+
 
 
       //TODO: modularize following code
@@ -122,6 +141,7 @@ export class EditProfilePage {
       //   updates['user/' + this.curUserToken.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
       //   firebase.database().ref().update(updates);                                      // update to specified path
       // }                                                                                  // in database.
+      this.editProfileForm.reset();
     }
     else {
       const alert = this.alertCtrl.create({
@@ -131,20 +151,13 @@ export class EditProfilePage {
       });
       alert.present();
     }
-    this.editProfileForm.reset();
+
   }
 
-  /*
-  / This function is to add updateMessage to the specified sub path of the user node
-  / that represents current user.
-   */
-  singleStringUpdate = function(subPath : string, updateMessage : string)
-  {
-    var updateMsg = {}
-    console.log("this is ", updateMessage);                                          //declare and initialize updateMsg variable
-    updateMsg['user/' + this.curUserToken.uid + '/' + subPath] = updateMessage;      //set correct path using subPath and assign update value
-    firebase.database().ref().update(updateMsg);                                     // updating to firebase using firebase API
-  }
+
+
+
+
 
   /*
   /  this function will find user node using userId and return value

@@ -18,10 +18,10 @@ export class FirebaseProvider {
   }
 
 
-    /*
+  /*
   / This function is to add updateMessage to the specified sub path of the user node
   / that represents current user.
-   */
+  */
   singleStringUpdate = function(subPath : string, updateMessage : string, userId : string) : any
   {
     var updateMsg = {}                                                        //declare and initialize updateMsg variable
@@ -34,28 +34,28 @@ export class FirebaseProvider {
   /  of the node
   */
 
-  getUserProfile = function(userId : string, profile)
-  {
-    var user;
-    var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value', function(snapshot)         // read node value once use firebase API
-    {
-      user = snapshot.val()                                               //return node value.
-      profile(user);
-      
-    })
-  }
+  // getUserProfile = function(userId : string, profile)
+  // {
+  //   var user;
+  //   var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
+  //   userRef.once('value', function(snapshot)         // read node value once use firebase API
+  //   {
+  //     user = snapshot.val()                                               //return node value.
+  //     profile(user);
+  //
+  //   })
+  // }
 
   /*
   / search user using user's name
   */
-  getUserByName = function(name : string) : any
-  {
-    var userRef = firebase.database().ref('user'); 
-    userRef.orderByChild("lastName").equalTo(name).on("child_added", function(snapshot) {
-      console.log(snapshot.key);
-    });
-  }
+  // getUserByName = function(name : string) : any
+  // {
+  //   var userRef = firebase.database().ref('user');
+  //   userRef.orderByChild("lastName").equalTo(name).on("child_added", function(snapshot) {
+  //     console.log(snapshot.key);
+  //   });
+  // }
 
 
 }

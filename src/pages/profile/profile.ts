@@ -26,14 +26,11 @@ export class ProfilePage {
               private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
               ) {
-
-
     AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
       const $key = action.payload.key;
       this.CURRENT_USER = { $key, ...action.payload.val()}
       return this.CURRENT_USER;
     }).subscribe();
-
   }
 
 
