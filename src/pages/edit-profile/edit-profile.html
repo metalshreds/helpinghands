@@ -1,10 +1,3 @@
-<!--
-  Generated template for the EditProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -14,87 +7,70 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
-  <ion-item>
-    <ion-input type="text" placeholder = "First Name" [(ngModel)] = "firstName"></ion-input>
-    <ion-input type="text" placeholder = "Last name" [(ngModel)] = "lastName"></ion-input>
-    <ion-icon name="person" item-start></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-input type="text" placeholder = "Email" [(ngModel)] = "email"></ion-input>
-    <ion-icon ios="ios-mail" md="md-mail" item-start></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-input type="text" placeholder = "Phone" [(ngModel)] = "phone"></ion-input>
-    <ion-icon name="call" item-start></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-input type="number" placeholder = "Zip Code " [(ngModel)] = "zipcode"></ion-input>
-    <ion-icon name="pin" item-start></ion-icon>
-    <button ion-button class="gps" item-right>
-      <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
-    </button>
-  </ion-item>
 
 
-  <ion-item>
-    <ion-icon name="paper"  item-start></ion-icon>
-    <ion-textarea rows="3" type="text" placeholder="Introduction" value=""></ion-textarea>
-  </ion-item>
+  <form [formGroup] = "editProfileForm" novalidate>
+    <ion-item>
+      <ion-input type="text" placeholder = "First Name"  value = "{{CURRENT_USER.firstName}}" formControlName = "firstName"></ion-input>
+      <ion-input type="text" placeholder = "Last name" value = "{{CURRENT_USER.lastName}}" formControlName  = "lastName"></ion-input>
+      <ion-icon name="person" item-start></ion-icon>
+    </ion-item>
 
-  <!-- Helper Fields -->
+    <ion-avatar (click)="changePicture()">
+      <img [src]="chosenPicture || placeholder" onerror="this.src='assets/icon/logo-login.png'" />
+      <button ion-button color="danger">Change image</button>
+    </ion-avatar>
 
-  <ion-item>
-    <ion-label>Suggest Me as a Helper </ion-label>
-    <ion-checkbox [(ngModel)]="helper" item-right></ion-checkbox>
-    <ion-icon name="hand" item-start></ion-icon>
-  </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder = "Phone" value = "{{CURRENT_USER.phone}}" formControlName = "phone"></ion-input>
+      <ion-icon name="call" item-start></ion-icon>
+    </ion-item>
 
-  <ion-item>
-    <ion-icon name='flask' item-start></ion-icon>
-    <ion-label style="color: black">
-      Skills
-    </ion-label>
-    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Save">
-      <ion-option value="Java" selected="true">Java</ion-option>
-      <ion-option value="Python">Python</ion-option>
-      <ion-option value="SQL" selected="true">SQL</ion-option>
-      <ion-option value="R">R</ion-option>
-      <ion-option value="HTML">HTML</ion-option>
-      <ion-option value="CSS">CSS</ion-option>
-      <ion-option value="C++">C++</ion-option>
-      <ion-option value="C">C</ion-option>
-      <ion-option value="Mathlab">Mathlab</ion-option>
-      <ion-option value="Firebase">Firebase</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-icon name='school' item-start></ion-icon>
-    <ion-label style="color: black">Major</ion-label>
-    <ion-select [(ngModel)]="major" multiple="true" cancelText="Cancel" okText="Save">
-      <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
-      <ion-option value="Math">Math</ion-option>
-      <ion-option value="Business" selected="true">Business</ion-option>
-      <ion-option value="Art">Art</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-input type="number" placeholder = "Zip Code " value = "{{CURRENT_USER.zipCode}}" formControlName = "zipCode"></ion-input>
+      <ion-icon name="pin" item-start></ion-icon>
+      <button ion-button class="gps" item-right>
+        <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+      </button>
+    </ion-item>
 
 
-  <ion-item>
-    <ion-input type="number" placeholder = "Travel Radius(Mi)" [(ngModel)] = "travelRadius"></ion-input>
-    <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
-  </ion-item>
+    <ion-item>
+      <ion-icon name="paper"  item-start></ion-icon>
+      <ion-textarea rows="3" type="text" placeholder="Introduction" value = "{{CURRENT_USER.introduction}}" formControlName = "introduction"></ion-textarea>
+    </ion-item>
+
+    <!-- Helper Fields -->
+    <ion-item>
+      <ion-label>Suggest Me as a Helper </ion-label>
+      <ion-checkbox [(ngModel)]="helper" [ngModelOptions]="{standalone: true}" item-right></ion-checkbox>
+      <ion-icon name="hand" item-start></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='school' item-start></ion-icon>
+      <ion-label style="color: black">Major</ion-label>
+      <ion-select [(ngModel)]="major" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
+        <ion-option value="Math">Math</ion-option>
+        <ion-option value="Business" selected="true">Business</ion-option>
+        <ion-option value="Art">Art</ion-option>
+      </ion-select>
+    </ion-item>
 
 
 
-  <!-- Update Button -->
-  <ion-col>
-    <button ion-button class="update-button" (click)="update(firstName, lastName)" block >Save</button>
-  </ion-col>
+    <ion-item>
+      <ion-input type="number" placeholder = "Travel Radius(Mi)" value = "{{CURRENT_USER.travelRadius}}" formControlName = "travelRadius"></ion-input>
+      <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
+    </ion-item>
+
+
+
+    <!-- Update Button -->
+    <ion-col>
+      <button ion-button class="update-button" (click)="update()" >Save</button>
+    </ion-col>
+  </form>
 </ion-content>
-
-

@@ -12,26 +12,14 @@
 
 <ion-content padding>
   <img class="edit-pencil" src="assets/icon/pencil.png" />
-  <div class = "profile-name">{{profile.firstName}} {{profile.lastName}}</div>
+  <div class = "profile-name">{{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</div>
 
   <img class="profile-pic" src="assets/icon/logo-login.png" />
   <p class="right-of-pic">4.8/5.0 ⭐</p>
-  <p class="right-of-pic">{{profile.email}}</p>
-  <p class="intro">{{profile.introduction}}</p>
+  <p class="right-of-pic">{{CURRENT_USER.email}}</p>
+  <p class="intro">{{CURRENT_USER.introduction}}</p>
 
-  <p class="center-break">My Skills</p>
-  <ul id="skill-list">
-    <li> {{skills[0]}} </li>
-    <ul>
-      <li> {{skills[1]}} </li>
-      <li> {{skills[2]}} </li>
-    </ul>
-    <li> {{skills[3]}} </li>
-    <li> {{skills[4]}} </li>
-    <ul>
-      <li> {{skills[5]}} </li>
-    </ul>
-  </ul>
+
   <p class="center-break">My Ratings</p>
 
   <button class="rating-button">

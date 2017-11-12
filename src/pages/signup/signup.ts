@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
-import {EditProfilePage} from "../edit-profile/edit-profile";
-import { User } from "../../models/user";
-import { AngularFireAuth} from "angularfire2/auth";
-import {HomePage} from "../home/home";
+import { EditProfilePage } from "../edit-profile/edit-profile";
+import { AngularFireAuth } from "angularfire2/auth";
+import { HomePage } from "../home/home";
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
@@ -47,7 +46,7 @@ export class SignupPage {
    */
   signUp = function() {
 
-
+    console.log("asd" ,this.signUpForm.value);
     if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
 

@@ -17,6 +17,8 @@ export class ProfileProvider {
   public lastName: string;
   public firstName: string;
   public introduction: string;
+  public zipCode : string;
+  public phone : number;
   //interests: string[];
   public skills: boolean[];
   public oTask : Array<TaskObjectProvider> = [];
@@ -24,14 +26,17 @@ export class ProfileProvider {
   public blackListTask: TaskObjectProvider[] = [];
   public confirmTask: TaskObjectProvider[] = [];
   public pendingTask: TaskObjectProvider[] = [];
-
+  public travelRadius : number;
   constructor(
     lastName : string,
     firstName : string,
     uid : string,
     email : string,
     introduction : string,
-    skills : boolean[]
+    skills : boolean[],
+    zipCode : string,
+    phone : number,
+    travelRadius : number,
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
@@ -39,6 +44,9 @@ export class ProfileProvider {
     this.email = email;
     this.introduction = introduction;
     this.skills = skills;
+    this.zipCode = zipCode;
+    this.phone = phone;
+    this.travelRadius = travelRadius;
   }
 
   /*

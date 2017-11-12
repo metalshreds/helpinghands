@@ -10,8 +10,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
-import { HomePage } from '../home/home'
-import { User } from '../../models/user';
+import { HomePage } from '../home/home';
 import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
@@ -52,20 +51,22 @@ export class LoginPage {
   / on failure.
    */
   login = async function() {
-    var _this = this;
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
+    console.log(this.loginForm.value.email);
     if(!this.loginForm.valid)
     {
       console.log("invalid input here");
     }
     this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
-      .then(function(){
+      .then(result=>{
         this.loginForm.reset();
-        _this.navCtrl.push(ProfilePage);
+        //TODO sent user verification email, add verification checking at login page
+        //https://firebase.google.com/docs/auth/web/manage-users
+        this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)
       {

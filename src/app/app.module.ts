@@ -22,6 +22,8 @@ import { DashboardPage } from "../pages/dashboard/dashboard";
 import { TaskViewPage } from "../pages/task-view/task-view";
 import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
+import { CameraProvider } from '../providers/camera';
+import { Camera } from '@ionic-native/camera';
 //import { emailValidator} from "../validators/emailValidator";
 
 @NgModule({
@@ -68,6 +70,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     ProfileProvider,
     FirebaseProvider,
     TaskObjectProvider,
-  ]
+    CameraProvider,
+    Camera,]
 })
 export class AppModule {}
