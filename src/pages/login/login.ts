@@ -64,6 +64,8 @@ export class LoginPage {
     this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
       .then(result=>{
         this.loginForm.reset();
+        //TODO sent user verification email, add verification checking at login page
+        //https://firebase.google.com/docs/auth/web/manage-users
         this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)

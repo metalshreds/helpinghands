@@ -2,16 +2,15 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, AlertController, App, LoadingController } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
-import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
-//import { CameraProvider } from '../../../providers/util/camera.provider';
+import { CameraProvider } from '../../providers/camera';
 
 
 /**
@@ -32,7 +31,7 @@ export class EditProfilePage {
   CURRENT_USER = {} as ProfileProvider;
   editProfileForm : FormGroup;
   storage = firebase.storage();
-  //chosenPicture: any;
+  chosenPicture: any;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -43,6 +42,9 @@ export class EditProfilePage {
     public navCtrl: NavController,
     public firebaseModule : FirebaseProvider,
     public formBuilder : FormBuilder,
+    public actionsheetCtrl: ActionSheetController,
+    public cameraProvider: CameraProvider,
+    public platform: Platform,
     //public currUser : ProfileProvider
   ) {
 
@@ -122,14 +124,7 @@ export class EditProfilePage {
       this.firebaseModule.singleStringUpdate('phone', newUser.travelRadius, this.curUserToken.uid);
 
 
-      // var storageRef = this.storage.ref();
-      // this.curUserToken.updateProfile({
-      //   photoURL: "https://example.com/jane-q-user/profile.jpg"
-      // }).then(function() {
-      //   // Update successful.
-      // }).catch(function(error) {
-      //   // An error happened.
-      // });
+
 
 
 
@@ -155,9 +150,84 @@ export class EditProfilePage {
   }
 
 
+  changePicture() {
+    const actionsheet = this.actionsheetCtrl.create({
+      title: 'upload picture',
+      buttons: [
+        {
+          text: 'camera',
+          icon: !this.platform.is('ios') ? 'camera' : null,
+          handler: () => {
+            this.takePicture();
+          }
+        },
+        {
+          text: !this.platform.is('ios') ? 'gallery' : 'camera roll',
+          icon: !this.platform.is('ios') ? 'image' : null,
+          handler: () => {
+            this.getPicture();
+          }
+        },
+        {
+          text: 'cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'destructive',
+          handler: () => {
+            console.log('the user has cancelled the interaction.');
+          }
+        }
+      ]
+    });
+    return actionsheet.present();
+  }
 
+  takePicture() {
+    const loading = this.loadingCtrl.create();
 
+    loading.present();
+    return this.cameraProvider.getPictureFromCamera().then(picture => {
+      if (picture) {
+        this.chosenPicture = picture;
+      }
+      loading.dismiss();
+    }, error => {
+      alert(error);
+    });
+  }
 
+  getPicture() {
+    const loading = this.loadingCtrl.create();
+
+    loading.present();
+    return this.cameraProvider.getPictureFromPhotoLibrary().then(picture => {
+      if (picture) {
+        this.chosenPicture = picture;
+      }
+      loading.dismiss();
+    }, error => {
+      alert(error);
+    });
+  }
+
+  updateUserPhoto(){
+    // File or Blob named mountains.jpg
+    var file = this.chosenPicture;
+    var storageRef = this.storage.ref();
+// Create the file metadata
+    var metadata = {
+      contentType: 'image/jpeg'
+    };
+    //TODO update picture to firebase and get a url to it.
+
+    // var storageRef = this.storage.ref();
+    // this.curUserToken.updateProfile({
+    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
+    // }).then(function() {
+    //   // Update successful.
+    // }).catch(function(error) {
+    //   // An error happened.
+    // });
+  }
 
   /*
   /  this function will find user node using userId and return value
