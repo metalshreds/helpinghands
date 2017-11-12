@@ -14,8 +14,8 @@ This app allows users with a task to find helpers who have the skills to complet
 * [Firebase](https://firebase.google.com/)
     * ```$ npm install firebase angularfire2 --save ```
 * Camera   
-    *```$ ionic cordova plugin add cordova-plugin-camera```
-    *```$ npm install --save @ionic-native/camera```
+    * ```$ ionic cordova plugin add cordova-plugin-camera```
+    * ```$ npm install --save @ionic-native/camera```
 
 ## Running the application
 * clone the app onto the computer
