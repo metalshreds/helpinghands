@@ -17,6 +17,7 @@ export class ProfileProvider {
   public lastName: string;
   public firstName: string;
   public introduction: string;
+  public zipCode : string;
   //interests: string[];
   public skills: boolean[];
   public oTask : Array<TaskObjectProvider> = [];
@@ -31,7 +32,8 @@ export class ProfileProvider {
     uid : string,
     email : string,
     introduction : string,
-    skills : boolean[]
+    skills : boolean[],
+    zipCode : string
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
@@ -39,6 +41,7 @@ export class ProfileProvider {
     this.email = email;
     this.introduction = introduction;
     this.skills = skills;
+    this.zipCode = zipCode;
   }
 
   /*
@@ -52,6 +55,14 @@ export class ProfileProvider {
     this.oTask.push(Task1);
   }
 
+//TODO method to retrieve user info
 
+//TODO method to edit/update user info
+
+//TODO create a new task (return new task object)
+
+//TODO update a new task (doesn't return)
+
+//TODO method to retrieve user info
 
 }

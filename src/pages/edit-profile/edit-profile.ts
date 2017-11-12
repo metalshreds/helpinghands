@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
+import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
-import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';  //for validation
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
 
-
- /**
+/**
  * Generated class for the EditProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
@@ -25,10 +25,9 @@ import { nameValidator} from '../../validators/nameValidator';
 })
 export class EditProfilePage {
 
-   curUserToken = this.AFcurUser.auth.currentUser;
-   CURRENT_USER = {} as ProfileProvider;
-   public editProfileForm : FormGroup;
-
+  curUserToken = this.AFcurUser.auth.currentUser;
+  CURRENT_USER = {} as ProfileProvider;
+  editProfileForm : FormGroup;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -36,74 +35,103 @@ export class EditProfilePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
-    public navParams: NavParams,
     public navCtrl: NavController,
     public firebaseModule : FirebaseProvider,
-    public formBuilder : FormBuilder)
-  {
+    public formBuilder : FormBuilder,
+    //public currUser : ProfileProvider
+  ) {
 
-    AFdatabase.list<ProfileProvider>('user').valueChanges().subscribe();
+    this.editProfileForm = formBuilder.group({
+      email : [''],
+      lastName : [''],
+      firstName :  [''],
+      phone : [''],
+      introduction : [''],
+      travelRadius : [''],
+      zipCode : [''],
+    });
 
+    //AFdatabase.list<ProfileProvider>('user').valueChanges().subscribe();
+    //read user profile from database
     AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
       const $key = action.payload.key;
       this.CURRENT_USER = { $key, ...action.payload.val()}
-
-
     }).subscribe(item =>(console.log("key is ", this.CURRENT_USER)));
+  };
 
-    // this.editProfileForm = this.formBuilder.group({
-    //   lastName : ['',Validators.required],
-    //   firstName :  ['',Validators.required],
-    // });
-  }
-
-   ngOnInit() {
-     this.initializeForm();
-   }
-
-   private initializeForm() {
-     this.editProfileForm = new FormGroup({
-       'lastName': new FormControl(null, Validators.required),
-       'firstNameName': new FormControl(null),
-     });
-   }
-
-
-
-
-     /*
-     / This funtion will take all the user inputs and update it to corresponding node.
-     */
+  //
+  // writeUp = function(message : any)
+  // {
+  //   //document.getElementById("FN").textContent = message.firstName;
+  // }
+  /*
+  / This funtion will take all the user inputs and update it to corresponding node.
+  */
   update = function()
   {
-    console.log("asd" ,this.editProfileForm.value);
+
+
     if(!this.editProfileForm.controls.firstName.valid)
     {
-      console.log("invalid input here");
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid first name',
+        buttons: ['OK']
+      });
+      alert.present();
     }
-    if(this.curUserToken)
+    else if(!this.editProfileForm.controls.lastName.valid)
+    {
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid last name',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else if(!this.editProfileForm.controls.introduction.valid)
+    {
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid introduction',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else if(this.curUserToken)
     {
       //initialize new User object using input lastname, firstname and current author's uid and email.
-      console.log("here", this.editProfileForm.value.firstName);
-      var newUser = new ProfileProvider(this.editProfileForm.value.lastName, this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, "intro", [true]);
+      var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
+        this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
+        [true], this.editProfileForm.value.zipCode);
 
-      //this.firebaseModule.singleStringUpdate('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
-      this.singleStringUpdate('firstName', newUser.firstName);
-      //this.firebaseModule.singleStringUpdate('phone', this.editProfileForm.value.phone, this.curUserToken.uid);
+      this.firebaseModule.singleStringUpdate('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
+      this.firebaseModule.singleStringUpdate('firstName', newUser.firstName, this.curUserToken.uid);
+      this.firebaseModule.singleStringUpdate('introduction', newUser.introduction, this.curUserToken.uid);
+      this.firebaseModule.singleStringUpdate('zipCode', newUser.zipCode, this.curUserToken.uid);
 
 
-
-
-      // //TODO: modularize following code
-      // var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
+      //TODO: modularize following code
+      // var userRef = firebase.database().ref('user/'+ this.curUserToken.uid + '/' + 'owenedTask'); //get node reference.
       // for( let ownedTask of newUser.oTask) {
       //   var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
       //   var updates = {};                         // declare update var to hold update data.
-      //   updates['user/' + this.result.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
+      //   updates['user/' + this.curUserToken.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
       //   firebase.database().ref().update(updates);                                      // update to specified path
       // }                                                                                  // in database.
     }
-    //this.editProfileForm.reset();
+    else {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'login first',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    this.editProfileForm.reset();
   }
 
   /*
@@ -112,20 +140,16 @@ export class EditProfilePage {
    */
   singleStringUpdate = function(subPath : string, updateMessage : string)
   {
-
     var updateMsg = {}
-    console.log("this is ", updateMessage);                                                      //declare and initialize updateMsg variable
-    updateMsg['user/' + this.curUserToken.uid + '/' + subPath] = updateMessage;     //set correct path using subPath and assign update value
-
-
-    firebase.database().ref().update(updateMsg);                              // updating to firebase using firebase API
-
+    console.log("this is ", updateMessage);                                          //declare and initialize updateMsg variable
+    updateMsg['user/' + this.curUserToken.uid + '/' + subPath] = updateMessage;      //set correct path using subPath and assign update value
+    firebase.database().ref().update(updateMsg);                                     // updating to firebase using firebase API
   }
 
-   /*
-   /  this function will find user node using userId and return value
-   /  of the node
-    */
+  /*
+  /  this function will find user node using userId and return value
+  /  of the node
+   */
   getUserProfile = function(userId : string, profile) : any
   {
     var user;
@@ -142,4 +166,3 @@ export class EditProfilePage {
 
 
 }
-

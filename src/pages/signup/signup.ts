@@ -36,7 +36,7 @@ export class SignupPage {
         email : ['', Validators.compose([emailValidator.isValid])],
         password : ['',Validators.compose([Validators.required, passwordValidator.isValid])],
         passwordRe :  ['',Validators.compose([Validators.required, passwordValidator.isValid])],
-      });
+      })
     }
 
 

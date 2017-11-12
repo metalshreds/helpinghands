@@ -1,10 +1,3 @@
-<!--
-  Generated template for the EditProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -14,30 +7,53 @@
   </ion-navbar>
 </ion-header>
 
-
-
 <ion-content padding>
 
-  <form [formGroup] = "editProfileForm"  (ngSubmit)="update()">
 
-      <ion-input type="text" placeholder = "First Name" formControlName = "firstName" ></ion-input>
-
-      <ion-input type="text" placeholder = "Last name" formControlName = "lastName"></ion-input>
-      <ion-icon name="person" item-start></ion-icon>
-
+  <form [formGroup] = "editProfileForm" novalidate>
     <ion-item>
-      <ion-input type="text" placeholder = "Please enter a valid wisc.edu email"  formControlName = "email"></ion-input>
+      <ion-input type="text" placeholder = "First Name"  value = "{{CURRENT_USER.firstName}}" formControlName = "firstName"></ion-input>
+      <ion-input type="text" placeholder = "Last name" value = "{{CURRENT_USER.lastName}}" formControlName  = "lastName"></ion-input>
+      <ion-icon name="person" item-start></ion-icon>
     </ion-item>
 
+
+    <ion-item>
+      <ion-input type="text" placeholder = "Phone" formControlName = "phone"></ion-input>
+      <ion-icon name="call" item-start></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" placeholder = "Zip Code " value = "{{CURRENT_USER.zipCode}}" formControlName = "zipCode"></ion-input>
+      <ion-icon name="pin" item-start></ion-icon>
+      <button ion-button class="gps" item-right>
+        <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+      </button>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name="paper"  item-start></ion-icon>
+      <ion-textarea rows="3" type="text" placeholder="Introduction"  formControlName = "introduction"></ion-textarea>
+    </ion-item>
+
+    <!-- Helper Fields -->
+
+
+
+
+
+
+    <ion-item>
+      <ion-input type="number" placeholder = "Travel Radius(Mi)" formControlName = "travelRadius"></ion-input>
+      <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
+    </ion-item>
 
 
 
     <!-- Update Button -->
     <ion-col>
-      <button ion-button class="submit" >Save</button>
+      <button ion-button class="update-button" (click)="update()" >Save</button>
     </ion-col>
   </form>
-
 </ion-content>
-
-

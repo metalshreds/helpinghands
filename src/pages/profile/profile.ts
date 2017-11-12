@@ -26,11 +26,8 @@ export class ProfilePage {
               private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
               ) {
-    this.skills = [true, false, true, false, false, true];
-    this.profile = new ProfileProvider("ABCDEFGHIJK", "LMNOPQRSTUVWXYZ", "uid", "test@mail.com",
-      "This is the intro to this person and will probably be somewhere along the lines of a 1 or 2 sentences, " +
-      "this max may be enforced but who knows I'm just trying to make this somewhat long for the sake of testing.",
-      this.skills);
+
+
     AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
       const $key = action.payload.key;
       this.CURRENT_USER = { $key, ...action.payload.val()}
