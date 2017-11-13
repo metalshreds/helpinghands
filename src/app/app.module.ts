@@ -24,7 +24,6 @@ import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import { CameraProvider } from '../providers/camera';
 import { Camera } from '@ionic-native/camera';
-import { NativeStorage } from '@ionic-native/native-storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 //import { emailValidator} from "../validators/emailValidator";
