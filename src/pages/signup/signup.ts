@@ -5,9 +5,12 @@ import { EditProfilePage } from "../edit-profile/edit-profile";
 import { AngularFireAuth } from "angularfire2/auth";
 import { HomePage } from "../home/home";
 import firebase from 'firebase';
+import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
+import { cloudProvider} from "../../providers/cloudbase";
+
 /**
  * Generated class for the SignupPage page.
  *
@@ -24,13 +27,15 @@ export class SignupPage {
 
   public signUpForm : FormGroup;
 
+  db = firebase.firestore();
   constructor(
     private authp: AngularFireAuth,
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public formBuilder : FormBuilder)
+    public formBuilder : FormBuilder,
+    public cloudBaseModel : cloudProvider)
     {
       this.signUpForm = formBuilder.group({
         email : ['', Validators.compose([emailValidator.isValid])],
@@ -93,11 +98,12 @@ export class SignupPage {
        //call create method which is provided by firebase
        this.authp.auth.createUserWithEmailAndPassword(this.signUpForm.value.email, this.signUpForm.value.password)
           .then(result=>{                 //on success, log returned value to the path user/userid
-            firebase.database().ref('/user').child(result.uid)
-              .set({email : this.signUpForm.value.email,
-                    userId : result.uid,
-                    lastName : 'Last name',
-                    firstName : 'First name'});
+            var docRef = this.db.collection('users').doc(result.uid);
+            docRef.set({
+              email: this.signUpForm.value.email,
+              lastName : '',
+              firstName : '',
+            });
             this.navCtrl.push(EditProfilePage);
           })
           .catch(function (error)        //on failure, display the error massage.

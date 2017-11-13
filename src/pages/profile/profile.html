@@ -15,7 +15,7 @@
   <div class = "profile-name">{{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</div>
 
   <ion-avatar (click) = "expandPic()">
-    <img class="profile-pic" [src]='userPhotoUrl' />
+    <img class="profile-pic" [src]='userPhotoUrl' onerror="this.src='assets/icon/logo-login.png'" />
   </ion-avatar>
 
   <p class="right-of-pic">4.8/5.0 ⭐</p>

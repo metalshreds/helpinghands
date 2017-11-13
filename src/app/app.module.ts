@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
 import { HelpingHands } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -24,8 +23,9 @@ import { FormsModule } from '@angular/forms'
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import { CameraProvider } from '../providers/camera';
 import { Camera } from '@ionic-native/camera';
-import { NativeStorage } from '@ionic-native/native-storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { cloudProvider } from "../providers/cloudbase";
+import { AngularFirestoreModule} from "angularfire2/firestore";
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -50,7 +50,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     IonicModule.forRoot(HelpingHands),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -75,6 +76,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     TaskObjectProvider,
     CameraProvider,
     Camera,
-    PhotoViewer]
+    PhotoViewer,
+    cloudProvider]
 })
 export class AppModule {}

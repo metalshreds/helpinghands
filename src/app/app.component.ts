@@ -6,11 +6,12 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { SignupPage } from "../pages/signup/signup";
 import { ProfilePage } from "../pages/profile/profile";
-import firebase from 'firebase';
+import * as firebase from 'firebase';
+import * as admin from 'firebase-admin';
 import { DashboardPage} from "../pages/dashboard/dashboard";
 import { SearchPage} from '../pages/search/search';
 import { TaskEditPage } from "../pages/task-edit/task-edit";
-import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import { EditProfilePage} from "../pages/edit-profile/edit-profile";
 @Component({
   templateUrl: 'app.html'    //TODO change app.html's content. currently it has sidebar created.
 })
@@ -32,11 +33,6 @@ export class HelpingHands {
       storageBucket: "helpinghands506.appspot.com",
       messagingSenderId: "652958427997"
     })
-    //TODO skip login screen if user is logged in
-    //https://stackoverflow.com/questions/37318472/ionic-2-app-remember-user-on-the-device?rq=1
-    var user = firebase.auth().onAuthStateChanged;
-    //this.rootPage = user.? ProfilePage : LoginPage;
-    console.log("this", user);
 
     this.initializeApp();
     this.splashScreen.hide();
