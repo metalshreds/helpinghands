@@ -32,6 +32,7 @@ export class EditProfilePage {
   editProfileForm : FormGroup;
   storage = firebase.storage();
   chosenPicture: any;
+  pictureChanged = false;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -122,8 +123,8 @@ export class EditProfilePage {
       this.firebaseModule.singleStringUpdate('zipCode', newUser.zipCode, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('phone', newUser.phone, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('phone', newUser.travelRadius, this.curUserToken.uid);
-
-      this.updateUserPhoto();
+      if(this.pictureChanged)
+        this.updateUserPhoto();
       //TODO: modularize following code
       // var userRef = firebase.database().ref('user/'+ this.curUserToken.uid + '/' + 'owenedTask'); //get node reference.
       // for( let ownedTask of newUser.oTask) {
@@ -174,6 +175,7 @@ export class EditProfilePage {
         }
       ]
     });
+    this.pictureChanged = true;
     return actionsheet.present();
   }
 
