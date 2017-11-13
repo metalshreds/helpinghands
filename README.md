@@ -16,6 +16,9 @@ This app allows users with a task to find helpers who have the skills to complet
 * Camera   
     * ```$ ionic cordova plugin add cordova-plugin-camera```
     * ```$ npm install --save @ionic-native/camera```
+* PhotoViewer
+    * ```$ionic cordova plugin add com-sarriaroman-photoviewer```
+    * ```$npm install --save @ionic-native/photo-viewer```
 
 ## Running the application
 * clone the app onto the computer
