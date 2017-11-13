@@ -86,4 +86,5 @@
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
+    <plugin name="com-sarriaroman-photoviewer" spec="^1.1.11" />
 </widget>

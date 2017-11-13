@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
-import firebase from 'firebase';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -27,6 +28,7 @@ export class ProfilePage {
               public navParams: NavParams,
               private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
+              private photoviewer : PhotoViewer,
               ) {
     AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
       const $key = action.payload.key;
@@ -37,7 +39,10 @@ export class ProfilePage {
     console.log(this.curUserToken.displayName);
   }
 
-
+  expandPic(){
+    this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
+    console.log(this.userPhotoUrl);
+  }
 
 
 

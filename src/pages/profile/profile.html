@@ -14,7 +14,10 @@
   <ion-icon name="brush"></ion-icon>
   <div class = "profile-name">{{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</div>
 
-  <img class="profile-pic" [src]='userPhotoUrl' />
+  <ion-avatar (click) = "expandPic()">
+    <img class="profile-pic" [src]='userPhotoUrl' />
+  </ion-avatar>
+
   <p class="right-of-pic">4.8/5.0 ⭐</p>
   <p class="right-of-pic">{{CURRENT_USER.email}}</p>
   <p class="intro">{{CURRENT_USER.introduction}}</p>
