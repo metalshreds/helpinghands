@@ -34,10 +34,13 @@ export class cloudProvider {
   */
   singleStringUpdate = function(subPath : string, updateMessage : string, userId : string) : any
   {
-    var updateMsg = {}                                                        //declare and initialize updateMsg variable
-    updateMsg['user/' + userId + '/' + subPath] = updateMessage;     //set correct path using subPath and assign update value
-    return firebase.database().ref().update(updateMsg);                              // updating to firebase using firebase API
+    var docRef = this.db.collection('users').doc(userId);
+    docRef.set({
+      string: updateMessage,
+    })
   }
+
+
 
 
 

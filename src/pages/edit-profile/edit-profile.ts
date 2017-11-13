@@ -6,6 +6,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
+import { cloudProvider } from '../../providers/cloudbase'
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
@@ -41,6 +42,7 @@ export class EditProfilePage {
     public app: App,
     public navCtrl: NavController,
     public firebaseModule : FirebaseProvider,
+    public cloudBaseModule : cloudProvider,
     public formBuilder : FormBuilder,
     public actionsheetCtrl: ActionSheetController,
     public cameraProvider: CameraProvider,
@@ -116,7 +118,7 @@ export class EditProfilePage {
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
 
-      this.firebaseModule.singleStringUpdate('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
+      this.('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
       this.firebaseModule.singleStringUpdate('firstName', newUser.firstName, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('introduction', newUser.introduction, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('zipCode', newUser.zipCode, this.curUserToken.uid);
