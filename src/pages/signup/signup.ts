@@ -104,7 +104,6 @@ export class SignupPage {
           {
             var errorCode = error.code;
             var errorMessage = error.message;
-
             //alert (errorMessage);
             alert.setTitle(errorCode);
             alert.setMessage(errorMessage);

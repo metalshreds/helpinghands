@@ -123,11 +123,7 @@ export class EditProfilePage {
       this.firebaseModule.singleStringUpdate('phone', newUser.phone, this.curUserToken.uid);
       this.firebaseModule.singleStringUpdate('phone', newUser.travelRadius, this.curUserToken.uid);
 
-
-
-
-
-
+      this.updateUserPhoto();
       //TODO: modularize following code
       // var userRef = firebase.database().ref('user/'+ this.curUserToken.uid + '/' + 'owenedTask'); //get node reference.
       // for( let ownedTask of newUser.oTask) {
@@ -210,23 +206,21 @@ export class EditProfilePage {
   }
 
   updateUserPhoto(){
-    // File or Blob named mountains.jpg
-    var file = this.chosenPicture;
-    var storageRef = this.storage.ref();
-// Create the file metadata
+    var imageRef = this.storage.ref('userPic/' + this.curUserToken.uid + '.jpg');
     var metadata = {
       contentType: 'image/jpeg'
     };
-    //TODO update picture to firebase and get a url to it.
+     imageRef.putString(this.chosenPicture, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+      var downloadURL = snapshot.downloadURL;
+      console.log('URL is', downloadURL);
+      this.curUserToken.updateProfile({
+          displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
+          photoURL: downloadURL,
+         }).catch(function(error) {
+            console.log("native update has an error");
+      });
+   });
 
-    // var storageRef = this.storage.ref();
-    // this.curUserToken.updateProfile({
-    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
-    // }).then(function() {
-    //   // Update successful.
-    // }).catch(function(error) {
-    //   // An error happened.
-    // });
   }
 
   /*

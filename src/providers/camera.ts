@@ -19,7 +19,7 @@ export class CameraProvider {
   }
 
   // This method takes optional parameters to make it more customizable
-  getImage(pictureSourceType, crop = false, quality = 50, allowEdit = true, saveToAlbum = true) {
+  getImage(pictureSourceType, crop = true, quality = 50, allowEdit = true, saveToAlbum = true) {
     const options = {
       quality,
       allowEdit,
@@ -31,8 +31,8 @@ export class CameraProvider {
 
     // If set to crop, restricts the image to a square of 600 by 600
     if (crop) {
-      options['targetWidth'] = 600;
-      options['targetHeight'] = 600;
+      options['targetWidth'] = 150;
+      options['targetHeight'] = 150;
     }
 
     return this.camera.getPicture(options).then(imageData => {

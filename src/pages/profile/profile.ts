@@ -20,6 +20,8 @@ export class ProfilePage {
   profile;
   skills : Array<boolean>;
   curUserToken = this.AFcurUser.auth.currentUser;
+  userPhotoUrl = this.curUserToken.photoURL;
+
   CURRENT_USER = {} as ProfileProvider;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -31,6 +33,8 @@ export class ProfilePage {
       this.CURRENT_USER = { $key, ...action.payload.val()}
       return this.CURRENT_USER;
     }).subscribe();
+    console.log(this.userPhotoUrl);
+    console.log(this.curUserToken.displayName);
   }
 
 
