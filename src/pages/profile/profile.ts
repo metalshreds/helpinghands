@@ -51,6 +51,8 @@ export class ProfilePage {
       .catch(err => {
         console.log('Error getting document', err);
       });
+
+    console.log("image ", this.curUserToken.photoURL);
   }
 
   expandPic(){

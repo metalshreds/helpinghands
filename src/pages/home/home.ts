@@ -22,12 +22,13 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     firebase.auth().onAuthStateChanged(user=> {
-      if(user.uid && !(user.displayName === null))
-        this.navCtrl.push(ProfilePage);
-      else if(user.uid)
-        this.navCtrl.push(EditProfilePage);
-      else
+      if(user == null)
         this.navCtrl.push(LoginPage);
+      else if(user.uid && !(user.displayName === null))
+        this.navCtrl.push(ProfilePage);
+      else
+        this.navCtrl.push(EditProfilePage);
+
     })
 
   }
