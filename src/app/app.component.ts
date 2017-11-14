@@ -7,7 +7,6 @@ import { HomePage } from '../pages/home/home';
 import { SignupPage } from "../pages/signup/signup";
 import { ProfilePage } from "../pages/profile/profile";
 import * as firebase from 'firebase';
-import * as admin from 'firebase-admin';
 import { DashboardPage} from "../pages/dashboard/dashboard";
 import { SearchPage} from '../pages/search/search';
 import { TaskEditPage } from "../pages/task-edit/task-edit";
@@ -46,7 +45,6 @@ export class HelpingHands {
       { title: 'Profile', component: ProfilePage },
       { title: 'Task Edit', component: TaskEditPage },
       { title: 'Edit Profile', component: EditProfilePage },
-
     ];
 
 
