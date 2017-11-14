@@ -5,7 +5,6 @@ import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
-import { FirebaseProvider } from '../../providers/firebase/firebase'
 import { cloudProvider } from '../../providers/cloudbase'
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
@@ -33,6 +32,8 @@ export class EditProfilePage {
   editProfileForm : FormGroup;
   storage = firebase.storage();
   chosenPicture: any;
+  pictureChanged = false;
+  db = firebase.firestore();
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -41,7 +42,6 @@ export class EditProfilePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-    public firebaseModule : FirebaseProvider,
     public cloudBaseModule : cloudProvider,
     public formBuilder : FormBuilder,
     public actionsheetCtrl: ActionSheetController,
@@ -65,6 +65,26 @@ export class EditProfilePage {
       const $key = action.payload.key;
       this.CURRENT_USER = { $key, ...action.payload.val()}
     }).subscribe(item =>(console.log("key is ", this.CURRENT_USER)));
+
+    var userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    userRef.get()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+          for(const field in doc.data())
+          {
+              //have to be careful that we have to store exactly same property
+              //  in userProvider obeject and users node.
+              this.CURRENT_USER[field] = doc.data()[field];
+          }
+
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+      });
   };
 
   //
@@ -117,23 +137,15 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
-
-      this.('lastName', newUser.lastName, this.curUserToken.uid);    //update user's last name to the server.
-      this.firebaseModule.singleStringUpdate('firstName', newUser.firstName, this.curUserToken.uid);
-      this.firebaseModule.singleStringUpdate('introduction', newUser.introduction, this.curUserToken.uid);
-      this.firebaseModule.singleStringUpdate('zipCode', newUser.zipCode, this.curUserToken.uid);
-      this.firebaseModule.singleStringUpdate('phone', newUser.phone, this.curUserToken.uid);
-      this.firebaseModule.singleStringUpdate('phone', newUser.travelRadius, this.curUserToken.uid);
-
-      this.updateUserPhoto();
-      //TODO: modularize following code
-      // var userRef = firebase.database().ref('user/'+ this.curUserToken.uid + '/' + 'owenedTask'); //get node reference.
-      // for( let ownedTask of newUser.oTask) {
-      //   var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
-      //   var updates = {};                         // declare update var to hold update data.
-      //   updates['user/' + this.curUserToken.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
-      //   firebase.database().ref().update(updates);                                      // update to specified path
-      // }                                                                                  // in database.
+      // for simplicity i wrote an abstract function to update each field.
+      // a crash during multiple independent writes may cause inconsistency in database,
+      //  but that issue is beyond our scope at this time. Will come back to this and using
+      //  batch or write a function to update the whole profile.
+      this.cloudBaseModule.singleStringUpdate("lastName", newUser.lastName, newUser.userId);
+      this.cloudBaseModule.singleStringUpdate("firstName", newUser.firstName, newUser.userId);
+      this.cloudBaseModule.singleStringUpdate("introduction", newUser.introduction, newUser.userId);
+      if(this.pictureChanged)
+        this.updateUserPhoto();
       this.editProfileForm.reset();
     }
     else {
@@ -186,6 +198,7 @@ export class EditProfilePage {
     return this.cameraProvider.getPictureFromCamera().then(picture => {
       if (picture) {
         this.chosenPicture = picture;
+        this.pictureChanged = true;
       }
       loading.dismiss();
     }, error => {
@@ -200,6 +213,7 @@ export class EditProfilePage {
     return this.cameraProvider.getPictureFromPhotoLibrary().then(picture => {
       if (picture) {
         this.chosenPicture = picture;
+        this.pictureChanged = true;
       }
       loading.dismiss();
     }, error => {

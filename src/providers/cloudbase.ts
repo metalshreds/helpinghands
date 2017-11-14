@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProfileProvider } from "../providers/profile/profile";
 import  * as firebase  from 'firebase';
-
+import 'firebase/firestore';
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import 'rxjs/add/operator/map';
 
@@ -13,32 +13,39 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class cloudProvider {
-
+  db = firebase.firestore();
   constructor() {
 
   }
-  getCloudBase()
-  {
-    const admin = require('firebase-admin');
-    const functions = require('firebase-functions');
-    admin.initializeApp(functions.config().firebase);
-    var cloudDatabse = admin.firestore();
-    console.log("here");
-    return cloudDatabse;
-  }
 
+    //data hierarchy
+    //user(collection)
+    //      userA(doc) (userId)
+    //        lastName
+    //        firstName
+    //        etc..
+    //           OwnedList(collection)
+    //                list(doc)
+    //                    listinfo:
+    //           participatedList(collection)
+    //                list(doc)
+    //      userB
+    //             ...
+    ////////////////////////////////
+    //task(collection)
+    //
 
   /*
   / This function is to add updateMessage to the specified sub path of the user node
   / that represents current user.
   */
-  singleStringUpdate = function(subPath : string, updateMessage : string, userId : string) : any
+  singleStringUpdate = function(subPath : string, updateMessage : any, userId : string) : any
   {
     var docRef = this.db.collection('users').doc(userId);
-    docRef.set({
-      string: updateMessage,
-    })
+    docRef.update({ [subPath] : updateMessage});
   }
+
+ // UpdateAllProfileField = function(updateMessage)
 
 
 
