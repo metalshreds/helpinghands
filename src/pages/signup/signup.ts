@@ -96,8 +96,15 @@ export class SignupPage {
             firebase.database().ref('/user').child(result.uid)
               .set({email : this.signUpForm.value.email,
                     userId : result.uid,
-                    lastName : 'Last name',
-                    firstName : 'First name'});
+                    lastName : '',
+                    firstName : ''});
+            firebase.database().ref('/user').child(result.uid)
+              result.updateProfile({
+              displayName: '',
+              photoURL: 'assets/icon/logo-login.png',
+            }).catch(function(error) {
+              console.log("native update has an error");
+            });
             this.navCtrl.push(EditProfilePage);
           })
           .catch(function (error)        //on failure, display the error massage.

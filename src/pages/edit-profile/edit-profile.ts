@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams,
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import {ProfilePage} from '../profile/profile';
+//import {ProfilePage} from '../profile/profile';
 import { FirebaseProvider } from '../../providers/firebase/firebase'
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
@@ -63,7 +63,8 @@ export class EditProfilePage {
     AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
       const $key = action.payload.key;
       this.CURRENT_USER = { $key, ...action.payload.val()}
-    }).subscribe(item =>(console.log("key is ", this.CURRENT_USER)));
+    }).subscribe();
+
   };
 
   //
