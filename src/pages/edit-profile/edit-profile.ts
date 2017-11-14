@@ -59,12 +59,7 @@ export class EditProfilePage {
       zipCode : [''],
     });
 
-    //AFdatabase.list<ProfileProvider>('user').valueChanges().subscribe();
-    //read user profile from database
-    AFdatabase.object<ProfileProvider>('user/' + this.curUserToken.uid).snapshotChanges().map(action=>{
-      const $key = action.payload.key;
-      this.CURRENT_USER = { $key, ...action.payload.val()}
-    }).subscribe(item =>(console.log("key is ", this.CURRENT_USER)));
+
 
     var userRef = this.db.collection('users').doc(this.curUserToken.uid);
     userRef.get()
@@ -85,6 +80,7 @@ export class EditProfilePage {
       .catch(err => {
         console.log('Error getting document', err);
       });
+
   };
 
   //
@@ -137,6 +133,7 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
+
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,
       //  but that issue is beyond our scope at this time. Will come back to this and using
@@ -188,6 +185,7 @@ export class EditProfilePage {
         }
       ]
     });
+    this.pictureChanged = true;
     return actionsheet.present();
   }
 

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import firebase from 'firebase';
 import {AngularFireAuth} from "angularfire2/auth";
 import {ProfilePage} from "../profile/profile";
+import { EditProfilePage } from "../edit-profile/edit-profile";
 import {LoginPage} from "../login/login";
 
 @Component({
@@ -21,8 +22,10 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     firebase.auth().onAuthStateChanged(user=> {
-      if(user.uid)
+      if(user.uid && !(user.displayName === null))
         this.navCtrl.push(ProfilePage);
+      else if(user.uid)
+        this.navCtrl.push(EditProfilePage);
       else
         this.navCtrl.push(LoginPage);
     })
