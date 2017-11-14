@@ -26,7 +26,6 @@ import { CameraProvider } from '../../providers/camera';
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-
   curUserToken = this.AFcurUser.auth.currentUser;
   CURRENT_USER = {} as ProfileProvider;
   editProfileForm : FormGroup;
@@ -60,7 +59,6 @@ export class EditProfilePage {
     });
 
 
-
     var userRef = this.db.collection('users').doc(this.curUserToken.uid);
     userRef.get()
       .then(doc => {
@@ -74,13 +72,12 @@ export class EditProfilePage {
               //  in userProvider obeject and users node.
               this.CURRENT_USER[field] = doc.data()[field];
           }
-
         }
       })
       .catch(err => {
         console.log('Error getting document', err);
       });
-
+    console.log("name is ", this.curUserToken.displayName);
   };
 
   //
@@ -143,7 +140,17 @@ export class EditProfilePage {
       this.cloudBaseModule.singleStringUpdate("introduction", newUser.introduction, newUser.userId);
       if(this.pictureChanged)
         this.updateUserPhoto();
+      else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
+      {
+        this.curUserToken.updateProfile({
+          displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
+          photoURL: 'assets/icon/logo-login.png',
+         }).catch(function(error) {
+          console.log("native update has an error");
+        });
+      }
       this.editProfileForm.reset();
+      this.navCtrl.push( ProfilePage );
     }
     else {
       const alert = this.alertCtrl.create({
@@ -224,17 +231,23 @@ export class EditProfilePage {
     var metadata = {
       contentType: 'image/jpeg'
     };
-     imageRef.putString(this.chosenPicture, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
-      var downloadURL = snapshot.downloadURL;
-      console.log('URL is', downloadURL);
-      this.curUserToken.updateProfile({
-          displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
-          photoURL: downloadURL,
-         }).catch(function(error) {
+      if(!(this.chosenPicture == null)){
+        imageRef.putString(this.chosenPicture, firebase.storage.StringFormat.DATA_URL).then((snapshot)=>
+        {
+          var downloadURL = snapshot.downloadURL;
+          console.log('URL is', downloadURL);
+          this.curUserToken.updateProfile({
+            displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
+            photoURL: downloadURL,
+          }).catch(function(error) {
             console.log("native update has an error");
-      });
-   });
-
+          });
+        });
+      }
+      else
+      {
+        console.log("no pic chosen, something is wrong");
+      }
   }
 
   /*

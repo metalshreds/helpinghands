@@ -21,14 +21,18 @@ export class cloudProvider {
     //data hierarchy
     //user(collection)
     //      userA(doc) (userId)
-    //        lastName
-    //        firstName
+    //        lastName:
+    //        firstName:
     //        etc..
     //           OwnedList(collection)
-    //                list(doc)
+    //                list1(doc)
+    //                    listinfo:
+    //                list2(doc)
     //                    listinfo:
     //           participatedList(collection)
     //                list(doc)
+    //                    listinfo:
+    //
     //      userB
     //             ...
     ////////////////////////////////

@@ -3,13 +3,12 @@ import { IonicPage, NavController, NavParams, AlertController, App, LoadingContr
 import {LoginPage} from "../login/login";
 import { EditProfilePage } from "../edit-profile/edit-profile";
 import { AngularFireAuth } from "angularfire2/auth";
-import { HomePage } from "../home/home";
 import firebase from 'firebase';
 import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
-import { cloudProvider} from "../../providers/cloudbase";
+
 
 /**
  * Generated class for the SignupPage page.
@@ -34,8 +33,7 @@ export class SignupPage {
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public formBuilder : FormBuilder,
-    public cloudBaseModel : cloudProvider)
+    public formBuilder : FormBuilder,)
     {
       this.signUpForm = formBuilder.group({
         email : ['', Validators.compose([emailValidator.isValid])],

@@ -32,8 +32,9 @@ export class ProfilePage {
               private photoviewer : PhotoViewer,
               )
   {
+    //get user node specificed by current userId.
     var userRef = this.db.collection('users').doc(this.curUserToken.uid);
-    userRef.get()
+    userRef.get() //read
       .then(doc => {
         if (!doc.exists) {
           console.log('No such document!');
@@ -45,7 +46,6 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-
         }
       })
       .catch(err => {
@@ -57,9 +57,6 @@ export class ProfilePage {
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
     console.log(this.userPhotoUrl);
   }
-
-
-
 
 
   ionViewDidLoad() {
