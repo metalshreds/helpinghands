@@ -16,7 +16,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class SearchPage {
 
   items;
-
+  /*
+  / Search page:
+  / normal search : search whole word:
+  / advance search : (use a load/activesheet)
+  /           1. search user only(toggle maybe)
+  /           2. search task only
+  /                  
+  / ranking method: 
+  /           1. by time
+  /           2. by rating
+  /           3. by relavence (need figure out how to calculate it)
+  /           4. by location (use google map api)
+  */
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.initializeItems();
 

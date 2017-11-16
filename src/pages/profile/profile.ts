@@ -5,6 +5,7 @@ import { ProfileProvider } from '../../providers/profile/profile'
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import firebase from 'firebase';
+import { NgZone } from '@angular/core'
 /**
  * Generated class for the ProfilePage page.
  *
@@ -30,6 +31,7 @@ export class ProfilePage {
               private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
+              private _zone : NgZone,
               )
   {
     //get user node specificed by current userId.
@@ -39,6 +41,9 @@ export class ProfilePage {
         if (!doc.exists) {
           console.log('No such document!');
         } else {
+          this._zone.run(()=>{
+            this.userPhotoUrl = this.curUserToken.photoURL;
+          })
           console.log('Document data:', doc.data());
           for(const field in doc.data())
           {
