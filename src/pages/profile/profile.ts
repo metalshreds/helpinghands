@@ -5,7 +5,7 @@ import { ProfileProvider } from '../../providers/profile/profile'
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import firebase from 'firebase';
-import { NgZone } from '@angular/core'
+import { NgZone, OnInit } from "@angular/core";
 /**
  * Generated class for the ProfilePage page.
  *
@@ -32,6 +32,7 @@ export class ProfilePage {
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
               private _zone : NgZone,
+
               )
   {
     //get user node specificed by current userId.
@@ -41,9 +42,6 @@ export class ProfilePage {
         if (!doc.exists) {
           console.log('No such document!');
         } else {
-          this._zone.run(()=>{
-            this.userPhotoUrl = this.curUserToken.photoURL;
-          })
           console.log('Document data:', doc.data());
           for(const field in doc.data())
           {
@@ -51,6 +49,12 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
+            
+            this._zone.run(()=>{
+              this.userPhotoUrl = this.curUserToken.photoURL;
+              console.log(this.curUserToken.photoURL);
+            });
+          
         }
       })
       .catch(err => {
@@ -60,14 +64,13 @@ export class ProfilePage {
     console.log("image ", this.curUserToken.photoURL);
   }
 
+
   expandPic(){
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
     console.log(this.userPhotoUrl);
   }
 
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
-  }
+
 
 }

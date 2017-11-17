@@ -148,9 +148,9 @@ export class EditProfilePage {
          }).catch(function(error) {
           console.log("native update has an error");
         });
+        this.editProfileForm.reset();
+        this.navCtrl.push( ProfilePage );
       }
-      this.editProfileForm.reset();
-      this.navCtrl.push( ProfilePage );
     }
     else {
       const alert = this.alertCtrl.create({
@@ -239,9 +239,12 @@ export class EditProfilePage {
           this.curUserToken.updateProfile({
             displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
             photoURL: downloadURL,
+            
           }).catch(function(error) {
             console.log("native update has an error");
           });
+          this.editProfileForm.reset();
+          this.navCtrl.push( ProfilePage );
         });
       }
       else

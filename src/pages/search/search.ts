@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import * as algoliasearch from 'algoliasearch';
 /**
  * Generated class for the SearchPage page.
  *
@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class SearchPage {
 
   items;
+
   /*
   / Search page:
   / normal search : search whole word:
@@ -29,6 +30,19 @@ export class SearchPage {
   /           3. by relavence (need figure out how to calculate it)
   /           4. by location (use google map api)
   */
+
+  functions = require('firebase-functions')
+  ALGOLIA_ID = this.functions.config().algolia.app_id;
+  ALGOLIA_ADMIN_KEY = this.functions.config().algolia.api_key;
+  
+  ALGOLIA_INDEX_NAME = "notes";
+  client = algoliasearch(this.ALGOLIA_ID, this.ALGOLIA_ADMIN_KEY);
+
+  //https://github.com/firebase/functions-samples/blob/master/fulltext-search/functions/index.js
+  //https://stackoverflow.com/questions/45274485/how-to-integrate-algolia-in-ionic3
+  //https://github.com/algolia/algoliasearch-client-javascript
+  //https://firebase.google.com/docs/firestore/solutions/search?authuser=2
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.initializeItems();
 
@@ -36,47 +50,12 @@ export class SearchPage {
 
     initializeItems() {
       this.items = [
-        'Amsterdam',
-        'Bogota',
-        'Buenos Aires',
-        'Cairo',
-        'Dhaka',
-        'Edinburgh',
-        'Geneva',
-        'Genoa',
-        'Glasglow',
-        'Hanoi',
-        'Hong Kong',
-        'Islamabad',
-        'Istanbul',
-        'Jakarta',
-        'Kiel',
-        'Kyoto',
-        'Le Havre',
-        'Lebanon',
-        'Lhasa',
-        'Lima',
-        'London',
-        'Los Angeles',
-        'Madrid',
-        'Manila',
-        'New York',
-        'Olympia',
-        'Oslo',
-        'Panama City',
-        'Peking',
-        'Philadelphia',
-        'San Francisco',
-        'Seoul',
-        'Taipeh',
-        'Tel Aviv',
-        'Tokio',
-        'Uelzen',
-        'Washington'
+      
       ];
     }
 
     getItems(ev) {
+      //https://firebase.google.com/docs/firestore/solutions/search?authuser=2
       // Reset items back to all of the items
       this.initializeItems();
 
