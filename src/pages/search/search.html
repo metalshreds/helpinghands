@@ -10,19 +10,48 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Search Tasks</ion-title>
+    <ion-title>Search</ion-title>
   </ion-navbar>
-
+  <ion-row>
+      <ion-searchbar (ionInput)="getItems()"></ion-searchbar>
+  </ion-row>
+  
+  <ion-toolbar no-border-top>
+      <ion-segment [(ngModel)]="SearchResult">
+        <ion-segment-button value="Everything">
+          All
+        </ion-segment-button>
+        <ion-segment-button value="User">
+          User
+        </ion-segment-button>
+        <ion-segment-button value="Task">
+          Task
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{ item }}
-    </ion-item>
-  </ion-list>
+    <div [ngSwitch]="SearchResult">
+        <ion-list *ngSwitchCase="'Everything'">
+            <ion-item *ngFor="let item of items">
+                {{ item }}
+              </ion-item>
+        </ion-list>
+        
+        <ion-list *ngSwitchCase="'User'">
+        </ion-list>
+        
+        <ion-list *ngSwitchCase="'Task'">
+        </ion-list>
+    
+    
+    </div>
+
+
+
 
 </ion-content>

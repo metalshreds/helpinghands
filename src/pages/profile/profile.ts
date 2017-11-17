@@ -50,7 +50,7 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-
+            
             this.zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);

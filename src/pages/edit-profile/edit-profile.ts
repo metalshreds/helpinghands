@@ -151,7 +151,6 @@ export class EditProfilePage {
         this.editProfileForm.reset();
         this.navCtrl.push( ProfilePage );
       }
-      
     }
     else {
       const alert = this.alertCtrl.create({
