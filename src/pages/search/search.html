@@ -35,22 +35,7 @@
 
 
 <ion-content padding>
-<<<<<<< HEAD
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-item>
-    <ion-label> Search User</ion-label>
-    <ion-toggle checked="false"></ion-toggle>
-  </ion-item>
-  <ion-item>
-    <ion-label> Search Task</ion-label>
-    <ion-toggle checked="false"></ion-toggle>
-  </ion-item>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{ item }}
-    </ion-item>
-  </ion-list>
-=======
+
     <div [ngSwitch]="SearchResult">
         <ion-list *ngSwitchCase="'Everything'">
             <ion-item *ngFor="let item of items">
@@ -67,8 +52,5 @@
     
     </div>
 
-
-
->>>>>>> 900d23a618a7bb361fd3fafbf2b1cc1cf5c44138
 
 </ion-content>
