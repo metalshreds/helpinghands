@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as algoliasearch from 'algoliasearch';
+import firebase from 'firebase';
+
 /**
  * Generated class for the SearchPage page.
  *
@@ -15,24 +17,24 @@ import * as algoliasearch from 'algoliasearch';
 })
 export class SearchPage {
 
-  items;
-  functions = require('firebase-functions')
-  ALGOLIA_ID = this.functions.config().algolia.app_id;
-  ALGOLIA_ADMIN_KEY = this.functions.config().algolia.api_key;
+  items;  
   
-  ALGOLIA_INDEX_NAME = "notes";
-  client = algoliasearch(this.ALGOLIA_ID, this.ALGOLIA_ADMIN_KEY);
-
+  
+  ALGOLIA_INDEX_NAME = "users";
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6');
+  index = this.client.initIndex('users');
+  db = firebase.firestore();
   //https://github.com/firebase/functions-samples/blob/master/fulltext-search/functions/index.js
   //https://stackoverflow.com/questions/45274485/how-to-integrate-algolia-in-ionic3
   //https://github.com/algolia/algoliasearch-client-javascript
   //https://firebase.google.com/docs/firestore/solutions/search?authuser=2
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.initializeItems();
-
   }
 
     initializeItems() {
+      var getDoc = this.db.collection('users');
+      console.log(getDoc);
       this.items = [
       
       ];
