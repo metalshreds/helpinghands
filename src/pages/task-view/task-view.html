@@ -15,6 +15,8 @@
 
 <ion-content padding>
 
+  <button ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask)' >Edit</button>
+
   <div *ngIf ="selectedTask">
     <h1>{{selectedTask.name}}</h1>
     <h4>Requested by <button ion-button class = "user-button"clear mode="ios"> {{selectedTask.owner}}</button></h4>
