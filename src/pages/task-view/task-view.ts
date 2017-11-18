@@ -25,7 +25,9 @@ export class TaskViewPage {
     console.log('ionViewDidLoad TaskViewPage');
   }
 
-  editTaskClicked(event, selectedTask){
-    this.navCtrl.push(TaskEditPage, selectedTask)
-  }
+  // editTaskClicked(event, selectedTask){
+  //    this.navCtrl.push(TaskEditPage, {
+  //      selectedTask
+  //    }
+  // }
 }
