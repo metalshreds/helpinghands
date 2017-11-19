@@ -25,6 +25,8 @@ import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { cloudProvider } from "../providers/cloudbase";
 import { AngularFirestoreModule} from "angularfire2/firestore";
+import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
+import { CommentPopover } from "../pages/task-edit/comment-popover"
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -50,7 +52,8 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    CommentPopoverModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +67,8 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     DashboardPage,
     ProfilePage,
     TaskEditPage,
-    TaskViewPage
+    TaskViewPage,
+    CommentPopover,
   ],
   providers: [
     StatusBar,
@@ -75,6 +79,7 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     CameraProvider,
     Camera,
     PhotoViewer,
-    cloudProvider]
+    cloudProvider
+  ]
 })
 export class AppModule {}
