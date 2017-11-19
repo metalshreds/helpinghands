@@ -4,8 +4,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
+<<<<<<< HEAD
 import { NgZone, OnInit } from "@angular/core";
+=======
+import {TaskObjectProvider} from "../../providers/task-object/task-object";
+>>>>>>> 9d44566ddd909bbd4600caa2bc66bc29105cf28c
 /**
  * Generated class for the ProfilePage page.
  *
@@ -61,13 +66,21 @@ export class ProfilePage {
         console.log('Error getting document', err);
       });
 
+
+
     console.log("image ", this.curUserToken.photoURL);
+
+
   }
 
 
   expandPic(){
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
     console.log(this.userPhotoUrl);
+  }
+
+  goToEditProfile(event){
+    this.navCtrl.push(EditProfilePage);
   }
 
 
