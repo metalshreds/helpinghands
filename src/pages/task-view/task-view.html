@@ -15,13 +15,26 @@
 
 <ion-content padding>
 
-  <div>
-    <h1>{{selectedTask.name}}</h1>
-    <h4>Requested by <button ion-button class = "user-button"clear mode="ios"> {{selectedTask.owner}}</button></h4>
-    <h4>Start Time: {{selectedTask.timeStart}}</h4>
-    <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
-    <h4>Task Summary: {{selectedTask.introduction}}</h4>
+  <button *ngIf="userIsTaskOwner" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask)' >Edit</button>
 
-  </div>
+  <button *ngIf="!userIsTaskOwner" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask, selectedTask.owner, curUserToken)' >Request</button>
+
+  <ion-item>
+    <div *ngIf ="selectedTask">
+      <h1 class = "task-name">{{selectedTask.name}}</h1>
+      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, userId)"> {{selectedTask.owner}}</button></h4>
+      <h4 class="task-summary wrap">{{selectedTask.introduction}}</h4>
+      <h4> </h4>
+      <h4>Start Time: {{selectedTask.timeStart}}</h4>
+      <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
+    </div>
+  </ion-item>
+
+  <!--<ion-list *ng-show="userIsTaskOwner">-->
+    <!--<button ion-item *ngFor="let user of suggestedUsers" (click) = 'suggestedUserClicked($event, user, selectedTask.owner, selectedTask)'>-->
+      <!--<h1>{{user.name}}</h1>-->
+    <!--</button>-->
+  <!--</ion-list>-->
+
 
 </ion-content>

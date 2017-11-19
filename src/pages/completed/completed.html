@@ -19,13 +19,24 @@
 <ion-content padding>
 
 
+  <!--<ion-list>-->
+    <!--<button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>-->
+
+      <!--<h1>{{task.name}}</h1>-->
+      <!--<h2>{{task.timeStart}}</h2>-->
+      <!--<h3>Expected to last {{task.timeDuration}} hours</h3>-->
+    <!--</button>-->
+  <!--</ion-list>-->
+
+
   <ion-list>
-    <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
+    <div ion-item *ngFor="let task of tasks">
 
       <h1>{{task.name}}</h1>
       <h2>{{task.timeStart}}</h2>
       <h3>Expected to last {{task.timeDuration}} hours</h3>
-    </button>
+    </div>
   </ion-list>
+
 </ion-content>
 
