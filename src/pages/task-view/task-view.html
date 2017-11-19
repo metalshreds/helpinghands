@@ -15,7 +15,6 @@
 
 <ion-content padding>
 
-<<<<<<< HEAD
   <button *ngIf="userIsTaskOwner" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask)' >Edit</button>
 
   <button *ngIf="!userIsTaskOwner" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask, selectedTask.owner, curUserToken)' >Request</button>
