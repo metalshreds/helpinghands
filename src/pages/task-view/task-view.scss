@@ -5,3 +5,33 @@ page-task-view {
 .user-button{
   margin-top: -8px;
 }
+
+.task-name{
+  text-align: center;
+  font-size: 300%;
+  color: #3f7cc6;
+  text-decoration: underline;
+  padding-top: 10px;
+}
+
+.requesting-user{
+  text-align: center;
+  font-size: 120%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.wrap {
+  white-space: normal;
+  word-wrap: normal !important;
+}
+
+.task-summary-name{
+  font-weight: bold;
+}
+
+.task-summary{
+  text-align: center;
+  text-wrap: normal;
+}
+
