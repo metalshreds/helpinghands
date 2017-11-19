@@ -20,8 +20,16 @@
         "@angular/http": "4.1.3",
         "@angular/platform-browser": "4.1.3",
         "@angular/platform-browser-dynamic": "4.1.3",
+<<<<<<< HEAD
         "@google-cloud/firestore": "^0.9.0",
         "@ionic-native/camera": "^4.4.0",
+=======
+<<<<<<< Updated upstream
+=======
+        "@google-cloud/firestore": "^0.9.0",
+        "@ionic-native/camera": "^4.4.2",
+>>>>>>> Stashed changes
+>>>>>>> ariel
         "@ionic-native/core": "3.12.1",
         "@ionic-native/native-storage": "^4.4.0",
         "@ionic-native/photo-viewer": "^4.4.0",

@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HelpingHands } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CreatePage } from "../pages/create/create";
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -38,6 +39,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
+    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
@@ -63,6 +65,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
+    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
