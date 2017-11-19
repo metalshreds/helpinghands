@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
-import { User } from '../../models/user';
+import firebase from 'firebase';
 import {AngularFireAuth} from "angularfire2/auth";
+import {ProfilePage} from "../profile/profile";
+import { EditProfilePage } from "../edit-profile/edit-profile";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-home',
@@ -17,19 +20,18 @@ export class HomePage {
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController
-  ) { }
+  ) {
+    firebase.auth().onAuthStateChanged(user=> {
+      if(user == null)
+        this.navCtrl.push(LoginPage);
+      else if(user.uid && !(user.displayName === null))
+        this.navCtrl.push(ProfilePage);
+      else
+        this.navCtrl.push(EditProfilePage);
 
-  update = function(firstName, lastName)
-  {
-    var user = {} as User;
-    var result = this.AFcurUser.auth.currentUser;
-    if(result)
-    {
-      console.log(result);
-      user.lastName = lastName;
-      user.firstName = firstName;
-      user.userId = result.uid;
-      console.log(user);
-    }
+    })
+
   }
+
+
 }

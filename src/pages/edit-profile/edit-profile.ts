@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
-import { User } from '../../models/user';
+import { IonicPage, NavController, NavParams,
+  Platform, ActionSheetController, AlertController, App, LoadingController } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
-import { TaskObjectProvider } from '../../providers/task-object/task-object'; //provider
-import {AngularFireAuth} from "angularfire2/auth";
-import { AngularFireDatabase} from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
+import { cloudProvider } from '../../providers/cloudbase'
 import firebase from 'firebase';
- /**
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
+import { emailValidator} from '../../validators/emailValidator';
+import { nameValidator} from '../../validators/nameValidator';
+import { CameraProvider } from '../../providers/camera';
+
+
+/**
  * Generated class for the EditProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
@@ -20,70 +26,247 @@ import firebase from 'firebase';
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-
+  curUserToken = this.AFcurUser.auth.currentUser;
+  CURRENT_USER = {} as ProfileProvider;
+  editProfileForm : FormGroup;
+  storage = firebase.storage();
+  chosenPicture: any;
+  pictureChanged = false;
+  db = firebase.firestore();
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
-    //private AFdatabase: AngularFireDatabase,
+    private AFdatabase: AngularFireDatabase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
     public navCtrl: NavController,
-  ) { }
-  result = this.AFcurUser.auth.currentUser;   //get current logged in user
-   //TODO figure out a way to replace placehold value to the database value after the profile been created.
-  testValue = "first name";                   //test value for input field.
+    public cloudBaseModule : cloudProvider,
+    public formBuilder : FormBuilder,
+    public actionsheetCtrl: ActionSheetController,
+    public cameraProvider: CameraProvider,
+    public platform: Platform,
+    //public currUser : ProfileProvider
+  ) {
 
+    this.editProfileForm = formBuilder.group({
+      lastName : ['', Validators.compose([nameValidator.isValid, Validators.required])],
+      firstName :  ['', Validators.compose([nameValidator.isValid, Validators.required])],
+      phone : [''],
+      introduction : ['', Validators.required],
+      travelRadius : [''],
+      zipCode : [''],
+    });
+
+
+    var userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    userRef.get()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+          for(const field in doc.data())
+          {
+              //have to be careful that we have to store exactly same property
+              //  in userProvider obeject and users node.
+              this.CURRENT_USER[field] = doc.data()[field];
+          }
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+      });
+    console.log("name is ", this.curUserToken.displayName);
+  };
+
+  //
+  // writeUp = function(message : any)
+  // {
+  //   //document.getElementById("FN").textContent = message.firstName;
+  // }
   /*
   / This funtion will take all the user inputs and update it to corresponding node.
   */
-  update = function(firstName, lastName)
+  update = function()
   {
-    if(this.result)
+
+    //if firstName is invalid
+    if(!this.editProfileForm.controls.firstName.valid)
+    {
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid first name',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    //if lastname is invalid
+    else if(!this.editProfileForm.controls.lastName.valid)
+    {
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid last name',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    //if introduction is invalid
+    else if(!this.editProfileForm.controls.introduction.valid)
+    {
+
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid introduction',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else if(this.curUserToken)
     {
       //initialize new User object using input lastname, firstname and current author's uid and email.
-      var newUser = new ProfileProvider(lastName, firstName, this.result.uid, this.result.email, "intro", [true]);
-      newUser.createTask();                                         //create test task list
+      var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
+        this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
+        [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
 
-      this.singleStringUpdate('lastName', lastName);    //update user's last name to the server.
-      this.singleStringUpdate('firstName', firstName);
-      //TODO modularize following code
-      var userRef = firebase.database().ref('user/'+ this.result.uid + '/' + 'owenedTask'); //get node reference.
-      for( let ownedTask of newUser.oTask) {
-        var ownedTaskRef = userRef.push().key;    //get new key value for a new entry of current path
-        var updates = {};                         // declare update var to hold update data.
-        updates['user/' + this.result.uid + '/' + 'owenedTask' + '/' + ownedTaskRef] = ownedTask; //set path for current task
-        firebase.database().ref().update(updates);                                      // update to specified path
-      }                                                                                  // in database.
+      // for simplicity i wrote an abstract function to update each field.
+      // a crash during multiple independent writes may cause inconsistency in database,
+      //  but that issue is beyond our scope at this time. Will come back to this and using
+      //  batch or write a function to update the whole profile.
+      this.cloudBaseModule.singleStringUpdate("lastName", newUser.lastName, newUser.userId);
+      this.cloudBaseModule.singleStringUpdate("firstName", newUser.firstName, newUser.userId);
+      this.cloudBaseModule.singleStringUpdate("introduction", newUser.introduction, newUser.userId);
+      if(this.pictureChanged)
+        this.updateUserPhoto();
+      else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
+      {
+        this.curUserToken.updateProfile({
+          displayName: newUser.lastName + newUser.firstName,
+          photoURL: this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
+         }).catch(function(error) {
+          console.log("native update has an error");
+        });
+      }
+      this.editProfileForm.reset();
+      this.navCtrl.push( ProfilePage );
     }
+    else {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'login first',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+  }
+
+
+  changePicture() {
+    const actionsheet = this.actionsheetCtrl.create({
+      title: 'upload picture',
+      buttons: [
+        {
+          text: 'camera',
+          icon: !this.platform.is('ios') ? 'camera' : null,
+          handler: () => {
+            this.takePicture();
+          }
+        },
+        {
+          text: !this.platform.is('ios') ? 'gallery' : 'camera roll',
+          icon: !this.platform.is('ios') ? 'image' : null,
+          handler: () => {
+            this.getPicture();
+          }
+        },
+        {
+          text: 'cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: 'destructive',
+          handler: () => {
+            console.log('the user has cancelled the interaction.');
+          }
+        }
+      ]
+    });
+    this.pictureChanged = true;
+    return actionsheet.present();
+  }
+
+  takePicture() {
+    const loading = this.loadingCtrl.create();
+
+    loading.present();
+    return this.cameraProvider.getPictureFromCamera().then(picture => {
+      if (picture) {
+        this.chosenPicture = picture;
+        this.pictureChanged = true;
+      }
+      loading.dismiss();
+    }, error => {
+      alert(error);
+    });
+  }
+
+  getPicture() {
+    const loading = this.loadingCtrl.create();
+
+    loading.present();
+    return this.cameraProvider.getPictureFromPhotoLibrary().then(picture => {
+      if (picture) {
+        this.chosenPicture = picture;
+        this.pictureChanged = true;
+      }
+      loading.dismiss();
+    }, error => {
+      alert(error);
+    });
+  }
+
+  updateUserPhoto(){
+    var imageRef = this.storage.ref('userPic/' + this.curUserToken.uid + '.jpg');
+    var metadata = {
+      contentType: 'image/jpeg'
+    };
+      if(!(this.chosenPicture == null)){
+        imageRef.putString(this.chosenPicture, firebase.storage.StringFormat.DATA_URL).then((snapshot)=>
+        {
+          var downloadURL = snapshot.downloadURL;
+          console.log('URL is', downloadURL);
+          this.curUserToken.updateProfile({
+            displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
+            photoURL: downloadURL,
+          }).catch(function(error) {
+            console.log("native update has an error");
+          });
+        });
+      }
+      else
+      {
+        console.log("no pic chosen, something is wrong");
+      }
   }
 
   /*
-  / This function is to add updateMessage to the specified sub path of the user node
-  / that represents current user.
+  /  this function will find user node using userId and return value
+  /  of the node
    */
-  singleStringUpdate = function(subPath : string, updateMessage : string)
+  getUserProfile = function(userId : string, profile) : any
   {
-    var updateMsg = {}                                                        //declare and initialize updateMsg variable
-    updateMsg['user/' + this.result.uid + '/' + subPath] = updateMessage;     //set correct path using subPath and assign update value
-    firebase.database().ref().update(updateMsg);                              // updating to firebase using firebase API
-
-  }
-
-   /*
-   /  this function will find user node using userId and return value
-   /  of the node
-    */
-  getUserProfile = function(userId : string)
-  {
+    var user;
     var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value').then(function(snapshot)         // read node value once use firebase API
+    userRef.once('value', function(snapshot)         // read node value once use firebase API
     {
-      var user = snapshot.val()                                               //return node value.
+      user = snapshot.val()                                               //return node value.
+      profile(user);
       return user;
     })
   }
 
 
-}
 
+
+}

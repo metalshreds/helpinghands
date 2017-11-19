@@ -12,9 +12,10 @@
     </button>
     <ion-title>Edit Task<ion-icon name="brush"></ion-icon> </ion-title>
   </ion-navbar>
+</ion-header>
 
 
-
+  <ion-content padding>
   <ion-list no-border>
 
     <ion-item>
@@ -22,7 +23,7 @@
       <ion-icon name='body' item-start></ion-icon>
     </ion-item>
 
-    <button ion-button block>Add a Picture</button>
+    <button ion-button (click)="changePicture()" block>Add a Picture</button>
 
     <ion-item>
       <ion-icon name='leaf' item-start></ion-icon>
@@ -30,40 +31,89 @@
     </ion-item>
 
     <ion-item>
-      <ion-icon name='flask' item-start></ion-icon>
-      <ion-label style="color: black">
-        Skills
-      </ion-label>
-      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="Java" selected="true">Java</ion-option>
-        <ion-option value="Python">Python</ion-option>
-        <ion-option value="SQL" selected="true">SQL</ion-option>
-        <ion-option value="R">R</ion-option>
-        <ion-option value="HTML">HTML</ion-option>
-        <ion-option value="CSS">CSS</ion-option>
-        <ion-option value="C++">C++</ion-option>
-        <ion-option value="C">C</ion-option>
-        <ion-option value="Mathlab">Mathlab</ion-option>
-        <ion-option value="Firebase">Firebase</ion-option>
-      </ion-select>
-
-
+      <ion-label>Skill Selection</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-icon name='school' item-start></ion-icon>
+      <ion-icon name='desktop' item-start></ion-icon>
       <ion-label style="color: black">
-        Recommended Major
+        Computer Sciences
       </ion-label>
-      <ion-select [(ngModel)]="major" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
-        <ion-option value="Math">Math</ion-option>
-        <ion-option value="Business" selected="true">Business</ion-option>
-        <ion-option value="Art">Art</ion-option>
-
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Programming">Programming</ion-option>
+        <ion-option value="Excel">Excel</ion-option>
+        <ion-option value="Hardware">Hardware</ion-option>
       </ion-select>
     </ion-item>
 
+    <ion-item>
+      <ion-icon name='construct' item-start></ion-icon>
+      <ion-label style="color: black">
+        Mechanical
+      </ion-label>
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Welding">Welding</ion-option>
+        <ion-option value="Mechanic">Mechanic</ion-option>
+        <ion-option value="Soldering">Soldering</ion-option>
+        <ion-option value="Drafting">Drafting</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='brush' item-start></ion-icon>
+      <ion-label style="color: black">
+        Art
+      </ion-label>
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Graphic Design">Graphic Design</ion-option>
+        <ion-option value="Photography">Photography</ion-option>
+        <ion-option value="Drawing and Painting">Drawing and Painting</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-label style="color: black">
+        Natural Sciences
+      </ion-label>
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Biology">Biology</ion-option>
+        <ion-option value="Physics">Physics</ion-option>
+        <ion-option value="Chemistry">Chemistry</ion-option>
+        <ion-option value="Agriculture">Agriculture</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='briefcase' item-start></ion-icon>
+      <ion-label style="color: black">
+        Business
+      </ion-label>
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Management">Management</ion-option>
+        <ion-option value="Accounting">Accounting</ion-option>
+        <ion-option value="Economics">Economics</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='globe' item-start></ion-icon>
+      <ion-label style="color: black">
+        Language
+      </ion-label>
+      <ion-select [(ngModel)]="skills" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="Chinese">Chinese</ion-option>
+        <ion-option value="English">English</ion-option>
+        <ion-option value="German">German</ion-option>
+        <ion-option value="Japanese">Japanese</ion-option>
+        <ion-option value="Portuguese">Portuguese</ion-option>
+        <ion-option value="Russian">Russian</ion-option>
+        <ion-option value="Spanish">Spanish</ion-option>
+        <ion-option value="Other">Other</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item></ion-item>
 
     <ion-item>
       <ion-icon name='timer' item-start>   </ion-icon>
@@ -131,22 +181,16 @@
       <ion-label style="color: black">
         Compensation
       </ion-label>
-      <ion-icon name='logo-yen' item-start></ion-icon>
+      <ion-icon name='cash' item-start></ion-icon>
       <ion-input type="number" placeholder="" value=""></ion-input>
       <ion-toggle checked="false"></ion-toggle>
     </ion-item>
 
-
-
   </ion-list>
 
-  <button ion-button style="background-color: red" block>Discard</button>
-  <button ion-button style="background-color: #2ec95c" block>Save</button>
-
-
-</ion-header>
-
-
-<ion-content padding>
+  <button ion-button style="background-color: red" block>Discard Changes</button>
+  <button ion-button style="background-color: #2ec95c" block>Save Changes</button>
+  <button ion-button style="background-color: blue" block (click)="presentPopover($event)">This task is completed</button>
+  <button ion-button style="background-color: black" block>Delete this task</button>
 
 </ion-content>

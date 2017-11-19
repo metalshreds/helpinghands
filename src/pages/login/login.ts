@@ -6,15 +6,18 @@
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+import { NativeStorage } from '@ionic-native/native-storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController, Platform } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
-import { HomePage } from '../home/home'
-import { User } from '../../models/user';
-import {ProfilePage} from '../profile/profile';
+import { HomePage } from '../home/home';
+import { ProfilePage } from '../profile/profile';
 import {AngularFireAuth} from "angularfire2/auth";
 import {EditProfilePage} from "../edit-profile/edit-profile";
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
+import { emailValidator} from '../../validators/emailValidator';
+import { passwordValidator } from '../../validators/passwordValidator';
+
 //@IonicPage()
 @Component({
 
@@ -23,30 +26,50 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 })
 export class LoginPage {
 
-  user = {} as User;    //initialize an object as user.
-
-  public loginForm: any;
-
+  public loginForm: FormGroup;
 
   constructor(
     private authp: AngularFireAuth,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public app: App,
-    public navCtrl: NavController
-  ) { }
+    public navCtrl: NavController,
+    public formBuilder : FormBuilder,
+    private plt : Platform
+  ) {
+    this.loginForm = formBuilder.group({
+      email : ['', Validators.compose([emailValidator.isValid])],
+      password : ['',Validators.required]
+    });
+    this.plt.ready()
+  }
 
-  login = async function(user: User) {
-    var _this = this;
+
+
+  /*
+  / This function takes user input and create an account
+  / using that inputs in firebase. It will navigate user
+  / to profile page on success, or display an error message
+  / on failure.
+   */
+  login = async function() {
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
+    console.log(this.loginForm.value.email);
+    if(!this.loginForm.valid)
+    {
+      console.log("invalid input here");
+    }
+    this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
+      .then(result=>{
+        this.loginForm.reset();
+        //TODO sent user verification email, add verification checking at login page
+        //https://firebase.google.com/docs/auth/web/manage-users
 
-    const result = this.authp.auth.signInWithEmailAndPassword(user.email, user.password)
-      .then(function(){
-        _this.navCtrl.push(EditProfilePage);
+        this.navCtrl.push(EditProfilePage);
       })
       .catch(function(error)
       {
@@ -59,12 +82,19 @@ export class LoginPage {
 
   }
 
+  /*
+  / This function navigate user to the sign up page
+   */
   goToSignup() {
     this.navCtrl.push(SignupPage);
   }
 
+  /*
+  / This function navigate user to the edit profile page
+  / solely for testing.
+   */
   goToHome() {
-    this.navCtrl.push(EditProfilePage);
+    this.navCtrl.push(HomePage);
   }
 
   /*
@@ -72,8 +102,8 @@ export class LoginPage {
   /email to user's register email using firebase's built-in
   /function.  **this piece of code is from firebase document.
    */
-  goToResetPassword(user : User) {
-    this.authp.auth.sendPasswordResetEmail(user.email).then(function() {
+  goToResetPassword() {
+    this.authp.auth.sendPasswordResetEmail(this.loginForm.value.email).then(function() {
       // Password Reset Email Sent!
       // [START_EXCLUDE]
       alert('Password Reset Email Sent!');
