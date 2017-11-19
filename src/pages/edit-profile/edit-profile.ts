@@ -130,7 +130,7 @@ export class EditProfilePage {
       //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
-        [true,false,false,true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
+        [true,false,false,true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius, 1);
 
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,
@@ -252,7 +252,7 @@ export class EditProfilePage {
           this.curUserToken.updateProfile({
             displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
             photoURL: downloadURL,
-            
+
           }).catch(function(error) {
             console.log("native update has an error");
           });
