@@ -8,7 +8,7 @@ import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
-
+import * as algoliasearch from 'algoliasearch';
 
 /**
  * Generated class for the SignupPage page.
@@ -25,7 +25,8 @@ import { passwordValidator } from '../../validators/passwordValidator';
 export class SignupPage {
 
   public signUpForm : FormGroup;
-
+  ALGOLIA_INDEX_NAME = "notes";
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   db = firebase.firestore();
   constructor(
     private authp: AngularFireAuth,
@@ -102,7 +103,15 @@ export class SignupPage {
               lastName : '',
               firstName : '',
             });
-            this.navCtrl.push(EditProfilePage);
+            docRef.get().then(doc=>{
+              var index = this.client.initIndex('users');
+              var user = doc.data();
+              user.objectID = result.uid;
+              index.saveObject(user);
+              this.navCtrl.push(EditProfilePage);
+            })
+          
+            
           })
           .catch(function (error)        //on failure, display the error massage.
           {

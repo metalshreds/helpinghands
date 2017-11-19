@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for valid
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
 import { CameraProvider } from '../../providers/camera';
-
+import * as algoliasearch from 'algoliasearch';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -33,6 +33,7 @@ export class EditProfilePage {
   chosenPicture: any;
   pictureChanged = false;
   db = firebase.firestore();
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -149,7 +150,18 @@ export class EditProfilePage {
           console.log("native update has an error");
         });
         this.editProfileForm.reset();
-        this.navCtrl.push( ProfilePage );
+
+        //TODO moduliraze following code maybe
+        var docRef = this.db.collection('users').doc(newUser.userId);
+        docRef.get().then(doc=>{
+          var index = this.client.initIndex('users');
+          var user = doc.data();
+          user.objectID = newUser.userId;
+          index.saveObject(user);
+          this.navCtrl.push(ProfilePage);
+        })
+
+
       }
     }
     else {

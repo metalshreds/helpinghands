@@ -23,6 +23,7 @@
     "@google-cloud/firestore": "^0.9.0",
     "@ionic-native/camera": "^4.4.2",
     "@ionic-native/core": "3.12.1",
+    "@ionic-native/http": "^4.4.2",
     "@ionic-native/native-storage": "^4.4.0",
     "@ionic-native/photo-viewer": "^4.4.0",
     "@ionic-native/splash-screen": "3.12.1",
@@ -32,6 +33,7 @@
     "angularfire2": "^5.0.0-rc.3",
     "com-sarriaroman-photoviewer": "^1.1.11",
     "cordova-android": "^6.2.3",
+    "cordova-plugin-advanced-http": "^1.8.1",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.6",
@@ -43,7 +45,6 @@
     "firebase-admin": "^5.4.0",
     "firebase-functions": "^0.7.3",
     "g": "^2.0.1",
-    "ionic": "^3.15.2",
     "ionic-angular": "3.6.1",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.1.4",
+    "ionic": "3.18.0",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",
@@ -65,7 +67,8 @@
       "ionic-plugin-keyboard": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-advanced-http": {}
     },
     "platforms": [
       "android"
