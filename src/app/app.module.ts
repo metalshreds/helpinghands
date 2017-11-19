@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { CreatePage } from "../pages/create/create";
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,6 +34,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     SignupPage,
     DashboardPage,
     SearchPage,
+    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
@@ -54,6 +56,7 @@ import { TaskEditPage } from "../pages/task-edit/task-edit";
     SignupPage,
     DashboardPage,
     SearchPage,
+    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,

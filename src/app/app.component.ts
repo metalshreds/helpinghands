@@ -11,6 +11,7 @@ import { DashboardPage} from "../pages/dashboard/dashboard";
 import { SearchPage} from '../pages/search/search';
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
+import { CreatePage } from "../pages/create/create";
 
 @Component({
   templateUrl: 'app.html'    //TODO change app.html's content. currently it has sidebar created.
@@ -43,6 +44,7 @@ export class MyApp {
       { title: 'Profile', component: ProfilePage },
       { title: 'Task Edit', component: TaskEditPage },
       { title: 'Edit Profile', component: EditProfilePage },
+      { title: 'Create Task', component: CreatePage },
 
 
     ];
