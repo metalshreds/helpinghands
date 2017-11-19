@@ -1,3 +1,20 @@
 page-search {
 
+
+    ion-segment {
+        padding: 0px 12px;
+        opacity: 1;
+        position: relative;
+        top: 1px;
+    }
+    ion-row {
+        align-items: center;
+        text-align: center;
+      }
+    ion-content {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-color: transparent;
+    }
 }

@@ -20,10 +20,11 @@ export class cloudProvider {
 
     //data hierarchy
     //user(collection)
-    //      userA(doc) (userId)
-    //        lastName:
-    //        firstName:
-    //        etc..
+    //      userA(doc) : userId
+    //           lastName:
+    //           firstName:
+    //           etc..
+    //           skills :{ software : true, hardware : true, ... }
     //           OwnedList(collection)
     //                list1(doc)
     //                    listinfo:
@@ -37,7 +38,14 @@ export class cloudProvider {
     //             ...
     ////////////////////////////////
     //task(collection)
-    //
+    //      TaskA (doc) : task ID    
+    //        taskName:
+    //        owner: 
+    //        etc...
+    //        participator(collection)
+    //            user1(doc)
+    //      TaskB (doc) : task ID
+
 
   /*
   / This function is to add updateMessage to the specified sub path of the user node

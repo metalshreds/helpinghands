@@ -1,15 +1,47 @@
 page-edit-profile {
 
   ion-item {
-
     background-color: #f6f6f6;
     opacity: 0.7;
     font-size: 0.9em;
-
   }
 
   ion-item:placeholder-shown {
 
   }
 
+  .title {
+    text-align: center;
+  }
+
+  .avatar {
+    text-align: center;
+  }
+
+  .avatarCol{
+    background-color: $secondary-color;
+
+  }
+
+  .editImageButton {
+    text-align: center;
+    float:right;
+    margin-top: -50px;
+  }
+
+  .grid{
+
+    padding:0;
+  }
+
+  img {
+    border:0;
+    max-width:140px;
+    border-radius:50%;
+  }
+
+  .scroll-content{
+    overflow-y: hidden;
+
+  }
 }
