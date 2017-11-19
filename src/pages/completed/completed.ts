@@ -15,6 +15,9 @@ import {TaskViewPage} from "../task-view/task-view";
   selector: 'page-completed',
   templateUrl: 'completed.html',
 })
+
+
+
 export class CompletedPage {
 
   tasks: Array<TaskObjectProvider>;

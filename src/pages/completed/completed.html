@@ -11,7 +11,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Completed</ion-title>
-  </ion-navbar>
+  </ion-navbar>√
 
 </ion-header>
 
@@ -30,13 +30,171 @@
 
 
   <ion-list>
-    <div ion-item *ngFor="let task of tasks">
 
-      <h1>{{task.name}}</h1>
-      <h2>{{task.timeStart}}</h2>
-      <h3>Expected to last {{task.timeDuration}} hours</h3>
-    </div>
+  <ion-card>""
+    <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
+
+      <ion-item style="background-color: #fefef3  !important">
+        <ion-avatar item-start>
+          <img src="https://media.npr.org/assets/img/2015/06/12/taylorswift_wide-a5642f8df94424facaaddf66776b7b5679b2e026.jpg?s=1400">
+        </ion-avatar>
+        <h2>Marty McFly</h2>
+        <p>November 5, 1955</p>
+      </ion-item>
+
+
+    <ion-card-content style="background-color: #f3fefe !important">
+      <ion-item style="background-color: #f3fefe !important">
+      <ion-icon name="checkmark" item-start large></ion-icon>
+      <ion-card-title>
+        {{task.name}}
+      </ion-card-title>
+      </ion-item>
+
+      <ion-item style="background-color: #f3fefe !important">
+        <ion-icon name="stopwatch" item-start large></ion-icon>
+        <h2>{{task.timeStart}}</h2>
+        <p>Expected to last {{task.timeDuration}} hours</p>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>Rate : 5.0 / 5.0 </div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>Comments</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+    </button>
+  </ion-card>
+
+
+
+    <ion-card >
+      <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
+
+        <ion-item style="background-color: #fef3f3 !important">
+          <ion-avatar item-start>
+            <img src="http://ksassets.timeincuk.net/wp/uploads/sites/55/2016/07/2015JustinBieber_8_DC_131115-1.jpg">
+          </ion-avatar>
+          <h2>Marty McFly</h2>
+          <p>November 5, 1955</p>
+        </ion-item>
+
+
+        <ion-card-content style="background-color: #f3fefe!important">
+          <ion-item style="background-color: #f3fefe !important">
+            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-card-title>
+              {{task.name}}
+            </ion-card-title>
+          </ion-item>
+
+          <ion-item style="background-color: #f3fefe !important">
+            <ion-icon name="stopwatch" item-start large></ion-icon>
+            <h2>{{task.timeStart}}</h2>
+            <p>Expected to last {{task.timeDuration}} hours</p>
+          </ion-item>
+
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>Rate : 5.0 / 5.0 </div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>Comments</div>
+              </button>
+            </ion-col>
+            <ion-col center text-center>
+              <ion-note>
+                11h ago
+              </ion-note>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </button>
+    </ion-card>
+
+
+
+
+    <ion-card >
+      <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
+
+        <ion-item style="background-color: #fef3f3 !important">
+          <ion-avatar item-start>
+            <img src="http://ksassets.timeincuk.net/wp/uploads/sites/55/2016/07/2015JustinBieber_8_DC_131115-1.jpg">
+          </ion-avatar>
+          <h2>Marty McFly</h2>
+          <p>November 5, 1955</p>
+        </ion-item>
+
+
+        <ion-card-content style="background-color: #f3fefe!important">
+          <ion-item style="background-color: #f3fefe !important">
+            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-card-title>
+              {{task.name}}
+            </ion-card-title>
+          </ion-item>
+
+          <ion-item style="background-color: #f3fefe !important">
+            <ion-icon name="stopwatch" item-start large></ion-icon>
+            <h2>{{task.timeStart}}</h2>
+            <p>Expected to last {{task.timeDuration}} hours</p>
+          </ion-item>
+
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>Rate : 5.0 / 5.0 </div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>Comments</div>
+              </button>
+            </ion-col>
+            <ion-col center text-center>
+              <ion-note>
+                11h ago
+              </ion-note>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </button>
+    </ion-card>
+
+
+
+
+
   </ion-list>
+
+
+
+
 
 </ion-content>
 
