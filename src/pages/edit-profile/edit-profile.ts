@@ -33,11 +33,7 @@ export class EditProfilePage {
   chosenPicture: any;
   pictureChanged = false;
   db = firebase.firestore();
-<<<<<<< HEAD
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-=======
-
->>>>>>> 9d44566ddd909bbd4600caa2bc66bc29105cf28c
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
