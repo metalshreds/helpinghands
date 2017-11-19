@@ -4,10 +4,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title center>Profile</ion-title>
+    <ion-title>Profile</ion-title>
     <ion-buttons end>
       <button ion-button (click)="goToEditProfile($event)">
-        <ion-icon name = "create" color="light"></ion-icon>
+        <ion-icon name = "create" color="dark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -15,38 +15,38 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-grid>
+<ion-content>
+  <ion-grid style="height: 100%">
     <ion-row>
-      <div class = "avatar">
-      <p class="name"> {{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</p>
-      <p class="right-of-pic" >{{CURRENT_USER.email}}</p>
-
-      <ion-avatar (click) = "expandPic()">
-        <img class="profile-pic" [src]='userPhotoUrl' onerror="this.src='assets/icon/logo-login.png'" />
-      </ion-avatar>
-      </div>
+      <ion-col class="avatarCol">
+          <h2 class="title" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
+          <p style="text-align: center" class="email" >{{CURRENT_USER.email}}</p>
+          <div class="avatar">
+            <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
+          </div>
+      </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-item text-wrap padding>
-      <p class="intro">{{CURRENT_USER.introduction}}</p>
-      </ion-item>
+      <ion-col>
+        <ion-item text-wrap padding>
+        <p class="intro">{{CURRENT_USER.introduction}}</p>
+        </ion-item>
 
-      <h3>Skills</h3>
+        <h3>Skills</h3>
+        <p>C++, Java, Hardware, Soldering, Welding</p>
 
-      <p>C++, Java, Hardware, Soldering, Welding</p>
-
-      <h3 padding-top="15px">Portfolio</h3>
-      <ion-item text-wrap>
-        <h2>Dumb As Dirt</h2>
-        <p>They really knew their stuff and was able to mix up the right dirt very quickly, but
-        they did not talk to me the entire time.</p>
-      </ion-item>
-      <ion-item text-wrap>
-        <h2>Get Rich Quick</h2>
-        <p>They told me exactly how to find bitcoin! Very helpful!!</p>
-      </ion-item>
+        <h3 padding-top="15px">Portfolio</h3>
+        <ion-item text-wrap>
+          <h2>Dumb As Dirt</h2>
+          <p>They really knew their stuff and was able to mix up the right dirt very quickly, but
+          they did not talk to me the entire time.</p>
+        </ion-item>
+        <ion-item text-wrap>
+          <h2>Get Rich Quick</h2>
+          <p>They told me exactly how to find bitcoin! Very helpful!!</p>
+        </ion-item>
+      </ion-col>
     </ion-row>
 
 
