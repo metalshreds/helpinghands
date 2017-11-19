@@ -27,7 +27,11 @@
     <ion-list-header>
       Part 1
     </ion-list-header>
-
+    <form [formGroup] = "taskCreatForm" novalidate>
+        <ion-label floating>Task name</ion-label>
+      <ion-input formControlName = "taskName" type = "text"> </ion-input>
+    
+    </form>
 
     <ion-item>
 
@@ -179,13 +183,13 @@
       <ion-toggle checked="false"></ion-toggle>
 
 
-    </ion-item>
+    </ion-item>(
 
 
 
   </ion-list>
 
-  <button ion-button block>Saved</button>
+  <button ion-button (click)=createTask()>Saved</button>
   <button ion-button block>Cancel</button>
 
 
