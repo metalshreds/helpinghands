@@ -27,6 +27,7 @@ export class ProfileProvider {
   public confirmTask: TaskObjectProvider[] = [];
   public pendingTask: TaskObjectProvider[] = [];
   public travelRadius : number;
+  public taskCount : number;
   constructor(
     lastName : string,
     firstName : string,
@@ -37,6 +38,7 @@ export class ProfileProvider {
     zipCode : string,
     phone : number,
     travelRadius : number,
+    taskCount: number,
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
@@ -47,6 +49,7 @@ export class ProfileProvider {
     this.zipCode = zipCode;
     this.phone = phone;
     this.travelRadius = travelRadius;
+    this.taskCount = taskCount;
   }
 
   /*
