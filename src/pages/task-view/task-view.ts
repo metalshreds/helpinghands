@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {TaskEditPage} from "../task-edit/task-edit";
 
 /**
  * Generated class for the TaskViewPage page.
@@ -24,4 +25,9 @@ export class TaskViewPage {
     console.log('ionViewDidLoad TaskViewPage');
   }
 
+  // editTaskClicked(event, selectedTask){
+  //    this.navCtrl.push(TaskEditPage, {
+  //      selectedTask
+  //    }
+  // }
 }
