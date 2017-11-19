@@ -33,6 +33,7 @@ export class EditProfilePage {
   chosenPicture: any;
   pictureChanged = false;
   db = firebase.firestore();
+
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -129,7 +130,7 @@ export class EditProfilePage {
       //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
-        [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
+        [true,false,false,true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
 
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,
@@ -160,6 +161,7 @@ export class EditProfilePage {
       });
       alert.present();
     }
+
 
   }
 

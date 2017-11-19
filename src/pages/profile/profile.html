@@ -4,38 +4,52 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>profile</ion-title>
+    <ion-title center>Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="goToEditProfile($event)">
+        <ion-icon name = "create" color="light"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-icon name="brush"></ion-icon>
-  <div class = "profile-name">{{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</div>
+  <ion-grid>
+    <ion-row>
+      <div class = "avatar">
+      <p class="name"> {{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</p>
+      <p class="right-of-pic" >{{CURRENT_USER.email}}</p>
 
-  <ion-avatar (click) = "expandPic()">
-    <img class="profile-pic" [src]='userPhotoUrl' onerror="this.src='assets/icon/logo-login.png'" />
-  </ion-avatar>
+      <ion-avatar (click) = "expandPic()">
+        <img class="profile-pic" [src]='userPhotoUrl' onerror="this.src='assets/icon/logo-login.png'" />
+      </ion-avatar>
+      </div>
+    </ion-row>
 
-  <p class="right-of-pic">4.8/5.0 ⭐</p>
-  <p class="right-of-pic">{{CURRENT_USER.email}}</p>
-  <p class="intro">{{CURRENT_USER.introduction}}</p>
+    <ion-row>
+      <ion-item text-wrap padding>
+      <p class="intro">{{CURRENT_USER.introduction}}</p>
+      </ion-item>
+
+      <h3>Skills</h3>
+
+      <p>C++, Java, Hardware, Soldering, Welding</p>
+
+      <h3 padding-top="15px">Portfolio</h3>
+      <ion-item text-wrap>
+        <h2>Dumb As Dirt</h2>
+        <p>They really knew their stuff and was able to mix up the right dirt very quickly, but
+        they did not talk to me the entire time.</p>
+      </ion-item>
+      <ion-item text-wrap>
+        <h2>Get Rich Quick</h2>
+        <p>They told me exactly how to find bitcoin! Very helpful!!</p>
+      </ion-item>
+    </ion-row>
 
 
-  <p class="center-break">My Ratings</p>
 
-  <button class="rating-button">
-    <img class="rater-profile-pic" src="assets/icon/profile-icon.png" />
-    <p class="rating-task-name">Task Name</p>
-    <p class="rating-feedback">"Super good at their job!"</p>
-    <p class="rating-number">5.0/5.0</p>
-  </button>
-
-  <button class="rating-button">
-    <img class="rater-profile-pic" src="assets/icon/profile-icon.png" />
-    <p class="rating-task-name">Task Name</p>
-    <p class="rating-feedback">"Smelled bad."</p>
-    <p class="rating-number">1.0/5.0</p>
-  </button>
+  </ion-grid>
 </ion-content>

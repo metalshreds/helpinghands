@@ -18,6 +18,7 @@ export class TaskObjectProvider {
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
   public owner : string;                  //onwer of this task.
+  public ownerComment: string;            // comment on quality of helper
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
@@ -62,6 +63,12 @@ export class TaskObjectProvider {
   setAppliedHelperList(appliedHelpers : string[])
   {
     this.appliedHelpers = appliedHelpers;
+  }
+
+  setOwnerComment(comment: string){
+
+    this.ownerComment = comment;
+
   }
 
 
