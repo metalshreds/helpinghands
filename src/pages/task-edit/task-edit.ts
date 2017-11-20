@@ -4,7 +4,12 @@ import { IonicPage, NavController, NavParams,
   PopoverController, ViewController } from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { CameraProvider } from '../../providers/camera';
-import {CommentPopover} from "./comment-popover";
+import { CommentPopover } from "./comment-popover";
+import { AngularFireAuth } from "angularfire2/auth"
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as algoliasearch from 'algoliasearch';
+import firebase from 'firebase';
+import {skill} from '../../interface/skills'
 
 /**
  * Generated class for the TaskEditPage page.
@@ -19,18 +24,72 @@ import {CommentPopover} from "./comment-popover";
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
+  skill = new Object(); 
+  CSskills;
+  skillinterface = new skill();
   task: TaskObjectProvider;
   chosenPicture: any;
   pictureChanged = false;
+  curUserToken = this.AFcurUser.auth.currentUser;
+  taskCreateForm : FormGroup;
+  db = firebase.firestore();
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
+  taskId = this.curUserToken.uid + '11'; 
   constructor(
+    public formBuilder : FormBuilder,
+    private AFcurUser : AngularFireAuth,
     public navCtrl: NavController,
     public navParams: NavParams,
     public actionsheetCtrl: ActionSheetController,
     public cameraProvider: CameraProvider,
     public platform: Platform,
     public loadingCtrl: LoadingController,
-    public popoverCtrl: PopoverController
+    public popoverCtrl: PopoverController,
+    
   ) {
+
+    this.taskCreateForm = formBuilder.group ({
+      taskName : [''],
+      TaskDescription : [''],
+      Location : [''],
+      Compensation : [''],
+    });
+
+
+  }
+
+  createTask(){
+    var docRef = this.db.collection('tasks').doc(this.taskId);
+    console.log(this.CSskills);
+    console.log(this.skillinterface);
+    for (const i in this.skillinterface)
+    {
+      if (this.CSskills.includes(i))
+      {
+        this.skill[i] = true;
+      }
+      else
+        this.skill[i] = false;
+        
+    }
+    console.log("skill", this.skill);
+    docRef.update({
+        taskName : this.taskCreateForm.value.taskName,
+        taskId : this.taskId,
+        TaskDescription : this.taskCreateForm.value.TaskDescription,
+        Location : this.taskCreateForm.value.Location,
+        Compensation : this.taskCreateForm.value.Compensation,
+        Skill : this.skill,
+
+    });
+    console.log("task name input is ", this.taskCreateForm.value.taskName);
+    docRef.get().then(doc=>{
+      var index = this.client.initIndex('tasks');
+      var task = doc.data();
+      task.objectID = this.taskId;
+      index.saveObject(task);
+      //this.navCtrl.push( some page here);
+    }) 
   }
 
   ionViewDidLoad() {
