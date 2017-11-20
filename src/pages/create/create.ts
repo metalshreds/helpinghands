@@ -32,17 +32,20 @@ export class CreatePage {
 
       this.taskCreatForm = formBuilder.group ({
         taskName : [''],
+        introduction : [''],
       });
 
   }
   taskId = this.curUserToken.uid + '11' //change 11 to counter later
-  
-  
+
+
   createTask(){
     var docRef = this.db.collection('tasks').doc(this.taskId);
     docRef.set({
         taskName : this.taskCreatForm.value.taskName,
         taskId : this.taskId,
+        introduction : this.taskCreatForm.value.introduction,
+
     });
     console.log("task name input is ", this.taskCreatForm.value.taskName);
     docRef.get().then(doc=>{
@@ -51,10 +54,10 @@ export class CreatePage {
       task.objectID = this.taskId;
       index.saveObject(task);
       //this.navCtrl.push( some page here);
-    }) 
+    })
   }
 
-  
+
 
 
   ionViewDidLoad() {
