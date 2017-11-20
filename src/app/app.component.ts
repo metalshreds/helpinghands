@@ -48,7 +48,7 @@ export class HelpingHands {
       { title: 'Profile', component: ProfilePage },
       { title: 'Task Edit', component: TaskEditPage },
       { title: 'Edit Profile', component: EditProfilePage },
-
+      { title: 'Create Page', component: CreatePage },
   ]
   }
 

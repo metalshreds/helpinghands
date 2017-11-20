@@ -44,6 +44,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
+    CreatePage,
 
   ],
   imports: [
@@ -70,6 +71,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     TaskEditPage,
     TaskViewPage,
     CommentPopover,
+    CreatePage,
   ],
   providers: [
     StatusBar,
