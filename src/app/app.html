@@ -6,8 +6,10 @@
   </ion-header>
 
   <ion-content>
-      <img class="user-avatar round" [src]="photoURL||placeholder" onerror="this.src='assets/icon/logo-login.png'"
-      />
+    <button  (click) = "editProfile()">
+        <img id="ua" [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'"/>
+    </button>
+      
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
