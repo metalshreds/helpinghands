@@ -21,7 +21,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for valid
 })
 export class CreatePage {
   curUserToken = this.AFcurUser.auth.currentUser;
-  taskCreatForm : FormGroup;
+  taskCreateForm : FormGroup;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   constructor(public navCtrl: NavController,
@@ -30,9 +30,8 @@ export class CreatePage {
       public formBuilder : FormBuilder,
      ) {
 
-      this.taskCreatForm = formBuilder.group ({
+      this.taskCreateForm = formBuilder.group ({
         taskName : [''],
-        introduction : [''],
       });
 
   }
@@ -42,12 +41,11 @@ export class CreatePage {
   createTask(){
     var docRef = this.db.collection('tasks').doc(this.taskId);
     docRef.set({
-        taskName : this.taskCreatForm.value.taskName,
+        taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
-        introduction : this.taskCreatForm.value.introduction,
 
     });
-    console.log("task name input is ", this.taskCreatForm.value.taskName);
+    console.log("task name input is ", this.taskCreateForm.value.taskName);
     docRef.get().then(doc=>{
       var index = this.client.initIndex('tasks');
       var task = doc.data();

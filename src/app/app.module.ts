@@ -39,12 +39,12 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
-    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
+    CreatePage,
 
   ],
   imports: [
@@ -65,13 +65,13 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
-    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
     CommentPopover,
+    CreatePage,
   ],
   providers: [
     StatusBar,
