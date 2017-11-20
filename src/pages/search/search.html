@@ -13,7 +13,7 @@
     <ion-title>Search</ion-title>
   </ion-navbar>
   <ion-row>
-      <ion-searchbar (ionInput)="getItems()"></ion-searchbar>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-row>
   
   <ion-toolbar no-border-top>
@@ -35,10 +35,11 @@
 
 
 <ion-content padding>
+
     <div [ngSwitch]="SearchResult">
         <ion-list *ngSwitchCase="'Everything'">
             <ion-item *ngFor="let item of items">
-                {{ item }}
+                {{ item.firstName }}
               </ion-item>
         </ion-list>
         
@@ -50,8 +51,6 @@
     
     
     </div>
-
-
 
 
 </ion-content>

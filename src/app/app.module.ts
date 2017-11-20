@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HelpingHands } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CreatePage } from "../pages/create/create";
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -25,6 +26,9 @@ import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { cloudProvider } from "../providers/cloudbase";
 import { AngularFirestoreModule} from "angularfire2/firestore";
+import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
+import { CommentPopover } from "../pages/task-edit/comment-popover"
+
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -41,7 +45,7 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
-
+    CreatePage,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,7 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule,
-    AngularFirestoreModule
+    CommentPopoverModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +68,9 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     DashboardPage,
     ProfilePage,
     TaskEditPage,
-    TaskViewPage
+    TaskViewPage,
+    CommentPopover,
+    CreatePage,
   ],
   providers: [
     StatusBar,
@@ -75,6 +81,7 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
     CameraProvider,
     Camera,
     PhotoViewer,
-    cloudProvider]
+    cloudProvider
+  ]
 })
 export class AppModule {}

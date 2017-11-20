@@ -20,7 +20,6 @@ export class DashboardPage {
   completedRoot = 'CompletedPage';
   pendingRoot = 'PendingPage';
   suggestedRoot = 'SuggestedPage';
-  createRoot = 'CreatePage';
   confirmedRoot = 'ConfirmedPage';
 
 

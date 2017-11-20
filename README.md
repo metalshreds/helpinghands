@@ -21,6 +21,7 @@ This app allows users with a task to find helpers who have the skills to complet
     * ```$npm install --save @ionic-native/photo-viewer```
 * cloudbase
     * ```$npm install firebase@4.6.0 --save```
+    * ```npm install algoliasearch --save```
 
 ## Running the application
 * clone the app onto the computer

@@ -7,17 +7,27 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class TaskObjectProvider {
+
+  //Users
+  public ownerUserId : string;                  //onwer of this task.
+
+  //Time
   public timeDuration : number;     //duration of the task
   public timeStart : string;          //start time of the task
-  public introduction : string;       //brief intro/background of this task
-  public requirement : string;        //requirement/qualification of this task
+  public timeEnd: string;
+
+  //Skills and status
   public wantedSkill : boolean[]=[];  //skill set of the task
   public complete: boolean;           //flag that indicates the completion of the task
-  public id: number;                  //task's unique id generated when during task creation
-  public name: string;                //task's name
+  public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
-  public owner : string;                  //onwer of this task.
+
+  //Task
+  public id: number;                  //task's unique id generated when during task creation
+  public name: string;                //task's name
+  public introduction : string;       //brief intro/background of this task
+
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
@@ -36,10 +46,9 @@ export class TaskObjectProvider {
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
     this.introduction = introduction;
-    this.requirement = requirement;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
-    this.owner = owner;
+    this.ownerUserId = owner;
 
   }
 
@@ -64,7 +73,11 @@ export class TaskObjectProvider {
     this.appliedHelpers = appliedHelpers;
   }
 
+  setOwnerComment(comment: string){
+
+    this.ownerComment = comment;
+
+  }
 
 
 }
-

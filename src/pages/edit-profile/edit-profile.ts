@@ -5,13 +5,13 @@ import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import {ProfilePage} from '../profile/profile';
-import { cloudProvider } from '../../providers/cloudbase'
+import { cloudProvider } from '../../providers/cloudbase';
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
 import { CameraProvider } from '../../providers/camera';
-
+import * as algoliasearch from 'algoliasearch';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -33,6 +33,7 @@ export class EditProfilePage {
   chosenPicture: any;
   pictureChanged = false;
   db = firebase.firestore();
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -129,7 +130,8 @@ export class EditProfilePage {
       //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
-        [true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
+        [true,false,false,true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
+      0);
 
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,
@@ -149,7 +151,18 @@ export class EditProfilePage {
           console.log("native update has an error");
         });
         this.editProfileForm.reset();
-        this.navCtrl.push( ProfilePage );
+
+        //TODO moduliraze following code maybe
+        var docRef = this.db.collection('users').doc(newUser.userId);
+        docRef.get().then(doc=>{
+          var index = this.client.initIndex('users');
+          var user = doc.data();
+          user.objectID = newUser.userId;
+          index.saveObject(user);
+          this.navCtrl.push(ProfilePage);
+        })
+
+
       }
     }
     else {
@@ -160,6 +173,7 @@ export class EditProfilePage {
       });
       alert.present();
     }
+
 
   }
 

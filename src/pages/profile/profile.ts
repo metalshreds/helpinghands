@@ -4,9 +4,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
 import { NgZone, OnInit } from "@angular/core";
-
 /**
  * Generated class for the ProfilePage page.
  *
@@ -22,17 +22,20 @@ import { NgZone, OnInit } from "@angular/core";
 export class ProfilePage {
   profile;
   skills : Array<boolean>;
-  curUserToken = this.AFcurUser.auth.currentUser;
+  AFcurUser = firebase.auth();
+  curUserToken = this.AFcurUser.currentUser;
+  
   userPhotoUrl = this.curUserToken.photoURL;
   db = firebase.firestore();
 
   CURRENT_USER = {} as ProfileProvider;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private AFcurUser: AngularFireAuth,
+              //private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
-              private zone : NgZone,
+              private _zone : NgZone,
+
               )
   {
     //get user node specificed by current userId.
@@ -42,7 +45,6 @@ export class ProfilePage {
         if (!doc.exists) {
           console.log('No such document!');
         } else {
-
           console.log('Document data:', doc.data());
           for(const field in doc.data())
           {
@@ -51,7 +53,7 @@ export class ProfilePage {
             this.CURRENT_USER[field] = doc.data()[field];
           }
             
-            this.zone.run(()=>{
+            this._zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);
             });
@@ -62,13 +64,21 @@ export class ProfilePage {
         console.log('Error getting document', err);
       });
 
+
+
     console.log("image ", this.curUserToken.photoURL);
+
+
   }
 
 
   expandPic(){
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
     console.log(this.userPhotoUrl);
+  }
+
+  goToEditProfile(event){
+    this.navCtrl.push(EditProfilePage);
   }
 
 

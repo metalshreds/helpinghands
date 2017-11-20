@@ -7,70 +7,86 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+
+  <ion-grid style="height: 100%">
+    <ion-row>
+        <ion-col class="avatarCol">
+        <h2 class="title" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
+          <div class="avatar">
+            <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
+          </div>
+          <div class="editImageButton">
+            <button  ion-button color="danger" (click)="changePicture()" > Change image </button>
+          </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <form [formGroup] = "editProfileForm" novalidate >
+          <ion-item>
+            <ion-icon name="person" item-start></ion-icon>
+            <ion-label floating>First Name</ion-label>
+            <ion-input type="text"   value = "{{CURRENT_USER.firstName}}" formControlName = "firstName"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="person" item-start></ion-icon>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input type="text"  value = "{{CURRENT_USER.lastName}}" formControlName  = "lastName"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Phone</ion-label>
+            <ion-input type="text" value = "{{CURRENT_USER.phone}}" formControlName = "phone"></ion-input>
+            <ion-icon name="call" item-start></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>ZIP Code</ion-label>
+            <ion-input type="number" value = "{{CURRENT_USER.zipCode}}" formControlName = "zipCode"></ion-input>
+            <ion-icon name="pin" item-start></ion-icon>
+            <button ion-button class="gps" item-right>
+              <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+            </button>
+          </ion-item>
 
 
-  <form [formGroup] = "editProfileForm" novalidate>
-    <ion-item>
-      <ion-input type="text" placeholder = "First Name"  value = "{{CURRENT_USER.firstName}}" formControlName = "firstName"></ion-input>
-      <ion-input type="text" placeholder = "Last name" value = "{{CURRENT_USER.lastName}}" formControlName  = "lastName"></ion-input>
-      <ion-icon name="person" item-start></ion-icon>
-    </ion-item>
+          <ion-item>
+            <ion-label floating>Introduction</ion-label>
+            <ion-icon name="paper"  item-start></ion-icon>
+            <ion-textarea rows="3" type="text"  value = "{{CURRENT_USER.introduction}}" formControlName = "introduction"></ion-textarea>
+          </ion-item>
 
-    <ion-avatar >
-      <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
-      <button ion-button color="danger" (click)="changePicture()" >Change image</button>
-    </ion-avatar>
+          <!-- Helper Fields -->
+          <ion-item>
+            <ion-label>Suggest Me as a Helper </ion-label>
+            <ion-checkbox [(ngModel)]="helper" [ngModelOptions]="{standalone: true}" item-right></ion-checkbox>
+            <ion-icon name="hand" item-start></ion-icon>
+          </ion-item>
 
-    <ion-item>
-      <ion-input type="text" placeholder = "Phone" value = "{{CURRENT_USER.phone}}" formControlName = "phone"></ion-input>
-      <ion-icon name="call" item-start></ion-icon>
-    </ion-item>
+          <ion-item>
+            <ion-icon name='school' item-start></ion-icon>
+            <ion-label style="color: black">Major</ion-label>
+            <ion-select [(ngModel)]="major" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+              <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
+              <ion-option value="Math">Math</ion-option>
+              <ion-option value="Business" selected="true">Business</ion-option>
+              <ion-option value="Art">Art</ion-option>
+            </ion-select>
+          </ion-item>
 
-    <ion-item>
-      <ion-input type="number" placeholder = "Zip Code " value = "{{CURRENT_USER.zipCode}}" formControlName = "zipCode"></ion-input>
-      <ion-icon name="pin" item-start></ion-icon>
-      <button ion-button class="gps" item-right>
-        <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
-      </button>
-    </ion-item>
+          <!-- Update Button -->
+          <button ion-button class="update-button" (click)="update()" block>Save</button>
 
-
-    <ion-item>
-      <ion-icon name="paper"  item-start></ion-icon>
-      <ion-textarea rows="3" type="text" placeholder="Introduction" value = "{{CURRENT_USER.introduction}}" formControlName = "introduction"></ion-textarea>
-    </ion-item>
-
-    <!-- Helper Fields -->
-    <ion-item>
-      <ion-label>Suggest Me as a Helper </ion-label>
-      <ion-checkbox [(ngModel)]="helper" [ngModelOptions]="{standalone: true}" item-right></ion-checkbox>
-      <ion-icon name="hand" item-start></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name='school' item-start></ion-icon>
-      <ion-label style="color: black">Major</ion-label>
-      <ion-select [(ngModel)]="major" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
-        <ion-option value="Computer Science" selected="true">Computer Science</ion-option>
-        <ion-option value="Math">Math</ion-option>
-        <ion-option value="Business" selected="true">Business</ion-option>
-        <ion-option value="Art">Art</ion-option>
-      </ion-select>
-    </ion-item>
+        </form>
 
 
-
-    <ion-item>
-      <ion-input type="number" placeholder = "Travel Radius(Mi)" value = "{{CURRENT_USER.travelRadius}}" formControlName = "travelRadius"></ion-input>
-      <ion-icon ios="ios-car" md="md-car" item-start ></ion-icon>
-    </ion-item>
+      </ion-col>
+    </ion-row>
 
 
+  </ion-grid>
 
-    <!-- Update Button -->
-    <ion-col>
-      <button ion-button class="update-button" (click)="update()" >Save</button>
-    </ion-col>
-  </form>
 </ion-content>
