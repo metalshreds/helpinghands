@@ -33,7 +33,6 @@ export class ProfilePage {
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
               private _zone : NgZone,
-
               )
   {
     //get user node specificed by current userId.
@@ -50,22 +49,18 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-            
+
             this._zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);
             });
-          
         }
       })
       .catch(err => {
         console.log('Error getting document', err);
       });
 
-
-
     console.log("image ", this.curUserToken.photoURL);
-
 
   }
 
