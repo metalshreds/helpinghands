@@ -29,6 +29,7 @@ import { cloudProvider } from "../providers/cloudbase";
 import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
 import { CommentPopover } from "../pages/task-edit/comment-popover"
 
+
 //import { emailValidator} from "../validators/emailValidator";
 
 @NgModule({
@@ -39,13 +40,12 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
-    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
-
+    CreatePage,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +54,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule,
-    // AngularFirestoreModule,
+
     CommentPopoverModule,
   ],
   bootstrap: [IonicApp],
@@ -65,13 +65,13 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     SignupPage,
     DashboardPage,
     SearchPage,
-    CreatePage,
     EditProfilePage,
     DashboardPage,
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
     CommentPopover,
+    CreatePage,
   ],
   providers: [
     StatusBar,
