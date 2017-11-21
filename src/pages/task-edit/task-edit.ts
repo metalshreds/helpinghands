@@ -24,17 +24,22 @@ import {skill} from '../../interface/skills'
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
-  skill = new Object(); 
-  CSskills;
+  skill = new Object();
+  csSkills = [];
+  mechSkills = [];
+  artSkills = [];
+  sciSkills = [];
+  econSkills = [];
+  langSkills = [];
   skillinterface = new skill();
-  task: TaskObjectProvider;
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
   taskCreateForm : FormGroup;
+  task : TaskObjectProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid + '11'; 
+  taskId = this.curUserToken.uid + '11';
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -45,7 +50,7 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    
+
   ) {
 
     this.taskCreateForm = formBuilder.group ({
@@ -60,20 +65,26 @@ export class TaskEditPage {
 
   createTask(){
     var docRef = this.db.collection('tasks').doc(this.taskId);
-    console.log(this.CSskills);
-    console.log(this.skillinterface);
     for (const i in this.skillinterface)
     {
-      if (this.CSskills.includes(i))
+      if (this.csSkills.indexOf(i) > -1 ||
+          this.mechSkills.indexOf(i) > -1 ||
+          this.artSkills.indexOf(i) > -1 ||
+          this.sciSkills.indexOf(i) > -1 ||
+          this.econSkills.indexOf(i) > -1 ||
+          this.langSkills.indexOf(i) > -1)
       {
         this.skill[i] = true;
       }
+      /*else if (this.mechSkills.includes(i)) {
+        this.skill[i] = true;
+      }*/
       else
         this.skill[i] = false;
-        
+
     }
     console.log("skill", this.skill);
-    docRef.update({
+    docRef.set({
         taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
         TaskDescription : this.taskCreateForm.value.TaskDescription,
@@ -89,7 +100,7 @@ export class TaskEditPage {
       task.objectID = this.taskId;
       index.saveObject(task);
       //this.navCtrl.push( some page here);
-    }) 
+    })
   }
 
   ionViewDidLoad() {
