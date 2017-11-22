@@ -16,11 +16,8 @@
 
 
   <ion-content padding>
-    
-      
 
-       
-      
+
   <ion-list no-border>
       <form [formGroup] = "taskCreateForm" novalidate>
       <ion-item>
@@ -34,11 +31,11 @@
     <ion-item>
         <ion-label floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-textarea formControlName = "TaskDescription"rows="5" type="text" value=""></ion-textarea>
+      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value=""></ion-textarea>
     </ion-item>
-  
-  
- 
+
+
+
 
 
     <ion-item>
@@ -196,8 +193,8 @@
       <ion-input formControlName = "Compensation" type="number" placeholder="" value=""></ion-input>
       <ion-toggle checked="false"></ion-toggle>
     </ion-item>
-    
-  </form>    
+
+  </form>
   </ion-list>
 
   <button ion-button style="background-color: red" block>Discard Changes</button>

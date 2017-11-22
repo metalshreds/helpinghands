@@ -17,37 +17,37 @@ export class TaskObjectProvider {
   public timeEnd: string;
 
   //Skills and status
-  public wantedSkill : boolean[]=[];  //skill set of the task
-  public complete: boolean;           //flag that indicates the completion of the task
+  public wantedSkills : boolean[]=[];  //skill set of the task
+  public completed: boolean;           //flag that indicates the completion of the task
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
 
   //Task
   public id: number;                  //task's unique id generated when during task creation
-  public name: string;                //task's name
-  public introduction : string;       //brief intro/background of this task
+  public taskName: string;                //task's name
+  public taskDescription : string;       //brief intro/background of this task
 
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
   / a task object.
   */
-  constructor(name: string,
+  constructor(taskName: string,
               timeDuration : number,
               timeStart : string,
-              introduction : string,
+              taskDescription : string,
               requirement : string,
-              wantedSkill : boolean[],
-              complete : boolean,
+              wantedSkills : boolean[],
+              completed : boolean,
               owner : string,
               ) {
-    this.name = name;
+    this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
-    this.introduction = introduction;
-    this.wantedSkill = wantedSkill;
-    this.complete = complete;
+    this.taskDescription = taskDescription;
+    this.wantedSkills = wantedSkills;
+    this.completed = completed;
     this.ownerUserId = owner;
 
   }

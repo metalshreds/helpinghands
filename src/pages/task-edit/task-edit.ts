@@ -24,7 +24,7 @@ import {skill} from '../../interface/skills'
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
-  skill = new Object(); 
+  skill = new Object();
   CSskills;
   skillinterface = new skill();
   task: TaskObjectProvider;
@@ -34,7 +34,7 @@ export class TaskEditPage {
   taskCreateForm : FormGroup;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid + '11'; 
+  taskId = this.curUserToken.uid + '11';
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -45,12 +45,12 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    
+
   ) {
 
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
-      TaskDescription : [''],
+      taskDescription : [''],
       Location : [''],
       Compensation : [''],
     });
@@ -70,17 +70,17 @@ export class TaskEditPage {
       }
       else
         this.skill[i] = false;
-        
+
     }
     console.log("skill", this.skill);
     docRef.update({
         taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
-        TaskDescription : this.taskCreateForm.value.TaskDescription,
+        taskDescription : this.taskCreateForm.value.taskDescription,
         Location : this.taskCreateForm.value.Location,
         Compensation : this.taskCreateForm.value.Compensation,
-        Skill : this.skill,
-
+        wantedSkills : this.skill,
+        ownerUserId : this.curUserToken.uid,
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     docRef.get().then(doc=>{
@@ -89,7 +89,7 @@ export class TaskEditPage {
       task.objectID = this.taskId;
       index.saveObject(task);
       //this.navCtrl.push( some page here);
-    }) 
+    })
   }
 
   ionViewDidLoad() {

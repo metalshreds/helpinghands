@@ -82,7 +82,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     CameraProvider,
     Camera,
     PhotoViewer,
-    cloudProvider
+    cloudProvider,
   ]
 })
 export class AppModule {}
