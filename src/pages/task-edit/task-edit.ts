@@ -81,6 +81,7 @@ export class TaskEditPage {
         Compensation : this.taskCreateForm.value.Compensation,
         wantedSkills : this.skill,
         ownerUserId : this.curUserToken.uid,
+        //Add your array here
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     docRef.get().then(doc=>{

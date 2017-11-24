@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 export class TaskObjectProvider {
 
   //Users
-  public ownerUserId : string;                  //onwer of this task.
+  public ownerUserId : string;                  //owner of this task.
 
   //Time
   public timeDuration : number;     //duration of the task
@@ -24,7 +24,7 @@ export class TaskObjectProvider {
   public appliedHelpers: string[] = [];  //store applicant user id
 
   //Task
-  public id: number;                  //task's unique id generated when during task creation
+  public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
   public taskDescription : string;       //brief intro/background of this task
 
@@ -54,6 +54,9 @@ export class TaskObjectProvider {
 
 
   //FUNCTIONS
+
+  setTaskId(taskId: string){ this.taskId = taskId; }
+  getTaskId(){ return this.taskId; }
 
   /*this function is used to set the helpers list
   / of a newly constructed task.
