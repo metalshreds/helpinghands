@@ -52,9 +52,7 @@ export class TaskObjectProvider {
 
   }
 
-
   //FUNCTIONS
-
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
 

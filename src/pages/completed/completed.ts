@@ -79,7 +79,6 @@ export class CompletedPage {
         console.log(task.ownerUserId);
 
         /* Get owners name */
-
         if( typeof task.ownerUserId  !== 'undefined'){
 
           var userRef = self.db.collection("users").doc(task.ownerUserId);
@@ -98,42 +97,13 @@ export class CompletedPage {
             console.log("Error getting document:", error);
             taskOwner = error;
           });
+        } //END get owners Name
 
-        }
-
-      });
+      }); //END .then function
     });
 
   }
 
-  // /* Get completed tasks for current owner  */
-  // getTaskOwner (uid: string ){
-  //   // console.log('Inside getTaskOwner');
-  //   console.log('uid is: ', uid);
-  //
-  //   var taskOwner: string = 'Task Owner\'s Name';
-  //   /* Get owners name */
-  //
-  //   if( typeof uid  !== 'undefined'){  //NOT ALL TASKS HAVE ownerUserId, if undefined will crash!
-  //     var userRef = this.db.collection("users").doc(uid);
-  //     userRef.get().then(function(doc) {
-  //       if (doc.exists) {
-  //         console.log("Document data: !!", doc.data());
-  //         console.log(doc.data()['firstName'] + doc.data()['lastName']);
-  //         //taskOwner = doc.data()['firstName'] + doc.data()['lastName'];
-  //       } else {
-  //         console.log("No such document!");
-  //         taskOwner = 'No Owner';
-  //       }
-  //     }).catch(function(error) {
-  //       console.log("Error getting document:", error);
-  //       taskOwner = error;
-  //     });
-  //     console.log(taskOwner);
-  //   }
-  //
-  //   return taskOwner;
-  // }
 
   //navigates to taskview page if task clicked
   taskClicked(event, task) {
