@@ -157,6 +157,8 @@ export class EditProfilePage {
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
       0);
+      newUser.createTask();
+      
       console.log("newUser is ", newUser);
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,

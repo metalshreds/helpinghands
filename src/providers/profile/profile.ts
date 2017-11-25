@@ -23,7 +23,7 @@ export class ProfileProvider {
   public skill = new Object();
   public oTask : Array<TaskObjectProvider> = [];
   public ownedTask : TaskObjectProvider[] = [];
-  public blackListTask: TaskObjectProvider[] = [];
+  public blockListTask: TaskObjectProvider[] = [];
   public confirmTask: TaskObjectProvider[] = [];
   public pendingTask: TaskObjectProvider[] = [];
   public travelRadius : number;
@@ -61,6 +61,7 @@ export class ProfileProvider {
     let Task1 = new TaskObjectProvider( "taskname1", 10, "startdate1", "introduction1", "requirment1", skill, false, this.userId);
     this.oTask.push(Task);
     this.oTask.push(Task1);
+    this.ownedTask.push(Task1);
   }
 
 //TODO method to retrieve user info
