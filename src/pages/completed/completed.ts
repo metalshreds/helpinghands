@@ -21,7 +21,7 @@ import {TaskViewPage} from "../task-view/task-view";
 export class CompletedPage {
 
   tasks: Array<TaskObjectProvider>;
-  skills: Array<boolean>;
+  skills: Array<string>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tasks =[];

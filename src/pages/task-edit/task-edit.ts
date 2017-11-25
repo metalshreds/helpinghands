@@ -27,7 +27,7 @@ import { TaskViewPage } from "../task-view/task-view"
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
-  skill = [];
+  skill = new Object();
   csSkills = [];
   mechSkills = [];
   artSkills = [];
@@ -58,14 +58,25 @@ export class TaskEditPage {
     public popoverCtrl: PopoverController,
     public datePicker: DatePicker,
   ) {
-
-
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
       taskDescription : [''],
       location : [''],
       compensation : [''],
     });
+
+
+    console.log(this.navParams.get('taskID'));
+    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    if(this.navParams.get('taskID') != undefined) {
+      this.taskId = this.navParams.get('taskID');
+    } else {
+      userRef.get().then(doc=>{
+        this.taskId += doc.data().taskCount.toString();
+      })
+    }
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    this.csSkills = ['Programming'];
 
     this.datePicker.show({
       date: new Date(),
@@ -80,17 +91,6 @@ export class TaskEditPage {
 
 
   updateTask(event){
-    console.log(this.navParams.get('taskID'));
-    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
-    if(this.navParams.get('taskID') != undefined) {
-      this.taskId = this.navParams.get('taskID');
-    } else {
-      userRef.get().then(doc=>{
-        this.taskId += doc.data().taskCount.toString();
-      })
-    }
-
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
     for (const i in this.skillinterface)
     {
       if (this.csSkills.indexOf(i) > -1 ||
@@ -106,6 +106,7 @@ export class TaskEditPage {
         this.skill[i] = false;
     }
     console.log("skill", this.skill);
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.set({
         taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
@@ -118,7 +119,7 @@ export class TaskEditPage {
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
-      this.task = new TaskObjectProvider(
+      /*this.task = new TaskObjectProvider(
                   doc.data().taskName,
                   5,
                   "right now",
@@ -128,10 +129,11 @@ export class TaskEditPage {
                   this.skill,
                   false,
                   this.curUserToken.uid
-      );
+      );*/
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
+    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     userRef.get().then(doc=>{
       let uIndex = this.client.initIndex('users');
       let newCount = doc.data().taskCount + 1;
@@ -144,9 +146,9 @@ export class TaskEditPage {
         });
       }
     });
-    this.navCtrl.push(TaskViewPage, {
+    /*this.navCtrl.push(TaskViewPage, {
       task: this.task
-    });
+    });*/
   }
 
   ionViewDidLoad() {

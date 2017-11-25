@@ -26,7 +26,7 @@
       <ion-item>
           <ion-label floating>Task name</ion-label>
           <ion-icon name='body' item-start></ion-icon>
-          <ion-input formControlName = "taskName" type = "text"> </ion-input>
+          <ion-input formControlName = "taskName" type = "text" value="name"> </ion-input>
         </ion-item>
 
     <button ion-button (click)="changePicture()" block>Add a Picture</button>
@@ -34,7 +34,7 @@
     <ion-item>
         <ion-label floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value=""></ion-textarea>
+      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value="description"></ion-textarea>
     </ion-item>
 
     <ion-item>
