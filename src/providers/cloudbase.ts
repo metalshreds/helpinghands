@@ -56,22 +56,18 @@ export class cloudProvider {
     var docRef = this.db.collection('users').doc(userId);
     docRef.update({ [subPath] : updateMessage});
   }
-
- // UpdateAllProfileField = function(updateMessage)
- //
-  arrayUpdate = function(skills : any, node: string, userId : string)
+  /*
+  //add task to corresponding user's sublist.
+  / input: userId - user's id
+  /        subPath - the name of the list under user
+  /        taskId - the id of the task
+  /        taskName - the name of the task
+  */
+  addTaskToList = function(userId : string, subPath : string, taskId : string, taskName : string)
   {
-
-    var docRef = this.db.collection(node).doc(userId);
-    for (const i in skills)
-    {
-      docRef.update({'skill' : {
-        [i] : [skills[i]]
-      }})
-    }
-
+    var docRef = this.db.collection('users').doc(userId).collection(subPath).doc(taskId);
+    docRef.set({'taskName' : taskName});
   }
-
 
 
 }

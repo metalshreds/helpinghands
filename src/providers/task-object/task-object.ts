@@ -8,15 +8,16 @@ import 'rxjs/add/operator/map';
 export class TaskObjectProvider {
 
   //Users
-  public ownerUserId : string;                  //owner of this task.
+  public owner : string;                  //onwer of this task.
+
   //Time
   public timeDuration : number;     //duration of the task
   public timeStart : string;          //start time of the task
   public timeEnd: string;
 
   //Skills and status
-  public wantedSkills : boolean[]=[];  //skill set of the task
-  public completed: boolean;           //flag that indicates the completion of the task
+  public wantedSkill = new Object();  //skill set of the task
+  public complete: boolean;           //flag that indicates the completion of the task
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
@@ -32,19 +33,21 @@ export class TaskObjectProvider {
   constructor(taskName: string,
               timeDuration : number,
               timeStart : string,
-              taskDescription : string,
+              timeEnd : string,
+              introduction : string,
               requirement : string,
-              wantedSkills : boolean[],
-              completed : boolean,
+              wantedSkills : string,
+              complete : boolean,
               owner : string,
   ) {
     this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
-    this.taskDescription = taskDescription;
-    this.wantedSkills = wantedSkills;
-    this.completed = completed;
-    this.ownerUserId = owner;
+    this.timeEnd = timeEnd;
+    this.taskDescription = introduction;
+    this.wantedSkill = wantedSkills;
+    this.complete = complete;
+    this.owner = owner;
 
   }
 

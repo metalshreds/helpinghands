@@ -3,13 +3,16 @@ import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
   PopoverController, ViewController } from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
+import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
 import { AngularFireAuth } from "angularfire2/auth"
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
-import {skill} from '../../interface/skills'
+import { skill } from '../../interface/skills'
+import { DatePicker } from "@ionic-native/date-picker"
+import { TaskViewPage } from "../task-view/task-view"
 
 /**
  * Generated class for the TaskEditPage page.
@@ -25,16 +28,25 @@ import {skill} from '../../interface/skills'
 })
 export class TaskEditPage {
   skill = new Object();
-  CSskills;
+  csSkills = [];
+  mechSkills = [];
+  artSkills = [];
+  sciSkills = [];
+  econSkills = [];
+  langSkills = [];
+  month : string;
+  day : string;
   skillinterface = new skill();
-  task: TaskObjectProvider;
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
   taskCreateForm : FormGroup;
+  task = {} as TaskObjectProvider;
+  user = {} as ProfileProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid + '111';
+  taskId = this.curUserToken.uid;
+
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -45,51 +57,98 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
+    public datePicker: DatePicker,
   ) {
+
 
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
-      TaskDescription : [''],
-      Location : [''],
-      Compensation : [''],
+      taskDescription : [''],
+      location : [''],
+      compensation : [''],
     });
 
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    }).then(
+      date => console.log('Got date: ', date),
+      err => console.log('Error occurred while getting date: ', err)
+    );
 
   }
 
-  createTask(){
-    var docRef = this.db.collection('tasks').doc(this.taskId);
 
-    console.log(this.CSskills);
-    console.log(this.skillinterface);
+  updateTask(){
+
+    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    if(this.navParams.get('taskID') != undefined) {
+      this.taskId = this.navParams.get('taskID');
+    } else {
+      userRef.get().then(doc=>{
+        this.taskId += doc.data().taskCount.toString();
+      })
+    }
+
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
     for (const i in this.skillinterface)
     {
-      if (this.CSskills.includes(i))
+      if (this.csSkills.indexOf(i) > -1 ||
+          this.mechSkills.indexOf(i) > -1 ||
+          this.artSkills.indexOf(i) > -1 ||
+          this.sciSkills.indexOf(i) > -1 ||
+          this.econSkills.indexOf(i) > -1 ||
+          this.langSkills.indexOf(i) > -1)
       {
         this.skill[i] = true;
       }
       else
         this.skill[i] = false;
-
     }
     console.log("skill", this.skill);
-    docRef.update({
+    taskRef.set({
         taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
-        TaskDescription : this.taskCreateForm.value.TaskDescription,
-        Location : this.taskCreateForm.value.Location,
-        Compensation : this.taskCreateForm.value.Compensation,
-        Skill : this.skill,
-
+        TaskDescription : this.taskCreateForm.value.taskDescription,
+        Location : this.taskCreateForm.value.location,
+        Compensation : this.taskCreateForm.value.compensation,
+        Skill : this.skill
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
-    docRef.get().then(doc=>{
-      var index = this.client.initIndex('tasks');
-      var task = doc.data();
-      task.objectID = this.taskId;
-      index.saveObject(task);
+
+    taskRef.get().then(doc=>{
+      let tIndex = this.client.initIndex('tasks');
+      console.log("this is the data", doc.data().taskName);
+      // this.task = new TaskObjectProvider(
+      //             doc.data().taskName,
+      //             5,
+      //             "right now",
+      //             this.month + " " + this.day,
+      //             doc.data().taskDescription,
+      //             "unused",
+      //             this.skill,
+      //             false,
+      //             this.curUserToken.uid
+      // );
+      console.log("the task", this.task);
       //this.navCtrl.push( some page here);
-    })
+    });
+    userRef.get().then(doc=>{
+      let uIndex = this.client.initIndex('users');
+      let newCount = doc.data().taskCount + 1;
+      let newOwned = doc.data().ownedTasks;
+      if (newOwned.indexOf(this.taskId) < 0) {
+        newOwned.push(this.taskId);
+        userRef.update({
+          taskCount : newCount,
+          ownedTasks : newOwned
+        });
+      }
+    });
+    this.navCtrl.push(TaskViewPage, {
+      task: this.task
+    });
   }
 
   ionViewDidLoad() {

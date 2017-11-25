@@ -157,7 +157,7 @@ export class EditProfilePage {
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
       0);
-      newUser.createTask();
+
       
       console.log("newUser is ", newUser);
       // for simplicity i wrote an abstract function to update each field.
@@ -172,8 +172,9 @@ export class EditProfilePage {
         zipCode : this.editProfileForm.value.zipCode,
         skill : this.skill,
       });
-      //this.cloudBaseModule.arrayUpdate(this.skill, 'users', this.curUserToken.uid);
-
+      
+      
+      
       if(this.pictureChanged)
         this.updateUserPhoto();
       else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
