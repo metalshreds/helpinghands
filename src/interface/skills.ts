@@ -32,7 +32,7 @@ export class skill{
 	Portuguese: string;
 	Russian: string;
 	English: string;
-	OtherLang: String;
+	OtherLang: string;
 
     constructor(){
       this.Programming = 'Programming';

@@ -39,7 +39,7 @@ export class TaskObjectProvider {
               timeEnd : string,
               introduction : string,
               requirement : string,
-              wantedSkill : string,
+              wantedSkill : string[],
               complete : boolean,
               owner : string,
               ) {

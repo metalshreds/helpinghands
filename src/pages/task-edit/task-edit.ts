@@ -27,6 +27,10 @@ import { TaskViewPage } from "../task-view/task-view"
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
+  nameHolder : string;
+  descriptionHolder : string;
+  locationHolder : string;
+  compensationHolder : string;
   skill = new Object();
   csSkills = [];
   mechSkills = [];
@@ -34,8 +38,8 @@ export class TaskEditPage {
   sciSkills = [];
   econSkills = [];
   langSkills = [];
-  month : string;
-  day : string;
+  month : string = '';
+  day : string = '';
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
@@ -65,19 +69,68 @@ export class TaskEditPage {
       compensation : [''],
     });
 
-
     console.log(this.navParams.get('taskID'));
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     if(this.navParams.get('taskID') != undefined) {
       this.taskId = this.navParams.get('taskID');
+      let taskRef = this.db.collection('tasks').doc(this.taskId);
+      taskRef.get().then(doc=>{
+        this.nameHolder = doc.data().TaskName;
+        this.descriptionHolder = doc.data().TaskDescription;
+        this.locationHolder = doc.data().Location;
+        this.compensationHolder = doc.data().Compensation;
+        this.month = doc.data().EndMonth;
+        this.day = doc.data().EndDay;
+        this.skill = doc.data().Skill;
+      });
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
       })
     }
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    this.csSkills = ['Programming'];
-
+    console.log(this.skill);
+    for (const field in this.skill) {
+      if (this.skill[field]) {
+        if (field == "Programming" ||
+          field == "Excel" ||
+          field == "Hardware") {
+          this.csSkills.push(field);
+        }
+        else if (field == "Welding" ||
+          field == "Mechanic" ||
+          field == "Soldering" ||
+          field == "Drafting") {
+          this.mechSkills.push(field);
+        }
+        else if (field == "GraphicDesign" ||
+          field == "Photography" ||
+          field == "DrawingandPainting") {
+          this.artSkills.push(field);
+        }
+        else if (field == "Bio" ||
+          field == "Physics" ||
+          field == "Chem" ||
+          field == "Agriculture") {
+          this.sciSkills.push(field);
+        }
+        else if (field == "Management" ||
+          field == "Accounting" ||
+          field == "Economics") {
+          this.econSkills.push(field);
+        }
+        else if (field == "Spanish" ||
+          field == "Japanese" ||
+          field == "German" ||
+          field == "Mandarin" ||
+          field == "Cantonese" ||
+          field == "Portuguese" ||
+          field == "Russian" ||
+          field == "English" ||
+          field == "OtherLang") {
+          this.langSkills.push(field);
+        }
+      }
+    }
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
@@ -108,18 +161,20 @@ export class TaskEditPage {
     console.log("skill", this.skill);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.set({
-        taskName : this.taskCreateForm.value.taskName,
-        taskId : this.taskId,
+        TaskName : this.taskCreateForm.value.taskName,
+        TaskId : this.taskId,
         TaskDescription : this.taskCreateForm.value.taskDescription,
         Location : this.taskCreateForm.value.location,
         Compensation : this.taskCreateForm.value.compensation,
-        Skill : this.skill
+        Skill : this.skill,
+        EndMonth : this.month,
+        EndDay : this.day
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
-      this.task = new TaskObjectProvider(
+      /*this.task = new TaskObjectProvider(
                   doc.data().taskName,
                   5,
                   "right now",
@@ -129,7 +184,7 @@ export class TaskEditPage {
                   this.skill,
                   false,
                   this.curUserToken.uid
-      );
+      );*/
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
@@ -146,9 +201,9 @@ export class TaskEditPage {
         });
       }
     });
-    this.navCtrl.push(TaskViewPage, {
+    /*this.navCtrl.push(TaskViewPage, {
       task: this.task
-    });
+    });*/
   }
 
   ionViewDidLoad() {

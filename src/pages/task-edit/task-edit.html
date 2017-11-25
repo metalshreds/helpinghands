@@ -26,7 +26,7 @@
       <ion-item>
           <ion-label floating>Task name</ion-label>
           <ion-icon name='body' item-start></ion-icon>
-          <ion-input formControlName = "taskName" type = "text" value="name"> </ion-input>
+          <ion-input formControlName = "taskName" type = "text" value={{nameHolder}}> </ion-input>
         </ion-item>
 
     <button ion-button (click)="changePicture()" block>Add a Picture</button>
@@ -34,7 +34,7 @@
     <ion-item>
         <ion-label floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value="description"></ion-textarea>
+      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
     </ion-item>
 
     <ion-item>
@@ -46,7 +46,7 @@
       <ion-label style="color: black">
         Computer Sciences
       </ion-label>
-      <ion-select [(ngModel)]="csSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select [(ngModel)]="csSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
         <ion-option value="Programming">Programming</ion-option>
         <ion-option value="Excel">Excel</ion-option>
         <ion-option value="Hardware">Hardware</ion-option>
@@ -58,7 +58,7 @@
       <ion-label style="color: black">
         Mechanical
       </ion-label>
-      <ion-select [(ngModel)]="mechSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select [(ngModel)]="mechSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
         <ion-option value="Welding">Welding</ion-option>
         <ion-option value="Mechanic">Mechanic</ion-option>
         <ion-option value="Soldering">Soldering</ion-option>
@@ -71,10 +71,10 @@
       <ion-label style="color: black">
         Art
       </ion-label>
-      <ion-select [(ngModel)]="artSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="Graphic Design">Graphic Design</ion-option>
+      <ion-select [(ngModel)]="artSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="GraphicDesign">Graphic Design</ion-option>
         <ion-option value="Photography">Photography</ion-option>
-        <ion-option value="Drawing and Painting">Drawing and Painting</ion-option>
+        <ion-option value="DrawingandPainting">Drawing and Painting</ion-option>
       </ion-select>
     </ion-item>
 
@@ -83,10 +83,10 @@
       <ion-label style="color: black">
         Natural Sciences
       </ion-label>
-      <ion-select [(ngModel)]="sciSkills"  [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="Biology">Biology</ion-option>
+      <ion-select [(ngModel)]="sciSkills"  [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Bio">Biology</ion-option>
         <ion-option value="Physics">Physics</ion-option>
-        <ion-option value="Chemistry">Chemistry</ion-option>
+        <ion-option value="Chem">Chemistry</ion-option>
         <ion-option value="Agriculture">Agriculture</ion-option>
       </ion-select>
     </ion-item>
@@ -96,7 +96,7 @@
       <ion-label style="color: black">
         Business
       </ion-label>
-      <ion-select [(ngModel)]="econSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select [(ngModel)]="econSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
         <ion-option value="Management">Management</ion-option>
         <ion-option value="Accounting">Accounting</ion-option>
         <ion-option value="Economics">Economics</ion-option>
@@ -108,11 +108,12 @@
       <ion-label style="color: black">
         Language
       </ion-label>
-      <ion-select [(ngModel)]="langSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option value="Chinese">Chinese</ion-option>
+      <ion-select [(ngModel)]="langSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Cantonese">Cantonese</ion-option>
         <ion-option value="English">English</ion-option>
         <ion-option value="German">German</ion-option>
         <ion-option value="Japanese">Japanese</ion-option>
+        <ion-option value="Mandarin">Mandarin</ion-option>
         <ion-option value="Portuguese">Portuguese</ion-option>
         <ion-option value="Russian">Russian</ion-option>
         <ion-option value="Spanish">Spanish</ion-option>
@@ -181,7 +182,7 @@
       <ion-label style="color: black">
         Location
       </ion-label>
-      <ion-input formControlName = "location" type="text" value=""></ion-input>
+      <ion-input formControlName = "location" type="text" value={{locationHolder}}></ion-input>
     </ion-item>
 
     <ion-item>
@@ -203,7 +204,7 @@
         Compensation
       </ion-label>
       <ion-icon name='cash' item-start></ion-icon>
-      <ion-input formControlName = "compensation" type="number" placeholder="" value=""></ion-input>
+      <ion-input formControlName = "compensation" type="number" placeholder="" value={{compensationHolder}}></ion-input>
       <ion-toggle checked="false"></ion-toggle>
     </ion-item>
 
