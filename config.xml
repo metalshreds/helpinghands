@@ -87,5 +87,7 @@
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.11" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.8.1" />
+    <engine name="browser" spec="~4.1.0" />
     <engine name="android" spec="~6.4.0" />
+    <plugin name="cordova-plugin-datepicker" spec="~0.9.3" />
 </widget>

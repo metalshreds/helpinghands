@@ -32,7 +32,8 @@ export class TaskViewPage {
     public loadingCtrl: LoadingController,
     public app: App,
   ) {
-    this.selectedTask = navParams.get('task');
+    this.selectedTask = this.navParams.get('task');
+    console.log(this.selectedTask);
     //TODO is this the correct way to check if they are the same user?
     this.userIsTaskOwner = (this.selectedTask.owner == this.curUserToken.uid)
   }
@@ -43,7 +44,7 @@ export class TaskViewPage {
 
    editTaskClicked(event, selectedTask){
      this.navCtrl.push(TaskEditPage, {
-       task: selectedTask
+       taskID: "PU3ezaX3w2VvnBgtqvXJ70wBkA2211"
      });
   }
 

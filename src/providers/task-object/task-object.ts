@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 export class TaskObjectProvider {
 
   //Users
-  public ownerUserId : string;                  //onwer of this task.
+  public owner : string;                  //onwer of this task.
 
   //Time
   public timeDuration : number;     //duration of the task
@@ -17,7 +17,7 @@ export class TaskObjectProvider {
   public timeEnd: string;
 
   //Skills and status
-  public wantedSkill : boolean[]=[];  //skill set of the task
+  public wantedSkill: any[];  //skill set of the task
   public complete: boolean;           //flag that indicates the completion of the task
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
@@ -36,19 +36,21 @@ export class TaskObjectProvider {
   constructor(name: string,
               timeDuration : number,
               timeStart : string,
+              timeEnd : string,
               introduction : string,
               requirement : string,
-              wantedSkill : boolean[],
+              wantedSkill : any[],
               complete : boolean,
               owner : string,
               ) {
     this.name = name;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
+    this.timeEnd = timeEnd;
     this.introduction = introduction;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
-    this.ownerUserId = owner;
+    this.owner = owner;
 
   }
 
