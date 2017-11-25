@@ -34,7 +34,17 @@
         </ion-item>
 
         <h3>Skills</h3>
-        <p>C++, Java, Hardware, Soldering, Welding</p>
+
+
+            <ion-item *ngFor = "let skill of displaySkill">
+            {{skill}}
+            </ion-item>
+
+
+
+
+
+
 
         <h3 padding-top="15px">Portfolio</h3>
         <ion-item text-wrap>

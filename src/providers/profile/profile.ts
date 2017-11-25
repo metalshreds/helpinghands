@@ -20,7 +20,7 @@ export class ProfileProvider {
   public zipCode : string;
   public phone : number;
   //interests: string[];
-  public skills: boolean[];
+  public skill = new Object();
   public oTask : Array<TaskObjectProvider> = [];
   public ownedTask : TaskObjectProvider[] = [];
   public blackListTask: TaskObjectProvider[] = [];
@@ -34,7 +34,7 @@ export class ProfileProvider {
     uid : string,
     email : string,
     introduction : string,
-    skills : boolean[],
+    skills : string,
     zipCode : string,
     phone : number,
     travelRadius : number,
@@ -45,7 +45,7 @@ export class ProfileProvider {
     this.userId = uid;
     this.email = email;
     this.introduction = introduction;
-    this.skills = skills;
+    this.skill = skills;
     this.zipCode = zipCode;
     this.phone = phone;
     this.travelRadius = travelRadius;

@@ -24,8 +24,8 @@ export class ProfilePage {
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
-  
   userPhotoUrl = this.curUserToken.photoURL;
+  displaySkill  = [];
   db = firebase.firestore();
 
   CURRENT_USER = {} as ProfileProvider;
@@ -52,12 +52,18 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-            
+          for (const i in this.CURRENT_USER.skill)
+          {
+            if (this.CURRENT_USER.skill[i] == true)
+              this.displaySkill.push(i);
+          }
+          console.log(this.displaySkill);
+
             this._zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);
             });
-          
+
         }
       })
       .catch(err => {
@@ -66,7 +72,7 @@ export class ProfilePage {
 
 
 
-    console.log("image ", this.curUserToken.photoURL);
+
 
 
   }

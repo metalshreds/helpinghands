@@ -38,9 +38,9 @@ export class cloudProvider {
     //             ...
     ////////////////////////////////
     //task(collection)
-    //      TaskA (doc) : task ID    
+    //      TaskA (doc) : task ID
     //        taskName:
-    //        owner: 
+    //        owner:
     //        etc...
     //        participator(collection)
     //            user1(doc)
@@ -58,8 +58,19 @@ export class cloudProvider {
   }
 
  // UpdateAllProfileField = function(updateMessage)
+ //
+  arrayUpdate = function(skills : any, node: string, userId : string)
+  {
 
+    var docRef = this.db.collection(node).doc(userId);
+    for (const i in skills)
+    {
+      docRef.update({'skill' : {
+        [i] : [skills[i]]
+      }})
+    }
 
+  }
 
 
 
