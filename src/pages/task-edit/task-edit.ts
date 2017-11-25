@@ -119,7 +119,7 @@ export class TaskEditPage {
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
-      /*this.task = new TaskObjectProvider(
+      this.task = new TaskObjectProvider(
                   doc.data().taskName,
                   5,
                   "right now",
@@ -129,7 +129,7 @@ export class TaskEditPage {
                   this.skill,
                   false,
                   this.curUserToken.uid
-      );*/
+      );
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
@@ -146,9 +146,9 @@ export class TaskEditPage {
         });
       }
     });
-    /*this.navCtrl.push(TaskViewPage, {
+    this.navCtrl.push(TaskViewPage, {
       task: this.task
-    });*/
+    });
   }
 
   ionViewDidLoad() {
