@@ -49,8 +49,11 @@ export class HelpingHands {
           this._zone.run(()=>{
             var curUserToken = firebase.auth().currentUser;
             console.log("ava", curUserToken.photoURL);
-            if(curUserToken)
+            if(curUserToken){
               this.photoURL = curUserToken.photoURL;
+            }
+              
+
           })
         } else {
           // No user is signed in.
@@ -94,6 +97,16 @@ export class HelpingHands {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+  //https://ionicthemes.com/tutorials/about/ionic-2-image-handling
+  // reduceImages(selected_pictures: any) : any{
+  //   return selected_pictures.reduce((promise:any, item:any) => {
+  //     return promise.then((result) => {
+  //       return this.cropService.crop(item, {quality: 75})
+	// 			.then(cropped_image => this.photos.push(cropped_image));
+  //     });
+  //   }, Promise.resolve());
+  // }
 
   editProfile()
   {

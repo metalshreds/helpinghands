@@ -24,7 +24,7 @@ import {skill} from '../../interface/skills'
   templateUrl: 'task-edit.html',
 })
 export class TaskEditPage {
-  skill = new Object(); 
+  skill = new Object();
   CSskills;
   skillinterface = new skill();
   task: TaskObjectProvider;
@@ -34,7 +34,7 @@ export class TaskEditPage {
   taskCreateForm : FormGroup;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid + '11'; 
+  taskId = this.curUserToken.uid + '111';
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -45,7 +45,6 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    
   ) {
 
     this.taskCreateForm = formBuilder.group ({
@@ -60,6 +59,7 @@ export class TaskEditPage {
 
   createTask(){
     var docRef = this.db.collection('tasks').doc(this.taskId);
+
     console.log(this.CSskills);
     console.log(this.skillinterface);
     for (const i in this.skillinterface)
@@ -70,7 +70,7 @@ export class TaskEditPage {
       }
       else
         this.skill[i] = false;
-        
+
     }
     console.log("skill", this.skill);
     docRef.update({
@@ -89,7 +89,7 @@ export class TaskEditPage {
       task.objectID = this.taskId;
       index.saveObject(task);
       //this.navCtrl.push( some page here);
-    }) 
+    })
   }
 
   ionViewDidLoad() {
@@ -127,6 +127,8 @@ export class TaskEditPage {
     this.pictureChanged = true;
     return actionsheet.present();
   }
+
+
 
   takePicture() {
     const loading = this.loadingCtrl.create();

@@ -15,13 +15,15 @@
   <ion-row>
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-row>
-  
+
+  <ion-row>
+    <ion-col col-10>
   <ion-toolbar no-border-top>
       <ion-segment [(ngModel)]="SearchResult">
         <ion-segment-button value="Everything">
           All
         </ion-segment-button>
-        <ion-segment-button value="User">
+        <ion-segment-button selected value="User">
           User
         </ion-segment-button>
         <ion-segment-button value="Task">
@@ -29,7 +31,16 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-  
+  </ion-col>
+  <ion-col text-left>
+    <ion-item text-left>
+      <ion-select [(ngModel)]="gaming" interface="popover">
+        <ion-option text-left selected value="deflist">Default</ion-option>
+        <ion-option text-left value="rating">Highest rate first</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+  </ion-row>
 
 </ion-header>
 

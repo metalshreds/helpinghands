@@ -26,9 +26,8 @@ import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { cloudProvider } from "../providers/cloudbase";
 import { AngularFirestoreModule} from "angularfire2/firestore";
-import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
-import { CommentPopover } from "../pages/task-edit/comment-popover"
-
+import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module";
+import { CommentPopover } from "../pages/task-edit/comment-popover";
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -81,7 +80,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     CameraProvider,
     Camera,
     PhotoViewer,
-    cloudProvider
+    cloudProvider,
   ]
 })
 export class AppModule {}

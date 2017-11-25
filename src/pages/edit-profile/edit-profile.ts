@@ -12,7 +12,6 @@ import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
 import { CameraProvider } from '../../providers/camera';
 import * as algoliasearch from 'algoliasearch';
-
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -47,7 +46,6 @@ export class EditProfilePage {
     public actionsheetCtrl: ActionSheetController,
     public cameraProvider: CameraProvider,
     public platform: Platform,
-    //public currUser : ProfileProvider
   ) {
 
     this.editProfileForm = formBuilder.group({
@@ -231,6 +229,10 @@ export class EditProfilePage {
     loading.present();
     return this.cameraProvider.getPictureFromPhotoLibrary().then(picture => {
       if (picture) {
+
+        // this.crop.crop(picture, {quality:75})
+        // .then(newImage=>{this.chosenPicture = newImage})
+        //   .catch(error=>{console.error('Error in croping image in edit-user', error)});
         this.chosenPicture = picture;
         this.pictureChanged = true;
       }
