@@ -102,6 +102,7 @@ export class SignupPage {
               email: this.signUpForm.value.email,
               lastName : '',
               firstName : '',
+              taskCount : 1,
             });
             docRef.get().then(doc=>{
               var index = this.client.initIndex('users');

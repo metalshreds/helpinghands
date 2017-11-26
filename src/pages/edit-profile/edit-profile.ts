@@ -156,7 +156,7 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
-      0);
+        this.CURRENT_USER.taskCount);
 
       
       console.log("newUser is ", newUser);
@@ -171,6 +171,7 @@ export class EditProfilePage {
         introduction : this.editProfileForm.value.introduction,
         zipCode : this.editProfileForm.value.zipCode,
         skill : this.skill,
+        taskCount : this.CURRENT_USER.taskCount,
       });
       
       
