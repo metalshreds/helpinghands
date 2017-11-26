@@ -40,11 +40,6 @@ export class SearchPage {
   */
 
   db = firebase.firestore();
-  //https://github.com/firebase/functions-samples/blob/master/fulltext-search/functions/index.js
-  //https://stackoverflow.com/questions/45274485/how-to-integrate-algolia-in-ionic3
-  //https://github.com/algolia/algoliasearch-client-javascript
-  //https://firebase.google.com/docs/firestore/solutions/search?authuser=2
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.initializeItems();
   }
@@ -83,6 +78,7 @@ export class SearchPage {
     if (val && val.trim() != '')
     {
       var query = val.trim();
+      //use cloudbase query
       this.db.collection('users').where('skill.'+query, '==', true ).get()
         .then((doc)=>{
           doc.forEach(sdoc=>{
@@ -103,9 +99,16 @@ export class SearchPage {
             CURRENT_USER['id'] = sdoc.id; //tmp fix, add those in user object later
             console.log(displaySkill);
             this.items.push(CURRENT_USER);
-            
           })
-        
+        })
+      //use algolia query
+        var index = this.client.initIndex('users');
+        index.search({query}).then(responses=>{
+          console.log("algolia", responses.hits);
+            for(const hit in responses.hits){
+                  this.items.push(responses.hits[hit]);
+                  console.log("this", responses.hits[hit]);
+            }
         })
     }
 
