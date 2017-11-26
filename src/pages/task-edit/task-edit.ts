@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import { skill } from '../../interface/skills'
 import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
+import { ProfilePage } from "../profile/profile"
 
 /**
  * Generated class for the TaskEditPage page.
@@ -50,6 +51,7 @@ export class TaskEditPage {
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   taskId = this.curUserToken.uid;
+  created = true;
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -69,9 +71,9 @@ export class TaskEditPage {
       compensation : [''],
     });
 
-    console.log(this.navParams.get('taskID'));
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     if(this.navParams.get('taskID') != undefined) {
+      this.created = false;
       this.taskId = this.navParams.get('taskID');
       let taskRef = this.db.collection('tasks').doc(this.taskId);
       taskRef.get().then(doc=>{
@@ -82,68 +84,40 @@ export class TaskEditPage {
         this.month = doc.data().EndMonth;
         this.day = doc.data().EndDay;
         this.skill = doc.data().Skill;
+        for (const field in this.skill) {
+          if (this.skill[field]) {
+            if (field == "Programming" || field == "Excel" || field == "Hardware") {
+              this.csSkills.push(field);
+            }
+            else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
+              this.mechSkills.push(field);
+            }
+            else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
+              this.artSkills.push(field);
+            }
+            else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
+              this.sciSkills.push(field);
+            }
+            else if (field == "Management" || field == "Accounting" || field == "Economics") {
+              this.econSkills.push(field);
+            }
+            else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
+              field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
+              field == "OtherLang") {
+              this.langSkills.push(field);
+            }
+          }
+        }
       });
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
       })
     }
-    console.log(this.skill);
-    for (const field in this.skill) {
-      if (this.skill[field]) {
-        if (field == "Programming" ||
-          field == "Excel" ||
-          field == "Hardware") {
-          this.csSkills.push(field);
-        }
-        else if (field == "Welding" ||
-          field == "Mechanic" ||
-          field == "Soldering" ||
-          field == "Drafting") {
-          this.mechSkills.push(field);
-        }
-        else if (field == "GraphicDesign" ||
-          field == "Photography" ||
-          field == "DrawingandPainting") {
-          this.artSkills.push(field);
-        }
-        else if (field == "Bio" ||
-          field == "Physics" ||
-          field == "Chem" ||
-          field == "Agriculture") {
-          this.sciSkills.push(field);
-        }
-        else if (field == "Management" ||
-          field == "Accounting" ||
-          field == "Economics") {
-          this.econSkills.push(field);
-        }
-        else if (field == "Spanish" ||
-          field == "Japanese" ||
-          field == "German" ||
-          field == "Mandarin" ||
-          field == "Cantonese" ||
-          field == "Portuguese" ||
-          field == "Russian" ||
-          field == "English" ||
-          field == "OtherLang") {
-          this.langSkills.push(field);
-        }
-      }
-    }
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(
-      date => console.log('Got date: ', date),
-      err => console.log('Error occurred while getting date: ', err)
-    );
-
   }
 
 
-  updateTask(event){
+  updateTask(){
     for (const i in this.skillinterface)
     {
       if (this.csSkills.indexOf(i) > -1 ||
@@ -168,7 +142,8 @@ export class TaskEditPage {
         Compensation : this.taskCreateForm.value.compensation,
         Skill : this.skill,
         EndMonth : this.month,
-        EndDay : this.day
+        EndDay : this.day,
+        Complete : false
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     taskRef.get().then(doc=>{
@@ -201,9 +176,7 @@ export class TaskEditPage {
         });
       }
     });
-    /*this.navCtrl.push(TaskViewPage, {
-      task: this.task
-    });*/
+    this.navCtrl.push(ProfilePage);
   }
 
   ionViewDidLoad() {
@@ -272,11 +245,20 @@ export class TaskEditPage {
     });
   }
 
-  presentPopover(myEvent) {
+  completeTask() {
     let popover = this.popoverCtrl.create(CommentPopover);
-    popover.present({
-      ev: myEvent
-    });
+  }
+
+  deleteTask() {
+    this.navCtrl.push(ProfilePage);
+  }
+
+  goBack() {
+    if(this.navParams.get('taskID') != undefined) {
+      this.navCtrl.pop();
+    } else {
+      this.navCtrl.push(ProfilePage);
+    }
   }
 }
 

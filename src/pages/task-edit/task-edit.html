@@ -17,14 +17,10 @@
 
   <ion-content padding>
 
-
-
-
-
   <ion-list no-border>
       <form [formGroup] = "taskCreateForm" novalidate>
       <ion-item>
-          <ion-label floating>Task name</ion-label>
+          <ion-label style="color: black" floating>Task name</ion-label>
           <ion-icon name='body' item-start></ion-icon>
           <ion-input formControlName = "taskName" type = "text" value={{nameHolder}}> </ion-input>
         </ion-item>
@@ -32,7 +28,7 @@
     <button ion-button (click)="changePicture()" block>Add a Picture</button>
 
     <ion-item>
-        <ion-label floating>Task Description</ion-label>
+      <ion-label style="color: black" floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
       <ion-textarea formControlName = "taskDescription"rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
     </ion-item>
@@ -209,13 +205,13 @@
     </ion-item>
 
   </form>
+    <button ion-button style="background-color: red" block (click)="goBack()">Discard Changes</button>
+    <button ion-button style="background-color: #2ec95c" block (click)="updateTask()">Save Changes</button>
+
+    <div *ngIf="!created">
+      <button ion-button style="background-color: blue" block (click)="completeTask()">This task is completed</button>
+      <button ion-button style="background-color: black" block (click)="deleteTask()">Delete this task</button>
+    </div>
   </ion-list>
-
-  <button ion-button block (click)="datePicker.show()">Date?</button>
-  <button ion-button style="background-color: red" block>Discard Changes</button>
-  <button ion-button style="background-color: #2ec95c" (click)="updateTask($event)" block>Save Changes</button>
-  <button ion-button style="background-color: blue" block (click)="presentPopover($event)">This task is completed</button>
-  <button ion-button style="background-color: black" block>Delete this task</button>
-
 
 </ion-content>
