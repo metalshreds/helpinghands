@@ -52,24 +52,33 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
+<<<<<<< HEAD
+=======
           for (const i in this.CURRENT_USER.skill)
           {
             if (this.CURRENT_USER.skill[i] == true)
               this.displaySkill.push(i);
           }
           console.log(this.displaySkill);
+>>>>>>> master
 
             this._zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);
             });
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
         }
       })
       .catch(err => {
         console.log('Error getting document', err);
       });
 
+<<<<<<< HEAD
+    console.log("image ", this.curUserToken.photoURL);
+=======
       //following code block pull the ownedlist from user node specified user ID, and push the name of the each
       //  task into current user's ownedlist.
       var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask');
@@ -82,6 +91,7 @@ export class ProfilePage {
             })     
         });
       });
+>>>>>>> master
 
   }
 

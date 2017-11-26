@@ -7,6 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 
 
+
 /**
  * Generated class for the CreatePage page.
  *
@@ -36,8 +37,8 @@ export class CreatePage {
 
   }
   taskId = this.curUserToken.uid + '11' //change 11 to counter later
-  
-  
+
+
   createTask(){
     var docRef = this.db.collection('tasks').doc(this.taskId);
     docRef.set({
@@ -51,10 +52,10 @@ export class CreatePage {
       task.objectID = this.taskId;
       index.saveObject(task);
       //this.navCtrl.push( some page here);
-    }) 
+    })
   }
 
-  
+
 
 
   ionViewDidLoad() {

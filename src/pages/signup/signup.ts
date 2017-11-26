@@ -111,8 +111,8 @@ export class SignupPage {
               index.saveObject(user);
               this.navCtrl.push(EditProfilePage);
             })
-          
-            
+
+
           })
           .catch(function (error)        //on failure, display the error massage.
           {

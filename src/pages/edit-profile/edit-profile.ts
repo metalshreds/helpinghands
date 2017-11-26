@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams,
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import {ProfilePage} from '../profile/profile';
+import { ProfilePage} from '../profile/profile';
 import { cloudProvider } from '../../providers/cloudbase';
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation

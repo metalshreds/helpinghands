@@ -23,6 +23,7 @@
 $primary-color: #19afdc;
 $secondary-color: #39acdc;
 
+<<<<<<< HEAD
 /* Task Colors */
 
 $task-completed: #99dc85;
@@ -41,3 +42,5 @@ ion-card-content, .card-item{
 
 
 /* Other Colors */
+=======
+>>>>>>> master

@@ -25,6 +25,10 @@ export class TaskObjectProvider {
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
   public taskDescription : string;       //brief intro/background of this task
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
@@ -38,12 +42,20 @@ export class TaskObjectProvider {
               wantedSkill : string[],
               complete : boolean,
               owner : string,
-  ) {
+<<<<<<< HEAD
+              ) {
     this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
     this.taskDescription = taskDescription;
+=======
+  ) {
+    this.taskName = taskName;
+    this.timeDuration = timeDuration;
+    this.timeStart = timeStart;
     this.timeEnd = timeEnd;
+    this.taskDescription = introduction;
+>>>>>>> master
     this.wantedSkill = wantedSkill;
     this.complete = complete;
     this.ownerUserId = owner;

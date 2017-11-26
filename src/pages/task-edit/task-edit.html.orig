@@ -1,0 +1,233 @@
+<!--
+  Generated template for the CreatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Edit Task<ion-icon name="brush"></ion-icon> </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+  <ion-content padding>
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
+  <ion-list no-border>
+      <form [formGroup] = "taskCreateForm" novalidate>
+      <ion-item>
+          <ion-label style="color: black" floating>Task name</ion-label>
+          <ion-icon name='body' item-start></ion-icon>
+          <ion-input formControlName = "taskName" type = "text" value={{nameHolder}}> </ion-input>
+        </ion-item>
+
+    <button ion-button (click)="changePicture()" block>Add a Picture</button>
+
+    <ion-item>
+      <ion-label style="color: black" floating>Task Description</ion-label>
+      <ion-icon name='leaf' item-start></ion-icon>
+<<<<<<< HEAD
+      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value=""></ion-textarea>
+    </ion-item>
+
+=======
+      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
+    </ion-item>
+>>>>>>> master
+
+    <ion-item>
+      <ion-label>Skill Selection</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='desktop' item-start></ion-icon>
+      <ion-label style="color: black">
+        Computer Sciences
+      </ion-label>
+      <ion-select [(ngModel)]="csSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Programming">Programming</ion-option>
+        <ion-option value="Excel">Excel</ion-option>
+        <ion-option value="Hardware">Hardware</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='construct' item-start></ion-icon>
+      <ion-label style="color: black">
+        Mechanical
+      </ion-label>
+      <ion-select [(ngModel)]="mechSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Welding">Welding</ion-option>
+        <ion-option value="Mechanic">Mechanic</ion-option>
+        <ion-option value="Soldering">Soldering</ion-option>
+        <ion-option value="Drafting">Drafting</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='brush' item-start></ion-icon>
+      <ion-label style="color: black">
+        Art
+      </ion-label>
+      <ion-select [(ngModel)]="artSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="GraphicDesign">Graphic Design</ion-option>
+        <ion-option value="Photography">Photography</ion-option>
+        <ion-option value="DrawingandPainting">Drawing and Painting</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-label style="color: black">
+        Natural Sciences
+      </ion-label>
+      <ion-select [(ngModel)]="sciSkills"  [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Bio">Biology</ion-option>
+        <ion-option value="Physics">Physics</ion-option>
+        <ion-option value="Chem">Chemistry</ion-option>
+        <ion-option value="Agriculture">Agriculture</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='briefcase' item-start></ion-icon>
+      <ion-label style="color: black">
+        Business
+      </ion-label>
+      <ion-select [(ngModel)]="econSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Management">Management</ion-option>
+        <ion-option value="Accounting">Accounting</ion-option>
+        <ion-option value="Economics">Economics</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='globe' item-start></ion-icon>
+      <ion-label style="color: black">
+        Language
+      </ion-label>
+      <ion-select [(ngModel)]="langSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
+        <ion-option value="Cantonese">Cantonese</ion-option>
+        <ion-option value="English">English</ion-option>
+        <ion-option value="German">German</ion-option>
+        <ion-option value="Japanese">Japanese</ion-option>
+        <ion-option value="Mandarin">Mandarin</ion-option>
+        <ion-option value="Portuguese">Portuguese</ion-option>
+        <ion-option value="Russian">Russian</ion-option>
+        <ion-option value="Spanish">Spanish</ion-option>
+        <ion-option value="OtherLang">Other</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item></ion-item>
+
+    <ion-item>
+      <ion-icon name='timer' item-start>   </ion-icon>
+      <ion-label style="color: black">
+        Date
+      </ion-label>
+      <ion-select [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+        <ion-option value="January">January</ion-option>
+        <ion-option value="February">February</ion-option>
+        <ion-option value="March">March</ion-option>
+        <ion-option value="April">April</ion-option>
+        <ion-option value="May">May</ion-option>
+        <ion-option value="June">June</ion-option>
+        <ion-option value="July">July</ion-option>
+        <ion-option value="August">August</ion-option>
+        <ion-option value="September">September</ion-option>
+        <ion-option value="October">October</ion-option>
+        <ion-option value="November">November</ion-option>
+        <ion-option value="December">December</ion-option>
+      </ion-select>
+      <ion-select [(ngModel)]="day" [ngModelOptions]="{standalone: true}">
+        <ion-option value="1">1</ion-option>
+        <ion-option value="2">2</ion-option>
+        <ion-option value="3">3</ion-option>
+        <ion-option value="4">4</ion-option>
+        <ion-option value="5">5</ion-option>
+        <ion-option value="6">6</ion-option>
+        <ion-option value="7">7</ion-option>
+        <ion-option value="8">8</ion-option>
+        <ion-option value="9">9</ion-option>
+        <ion-option value="10">10</ion-option>
+        <ion-option value="11">11</ion-option>
+        <ion-option value="12">12</ion-option>
+        <ion-option value="13">13</ion-option>
+        <ion-option value="14">14</ion-option>
+        <ion-option value="15">15</ion-option>
+        <ion-option value="16">16</ion-option>
+        <ion-option value="17">17</ion-option>
+        <ion-option value="18">18</ion-option>
+        <ion-option value="19">19</ion-option>
+        <ion-option value="20">20</ion-option>
+        <ion-option value="21">21</ion-option>
+        <ion-option value="22">22</ion-option>
+        <ion-option value="23">23</ion-option>
+        <ion-option value="24">24</ion-option>
+        <ion-option value="25">25</ion-option>
+        <ion-option value="26">26</ion-option>
+        <ion-option value="27">27</ion-option>
+        <ion-option value="28">28</ion-option>
+        <ion-option value="29">29</ion-option>
+        <ion-option value="30">30</ion-option>
+        <ion-option value="31">31</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='pin' item-start></ion-icon>
+      <ion-label style="color: black">
+        Location
+      </ion-label>
+      <ion-input formControlName = "location" type="text" value={{locationHolder}}></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='call' item-start></ion-icon>
+      <ion-label style="color: black">
+        Contact via
+      </ion-label>
+      <ion-select [(ngModel)]="media" [ngModelOptions]="{standalone: true}">
+        <ion-option>Email</ion-option>
+        <ion-option>Phone</ion-option>
+        <ion-option>Face to Face</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+
+      <ion-label style="color: black">
+        Compensation
+      </ion-label>
+      <ion-icon name='cash' item-start></ion-icon>
+      <ion-input formControlName = "compensation" type="number" placeholder="" value={{compensationHolder}}></ion-input>
+      <ion-toggle checked="false"></ion-toggle>
+    </ion-item>
+<<<<<<< HEAD
+
+  </form>
+  </ion-list>
+=======
+>>>>>>> master
+
+  </form>
+    <button ion-button style="background-color: red" block (click)="goBack()">Discard Changes</button>
+    <button ion-button style="background-color: #2ec95c" block (click)="updateTask()">Save Changes</button>
+
+    <div *ngIf="!created">
+      <button ion-button style="background-color: blue" block (click)="completeTask()">This task is completed</button>
+      <button ion-button style="background-color: black" block (click)="deleteTask()">Delete this task</button>
+    </div>
+  </ion-list>
+
+</ion-content>
