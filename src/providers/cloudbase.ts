@@ -38,9 +38,9 @@ export class cloudProvider {
     //             ...
     ////////////////////////////////
     //task(collection)
-    //      TaskA (doc) : task ID    
+    //      TaskA (doc) : task ID
     //        taskName:
-    //        owner: 
+    //        owner:
     //        etc...
     //        participator(collection)
     //            user1(doc)
@@ -56,11 +56,24 @@ export class cloudProvider {
     var docRef = this.db.collection('users').doc(userId);
     docRef.update({ [subPath] : updateMessage});
   }
-
- // UpdateAllProfileField = function(updateMessage)
-
-
-
+  /*
+  / add task to corresponding user's sublist.
+  / input: userId - user's id
+  /        subPath - the name of the list under user
+  /        taskId - the id of the task
+  /        taskName - the name of the task
+  */
+  addTaskToList = function(userId : string, subPath : string, taskId : string, taskName : string)
+  {
+    var docRef = this.db.collection('users').doc(userId).collection(subPath).doc(taskId);
+    docRef.set({'taskName' : taskName});
+    // docRef.get().then(doc=>{
+    //   var index = this.client.initIndex('users');
+    //   var user = doc.data();
+    //   user.objectID = (userId);
+    //   index.saveObject(user);
+    // });
+  }
 
 
 }

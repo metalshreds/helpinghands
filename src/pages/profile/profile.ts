@@ -24,8 +24,8 @@ export class ProfilePage {
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
-  
   userPhotoUrl = this.curUserToken.photoURL;
+  displaySkill  = [];
   db = firebase.firestore();
 
   CURRENT_USER = {} as ProfileProvider;
@@ -38,6 +38,7 @@ export class ProfilePage {
 
               )
   {
+    this.CURRENT_USER.ownedTask = [];
     //get user node specificed by current userId.
     var userRef = this.db.collection('users').doc(this.curUserToken.uid);
     userRef.get() //read
@@ -52,22 +53,36 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-            
+          for (const i in this.CURRENT_USER.skill)
+          {
+            if (this.CURRENT_USER.skill[i] == true)
+              this.displaySkill.push(i);
+          }
+          console.log(this.displaySkill);
+
             this._zone.run(()=>{
               this.userPhotoUrl = this.curUserToken.photoURL;
               console.log(this.curUserToken.photoURL);
             });
-          
+
         }
       })
       .catch(err => {
         console.log('Error getting document', err);
       });
 
-
-
-    console.log("image ", this.curUserToken.photoURL);
-
+      //following code block pull the ownedlist from user node specified user ID, and push the name of the each
+      //  task into current user's ownedlist.
+      var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask');
+      docRef.get().then(doc=>{
+        doc.forEach(sdoc=>{
+          this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask').doc(sdoc.id).
+            get().then(doc =>{
+              console.log("this is ", this.CURRENT_USER.ownedTask);
+              this.CURRENT_USER.ownedTask.push(doc.data().taskName);
+            })     
+        });
+      });
 
   }
 

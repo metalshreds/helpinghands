@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -22,18 +21,16 @@ export class TaskObjectProvider {
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
-
   //Task
-  public id: number;                  //task's unique id generated when during task creation
-  public name: string;                //task's name
-  public introduction : string;       //brief intro/background of this task
-
+  public taskId: string;                  //task's unique id generated when during task creation
+  public taskName: string;                //task's name
+  public taskDescription : string;       //brief intro/background of this task
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
   / a task object.
   */
-  constructor(name: string,
+  constructor(taskName: string,
               timeDuration : number,
               timeStart : string,
               timeEnd : string,
@@ -42,20 +39,21 @@ export class TaskObjectProvider {
               wantedSkill : string[],
               complete : boolean,
               owner : string,
-              ) {
-    this.name = name;
+  ) {
+    this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
     this.timeEnd = timeEnd;
-    this.introduction = introduction;
+    this.taskDescription = introduction;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
     this.owner = owner;
 
   }
 
-
   //FUNCTIONS
+  setTaskId(taskId: string){ this.taskId = taskId; }
+  getTaskId(){ return this.taskId; }
 
   /*this function is used to set the helpers list
   / of a newly constructed task.
