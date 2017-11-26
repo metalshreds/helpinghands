@@ -38,8 +38,6 @@ export class TaskObjectProvider {
               timeStart : string,
               taskDescription : string,
               timeEnd : string,
-              introduction : string,
-              requirement : string,
               wantedSkill : string[],
               complete : boolean,
               owner : string,
@@ -48,8 +46,8 @@ export class TaskObjectProvider {
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
     this.taskDescription = taskDescription;
-    this.wantedSkills = wantedSkills;
-    this.completed = completed;
+    this.wantedSkill = wantedSkill;
+    this.complete = complete;
     this.ownerUserId = owner;
 
   }

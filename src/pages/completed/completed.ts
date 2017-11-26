@@ -60,7 +60,7 @@ export class CompletedPage {
           doc.data()['timeDuration'],
           doc.data()['timeStart'],
           doc.data()['taskDescription'],
-          doc.data()['requirement'],
+          doc.data()['timeEnd'],
           doc.data()['wantedSkills'],
           doc.data()['completed'],
           doc.data()['ownerUserId']
@@ -68,7 +68,7 @@ export class CompletedPage {
 
         task.setTaskId(doc.data()['taskId']);
 
-        if (task.completed == true /*&& self.curUserToken.uid == task.ownerUserId */)
+        if (task.complete == true /*&& self.curUserToken.uid == task.ownerUserId */)
         { self.tasks.push(task); }
         //this.completedTasks.push(doc);
 
