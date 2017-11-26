@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -22,12 +21,10 @@ export class TaskObjectProvider {
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
-
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
   public taskDescription : string;       //brief intro/background of this task
-
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
@@ -41,11 +38,13 @@ export class TaskObjectProvider {
               wantedSkill : string[],
               complete : boolean,
               owner : string,
-              ) {
+  ) {
     this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
     this.taskDescription = taskDescription;
+    this.timeEnd = timeEnd;
+    this.taskDescription = introduction;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
     this.ownerUserId = owner;

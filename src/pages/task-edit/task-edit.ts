@@ -46,8 +46,8 @@ export class TaskEditPage {
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
   taskCreateForm : FormGroup;
-  task : TaskObjectProvider;
-  user : ProfileProvider;
+  task = {} as TaskObjectProvider;
+  user = {} as ProfileProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   taskId = this.curUserToken.uid;
@@ -146,6 +146,7 @@ export class TaskEditPage {
         Complete : false
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
+
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
@@ -214,6 +215,8 @@ export class TaskEditPage {
     this.pictureChanged = true;
     return actionsheet.present();
   }
+
+
 
   takePicture() {
     const loading = this.loadingCtrl.create();
