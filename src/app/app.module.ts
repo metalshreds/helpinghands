@@ -29,6 +29,7 @@ import { AngularFirestoreModule} from "angularfire2/firestore";
 import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
 import { CommentPopover } from "../pages/task-edit/comment-popover"
 
+
 //import { emailValidator} from "../validators/emailValidator";
 
 @NgModule({
@@ -45,7 +46,6 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     TaskEditPage,
     TaskViewPage,
     CreatePage,
-
   ],
   imports: [
     BrowserModule,
@@ -54,7 +54,6 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule,
-    AngularFirestoreModule,
     CommentPopoverModule,
   ],
   bootstrap: [IonicApp],

@@ -22,14 +22,16 @@ import { NgZone, OnInit } from "@angular/core";
 export class ProfilePage {
   profile;
   skills : Array<boolean>;
-  curUserToken = this.AFcurUser.auth.currentUser;
+  AFcurUser = firebase.auth();
+  curUserToken = this.AFcurUser.currentUser;
+  
   userPhotoUrl = this.curUserToken.photoURL;
   db = firebase.firestore();
 
   CURRENT_USER = {} as ProfileProvider;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private AFcurUser: AngularFireAuth,
+              //private AFcurUser: AngularFireAuth,
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
               private _zone : NgZone,
