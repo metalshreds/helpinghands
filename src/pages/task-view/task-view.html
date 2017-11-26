@@ -15,14 +15,14 @@
 
 <ion-content padding>
 
-  <button *ngIf="userIsTaskOwner" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask)' >Edit</button>
+  <button *ngIf="!userIsTaskOwner" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask)' >Edit</button>
 
   <button *ngIf="!userIsTaskOwner" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask, selectedTask.owner, curUserToken)' >Request</button>
 
   <ion-item>
     <div *ngIf ="selectedTask">
       <h1 class = "task-name">{{selectedTask.name}}</h1>
-      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, userId)"> {{selectedTask.owner}}</button></h4>
+      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, userId)"> lolm2k </button></h4>
       <h4 class="task-summary wrap">{{selectedTask.introduction}}</h4>
       <h4> </h4>
       <h4>Start Time: {{selectedTask.timeStart}}</h4>

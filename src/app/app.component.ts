@@ -69,9 +69,8 @@ export class HelpingHands {
       { title: 'Dashboard', component: DashboardPage },
       { title: 'Search', component: SearchPage },
       { title: 'Profile', component: ProfilePage },
-      { title: 'Task Edit', component: TaskEditPage },
       { title: 'Edit Profile', component: EditProfilePage },
-      { title: 'Create Page', component: CreatePage },
+      { title: 'Create Task', component: TaskEditPage },
   ]
   }
 

@@ -21,14 +21,14 @@ import {TaskViewPage} from "../task-view/task-view";
 export class CompletedPage {
 
   tasks: Array<TaskObjectProvider>;
-  skills: Array<boolean>;
+  skills: Array<string>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tasks =[];
     this.skills = [];
 
     //creates example task
-    let task = new TaskObjectProvider( "Dumb As Dirt", 6.5,
+    let task = new TaskObjectProvider( "Dumb As Dirt", 6.5, "today",
       "1:00 pm, April 20th", "I am trying to do an experiment that involves " +
       "using dirts with different pH levels. On my first go, I couldn't get" +
       " the right pH levels, so I am looking for someone who could get dirt" +
