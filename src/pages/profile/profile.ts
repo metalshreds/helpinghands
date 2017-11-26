@@ -35,7 +35,6 @@ export class ProfilePage {
               private AFdatabase: AngularFireDatabase,
               private photoviewer : PhotoViewer,
               private _zone : NgZone,
-
               )
   {
     this.CURRENT_USER.ownedTask = [];

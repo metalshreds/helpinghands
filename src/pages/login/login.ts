@@ -16,6 +16,7 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
+import {DashboardPage} from "../dashboard/dashboard";
 
 //@IonicPage()
 @Component({
@@ -68,7 +69,7 @@ export class LoginPage {
         //TODO sent user verification email, add verification checking at login page
         //https://firebase.google.com/docs/auth/web/manage-users
 
-        this.navCtrl.push(EditProfilePage);
+        this.navCtrl.push(DashboardPage);
       })
       .catch(function(error)
       {

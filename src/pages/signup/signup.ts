@@ -102,6 +102,7 @@ export class SignupPage {
               email: this.signUpForm.value.email,
               lastName : '',
               firstName : '',
+              taskCount : 1,
             });
             docRef.get().then(doc=>{
               var index = this.client.initIndex('users');
@@ -110,8 +111,8 @@ export class SignupPage {
               index.saveObject(user);
               this.navCtrl.push(EditProfilePage);
             })
-          
-            
+
+
           })
           .catch(function (error)        //on failure, display the error massage.
           {

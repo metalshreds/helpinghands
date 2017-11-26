@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 export class TaskObjectProvider {
 
   //Users
-  public owner : string;                  //onwer of this task.
+  public ownerUserId : string;                  //owner of this task.
 
   //Time
   public timeDuration : number;     //duration of the task
@@ -33,9 +33,8 @@ export class TaskObjectProvider {
   constructor(taskName: string,
               timeDuration : number,
               timeStart : string,
+              taskDescription : string,
               timeEnd : string,
-              introduction : string,
-              requirement : string,
               wantedSkill : string[],
               complete : boolean,
               owner : string,
@@ -43,11 +42,11 @@ export class TaskObjectProvider {
     this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
+    this.taskDescription = taskDescription;
     this.timeEnd = timeEnd;
-    this.taskDescription = introduction;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
-    this.owner = owner;
+    this.ownerUserId = owner;
 
   }
 

@@ -26,6 +26,7 @@ import {isNullOrUndefined} from "util";
 
 export class CompletedPage {
 
+<<<<<<< HEAD
   tasks: Array<TaskObjectProvider> = [];
   skills: Array<boolean>;
   curUserToken = this.AFcurUser.auth.currentUser;
@@ -40,6 +41,16 @@ export class CompletedPage {
               public AFcurUser: AngularFireAuth,
   ) {
       // Wait for view to load to generate list of tasks
+=======
+  tasks: Array<TaskObjectProvider>;
+  skills: Array<string>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.tasks =[];
+    this.skills = [];
+
+ 
+>>>>>>> master
   }
 
 

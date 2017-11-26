@@ -16,6 +16,28 @@
 // automatically applied to the <body> element in the app.
 
 
+
+
+/* Main app color scheme */
+
 $primary-color: #19afdc;
 $secondary-color: #39acdc;
 
+/* Task Colors */
+
+$task-completed: #99dc85;
+$task-pending: #dcd575;
+$task-suggested: #dc9593;
+
+$card-bg: #f4f4f5;
+
+.task-completed {
+ background-color: $task-completed;
+}
+
+ion-card-content, .card-item{
+  background-color: $card-bg;
+}
+
+
+/* Other Colors */

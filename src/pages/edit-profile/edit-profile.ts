@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams,
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import {ProfilePage} from '../profile/profile';
+import { ProfilePage} from '../profile/profile';
 import { cloudProvider } from '../../providers/cloudbase';
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
@@ -156,7 +156,7 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
-      0);
+        this.CURRENT_USER.taskCount);
 
       
       console.log("newUser is ", newUser);
@@ -171,6 +171,7 @@ export class EditProfilePage {
         introduction : this.editProfileForm.value.introduction,
         zipCode : this.editProfileForm.value.zipCode,
         skill : this.skill,
+        taskCount : this.CURRENT_USER.taskCount,
       });
       
       

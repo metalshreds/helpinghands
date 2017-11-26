@@ -54,6 +54,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover";
     AngularFireModule.initializeApp(FIREBASE_CONFIG),  //initialize fire base
     AngularFireAuthModule, //import auth module
     AngularFireDatabaseModule,
+
     CommentPopoverModule,
   ],
   bootstrap: [IonicApp],
