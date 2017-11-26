@@ -22,6 +22,9 @@ This app allows users with a task to find helpers who have the skills to complet
 * cloudbase
     * ```$npm install firebase@4.6.0 --save```
     * ```npm install algoliasearch --save```
+* DatePicker
+    * ```$ionic cordova plugin add cordova-plugin-datepicker```
+    * ```$npm install --save @ionic-native/date-picker```
 
 ## Running the application
 * clone the app onto the computer
