@@ -57,7 +57,7 @@ export class cloudProvider {
     docRef.update({ [subPath] : updateMessage});
   }
   /*
-  //add task to corresponding user's sublist.
+  / add task to corresponding user's sublist.
   / input: userId - user's id
   /        subPath - the name of the list under user
   /        taskId - the id of the task
@@ -67,6 +67,12 @@ export class cloudProvider {
   {
     var docRef = this.db.collection('users').doc(userId).collection(subPath).doc(taskId);
     docRef.set({'taskName' : taskName});
+    // docRef.get().then(doc=>{
+    //   var index = this.client.initIndex('users');
+    //   var user = doc.data();
+    //   user.objectID = (userId);
+    //   index.saveObject(user);
+    // });
   }
 
 

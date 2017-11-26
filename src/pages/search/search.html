@@ -45,13 +45,13 @@
 <ion-content padding>
 
     <div [ngSwitch]="SearchResult">
-        <ion-list *ngSwitchCase="'Everything'">
-            <ion-item *ngFor="let item of items">
-                {{ item.firstName }}
-              </ion-item>
-        </ion-list>
         
         <ion-list *ngSwitchCase="'User'">
+            <ion-item *ngFor="let item of items">
+                {{item.firstName}} {{ item.lastName }}
+                {{item.skillset}}
+                {{item.id}}
+              </ion-item>
         </ion-list>
         
         <ion-list *ngSwitchCase="'Task'">
