@@ -98,8 +98,8 @@ export class SearchPage {
             CURRENT_USER['skillset'] = displaySkill;  //tmp fix
             CURRENT_USER['id'] = sdoc.id; //tmp fix, add those in user object later
             console.log(displaySkill);
-            this.items.push(CURRENT_USER);
-          })
+            this.items.push(CURRENT_USER);       
+          })  
         })
       //use algolia query
         var index = this.client.initIndex('users');
