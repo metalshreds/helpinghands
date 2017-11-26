@@ -40,9 +40,11 @@
     "algoliasearch": "^3.24.6",
     "angularfire2": "^5.0.0-rc.4",
     "com-sarriaroman-photoviewer": "^1.1.11",
-    "cordova-android": "^6.2.3",
+    "cordova-android": "^6.3.0",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-crop": "^0.4.0",
+    "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-nativestorage": "^2.2.2",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -61,11 +63,13 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.1.4",
+<<<<<<< HEAD
     "@types/jasmine": "^2.8.2",
     "@types/node": "^8.0.53",
-<<<<<<< HEAD
     "angular2-template-loader": "^0.6.2",
     "html-loader": "^0.5.1",
+    "angular-cli": "^1.0.0-beta.28.3",
+    "codecov": "^3.0.0",
     "ionic": "3.18.0",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine": "^2.8.0",
@@ -81,21 +85,14 @@
     "protractor": "^5.2.0",
     "ts-loader": "^3.1.1",
     "ts-node": "^3.3.0",
-=======
-    "angular-cli": "^1.0.0-beta.28.3",
-    "codecov": "^3.0.0",
-    "ionic": "3.18.0",
     "jasmine-core": "^2.8.0",
-    "jasmine-spec-reporter": "^4.2.1",
-    "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.1.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-remap-istanbul": "^0.6.0",
-    "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-eslint-rules": "^4.1.1",
+=======
+    "ionic": "3.19.0",
 >>>>>>> master
     "typescript": "2.3.4"
   },
@@ -109,7 +106,9 @@
       "ionic-plugin-keyboard": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-crop": {},
+      "cordova-plugin-datepicker": {}
     },
     "platforms": [
       "android"

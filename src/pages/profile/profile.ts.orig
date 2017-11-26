@@ -1,0 +1,111 @@
+import { Component } from '@angular/core';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ProfileProvider } from '../../providers/profile/profile'
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { EditProfilePage } from '../edit-profile/edit-profile';
+import firebase from 'firebase';
+import { NgZone, OnInit } from "@angular/core";
+/**
+ * Generated class for the ProfilePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-profile',
+  templateUrl: 'profile.html',
+})
+export class ProfilePage {
+  profile;
+  skills : Array<boolean>;
+  AFcurUser = firebase.auth();
+  curUserToken = this.AFcurUser.currentUser;
+  userPhotoUrl = this.curUserToken.photoURL;
+  displaySkill  = [];
+  db = firebase.firestore();
+
+  CURRENT_USER = {} as ProfileProvider;
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              //private AFcurUser: AngularFireAuth,
+              private AFdatabase: AngularFireDatabase,
+              private photoviewer : PhotoViewer,
+              private _zone : NgZone,
+              )
+  {
+    this.CURRENT_USER.ownedTask = [];
+    //get user node specificed by current userId.
+    var userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    userRef.get() //read
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+          for(const field in doc.data())
+          {
+            //have to be careful that we have to store exactly same property
+            //  in userProvider obeject and users node.
+            this.CURRENT_USER[field] = doc.data()[field];
+          }
+<<<<<<< HEAD
+=======
+          for (const i in this.CURRENT_USER.skill)
+          {
+            if (this.CURRENT_USER.skill[i] == true)
+              this.displaySkill.push(i);
+          }
+          console.log(this.displaySkill);
+>>>>>>> master
+
+            this._zone.run(()=>{
+              this.userPhotoUrl = this.curUserToken.photoURL;
+              console.log(this.curUserToken.photoURL);
+            });
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+      });
+
+<<<<<<< HEAD
+    console.log("image ", this.curUserToken.photoURL);
+=======
+      //following code block pull the ownedlist from user node specified user ID, and push the name of the each
+      //  task into current user's ownedlist.
+      var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask');
+      docRef.get().then(doc=>{
+        doc.forEach(sdoc=>{
+          this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask').doc(sdoc.id).
+            get().then(doc =>{
+              console.log("this is ", this.CURRENT_USER.ownedTask);
+              this.CURRENT_USER.ownedTask.push(doc.data().taskName);
+            })     
+        });
+      });
+>>>>>>> master
+
+  }
+
+
+  expandPic(){
+    this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});
+    console.log(this.userPhotoUrl);
+  }
+
+  goToEditProfile(event){
+    this.navCtrl.push(EditProfilePage);
+  }
+
+
+
+
+}
