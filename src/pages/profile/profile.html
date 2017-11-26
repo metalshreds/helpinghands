@@ -16,16 +16,17 @@
 
 
 <ion-content>
+
+
+  <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
+  <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
+  <div class="avatar avatarCol">
+    <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
+  </div>
+
+
   <ion-grid style="height: 100%">
-    <ion-row>
-      <ion-col class="avatarCol">
-          <h2 class="title" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
-          <p style="text-align: center" class="email" >{{CURRENT_USER.email}}</p>
-          <ion-avatar class="avatar">
-            <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
-          </ion-avatar>
-      </ion-col>
-    </ion-row>
+
 
     <ion-row>
       <ion-col>
