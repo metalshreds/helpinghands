@@ -14,7 +14,7 @@ import { skill } from '../../interface/skills'
 import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
-
+import { cloudProvider } from '../../providers/cloudbase';
 /**
  * Generated class for the TaskEditPage page.
  *
@@ -41,6 +41,7 @@ export class TaskEditPage {
   langSkills = [];
   month : string = '';
   day : string = '';
+  myDate : string = '';
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
@@ -63,6 +64,7 @@ export class TaskEditPage {
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
     public datePicker: DatePicker,
+    public clouldModule : cloudProvider, 
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -70,6 +72,11 @@ export class TaskEditPage {
       location : [''],
       compensation : [''],
     });
+
+
+
+
+
 
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     if(this.navParams.get('taskID') != undefined) {
@@ -81,8 +88,7 @@ export class TaskEditPage {
         this.descriptionHolder = doc.data().TaskDescription;
         this.locationHolder = doc.data().Location;
         this.compensationHolder = doc.data().Compensation;
-        this.month = doc.data().EndMonth;
-        this.day = doc.data().EndDay;
+        this.myDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         this.skill = doc.data().Skill;
         for (const field in this.skill) {
           if (this.skill[field]) {
@@ -118,6 +124,10 @@ export class TaskEditPage {
 
 
   updateTask(){
+    console.log("my date is ", this.myDate);
+    var date = this.myDate.split('-');
+    this.month = date[1];
+    this.day = date[2];
     for (const i in this.skillinterface)
     {
       if (this.csSkills.indexOf(i) > -1 ||
@@ -146,7 +156,8 @@ export class TaskEditPage {
         Complete : false
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
-
+    //add this task to current user's ownedtask
+    this.clouldModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
@@ -164,19 +175,18 @@ export class TaskEditPage {
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
-    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
-    userRef.get().then(doc=>{
-      let uIndex = this.client.initIndex('users');
-      let newCount = doc.data().taskCount + 1;
-      let newOwned = doc.data().ownedTasks;
-      if (newOwned.indexOf(this.taskId) < 0) {
-        newOwned.push(this.taskId);
-        userRef.update({
-          taskCount : newCount,
-          ownedTasks : newOwned
+    if(this.created ==true )
+    {
+      let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+      userRef.get().then(doc=>{
+        let newCount = doc.data().taskCount + 1;
+
+          userRef.update({
+            taskCount : newCount,
+          });
         });
-      }
-    });
+    }
+
     this.navCtrl.push(ProfilePage);
   }
 
@@ -263,5 +273,18 @@ export class TaskEditPage {
       this.navCtrl.push(ProfilePage);
     }
   }
+
+  // <button ion-button (click)="pickADate()">pick a date</button>
+  // pickADate(){
+  //   this.datePicker.show({
+  //     date: new Date(),
+  //     mode: 'date',
+  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  //   }).then(
+  //     date => console.log('Got date: ', date),
+  //     err => console.log('Error occurred while getting date: ', err)
+  //   );
+  // }
+
 }
 
