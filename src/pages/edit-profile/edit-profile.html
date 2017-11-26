@@ -8,19 +8,16 @@
 </ion-header>
 
 <ion-content>
+  <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
+  <div class="avatar avatarCol">
+    <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
+  </div>
+  <div class="editImageButton">
+    <button  ion-button color="danger" (click)="changePicture()" > Change image </button>
+  </div>
 
   <ion-grid style="height: 100%">
-    <ion-row>
-        <ion-col class="avatarCol">
-        <h2 class="title" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
-          <div class="avatar">
-            <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
-          </div>
-          <div class="editImageButton">
-            <button  ion-button color="danger" (click)="changePicture()" > Change image </button>
-          </div>
-        </ion-col>
-    </ion-row>
+
 
     <ion-row>
       <ion-col>
