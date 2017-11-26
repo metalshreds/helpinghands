@@ -121,56 +121,8 @@
 
     <ion-item>
       <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-label style="color: black">
-        Date
-      </ion-label>
-      <ion-select [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-        <ion-option value="January">January</ion-option>
-        <ion-option value="February">February</ion-option>
-        <ion-option value="March">March</ion-option>
-        <ion-option value="April">April</ion-option>
-        <ion-option value="May">May</ion-option>
-        <ion-option value="June">June</ion-option>
-        <ion-option value="July">July</ion-option>
-        <ion-option value="August">August</ion-option>
-        <ion-option value="September">September</ion-option>
-        <ion-option value="October">October</ion-option>
-        <ion-option value="November">November</ion-option>
-        <ion-option value="December">December</ion-option>
-      </ion-select>
-      <ion-select [(ngModel)]="day" [ngModelOptions]="{standalone: true}">
-        <ion-option value="1">1</ion-option>
-        <ion-option value="2">2</ion-option>
-        <ion-option value="3">3</ion-option>
-        <ion-option value="4">4</ion-option>
-        <ion-option value="5">5</ion-option>
-        <ion-option value="6">6</ion-option>
-        <ion-option value="7">7</ion-option>
-        <ion-option value="8">8</ion-option>
-        <ion-option value="9">9</ion-option>
-        <ion-option value="10">10</ion-option>
-        <ion-option value="11">11</ion-option>
-        <ion-option value="12">12</ion-option>
-        <ion-option value="13">13</ion-option>
-        <ion-option value="14">14</ion-option>
-        <ion-option value="15">15</ion-option>
-        <ion-option value="16">16</ion-option>
-        <ion-option value="17">17</ion-option>
-        <ion-option value="18">18</ion-option>
-        <ion-option value="19">19</ion-option>
-        <ion-option value="20">20</ion-option>
-        <ion-option value="21">21</ion-option>
-        <ion-option value="22">22</ion-option>
-        <ion-option value="23">23</ion-option>
-        <ion-option value="24">24</ion-option>
-        <ion-option value="25">25</ion-option>
-        <ion-option value="26">26</ion-option>
-        <ion-option value="27">27</ion-option>
-        <ion-option value="28">28</ion-option>
-        <ion-option value="29">29</ion-option>
-        <ion-option value="30">30</ion-option>
-        <ion-option value="31">31</ion-option>
-      </ion-select>
+      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="myDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      
     </ion-item>
 
     <ion-item>
@@ -207,7 +159,6 @@
   </form>
     <button ion-button style="background-color: red" block (click)="goBack()">Discard Changes</button>
     <button ion-button style="background-color: #2ec95c" block (click)="updateTask()">Save Changes</button>
-
     <div *ngIf="!created">
       <button ion-button style="background-color: blue" block (click)="completeTask()">This task is completed</button>
       <button ion-button style="background-color: black" block (click)="deleteTask()">Delete this task</button>
