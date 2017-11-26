@@ -23,6 +23,7 @@
     "@google-cloud/firestore": "^0.9.0",
     "@ionic-native/camera": "^4.4.2",
     "@ionic-native/core": "3.12.1",
+    "@ionic-native/date-picker": "^4.4.2",
     "@ionic-native/http": "^4.4.2",
     "@ionic-native/native-storage": "^4.4.0",
     "@ionic-native/photo-viewer": "^4.4.0",
@@ -36,6 +37,7 @@
     "cordova-android": "^6.2.3",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-nativestorage": "^2.2.2",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -67,7 +69,8 @@
       "ionic-plugin-keyboard": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-datepicker": {}
     },
     "platforms": [
       "android"

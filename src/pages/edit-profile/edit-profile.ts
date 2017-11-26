@@ -253,7 +253,7 @@ export class EditProfilePage {
           this.curUserToken.updateProfile({
             displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
             photoURL: downloadURL,
-            
+
           }).catch(function(error) {
             console.log("native update has an error");
           });
