@@ -17,8 +17,8 @@ export class TaskObjectProvider {
   public timeEnd: string;
 
   //Skills and status
-  public wantedSkills : boolean[]=[];  //skill set of the task
-  public completed: boolean;           //flag that indicates the completion of the task
+  public wantedSkill = new Object();  //skill set of the task
+  public complete: boolean;           //flag that indicates the completion of the task
   public ownerComment: string;            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
@@ -37,9 +37,11 @@ export class TaskObjectProvider {
               timeDuration : number,
               timeStart : string,
               taskDescription : string,
+              timeEnd : string,
+              introduction : string,
               requirement : string,
-              wantedSkills : boolean[],
-              completed : boolean,
+              wantedSkill : string[],
+              complete : boolean,
               owner : string,
               ) {
     this.taskName = taskName;

@@ -15,6 +15,7 @@ import { SearchPage } from '../pages/search/search';
 import { EditProfilePage } from "../pages/edit-profile/edit-profile";
 import { ProfilePage } from "../pages/profile/profile";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { DatePicker } from "@ionic-native/date-picker"
 import { ProfileProvider } from '../providers/profile/profile';
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 import { DashboardPage } from "../pages/dashboard/dashboard";
@@ -83,6 +84,7 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     Camera,
     PhotoViewer,
     cloudProvider,
+    DatePicker
   ]
 })
 export class AppModule {}

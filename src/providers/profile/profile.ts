@@ -21,7 +21,7 @@ export class ProfileProvider {
   public phone : number;
   //interests: string[];
   public skills: boolean[];
-  public oTask : Array<TaskObjectProvider> = [];
+  public oTask : TaskObjectProvider[] = [];
   public ownedTask : TaskObjectProvider[] = [];
   public blackListTask: TaskObjectProvider[] = [];
   public confirmTask: TaskObjectProvider[] = [];
@@ -57,16 +57,14 @@ export class ProfileProvider {
    */
   createTask(){
     var skill = [ true, false, true, false];
-    let Task = new TaskObjectProvider( "taskname", 10, "startdate", "introduction", "requirment", skill, false, this.userId);
-    let Task1 = new TaskObjectProvider( "taskname1", 10, "startdate1", "introduction1", "requirment1", skill, false, this.userId);
-    this.oTask.push(Task);
-    this.oTask.push(Task1);
   }
 
 //TODO method to retrieve user info
 
 //TODO method to edit/update user info
-
+  addToOwned(count, task) {
+    this.ownedTask[count] = task;
+  }
 //TODO create a new task (return new task object)
 
 //TODO update a new task (doesn't return)
