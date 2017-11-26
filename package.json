@@ -34,9 +34,10 @@
     "algoliasearch": "^3.24.6",
     "angularfire2": "^5.0.0-rc.3",
     "com-sarriaroman-photoviewer": "^1.1.11",
-    "cordova-android": "^6.2.3",
+    "cordova-android": "^6.3.0",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-crop": "^0.4.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-nativestorage": "^2.2.2",
@@ -56,7 +57,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.1.4",
-    "ionic": "3.18.0",
+    "ionic": "3.19.0",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",
@@ -70,6 +71,7 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-nativestorage": {},
       "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-crop": {},
       "cordova-plugin-datepicker": {}
     },
     "platforms": [

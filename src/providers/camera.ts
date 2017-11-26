@@ -15,11 +15,11 @@ export class CameraProvider {
   }
 
   getPictureFromPhotoLibrary() {
-    return this.getImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+    return this.getImage(this.camera.PictureSourceType.PHOTOLIBRARY, true, 100, true, false);
   }
 
   // This method takes optional parameters to make it more customizable
-  getImage(pictureSourceType, crop = true, quality = 50, allowEdit = true, saveToAlbum = true) {
+  getImage(pictureSourceType, crop = true, quality = 100, allowEdit = true, saveToAlbum = true) {
     const options = {
       quality,
       allowEdit,

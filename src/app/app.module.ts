@@ -15,20 +15,20 @@ import { SearchPage } from '../pages/search/search';
 import { EditProfilePage } from "../pages/edit-profile/edit-profile";
 import { ProfilePage } from "../pages/profile/profile";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { DatePicker } from "@ionic-native/date-picker"
 import { ProfileProvider } from '../providers/profile/profile';
 import { TaskObjectProvider } from '../providers/task-object/task-object'; //provider
 import { DashboardPage } from "../pages/dashboard/dashboard";
 import { TaskViewPage } from "../pages/task-view/task-view";
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import { CameraProvider } from '../providers/camera';
 import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { cloudProvider } from "../providers/cloudbase";
 import { AngularFirestoreModule} from "angularfire2/firestore";
-import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
-import { CommentPopover } from "../pages/task-edit/comment-popover"
-
+import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module";
+import { CommentPopover } from "../pages/task-edit/comment-popover";
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -81,7 +81,8 @@ import { CommentPopover } from "../pages/task-edit/comment-popover"
     CameraProvider,
     Camera,
     PhotoViewer,
-    cloudProvider
+    cloudProvider,
+    DatePicker
   ]
 })
 export class AppModule {}
