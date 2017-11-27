@@ -38,7 +38,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button ion-button class = "login-button"  (click)="login()" [disabled]="!loginForm.valid">Login</button>
+          <button ion-button class = "login-button"  (click)="login(loginForm.value.email, loginForm.value.password)" [disabled]="!loginForm.valid">Login</button>
         </ion-col>
       </ion-row>
       <ion-row>
