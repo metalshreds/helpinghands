@@ -24,9 +24,9 @@
           <ion-icon name='body' item-start></ion-icon>
           <ion-input formControlName = "taskName" type = "text" value={{nameHolder}}> </ion-input>
         </ion-item>
-
+<!--
     <button ion-button (click)="changePicture()" block>Add a Picture</button>
-
+-->
     <ion-item>
       <ion-label style="color: black" floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
@@ -122,7 +122,7 @@
     <ion-item>
       <ion-icon name='timer' item-start>   </ion-icon>
       <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="myDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
-      
+
     </ion-item>
 
     <ion-item>

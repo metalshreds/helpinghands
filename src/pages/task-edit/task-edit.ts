@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
-  PopoverController, ViewController } from 'ionic-angular';
+  PopoverController} from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
 import { AngularFireAuth } from "angularfire2/auth"
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
@@ -15,12 +15,6 @@ import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
-/**
- * Generated class for the TaskEditPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -45,13 +39,14 @@ export class TaskEditPage {
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
-  curUserToken = this.AFcurUser.auth.currentUser;
+  //curUserToken = this.AFcurUser.auth.currentUser;
+  curUID = 'yP7n3Tv1WPNXL6T27GiAeWjPupu2';//this.curUserToken.uid;
   taskCreateForm : FormGroup;
   task = {} as TaskObjectProvider;
   user = {} as ProfileProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid;
+  taskId = this.curUID;
   created = true;
   constructor(
     public formBuilder : FormBuilder,
@@ -59,12 +54,12 @@ export class TaskEditPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public actionsheetCtrl: ActionSheetController,
-    public cameraProvider: CameraProvider,
+    //public cameraProvider: CameraProvider,
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
     public datePicker: DatePicker,
-    public clouldModule : cloudProvider, 
+    public clouldModule : cloudProvider,
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -73,12 +68,7 @@ export class TaskEditPage {
       compensation : [''],
     });
 
-
-
-
-
-
-    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    let userRef = this.db.collection('users').doc(this.curUID);
     if(this.navParams.get('taskID') != undefined) {
       this.created = false;
       this.taskId = this.navParams.get('taskID');
@@ -157,7 +147,7 @@ export class TaskEditPage {
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
-    this.clouldModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    this.clouldModule.addTaskToList(this.curUID, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
@@ -170,14 +160,14 @@ export class TaskEditPage {
                   "unused",
                   this.skill,
                   false,
-                  this.curUserToken.uid
+                  this.curUID
       );*/
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
     if(this.created ==true )
     {
-      let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+      let userRef = this.db.collection('users').doc(this.curUID);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
 
@@ -194,7 +184,7 @@ export class TaskEditPage {
     console.log('ionViewDidLoad TaskEditPage');
   }
 
-  changePicture() {
+  /*changePicture() {
     const actionsheet = this.actionsheetCtrl.create({
       title: 'upload picture',
       buttons: [
@@ -256,7 +246,7 @@ export class TaskEditPage {
     }, error => {
       alert(error);
     });
-  }
+  }*/
 
   completeTask() {
     let popover = this.popoverCtrl.create(CommentPopover);
