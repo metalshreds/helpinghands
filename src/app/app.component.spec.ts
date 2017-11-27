@@ -4,6 +4,9 @@ import { HelpingHands } from './app.component';
 import {ProfilePage} from "../pages/profile/profile";
 import {HomePage} from "../pages/home/home";
 import {} from 'jasmine';
+import { Nav, Platform, MenuController, NavController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 let comp: HelpingHands;
 let fixture: ComponentFixture<HelpingHands>;
@@ -16,10 +19,11 @@ describe('Component: Root Component', () => {
 
       declarations: [HelpingHands],
       providers: [
-      ],
+        {provide: SplashScreen},
 
+      ],
       imports: [
-        IonicModule.forRoot(HomePage)
+        IonicModule.forRoot(HelpingHands)
       ]
 
     }).compileComponents();

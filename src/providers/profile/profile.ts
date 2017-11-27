@@ -50,14 +50,12 @@ export class ProfileProvider {
     this.phone = phone;
     this.travelRadius = travelRadius;
     this.taskCount = taskCount;
+
   }
 
   /*
   /
    */
-  createTask(){
-    var skill = [ true, false, true, false];
-  }
 
 //TODO method to retrieve user info
 
