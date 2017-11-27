@@ -17,7 +17,7 @@ module.exports = function(config) {
         included: false,
         served: true,
         nocache: false
-      }
+      },
     ],
 
     proxies: {
