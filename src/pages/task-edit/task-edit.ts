@@ -39,8 +39,8 @@ export class TaskEditPage {
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
-  //curUserToken = this.AFcurUser.auth.currentUser;
-  curUID = 'yP7n3Tv1WPNXL6T27GiAeWjPupu2';//this.curUserToken.uid;
+  curUserToken = this.AFcurUser.auth.currentUser;
+  curUID = this.curUserToken.uid;
   taskCreateForm : FormGroup;
   task = {} as TaskObjectProvider;
   user = {} as ProfileProvider;
@@ -54,7 +54,7 @@ export class TaskEditPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public actionsheetCtrl: ActionSheetController,
-    //public cameraProvider: CameraProvider,
+    public cameraProvider: CameraProvider,
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
@@ -184,7 +184,7 @@ export class TaskEditPage {
     console.log('ionViewDidLoad TaskEditPage');
   }
 
-  /*changePicture() {
+  changePicture() {
     const actionsheet = this.actionsheetCtrl.create({
       title: 'upload picture',
       buttons: [
@@ -246,7 +246,7 @@ export class TaskEditPage {
     }, error => {
       alert(error);
     });
-  }*/
+  }
 
   completeTask() {
     let popover = this.popoverCtrl.create(CommentPopover);
