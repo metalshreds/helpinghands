@@ -27,7 +27,7 @@ export class ProfilePage {
   userPhotoUrl = this.curUserToken.photoURL;
   displaySkill  = [];
   db = firebase.firestore();
-
+  profileOwner;
   CURRENT_USER = {} as ProfileProvider;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -37,9 +37,20 @@ export class ProfilePage {
               private _zone : NgZone,
               )
   {
+    console.log( "param is", navParams.get('userId'));
+    this.CURRENT_USER.userId = (navParams.get('userId'))? navParams.get('userId') : this.curUserToken.uid;
     this.CURRENT_USER.ownedTask = [];
+    if(this.CURRENT_USER.userId == this.curUserToken.uid)
+    {
+      this.profileOwner = true;
+    }
+    else
+    {
+      this.profileOwner = false;
+      this.CURRENT_USER.userId = this.curUserToken.uid;
+    }
     //get user node specificed by current userId.
-    var userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    var userRef = this.db.collection('users').doc(this.CURRENT_USER.userId);
     userRef.get() //read
       .then(doc => {
         if (!doc.exists) {
@@ -72,14 +83,14 @@ export class ProfilePage {
 
       //following code block pull the ownedlist from user node specified user ID, and push the name of the each
       //  task into current user's ownedlist.
-      var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask');
+      var docRef = this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask');
       docRef.get().then(doc=>{
         doc.forEach(sdoc=>{
-          this.db.collection('users').doc(this.curUserToken.uid).collection('ownedTask').doc(sdoc.id).
+          this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask').doc(sdoc.id).
             get().then(doc =>{
               console.log("this is ", this.CURRENT_USER.ownedTask);
               this.CURRENT_USER.ownedTask.push(doc.data().taskName);
-            })     
+            })
         });
       });
 

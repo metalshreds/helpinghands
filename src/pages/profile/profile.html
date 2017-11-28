@@ -5,7 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Profile</ion-title>
-    <ion-buttons end>
+
+    <ion-buttons end *ngIf="profileOwner">
       <button ion-button (click)="goToEditProfile($event)">
         <ion-icon name = "create" color="dark"></ion-icon>
       </button>
