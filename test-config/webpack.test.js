@@ -20,7 +20,6 @@ module.exports = {
         exclude: /(index.ts|mocks.ts|\.spec\.ts$)/,
         loader: 'istanbul-instrumenter-loader',
         enforce: 'post',
-        include: /src\/app/,
         query: {
           esModules: true
         }

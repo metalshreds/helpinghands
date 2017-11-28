@@ -116,5 +116,6 @@
     "externals": [
       "child_process"
     ]
+    
   }
 }
