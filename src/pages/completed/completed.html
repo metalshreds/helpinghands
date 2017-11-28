@@ -34,7 +34,7 @@
 
       <ion-item class="task-completed">
         <ion-avatar item-start>
-          <img src="https://media.npr.org/assets/img/2015/06/12/taylorswift_wide-a5642f8df94424facaaddf66776b7b5679b2e026.jpg?s=1400">
+          <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
         </ion-avatar>
         <!--<h2>{{task.ownerUserId}}</h2>-->
         <h2>{{taskOwnerDict[task.getTaskId()]}}</h2>

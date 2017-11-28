@@ -44,6 +44,7 @@ export class CreatePage {
     docRef.set({
         taskName : this.taskCreateForm.value.taskName,
         taskId : this.taskId,
+
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     docRef.get().then(doc=>{
