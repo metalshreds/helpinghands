@@ -27,14 +27,14 @@ describe('My Service', () => {
 
   let comp: TaskEditPage;
   let fixture: ComponentFixture<TaskEditPage>;
-  let firebaseConfig = firebase.initializeApp({
-    apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
-    authDomain: "helpinghands506.firebaseapp.com",
-    databaseURL: "https://helpinghands506.firebaseio.com",
-    projectId: "helpinghands506",
-    storageBucket: "helpinghands506.appspot.com",
-    messagingSenderId: "652958427997"
-  });
+  // let firebaseConfig = firebase.initializeApp({
+  //   apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
+  //   authDomain: "helpinghands506.firebaseapp.com",
+  //   databaseURL: "https://helpinghands506.firebaseio.com",
+  //   projectId: "helpinghands506",
+  //   storageBucket: "helpinghands506.appspot.com",
+  //   messagingSenderId: "652958427997"
+  // });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,7 +53,7 @@ describe('My Service', () => {
       ],
       imports: [
         IonicModule.forRoot(TaskEditPage),
-        AngularFireModule.initializeApp(firebaseConfig)
+        AngularFireModule.initializeApp(FIREBASE_CONFIG)
       ]
     }).compileComponents()
       .then(() => {
