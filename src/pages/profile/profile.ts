@@ -24,7 +24,7 @@ export class ProfilePage {
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
-  userPhotoUrl = this.curUserToken.photoURL;
+  userPhotoUrl;
   displaySkill  = [];
   db = firebase.firestore();
   profileOwner;
@@ -39,6 +39,7 @@ export class ProfilePage {
   {
     console.log( "param is", navParams.get('userId'));
     this.CURRENT_USER.userId = (navParams.get('userId'))? navParams.get('userId') : this.curUserToken.uid;
+    console.log("cu id is ", this.CURRENT_USER.userId);
     this.CURRENT_USER.ownedTask = [];
     if(this.CURRENT_USER.userId == this.curUserToken.uid)
     {
@@ -47,7 +48,6 @@ export class ProfilePage {
     else
     {
       this.profileOwner = false;
-      this.CURRENT_USER.userId = this.curUserToken.uid;
     }
     //get user node specificed by current userId.
     var userRef = this.db.collection('users').doc(this.CURRENT_USER.userId);
@@ -71,8 +71,8 @@ export class ProfilePage {
           console.log(this.displaySkill);
 
             this._zone.run(()=>{
-              this.userPhotoUrl = this.curUserToken.photoURL;
-              console.log(this.curUserToken.photoURL);
+              this.userPhotoUrl = this.CURRENT_USER.photoUrl;
+              console.log(this.userPhotoUrl);
             });
 
         }

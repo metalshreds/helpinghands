@@ -46,7 +46,7 @@ export class TaskViewPage {
     console.log("Selected task" + this.selectedTask);
     //TODO is this the correct way to check if they are the same user?
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
-
+    console.log("selectedTask.ownerUserId is ", this.selectedTask.ownerUserId)
     var userRef = this.db.collection('users').doc(this.curUserToken.uid);
     userRef.get()
       .then(doc => {
