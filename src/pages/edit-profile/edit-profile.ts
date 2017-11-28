@@ -181,7 +181,7 @@ export class EditProfilePage {
       else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
       {
         this.curUserToken.updateProfile({
-          displayName: newUser.lastName + newUser.firstName,
+          displayName: newUser.firstName + ' ' + newUser.lastName,
           photoURL: this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
          }).catch(function(error) {
           console.log("native update has an error");

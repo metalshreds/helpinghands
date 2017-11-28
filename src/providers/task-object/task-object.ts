@@ -9,6 +9,7 @@ export class TaskObjectProvider {
 
   //Users
   public ownerUserId : string;                  //owner of this task.
+  public ownerName : string;
 
   //Time
   public timeDuration : number;     //duration of the task
