@@ -49,7 +49,6 @@ export class SignupPage {
    */
   signUp = async function() : Promise<any> {
 
-    console.log("asd" ,this.signUpForm.value);
     if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
         const alert = this.alertCtrl.create({
@@ -57,6 +56,7 @@ export class SignupPage {
           subTitle: 'Please use a valid wisc.edu email',
           buttons: ['OK']
         });
+        /* istanbul ignore next */
         alert.present();
     }
     //password doesn't match the reenter password.
@@ -67,6 +67,7 @@ export class SignupPage {
         subTitle: 'Two passwords are not the same',
         buttons: ['OK']
       });
+      /* istanbul ignore next */
       alert.present();
     }
     else if (!this.signUpForm.controls.password.valid) //passwaord should be in range 6-20
@@ -77,6 +78,7 @@ export class SignupPage {
         subTitle: 'Password should have at least 6 letters and at most 20 letters',
         buttons: ['OK']
       });
+      /* istanbul ignore next */
       alert.present();
 
     }

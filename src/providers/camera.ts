@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { Injectable } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
 

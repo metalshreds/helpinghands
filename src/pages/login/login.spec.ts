@@ -15,14 +15,12 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import {} from 'jasmine'
 import { FormControl } from '@angular/forms/src/model';
 import {NavMock,alarmControllerMock} from '../../../test-config/mocks-ionic'
+import { SignupPage } from '../signup/signup'
 describe('login page', () => {
     let fixture;
     let comp;
-    let login;
-    
-    let email = 'szhao34@wisc.edu';
-    let password = '1234567'
-    let authApp = AngularFireModule.initializeApp(FIREBASE_CONFIG);
+    let de;
+    let el: HTMLElement;
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
@@ -31,7 +29,7 @@ describe('login page', () => {
       providers: [
         AngularFireAuth,
         {provide : AlertController, usedClass : alarmControllerMock},
-        NavController,
+        {provide : NavController, usedClass : NavMock},
         FormBuilder,
         AngularFireAuthModule,
         AngularFireDatabase
@@ -81,9 +79,20 @@ describe('login page', () => {
     expect(comp.loginForm.valid).toBe(false);
     comp.loginForm.controls['email'].setValue('s@wiesc.edu');
     comp.loginForm.controls['password'].setValue('1234567');
+    comp.login(comp.loginForm.controls.email.value, comp.loginForm.controls.password.value)
     expect(comp.loginForm.valid).toBe(false);
   })
 
+  it('login with random string as email', ()=>{
+    comp.loginForm.controls['email'].setValue('sfere@e');
+    comp.loginForm.controls['password'].setValue('1234567');
+    comp.login(comp.loginForm.controls.email.value, comp.loginForm.controls.password.value).then(res=>{
+      expect(comp.loginForm.valid).toBe(false);
+      console.log("res is ", res);
+      expect(res  == 'login success');
+    })
+    expect(comp.loginForm.valid).toBe(false);
+  });
 
   it('login with correct email&password', ()=>{
     comp.loginForm.controls['email'].setValue('szhao34@wisc.edu');
@@ -113,7 +122,14 @@ describe('login page', () => {
     });
   })
   
-
+  it("to signup page redirect successfully ", ()=>{
+    
+    //comp.goToSignup();
+ 
+ 
+    //expect(NavMock.push).toHaveBeenCalledWith(SignupPage);
+ 
+  })
 
   
  

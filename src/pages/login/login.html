@@ -38,14 +38,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button ion-button class = "login-button"  (click)="login(loginForm.value.email, loginForm.value.password)" [disabled]="!loginForm.valid">Login</button>
+          <button ion-button class = "login-button"  (click)="login(loginForm.value.email, loginForm.value.password)" >Login</button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <button ion-button class="sign-up-button" (click)="goToSignup()">sign up</button>
-          <button ion-button class="reset-pw-button" (click)="goToResetPassword(user)" [disabled]="!loginForm.controls.email.valid">Reset password</button>
-          <button ion-button class="home-page-" (click)="goToHome()">Home</button>
+          <button ion-button class="reset-pw-button" (click)="goToResetPassword(user)" >Reset password</button>
         </ion-col>
       </ion-row>
     </form>

@@ -40,7 +40,7 @@ export class LoginPage {
   ) {
     this.loginForm = formBuilder.group({
       email : ['', Validators.compose([emailValidator.isValid])],
-      password : ['',Validators.compose([Validators.required, passwordValidator.isValid])]
+      password : ['',Validators.compose([passwordValidator.isValid])]
     });
     this.plt.ready()
   }
@@ -59,13 +59,30 @@ export class LoginPage {
       subTitle: '',
       buttons: ['OK']
     });
-    
-    console.log(email);
-    if(!this.loginForm.valid)
+    if(!this.loginForm.controls.email.valid)
     {
-      console.log("invalid input here");
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please use a valid wisc.edu email',
+        buttons: ['OK']
+      });
+      /* istanbul ignore next */
+      alert.present();
+    }else if (this.loginForm.controls.password.valid == false) //passwaord should be in range 6-20
+    {
+      console.log("password vaild? ", !this.loginForm.controls.password.valid);
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Password should have at least 6 letters and at most 20 letters',
+        buttons: ['OK']
+      });
+      /* istanbul ignore next */
+      alert.present();
+
     }
-    var loginResult = this.authp.auth.signInWithEmailAndPassword(email, passwrod)
+    else
+    {
+      var loginResult = this.authp.auth.signInWithEmailAndPassword(email, passwrod)
       .then(result=>{
         return new Promise((resolve)=>{
             this.loginForm.reset();
@@ -96,6 +113,8 @@ export class LoginPage {
         })
       });
 
+    }
+    
   }
 
   /*
@@ -105,13 +124,6 @@ export class LoginPage {
     this.navCtrl.push(SignupPage);
   }
 
-  /*
-  / This function navigate user to the edit profile page
-  / solely for testing.
-   */
-  goToHome() {
-    this.navCtrl.push(HomePage);
-  }
 
   /*
   /function that let user reset password by sending an
