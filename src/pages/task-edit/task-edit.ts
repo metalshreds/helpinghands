@@ -153,7 +153,9 @@ export class TaskEditPage {
         Skill : this.skill,
         EndMonth : this.month,
         EndDay : this.day,
-        Complete : false
+        Complete : false,
+        ownerName : this.curUserToken.displayName,
+        ownerUserId : this.curUserToken.uid,
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
