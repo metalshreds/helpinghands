@@ -14,12 +14,12 @@ import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import {} from 'jasmine'
 import { FormControl } from '@angular/forms/src/model';
-import {NavMock} from '../../../test-config/mocks-ionic'
+import {NavMock,alarmControllerMock} from '../../../test-config/mocks-ionic'
 describe('login page', () => {
     let fixture;
     let comp;
     let login;
-
+    
     let email = 'szhao34@wisc.edu';
     let password = '1234567'
     let authApp = AngularFireModule.initializeApp(FIREBASE_CONFIG);
@@ -30,7 +30,7 @@ describe('login page', () => {
       declarations: [LoginPage],
       providers: [
         AngularFireAuth,
-        AlertController,
+        {provide : AlertController, usedClass : alarmControllerMock},
         NavController,
         FormBuilder,
         AngularFireAuthModule,
@@ -44,7 +44,7 @@ describe('login page', () => {
     })
 
   }));
-
+  
   beforeEach(() => {
 
     fixture = TestBed.createComponent(LoginPage);
@@ -54,13 +54,14 @@ describe('login page', () => {
     console.log((comp.loginForm.controls.email));
     console.log(comp)
     //comp.login();
-
+    
   });
 
 
 
   it('login page is created', () => {
     expect(comp instanceof LoginPage).toBe(true);
+   
   });
 
   it('login form is created correctly', () =>{
@@ -99,7 +100,7 @@ describe('login page', () => {
     comp.login(comp.loginForm.controls.email.value, comp.loginForm.controls.password.value).catch(error=>{
         var result = error.code;
         console.log("result is ", result);
-        expect(result == 'auth/user-not-found');
+        expect(result == 'auth/user-not-found');  
     });
   })
 
@@ -108,14 +109,14 @@ describe('login page', () => {
     comp.loginForm.controls['password'].setValue('12345678');
     comp.login(comp.loginForm.controls.email.value, comp.loginForm.controls.password.value).catch(error=>{
         var result = error.code;
-        expect(result == 'auth/wrong-password');
+        expect(result == 'auth/wrong-password');  
     });
   })
+  
 
 
-
-
-
+  
+ 
 
   // it('login form get the correct value', () =>{
   //   expect(Object.keys(comp.loginForm.controls) == (['email','password']));
