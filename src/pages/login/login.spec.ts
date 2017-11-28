@@ -61,6 +61,7 @@ describe('login page', () => {
 
   it('login page is created', () => {
     expect(comp instanceof LoginPage).toBe(true);
+   
   });
 
   it('login form is created correctly', () =>{
@@ -92,7 +93,7 @@ describe('login page', () => {
       expect(res  == 'login success');
     })
   });
-  
+
   it('login with email that is not registered to the server', ()=>{
     comp.loginForm.controls['email'].setValue('s342@wisc.edu');
     comp.loginForm.controls['password'].setValue('1234567');
