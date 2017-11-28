@@ -37,3 +37,9 @@ This app allows users with a task to find helpers who have the skills to complet
 *  [Namespace 'firebase' has no exported member 'Promise'.](https://stackoverflow.com/questions/46557694/update-issues-in-angularfire-5-0)
     * ```$npm uninstall angularfire2```
     * ```$npm install angularfire2 --save```
+### Running Tests
+* To run the tests install dependencies listed in this website [Ionic Jasmine Tutorial](https://leifwells.github.io/2017/08/27/testing-in-ionic-configure-existing-projects-for-testing/) 
+    * ```npm install --save-dev angular2-template-loader html-loader jasmine jasmine-spec-reporter karma karma-chrome-launcher karma-jasmine karma-jasmine-html-reporter karma-sourcemap-loader karma-webpack karma-coverage-istanbul-reporter istanbul-instrumenter-loader null-loader protractor ts-loader ts-node @types/jasmine @types/node```
+* Clone a copy of our repo
+     * Run $ npm run test // for unit tests
+     * Run $ npm run test-coverage //for test coverage
