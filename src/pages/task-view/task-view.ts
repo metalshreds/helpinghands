@@ -28,9 +28,7 @@ export class TaskViewPage {
   selectedTask: TaskObjectProvider;
   CURRENT_USER = {} as ProfileProvider;
   TASK_OWNER = {} as ProfileProvider;
-  CURRENT_TASK = {} as TaskObjectProvider;
   isTaskCompleted = false;
-  //CURRENT_TASK = {};
   userIsTaskOwner = false;
   showEditButton = false;
   showRequestButton = false;
@@ -41,13 +39,9 @@ export class TaskViewPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private AFcurUser: AngularFireAuth,
-    private AFdatabase: AngularFireDatabase,
-    public loadingCtrl: LoadingController,
     public app: App,
   ) {
     this.selectedTask = navParams.get('task');
-    //TODO TAKE OUT
-    //this.selectedTask.setId("DCUsuloZ5gbHrjXqi9cf50cXaVJ311");
 
     console.log("Selected task" + this.selectedTask);
     //TODO is this the correct way to check if they are the same user?
@@ -73,36 +67,7 @@ export class TaskViewPage {
         console.log('Error getting document', err);
       });
 
-    //actual one
-    //var taskRef = this.db.collection('tasks').doc(this.selectedTask.id.toString());
-
-    //DCUsuloZ5gbHrjXqi9cf50cXaVJ311
-    var taskRef = this.db.collection('tasks').doc("DCUsuloZ5gbHrjXqi9cf50cXaVJ311");
-    taskRef.get().then(doc=>{
-      if (!doc.exists) {
-        console.log('No such document!');
-      } else {
-        console.log('Document data:', doc.data());
-        for(const field in doc.data())
-        {
-          //have to be careful that we have to store exactly same property
-          //  in userProvider obeject and users node.
-          this.CURRENT_TASK[field] = doc.data()[field];
-          console.log('Current task:  field = ' + field + " and value =" + this.CURRENT_TASK[field]);
-          if(field == "ownerUserId") {
-            this.owner_user_id = this.CURRENT_TASK[field];
-          }else if(field == 'completed'){
-            this.isTaskCompleted = this.CURRENT_TASK[field];
-          }
-        }
-      }
-    }).catch(err => {
-      console.log('Error getting document', err);
-    });
-
-    console.log("This is the current task " + this.CURRENT_TASK);
-
-    var taskOwnerRef = this.db.collection('users').doc(this.owner_user_id.toString());
+    var taskOwnerRef = this.db.collection('users').doc(this.selectedTask.ownerUserId.toString());
     taskOwnerRef.get().then(doc=>{
       if (!doc.exists) {
         console.log('No such document!');
