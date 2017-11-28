@@ -12,7 +12,8 @@ import { DatePicker } from "@ionic-native/date-picker";
 import { ProfilePage } from "../profile/profile";
 import { cloudProvider } from '../../providers/cloudbase';
 import { HelpingHands } from '../../app/app.component';
-
+import { FIREBASE_CONFIG } from "../../app/app.firebase.config";
+import { Camera } from "@ionic-native/camera"
 
 class MockNavParams{
   data = {
@@ -27,16 +28,8 @@ describe('My Service', () => {
 
   let comp: TaskEditPage;
   let fixture: ComponentFixture<TaskEditPage>;
-  // let firebaseConfig = firebase.initializeApp({
-  //   apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
-  //   authDomain: "helpinghands506.firebaseapp.com",
-  //   databaseURL: "https://helpinghands506.firebaseio.com",
-  //   projectId: "helpinghands506",
-  //   storageBucket: "helpinghands506.appspot.com",
-  //   messagingSenderId: "652958427997"
-  // });
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TaskEditPage],
       providers: [
@@ -49,18 +42,20 @@ describe('My Service', () => {
         DatePicker,
         ProfilePage,
         cloudProvider,
-        HelpingHands
+        HelpingHands,
+        Camera
       ],
       imports: [
         IonicModule.forRoot(TaskEditPage),
         AngularFireModule.initializeApp(FIREBASE_CONFIG)
       ]
-    }).compileComponents()
-      .then(() => {
-      this.fixture = TestBed.createComponent(TaskEditPage);
-      this.comp = this.fixture.componentInstance;
-    });
-  }));
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    this.fixture = TestBed.createComponent(TaskEditPage);
+    this.comp = this.fixture.componentInstance;
+  });
 
   afterEach(() => {
     this.fixture.destroy();
@@ -68,6 +63,8 @@ describe('My Service', () => {
   });
 
   it('is created', () => {
+    // comp.AFcurUser.auth.signInWithEmailAndPassword('jltanumihard@wisc.edu', '123456');
+    // comp.AFcurUser.auth.currentUser;
     expect(this.fixture).toBeTruthy();
     expect(this.comp).toBeTruthy();
   });

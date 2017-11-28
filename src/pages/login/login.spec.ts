@@ -2,20 +2,21 @@ import {IonicModule, NavController} from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth"
 import firebase from 'firebase';
 import { LoginPage } from '../login/login'
+import { FIREBASE_CONFIG } from "../../app/app.firebase.config";
 import {ComponentFixture, TestBed, async} from "@angular/core/testing";
 import {HelpingHands} from "../../app/app.component";
 import {AngularFireModule} from "angularfire2";
 
 let comp;
 let fixture;
-let firebaseConfig = firebase.initializeApp({
-  apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
-  authDomain: "helpinghands506.firebaseapp.com",
-  databaseURL: "https://helpinghands506.firebaseio.com",
-  projectId: "helpinghands506",
-  storageBucket: "helpinghands506.appspot.com",
-  messagingSenderId: "652958427997"
-});
+// let firebaseConfig = firebase.initializeApp({
+//   apiKey: "AIzaSyAtXUZCmJgRa_DjLRqqlEiXtGNCMXO0lXo",
+//   authDomain: "helpinghands506.firebaseapp.com",
+//   databaseURL: "https://helpinghands506.firebaseio.com",
+//   projectId: "helpinghands506",
+//   storageBucket: "helpinghands506.appspot.com",
+//   messagingSenderId: "652958427997"
+// });
 
 describe('Login Page', () => {
 
@@ -29,7 +30,7 @@ describe('Login Page', () => {
       ],
       imports: [
         IonicModule.forRoot(LoginPage),
-        AngularFireModule.initializeApp(this.firebaseConfig)
+        AngularFireModule.initializeApp(FIREBASE_CONFIG)
       ]
     }).compileComponents();
   });
