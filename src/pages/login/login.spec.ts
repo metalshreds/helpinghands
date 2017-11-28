@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import {} from 'jasmine'
 import { FormControl } from '@angular/forms/src/model';
-import {NavMock} from '../../../test-config/mocks-ionic'
+import {NavMock,alarmControllerMock} from '../../../test-config/mocks-ionic'
 describe('login page', () => {
     let fixture;
     let comp;
@@ -30,7 +30,7 @@ describe('login page', () => {
       declarations: [LoginPage],
       providers: [
         AngularFireAuth,
-        AlertController,
+        {provide : AlertController, usedClass : alarmControllerMock},
         NavController,
         FormBuilder,
         AngularFireAuthModule,
