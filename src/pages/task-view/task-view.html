@@ -15,19 +15,19 @@
 
 <ion-content padding>
 
-  <button *ngIf="showEditButton" ion-button class="edit-pencil" (click)='editTaskClicked($event, CURRENT_TASK.taskId)' >Edit</button>
+  <button *ngIf="showEditButton" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask.taskId)' >Edit</button>
 
-  <button *ngIf="!showRequestButton" ion-button class="edit-pencil" (click)='requestTaskClicked($event, CURRENT_TASK.taskId, owner_user_id)' >Request</button>
+  <button *ngIf="!showRequestButton" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request</button>
 
   <ion-item>
     <div *ngIf ="selectedTask">
-      <h1 class = "task-name">{{CURRENT_TASK.taskName}}</h1>
-      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, owner_user_id)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button></h4>
-      <h4 class="task-summary wrap">{{CURRENT_TASK.taskDescription}}</h4>
+      <h1 class = "task-name">{{selectedTask.taskName}}</h1>
+      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button></h4>
+      <h4 class="task-summary wrap">{{selectedTask.taskDescription}}</h4>
       <h4> </h4>
-      <h4>Start Time: {{CURRENT_TASK.timeStart}}</h4>
-      <h4>End Time: {{CURRENT_TASK.timeEnd}}</h4>
-      <h4>Estimated Length: {{CURRENT_TASK.timeDuration}} hours</h4>
+      <h4>Start Time: {{selectedTask.timeStart}}</h4>
+      <h4>End Time: {{selectedTask.timeEnd}}</h4>
+      <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
       <!--<h2>Compensation: {{CURRENT_TASK.Compensation}}</h2>-->
       <!--<h2>Location: {{CURRENT_TASK.Location}}</h2>-->
     </div>
