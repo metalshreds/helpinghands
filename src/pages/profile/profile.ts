@@ -7,6 +7,7 @@ import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
 import { NgZone, OnInit } from "@angular/core";
+import {TaskObjectProvider} from "../../providers/task-object/task-object";
 /**
  * Generated class for the ProfilePage page.
  *
@@ -89,8 +90,29 @@ export class ProfilePage {
           this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask').doc(sdoc.id).
             get().then(doc =>{
               console.log("this is ", this.CURRENT_USER.ownedTask);
-              this.CURRENT_USER.ownedTask.push(doc.data().taskName);
-            })
+                var taskRef = this.db.collection('tasks').doc(sdoc.id);
+                taskRef.get().then(taskDoc =>{
+                    console.log('task doc is ',taskDoc.data());
+                    //create task and push into array
+
+                    var task = new TaskObjectProvider(
+                      taskDoc.data()['TaskName'],
+                      0,
+                      '0',
+                      taskDoc.data()['TaskDescription'],
+                      '0',
+                      taskDoc.data()['Skill'],
+                      taskDoc.data()['Complete'],
+                      taskDoc.data()['ownerUserId']
+                    );
+                    task['taskId'] = sdoc.id;
+                  this.CURRENT_USER.ownedTask.push(task);
+
+
+                });
+              //this.CURRENT_USER.ownedTask.push(doc.data().taskName);
+
+          })
         });
       });
 

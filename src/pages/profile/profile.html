@@ -50,7 +50,7 @@
 
         <h3 padding-top="15px">Portfolio</h3>
         <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
-          <h2>{{task}}</h2>
+          <h2>{{task.taskId}} {{task.taskName}}</h2>
         </ion-item>
       </ion-col>
     </ion-row>
