@@ -5,7 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Profile</ion-title>
-    <ion-buttons end>
+
+    <ion-buttons end *ngIf="profileOwner">
       <button ion-button (click)="goToEditProfile($event)">
         <ion-icon name = "create" color="dark"></ion-icon>
       </button>
@@ -21,7 +22,7 @@
   <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
   <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
   <div class="avatar avatarCol">
-    <img [src]="chosenPicture || curUserToken.photoURL" onerror="this.src='assets/icon/logo-login.png'" />
+    <img [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
   </div>
 
 
@@ -49,7 +50,7 @@
 
         <h3 padding-top="15px">Portfolio</h3>
         <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
-          <h2>{{task}}</h2>
+          <button ion-item  (click)="taskClicked($event, task)">{{task.taskName}}</button>
         </ion-item>
       </ion-col>
     </ion-row>

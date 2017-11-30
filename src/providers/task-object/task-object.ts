@@ -9,6 +9,7 @@ export class TaskObjectProvider {
 
   //Users
   public ownerUserId : string;                  //owner of this task.
+  public ownerName : string;
 
   //Time
   public timeDuration : number;     //duration of the task
@@ -18,7 +19,7 @@ export class TaskObjectProvider {
   //Skills and status
   public wantedSkill = new Object();  //skill set of the task
   public complete: boolean;           //flag that indicates the completion of the task
-  public ownerComment: string;            // comment on quality of helper
+  public ownerComment: string = '';            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
   //Task

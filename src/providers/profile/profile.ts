@@ -28,6 +28,7 @@ export class ProfileProvider {
   public pendingTask: TaskObjectProvider[] = [];
   public travelRadius : number;
   public taskCount : number;
+  public photoUrl : string;
   constructor(
     lastName : string,
     firstName : string,
@@ -50,14 +51,12 @@ export class ProfileProvider {
     this.phone = phone;
     this.travelRadius = travelRadius;
     this.taskCount = taskCount;
+    this.photoUrl = null;
   }
 
   /*
   /
    */
-  createTask(){
-    var skill = [ true, false, true, false];
-  }
 
 //TODO method to retrieve user info
 

@@ -49,22 +49,64 @@ export class CompletedPage {
   }
 
   loadCompletedTasks(){
-    /* Get completed tasks for current owner  */
+
+
+    /** Testing getting list of owned tasks**/
+    // console.log('current user: ', this.curUserToken.uid );
+    // this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
+    //   ownedTasks.forEach( (doc)=>{
+    //     let task = new TaskObjectProvider(
+    //       doc.data()['taskName'],
+    //       doc.data()['timeDuration'],
+    //       doc.data()['timeStart'],
+    //       doc.data()['taskDescription'],
+    //       doc.data()['timeEnd'],
+    //       doc.data()['wantedSkills'],
+    //       doc.data()['completed'],
+    //       doc.data()['ownerUserId']
+    //     );
+    //
+    //     console.log("log task:", task);
+    //
+    //   });
+    // });
+
+
+    /** Get completed tasks for current owner  **/
     var self = this; //This is needed because "this" loses context inside next "function"
-    this.db.collection("tasks").get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        // console.log(doc.id, " => ", doc.data());
-        //Create new task for each doc
+    // this.db.collection("tasks").get().then(function(querySnapshot) {
+    // this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then(function(task) {
+    //   task.forEach(function(doc) {
+    //     console.log(doc.id, " => ", doc.data());
+    //     //Create new task for each doc
+    //     let task = new TaskObjectProvider(
+    //       doc.data()['taskName'],
+    //       doc.data()['timeDuration'],
+    //       doc.data()['timeStart'],
+    //       doc.data()['taskDescription'],
+    //       doc.data()['timeEnd'],
+    //       doc.data()['wantedSkills'],
+    //       doc.data()['completed'],
+    //       doc.data()['ownerUserId']
+    //     );
+
+
+    this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
+      ownedTasks.forEach( (doc)=>{
+        console.log('display doc: ', doc);
         let task = new TaskObjectProvider(
           doc.data()['taskName'],
           doc.data()['timeDuration'],
           doc.data()['timeStart'],
-          doc.data()['taskDescription'],
+          doc.data()['TaskDescription'],
           doc.data()['timeEnd'],
           doc.data()['wantedSkills'],
-          doc.data()['completed'],
+          doc.data()['Complete'],
           doc.data()['ownerUserId']
         );
+        // console.log("complete: ", doc.data()['Complete']);
+        console.log("log task:", task);
+
 
         task.setTaskId(doc.data()['taskId']);
 
@@ -72,13 +114,13 @@ export class CompletedPage {
         { self.tasks.push(task); }
         //this.completedTasks.push(doc);
 
-        /* Print out owners name*/
 
+        /* Print out owners name*/
         let taskOwner: string = 'Task Owner\'s Name';
         console.log(doc.data()['ownerUserId']);
         console.log(task.ownerUserId);
 
-        /* Get owners name */
+        /** Get owners name **/
         if( typeof task.ownerUserId  !== 'undefined'){
 
           var userRef = self.db.collection("users").doc(task.ownerUserId);

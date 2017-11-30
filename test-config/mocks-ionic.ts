@@ -110,6 +110,19 @@ export class NavMock {
 
 }
 
+export class alarmControllerMock {
+  _getPortal(): any { return {} };
+  create(options?: any) { 
+      return new LoadingMock()
+  };
+}
+
+class LoadingMock {
+  present() { };
+  dismiss() { };
+  dismissAll() { };
+}
+
 export class DeepLinkerMock {
 
 }
