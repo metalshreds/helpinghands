@@ -39,6 +39,7 @@ export class TaskEditPage {
   sciSkills = [];
   econSkills = [];
   langSkills = [];
+  skillHolder = [];
   month : string = '';
   day : string = '';
   startDate : string = '';
@@ -82,41 +83,54 @@ export class TaskEditPage {
 
 
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
-    if(this.navParams.get('taskID') != undefined) {
+    if(this.navParams.get('taskId') != undefined) {
       this.created = false;
-      this.taskId = this.navParams.get('taskID');
+      this.taskId = this.navParams.get('taskId');
       let taskRef = this.db.collection('tasks').doc(this.taskId);
       taskRef.get().then(doc=>{
-        this.nameHolder = doc.data().TaskName;
-        this.descriptionHolder = doc.data().TaskDescription;
-        this.locationHolder = doc.data().Location;
-        this.compensationHolder = doc.data().Compensation;
-        //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
-        this.skill = doc.data().Skill;
-        for (const field in this.skill) {
-          if (this.skill[field]) {
-            if (field == "Programming" || field == "Excel" || field == "Hardware") {
-              this.csSkills.push(field);
-            }
-            else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
-              this.mechSkills.push(field);
-            }
-            else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
-              this.artSkills.push(field);
-            }
-            else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
-              this.sciSkills.push(field);
-            }
-            else if (field == "Management" || field == "Accounting" || field == "Economics") {
-              this.econSkills.push(field);
-            }
-            else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
-              field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
-              field == "OtherLang") {
-              this.langSkills.push(field);
-            }
-          }
+        this.nameHolder = doc.data().taskName;
+        this.descriptionHolder = doc.data().taskDescription;
+        this.locationHolder = doc.data().location;
+        this.compensationHolder = doc.data().compensation;
+        for (const i in doc.data().wantedSkill)
+        {
+          console.log('in task-edit constructor i is', i);
+          if (doc.data().wantedSkill[i] == true)
+            this.skillHolder.push(i);
         }
+        this.csSkills = this.skillHolder;
+        this.mechSkills = this.skillHolder;
+        this.artSkills = this.skillHolder;
+        this.sciSkills = this.skillHolder;
+        this.econSkills = this.skillHolder;
+        this.langSkills = this.skillHolder;
+        //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
+        // this.skill = doc.data().wantedSkill;
+        
+        // for (const field in this.skill) {
+        //   if (this.skill[field]) {
+        //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
+        //       this.csSkills.push(field);
+        //     }
+        //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
+        //       this.mechSkills.push(field);
+        //     }
+        //     else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
+        //       this.artSkills.push(field);
+        //     }
+        //     else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
+        //       this.sciSkills.push(field);
+        //     }
+        //     else if (field == "Management" || field == "Accounting" || field == "Economics") {
+        //       this.econSkills.push(field);
+        //     }
+        //     else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
+        //       field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
+        //       field == "OtherLang") {
+        //       this.langSkills.push(field);
+        //     }
+        //   }
+        // }
       });
     } else {
       userRef.get().then(doc=>{
@@ -149,7 +163,7 @@ export class TaskEditPage {
         taskDescription : this.taskCreateForm.value.taskDescription,
         location : this.taskCreateForm.value.location,
         compensation : this.taskCreateForm.value.compensation,
-        wantedskill : this.skill,
+        wantedSkill : this.skill,
         startDate : this.startDate,
         endDate : this.endDate,
         duration : this.duration,
