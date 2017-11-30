@@ -68,15 +68,19 @@ export class CompletedPage {
           if (ownedTasks.data()['Complete'] == true) {
             //TODO Update firebase AND task-object AND user object fields to use camelCase with initial lower case
             let task = new TaskObjectProvider(
-              ownedTasks.data()['TaskName'],
+              ownedTasks.data()['taskName'],
+              ownedTasks.data()['taskId'],
               ownedTasks.data()['timeDuration'],
               ownedTasks.data()['timeStart'],
-              ownedTasks.data()['TaskDescription'],
               ownedTasks.data()['timeEnd'],
-              ownedTasks.data()['Skill'],
-              ownedTasks.data()['Complete'],
-              ownedTasks.data()['ownerUserId']
+              ownedTasks.data()['taskDescription'],
+              ownedTasks.data()['wantedSkills'],
+              ownedTasks.data()['completed'],
+              ownedTasks.data()['owner'],
+              ownedTasks.data()['ownerUserId'],
+              ownedTasks.data()['location']
             );
+
             task.setTaskId(ownedTasks.data()['taskId']);
 
             // Set owner
