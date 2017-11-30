@@ -89,10 +89,10 @@ export class ProfilePage {
         doc.forEach(sdoc=>{
           this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask').doc(sdoc.id).
             get().then(doc =>{
-              console.log("this is ", this.CURRENT_USER.ownedTask);
+              // console.log("this is ", this.CURRENT_USER.ownedTask);
                 var taskRef = this.db.collection('tasks').doc(sdoc.id);
                 taskRef.get().then(taskDoc =>{
-                    console.log('task doc is ',taskDoc.data());
+                    // console.log('task doc is ',taskDoc.data());
                     //create task and push into array
 
                     var task = new TaskObjectProvider(

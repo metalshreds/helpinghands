@@ -55,6 +55,9 @@ export class TaskObjectProvider {
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
 
+  setOwnerName(ownerName: string){this.ownerName = ownerName;}
+  getOwnerName(){return this.ownerName};
+
   /*this function is used to set the helpers list
   / of a newly constructed task.
   / possible usage: construct a task object based
