@@ -55,6 +55,9 @@
         </ion-list>
         
         <ion-list *ngSwitchCase="'Task'">
+            <ion-item *ngFor="let item of items">
+                {{item.taskName}}
+              </ion-item>
         </ion-list>
     
     
