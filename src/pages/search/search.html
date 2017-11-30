@@ -10,19 +10,55 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Search Tasks</ion-title>
+    <ion-title>Search</ion-title>
   </ion-navbar>
+  <ion-row>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  </ion-row>
 
+  <ion-row>
+    <ion-col col-10>
+  <ion-toolbar no-border-top>
+      <ion-segment [(ngModel)]="SearchResult">
+        <ion-segment-button selected value="User">
+          User
+        </ion-segment-button>
+        <ion-segment-button value="Task">
+          Task
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-col>
+  <ion-col text-left>
+    <ion-item text-left>
+      <ion-select [(ngModel)]="gaming" interface="popover">
+        <ion-option text-left selected value="deflist">Default</ion-option>
+        <ion-option text-left value="rating">Highest rate first</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+  </ion-row>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{ item }}
-    </ion-item>
-  </ion-list>
+
+    <div [ngSwitch]="SearchResult">
+        
+        <ion-list *ngSwitchCase="'User'">
+            <ion-item *ngFor="let item of items">
+                {{item.firstName}} {{ item.lastName }}
+                {{item.skillset}}
+                {{item.id}}
+              </ion-item>
+        </ion-list>
+        
+        <ion-list *ngSwitchCase="'Task'">
+        </ion-list>
+    
+    
+    </div>
+
 
 </ion-content>

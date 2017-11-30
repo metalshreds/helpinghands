@@ -4,15 +4,16 @@ import { IonicPage, NavController, NavParams,
 import { ProfileProvider } from "../../providers/profile/profile";  //provider
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import {ProfilePage} from '../profile/profile';
-import { cloudProvider } from '../../providers/cloudbase'
+import { ProfilePage} from '../profile/profile';
+import { cloudProvider } from '../../providers/cloudbase';
 import firebase from 'firebase';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { nameValidator} from '../../validators/nameValidator';
 import { CameraProvider } from '../../providers/camera';
-
-
+import * as algoliasearch from 'algoliasearch';
+import { skill } from '../../interface/skills';
+import { TaskViewPage } from "../task-view/task-view"
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -33,7 +34,15 @@ export class EditProfilePage {
   chosenPicture: any;
   pictureChanged = false;
   db = firebase.firestore();
-
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
+  skillInterface = new skill();
+  skill =  new Object();
+  csSkills = [];
+  mechSkills = [];
+  artSkills = [];
+  sciSkills = [];
+  econSkills = [];
+  langSkills = [];
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -47,7 +56,6 @@ export class EditProfilePage {
     public actionsheetCtrl: ActionSheetController,
     public cameraProvider: CameraProvider,
     public platform: Platform,
-    //public currUser : ProfileProvider
   ) {
 
     this.editProfileForm = formBuilder.group({
@@ -127,31 +135,77 @@ export class EditProfilePage {
     }
     else if(this.curUserToken)
     {
+      for (const i in this.skillInterface)
+      {
+        console.log("i is ", i)
+        if (this.csSkills.indexOf(i) > -1 ||
+          this.mechSkills.indexOf(i) > -1 ||
+          this.artSkills.indexOf(i) > -1 ||
+          this.sciSkills.indexOf(i) > -1 ||
+          this.econSkills.indexOf(i) > -1 ||
+          this.langSkills.indexOf(i) > -1)
+        {
+          this.skill[i] = true;
+        }
+        else
+          this.skill[i] = false;
+      }
+      console.log("mechSkill", this.mechSkills);
+      console.log("skill", this.skill);
       //initialize new User object using input lastname, firstname and current author's uid and email.
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
-        [true,false,false,true], this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius);
+        this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
+        this.CURRENT_USER.taskCount);
 
+
+      console.log("newUser is ", newUser);
       // for simplicity i wrote an abstract function to update each field.
       // a crash during multiple independent writes may cause inconsistency in database,
       //  but that issue is beyond our scope at this time. Will come back to this and using
       //  batch or write a function to update the whole profile.
-      this.cloudBaseModule.singleStringUpdate("lastName", newUser.lastName, newUser.userId);
-      this.cloudBaseModule.singleStringUpdate("firstName", newUser.firstName, newUser.userId);
-      this.cloudBaseModule.singleStringUpdate("introduction", newUser.introduction, newUser.userId);
+      var userRef = this.db.collection('users').doc(this.curUserToken.uid);
+      userRef.update({
+        lastName : this.editProfileForm.value.lastName,
+        firstName : this.editProfileForm.value.firstName,
+        introduction : this.editProfileForm.value.introduction,
+        zipCode : this.editProfileForm.value.zipCode,
+        skill : this.skill,
+        taskCount : this.CURRENT_USER.taskCount,
+      });
+
+
+
       if(this.pictureChanged)
+      {
         this.updateUserPhoto();
+        userRef.update({
+          photoUrl : this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
+        })
+      }
       else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
       {
+
         this.curUserToken.updateProfile({
-          displayName: newUser.lastName + newUser.firstName,
+          displayName: newUser.firstName + ' ' + newUser.lastName,
           photoURL: this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
          }).catch(function(error) {
           console.log("native update has an error");
         });
+        this.editProfileForm.reset();
+
+        //TODO moduliraze following code maybe
+        var docRef = this.db.collection('users').doc(newUser.userId);
+        docRef.get().then(doc=>{
+          var index = this.client.initIndex('users');
+          var user = doc.data();
+          user.objectID = newUser.userId;
+          index.saveObject(user);
+          this.navCtrl.push(ProfilePage);
+        })
+
+
       }
-      this.editProfileForm.reset();
-      this.navCtrl.push( ProfilePage );
     }
     else {
       const alert = this.alertCtrl.create({
@@ -219,6 +273,10 @@ export class EditProfilePage {
     loading.present();
     return this.cameraProvider.getPictureFromPhotoLibrary().then(picture => {
       if (picture) {
+
+        // this.crop.crop(picture, {quality:75})
+        // .then(newImage=>{this.chosenPicture = newImage})
+        //   .catch(error=>{console.error('Error in croping image in edit-user', error)});
         this.chosenPicture = picture;
         this.pictureChanged = true;
       }
@@ -241,9 +299,12 @@ export class EditProfilePage {
           this.curUserToken.updateProfile({
             displayName: this.CURRENT_USER.firstName + this.CURRENT_USER.lastName,
             photoURL: downloadURL,
+
           }).catch(function(error) {
             console.log("native update has an error");
           });
+          this.editProfileForm.reset();
+          this.navCtrl.push( ProfilePage );
         });
       }
       else

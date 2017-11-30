@@ -15,9 +15,7 @@
 
 </ion-header>
 
-
 <ion-content padding>
-
 
   <!--<ion-list>-->
     <!--<button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>-->
@@ -30,12 +28,58 @@
 
 
   <ion-list>
-    <div ion-item *ngFor="let task of tasks">
 
-      <h1>{{task.name}}</h1>
-      <h2>{{task.timeStart}}</h2>
-      <h3>Expected to last {{task.timeDuration}} hours</h3>
-    </div>
+  <ion-card>
+    <button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>
+
+      <ion-item class="task-completed">
+        <ion-avatar item-start>
+          <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
+        </ion-avatar>
+        <!--<h2>{{task.ownerUserId}}</h2>-->
+        <h2>{{taskOwnerDict[task.getTaskId()]}}</h2>
+
+        <p>November 5, 1955</p>
+      </ion-item>
+
+    <ion-card-content>
+      <ion-item class="card-item">
+      <ion-icon name="checkmark" item-start large></ion-icon>
+      <ion-card-title>
+        {{task.taskName}}
+      </ion-card-title>
+      </ion-item>
+
+      <ion-item class="card-item">
+        <ion-icon name="stopwatch" item-start large></ion-icon>
+        <h2>{{task.timeStart}}</h2>
+        <p>Expected to last {{task.timeDuration}} hours</p>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>Rate : 5.0 / 5.0 </div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>Comments</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+    </button>
+  </ion-card>
+
   </ion-list>
 
 </ion-content>

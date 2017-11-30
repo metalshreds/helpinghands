@@ -4,10 +4,11 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title center>Profile</ion-title>
-    <ion-buttons end>
+    <ion-title>Profile</ion-title>
+
+    <ion-buttons end *ngIf="profileOwner">
       <button ion-button (click)="goToEditProfile($event)">
-        <ion-icon name = "create" color="light"></ion-icon>
+        <ion-icon name = "create" color="dark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -15,38 +16,43 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-grid>
+<ion-content>
+
+
+  <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
+  <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
+  <div class="avatar avatarCol">
+    <img [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
+  </div>
+
+
+  <ion-grid style="height: 100%">
+
+
     <ion-row>
-      <div class = "avatar">
-      <p class="name"> {{CURRENT_USER.firstName}} {{CURRENT_USER.lastName}}</p>
-      <p class="right-of-pic" >{{CURRENT_USER.email}}</p>
+      <ion-col>
+        <ion-item text-wrap padding>
+        <p class="intro">{{CURRENT_USER.introduction}}</p>
+        </ion-item>
 
-      <ion-avatar (click) = "expandPic()">
-        <img class="profile-pic" [src]='userPhotoUrl' onerror="this.src='assets/icon/logo-login.png'" />
-      </ion-avatar>
-      </div>
-    </ion-row>
+        <h3>Skills</h3>
 
-    <ion-row>
-      <ion-item text-wrap padding>
-      <p class="intro">{{CURRENT_USER.introduction}}</p>
-      </ion-item>
 
-      <h3>Skills</h3>
+            <ion-item *ngFor = "let skill of displaySkill">
+            {{skill}}
+            </ion-item>
 
-      <p>C++, Java, Hardware, Soldering, Welding</p>
 
-      <h3 padding-top="15px">Portfolio</h3>
-      <ion-item text-wrap>
-        <h2>Dumb As Dirt</h2>
-        <p>They really knew their stuff and was able to mix up the right dirt very quickly, but
-        they did not talk to me the entire time.</p>
-      </ion-item>
-      <ion-item text-wrap>
-        <h2>Get Rich Quick</h2>
-        <p>They told me exactly how to find bitcoin! Very helpful!!</p>
-      </ion-item>
+
+
+
+
+
+        <h3 padding-top="15px">Portfolio</h3>
+        <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
+          <button ion-item  (click)="taskClicked($event, task)">{{task.taskName}}</button>
+        </ion-item>
+      </ion-col>
     </ion-row>
 
 

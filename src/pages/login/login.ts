@@ -16,6 +16,7 @@ import {EditProfilePage} from "../edit-profile/edit-profile";
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
+import {DashboardPage} from "../dashboard/dashboard";
 
 //@IonicPage()
 @Component({
@@ -26,19 +27,20 @@ import { passwordValidator } from '../../validators/passwordValidator';
 export class LoginPage {
 
   public loginForm: FormGroup;
-
+  public emailInput;
+  public passwrodInput;
   constructor(
     private authp: AngularFireAuth,
-    public loadingCtrl: LoadingController,
+    //public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public app: App,
+    //public app: App,
     public navCtrl: NavController,
     public formBuilder : FormBuilder,
     private plt : Platform
   ) {
     this.loginForm = formBuilder.group({
       email : ['', Validators.compose([emailValidator.isValid])],
-      password : ['',Validators.required]
+      password : ['',Validators.compose([Validators.required, passwordValidator.isValid])]
     });
     this.plt.ready()
   }
@@ -51,32 +53,47 @@ export class LoginPage {
   / to profile page on success, or display an error message
   / on failure.
    */
-  login = async function() {
+  login = async function(email, passwrod) : Promise<any> {
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: '',
       buttons: ['OK']
     });
-    console.log(this.loginForm.value.email);
+    
+    console.log(email);
     if(!this.loginForm.valid)
     {
       console.log("invalid input here");
     }
-    this.authp.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
+    var loginResult = this.authp.auth.signInWithEmailAndPassword(email, passwrod)
       .then(result=>{
-        this.loginForm.reset();
-        //TODO sent user verification email, add verification checking at login page
-        //https://firebase.google.com/docs/auth/web/manage-users
+        return new Promise((resolve)=>{
+            this.loginForm.reset();
+            console.log(result);
+            //TODO sent user verification email, add verification checking at login page
+            //https://firebase.google.com/docs/auth/web/manage-users
+            resolve('login success');
+            console.log("in loging page, Cemail/Cpw", resolve);
+            this.navCtrl.push(DashboardPage);
+        })
 
-        this.navCtrl.push(EditProfilePage);
+
       })
       .catch(function(error)
       {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert.setTitle(errorCode);
-          alert.setMessage(errorMessage);
-          alert.present();
+        return new Promise((reject)=>{
+          if(error)
+          {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert.setTitle(errorCode);
+            alert.setMessage(errorMessage);
+            alert.present();
+            console.log("in loging page's catch, Wemail/Wpw", errorCode);
+            reject(errorCode);
+          }
+
+        })
       });
 
   }

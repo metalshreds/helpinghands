@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -7,45 +6,54 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class TaskObjectProvider {
+
+  //Users
+  public ownerUserId : string;                  //owner of this task.
+  public ownerName : string;
+
+  //Time
   public timeDuration : number;     //duration of the task
   public timeStart : string;          //start time of the task
-  public introduction : string;       //brief intro/background of this task
-  public requirement : string;        //requirement/qualification of this task
-  public wantedSkill : boolean[]=[];  //skill set of the task
+  public timeEnd: string;
+
+  //Skills and status
+  public wantedSkill = new Object();  //skill set of the task
   public complete: boolean;           //flag that indicates the completion of the task
-  public id: number;                  //task's unique id generated when during task creation
-  public name: string;                //task's name
+  public ownerComment: string = '';            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
-  public owner : string;                  //onwer of this task.
-  public ownerComment: string;            // comment on quality of helper
+  //Task
+  public taskId: string;                  //task's unique id generated when during task creation
+  public taskName: string;                //task's name
+  public taskDescription : string;       //brief intro/background of this task
 
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
   / a task object.
   */
-  constructor(name: string,
+  constructor(taskName: string,
               timeDuration : number,
               timeStart : string,
-              introduction : string,
-              requirement : string,
-              wantedSkill : boolean[],
+              taskDescription : string,
+              timeEnd : string,
+              wantedSkill : string[],
               complete : boolean,
               owner : string,
-              ) {
-    this.name = name;
+  ) {
+    this.taskName = taskName;
     this.timeDuration = timeDuration;
     this.timeStart = timeStart;
-    this.introduction = introduction;
-    this.requirement = requirement;
+    this.taskDescription = taskDescription;
+    this.timeEnd = timeEnd;
     this.wantedSkill = wantedSkill;
     this.complete = complete;
-    this.owner = owner;
+    this.ownerUserId = owner;
 
   }
 
-
   //FUNCTIONS
+  setTaskId(taskId: string){ this.taskId = taskId; }
+  getTaskId(){ return this.taskId; }
 
   /*this function is used to set the helpers list
   / of a newly constructed task.
@@ -72,6 +80,4 @@ export class TaskObjectProvider {
   }
 
 
-
 }
-

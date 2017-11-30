@@ -8,7 +8,7 @@ import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';  //for validation
 import { emailValidator} from '../../validators/emailValidator';
 import { passwordValidator } from '../../validators/passwordValidator';
-
+import * as algoliasearch from 'algoliasearch';
 
 /**
  * Generated class for the SignupPage page.
@@ -25,12 +25,12 @@ import { passwordValidator } from '../../validators/passwordValidator';
 export class SignupPage {
 
   public signUpForm : FormGroup;
-
+  ALGOLIA_INDEX_NAME = "notes";
+  client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   db = firebase.firestore();
   constructor(
     private authp: AngularFireAuth,
     public navCtrl: NavController,
-    public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public formBuilder : FormBuilder,)
@@ -47,19 +47,17 @@ export class SignupPage {
   / This function takes user inputs and pass it to firebase server
   / use firebase API. Which will create a new user in firebase.
    */
-  signUp = function() {
+  signUp = async function() : Promise<any> {
 
     console.log("asd" ,this.signUpForm.value);
     if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
-
         const alert = this.alertCtrl.create({
           title: 'Error',
           subTitle: 'Please use a valid wisc.edu email',
           buttons: ['OK']
         });
         alert.present();
-
     }
     //password doesn't match the reenter password.
     else if (this.signUpForm.value.password.localeCompare(this.signUpForm.value.passwordRe) != 0)
@@ -70,7 +68,6 @@ export class SignupPage {
         buttons: ['OK']
       });
       alert.present();
-
     }
     else if (!this.signUpForm.controls.password.valid) //passwaord should be in range 6-20
     {
@@ -101,16 +98,34 @@ export class SignupPage {
               email: this.signUpForm.value.email,
               lastName : '',
               firstName : '',
+              taskCount : 1,
             });
-            this.navCtrl.push(EditProfilePage);
+            docRef.get().then(doc=>{
+              var index = this.client.initIndex('users');
+              var user = doc.data();
+              user.objectID = result.uid;
+              index.saveObject(user);
+              return new Promise((resolve)=> {
+                resolve('sign in successfully');
+                this.navCtrl.push(EditProfilePage);
+              })
+              
+            })
+          
+
           })
           .catch(function (error)        //on failure, display the error massage.
           {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert.setTitle(errorCode);
-            alert.setMessage(errorMessage);
-            alert.present();
+            return new Promise((reject)=>{
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              alert.setTitle(errorCode);
+              alert.setMessage(errorMessage);
+              alert.present();
+              console.log("error code is ", errorCode);
+              reject(errorCode);
+            })
+
           });
     }
   }
