@@ -23,7 +23,7 @@ export class ProfileProvider {
   public introduction: string;
   public zipCode : string;
   public phone : number;
-  public skill = new Object();
+  public skills = new Object();
   public ownedTask : TaskObjectProvider[] = [];
   public blockListTask: TaskObjectProvider[] = [];
   public confirmTask: TaskObjectProvider[] = [];
@@ -52,7 +52,7 @@ export class ProfileProvider {
     this.userId = uid;
     this.email = email;
     this.introduction = introduction;
-    this.skill = skills;
+    this.skills = skills;
     this.zipCode = zipCode;
     this.phone = phone;
     this.travelRadius = travelRadius;

@@ -17,8 +17,8 @@ export class TaskObjectProvider {
   public endDate: string;
 
   //Skills and status
-  public wantedSkill = new Object();  //skill set of the task
-  public complete: boolean;           //flag that indicates the completion of the task
+  public wantedSkills = new Object();  //skill set of the task
+  public completed: boolean;           //flag that indicates the completion of the task
   public ownerComment: string = '';            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
@@ -51,8 +51,8 @@ export class TaskObjectProvider {
     this.startDate = timeStart;
     this.taskDescription = taskDescription;
     this.endDate = timeEnd;
-    this.wantedSkill = wantedSkill;
-    this.complete = complete;
+    this.wantedSkills = wantedSkill;
+    this.completed = complete;
     this.ownerUserId = ownerUserId;
     this.ownerName = owner;
   }
@@ -60,6 +60,9 @@ export class TaskObjectProvider {
   //FUNCTIONS
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
+
+  setOwnerName(ownerName: string){this.ownerName = ownerName;}
+  getOwnerName(){return this.ownerName};
 
   /*this function is used to set the helpers list
   / of a newly constructed task.
