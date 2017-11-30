@@ -47,17 +47,19 @@
     <div [ngSwitch]="SearchResult">
         
         <ion-list *ngSwitchCase="'User'">
-            <ion-item *ngFor="let item of items">
-                {{item.firstName}} {{ item.lastName }}
-                {{item.skillset}}
-                {{item.id}}
-              </ion-item>
+          <button ion-item *ngFor="let item of items" (click) = 'userClicked(item.userId)'>
+            {{item.firstName}} {{ item.lastName }}
+            {{item.skillset}}
+            {{item.userId}} 
+          </button>
         </ion-list>
         
         <ion-list *ngSwitchCase="'Task'">
-            <ion-item *ngFor="let item of items">
-                {{item.taskName}}
-              </ion-item>
+          <button ion-item *ngFor="let task of resultTasks" (click)='taskClicked(task)'>
+              {{task.taskName}}
+              {{task.skillset}}
+              {{task.taskId}}
+          </button>
         </ion-list>
     
     

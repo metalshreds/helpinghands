@@ -100,6 +100,7 @@ export class SignupPage {
               firstName : '',
               taskCount : 1,
               rating : -1,
+              isHelper : true,
             });
             docRef.get().then(doc=>{
               var index = this.client.initIndex('users');

@@ -117,9 +117,9 @@ export class TaskViewPage {
   requestTaskClicked(event, selectedTaskId, selectedTask_owner){
     alert("Task Requested");
 
-    //add task id to user's list of pending tasks
+    //add task id to user's list of pending tasks.
 
-    //add user id to list of people who have requested to do a task
+    //add user id to list of people who have requested to do a task.
   }
 
   //TODO what to do if task owner clicks a user?

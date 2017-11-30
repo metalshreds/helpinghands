@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as algoliasearch from 'algoliasearch';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
+import { TaskObjectProvider } from '../../providers/task-object/task-object';
+import { ProfilePage } from '../profile/profile'
+import { TaskViewPage } from '../task-view/task-view'
 
 
 /**
@@ -19,12 +22,12 @@ import * as firebase from 'firebase';
 })
 export class SearchPage {
 
-
+  SearchResult = 'User';
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6');
   userIndex = this.client.initIndex('users');
 
   items;
-
+  resultTasks;
   /*
   / Search page:
   / normal search : search whole word:
@@ -46,11 +49,8 @@ export class SearchPage {
 
 
     initializeItems() {
-      var getDoc = this.db.collection('users');
-      console.log(getDoc);
-      this.items = [
-
-      ];
+      this.items = [];
+      this.resultTasks = [];
     }
 
 
@@ -79,7 +79,8 @@ export class SearchPage {
     {
       var query = val.trim();
       //use cloudbase query
-      this.db.collection('users').where('skill.'+query, '==', true ).get()
+      query = query.charAt(0).toUpperCase()+query.slice(1); //capitalize first letter to match the key in database
+      this.db.collection('users').where('skills.'+query, '==', true ).get()
         .then((doc)=>{
           doc.forEach(sdoc=>{
             console.log("search is ", sdoc.data());
@@ -96,25 +97,72 @@ export class SearchPage {
                 displaySkill.push(i);
             }
             CURRENT_USER['skillset'] = displaySkill;  //tmp fix
-            CURRENT_USER['id'] = sdoc.id; //tmp fix, add those in user object later
+            CURRENT_USER['userId'] = sdoc.id;  //tmp fix
             console.log(displaySkill);
             this.items.push(CURRENT_USER);       
           })  
         })
-      //use algolia query
-        var index = this.client.initIndex('users');
-        index.search({query}).then(responses=>{
-          console.log("algolia", responses.hits);
-            for(const hit in responses.hits){
-                  this.items.push(responses.hits[hit]);
-                  console.log("this", responses.hits[hit]);
-            }
+      //use algolia query do whole word search on user
+      //TODO: need to parse skill map to skill array
+      var index = this.client.initIndex('users');
+      index.search({query}).then(responses=>{
+        console.log("algolia", responses.hits);
+          for(const hit in responses.hits){
+                this.items.push(responses.hits[hit]);
+                console.log("this", responses.hits[hit]);
+          }
+      })
+
+      //do task search query with skill
+      this.db.collection('tasks').where('wantedSkills.'+query, '==', true ).get()
+      .then(doc=>{
+        doc.forEach(sdoc=>{
+          var taskObject = {} as TaskObjectProvider;
+          var skill = [];
+          for(const field in sdoc.data())
+          {
+            taskObject[field] = sdoc.data()[field];
+          }
+          //put keys of wantedSkills map in a array for display purpose
+          for (const i in taskObject.wantedSkills)
+          {
+            if (taskObject.wantedSkills[i] == true)
+                skill.push(i);
+          }
+          taskObject['skillset'] = skill;
+          //push in result array if this task is not completed
+          if(!taskObject.completed)
+            this.resultTasks.push(taskObject);
         })
+      })
+      //do whole word search on task
+      var index = this.client.initIndex('tasks');
+      index.search({query}).then(responses=>{
+        console.log("algolia", responses.hits);
+          for(const hit in responses.hits){
+                if(!responses.hits[hit].completed)
+                  this.resultTasks.push(responses.hits[hit]);
+                console.log("this", responses.hits[hit]);
+          }
+      })
     }
 
   }
 
+  userClicked(userId)
+  {
+    this.navCtrl.push(ProfilePage, {
+      userId: userId
+    });
+  }
 
+  
+  taskClicked(task)
+  {
+    this.navCtrl.push(TaskViewPage, {
+      task: task
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');

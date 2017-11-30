@@ -192,6 +192,7 @@ export class EditProfilePage {
         skills : this.skill,
         taskCount : this.CURRENT_USER.taskCount,
         isHelper : this.helper,
+        userId : this.curUserToken.uid,
       });
 
 
