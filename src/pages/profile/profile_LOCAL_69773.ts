@@ -7,7 +7,6 @@ import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import firebase from 'firebase';
 import { NgZone, OnInit } from "@angular/core";
-import {TaskViewPage} from "../task-view/task-view";
 import {TaskObjectProvider} from "../../providers/task-object/task-object";
 /**
  * Generated class for the ProfilePage page.
@@ -31,8 +30,6 @@ export class ProfilePage {
   db = firebase.firestore();
   profileOwner;
   CURRENT_USER = {} as ProfileProvider;
-  currTask : TaskObjectProvider;
-  //db = firebase.firestore();
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               //private AFcurUser: AngularFireAuth,
@@ -92,26 +89,23 @@ export class ProfilePage {
         doc.forEach(sdoc=>{
           this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask').doc(sdoc.id).
             get().then(doc =>{
-              console.log("this is ", this.CURRENT_USER.ownedTask);
-                //TODO
+              // console.log("this is ", this.CURRENT_USER.ownedTask);
                 var taskRef = this.db.collection('tasks').doc(sdoc.id);
                 taskRef.get().then(taskDoc =>{
-                    console.log('task doc is ',taskDoc.data());
+                    // console.log('task doc is ',taskDoc.data());
                     //create task and push into array
 
                     var task = new TaskObjectProvider(
-                      taskDoc.data()['taskName'],
-                      sdoc.id,
+                      taskDoc.data()['TaskName'],
                       0,
-                      '10',
                       '0',
-                      taskDoc.data()['taskDescription'],
-                      taskDoc.data()['wantedSkill'],
-                      taskDoc.data()['complete'],
-                      taskDoc.data()['owner'],
-                      taskDoc.data()['ownerUserId'],
-                      taskDoc.data()['location']
+                      taskDoc.data()['TaskDescription'],
+                      '0',
+                      taskDoc.data()['Skill'],
+                      taskDoc.data()['Complete'],
+                      taskDoc.data()['ownerUserId']
                     );
+                    task['taskId'] = sdoc.id;
                   this.CURRENT_USER.ownedTask.push(task);
 
 
@@ -134,33 +128,7 @@ export class ProfilePage {
     this.navCtrl.push(EditProfilePage);
   }
 
-  taskClicked(event, task){
-    console.log("TASK TO PUSH IS: " + task);
-    //var currTask: TaskObjectProvider;
-    // var taskRef = this.db.collection('tasks').doc(task);
-    // taskRef.get()
-    //   .then(doc => {
-    //     if (!doc.exists) {
-    //       console.log('No such document!');
-    //     } else {
-    //       console.log('Document data:', doc.data());
-    //       for(const field in doc.data())
-    //       {
-    //         //have to be careful that we have to store exactly same property
-    //         //  in userProvider obeject and users node.
-    //         this.currTask[field] = doc.data()[field];
-    //         console.log('TAsk in prfile: ' + this.currTask[field]);
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('Error getting document', err);
-    //   });
-    this.navCtrl.push(TaskViewPage, {
-      task: task
-    });
 
-  }
 
 
 }

@@ -12,7 +12,6 @@ import { SearchPage} from '../pages/search/search';
 import { TaskEditPage } from "../pages/task-edit/task-edit";
 import { AngularFireAuth } from "angularfire2/auth";
 import {EditProfilePage} from "../pages/edit-profile/edit-profile";
-import { CreatePage } from "../pages/create/create";
 import { NgZone } from "@angular/core";
 
 
