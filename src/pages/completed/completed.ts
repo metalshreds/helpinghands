@@ -64,8 +64,8 @@ export class CompletedPage {
         this.db.collection("tasks").doc(doc.id).get().then((ownedTasks) => {
 
           /** store only completed tasks**/
-          console.log('Complete: ', ownedTasks.data()['Complete'] );
-          if (ownedTasks.data()['Complete'] == true) {
+          console.log('Complete: ', ownedTasks.data()['completed'] );
+          if (ownedTasks.data()['completed'] == true) {
             //TODO Update firebase AND task-object AND user object fields to use camelCase with initial lower case
             let task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
