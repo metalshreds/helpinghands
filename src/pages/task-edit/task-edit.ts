@@ -92,10 +92,10 @@ export class TaskEditPage {
         this.descriptionHolder = doc.data().taskDescription;
         this.locationHolder = doc.data().location;
         this.compensationHolder = doc.data().compensation;
-        for (const i in doc.data().wantedSkill)
+        for (const i in doc.data().wantedSkills)
         {
           console.log('in task-edit constructor i is', i);
-          if (doc.data().wantedSkill[i] == true)
+          if (doc.data().wantedSkills[i] == true)
             this.skillHolder.push(i);
         }
         this.csSkills = this.skillHolder;
@@ -163,11 +163,11 @@ export class TaskEditPage {
         taskDescription : this.taskCreateForm.value.taskDescription,
         location : this.taskCreateForm.value.location,
         compensation : this.taskCreateForm.value.compensation,
-        wantedSkill : this.skill,
+        wantedSkills : this.skill,
         startDate : this.startDate,
         endDate : this.endDate,
         duration : this.duration,
-        complete : false,
+        completed : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
         photoUrl : this.photoUrl,

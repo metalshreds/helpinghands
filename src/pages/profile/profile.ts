@@ -67,9 +67,9 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
-          for (const i in this.CURRENT_USER.skill)
+          for (const i in this.CURRENT_USER.skills)
           {
-            if (this.CURRENT_USER.skill[i] == true)
+            if (this.CURRENT_USER.skills[i] == true)
               this.displaySkill.push(i);
           }
           console.log(this.displaySkill);
