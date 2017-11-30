@@ -113,7 +113,7 @@ export class CompletedPage {
 
         task.setTaskId(doc.data()['taskId']);
 
-        if (task.complete == true /*&& self.curUserToken.uid == task.ownerUserId */)
+        if (task.completed == true /*&& self.curUserToken.uid == task.ownerUserId */)
         { self.tasks.push(task); }
         //this.completedTasks.push(doc);
 

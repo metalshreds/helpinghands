@@ -90,9 +90,9 @@ export class SearchPage {
               CURRENT_USER[field] = sdoc.data()[field];
             }
             
-            for (const i in CURRENT_USER.skill)
+            for (const i in CURRENT_USER.skills)
             {
-              if (CURRENT_USER.skill[i] == true)
+              if (CURRENT_USER.skills[i] == true)
                 displaySkill.push(i);
             }
             CURRENT_USER['skillset'] = displaySkill;  //tmp fix
