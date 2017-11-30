@@ -96,13 +96,16 @@ export class CompletedPage {
         console.log('display doc: ', doc);
         let task = new TaskObjectProvider(
           doc.data()['taskName'],
+          doc.data()['taskId'],
           doc.data()['timeDuration'],
           doc.data()['timeStart'],
-          doc.data()['TaskDescription'],
           doc.data()['timeEnd'],
+          doc.data()['TaskDescription'],
           doc.data()['wantedSkills'],
-          doc.data()['Complete'],
-          doc.data()['ownerUserId']
+          doc.data()['complete'],
+          doc.data()['ownerName'],
+          doc.data()['ownerUserId'],
+          doc.data()['location'],
         );
         // console.log("complete: ", doc.data()['Complete']);
         console.log("log task:", task);

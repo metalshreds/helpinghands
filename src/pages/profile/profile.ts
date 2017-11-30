@@ -100,16 +100,18 @@ export class ProfilePage {
                     //create task and push into array
 
                     var task = new TaskObjectProvider(
-                      taskDoc.data()['TaskName'],
+                      taskDoc.data()['taskName'],
+                      sdoc.id,
                       0,
+                      '10',
                       '0',
-                      taskDoc.data()['TaskDescription'],
-                      '0',
-                      taskDoc.data()['Skill'],
-                      taskDoc.data()['Complete'],
-                      taskDoc.data()['ownerUserId']
+                      taskDoc.data()['taskDescription'],
+                      taskDoc.data()['wantedSkill'],
+                      taskDoc.data()['complete'],
+                      taskDoc.data()['owner'],
+                      taskDoc.data()['ownerUserId'],
+                      taskDoc.data()['location']
                     );
-                    task['taskId'] = sdoc.id;
                   this.CURRENT_USER.ownedTask.push(task);
 
 
