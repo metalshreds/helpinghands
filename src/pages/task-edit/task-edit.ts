@@ -41,7 +41,9 @@ export class TaskEditPage {
   langSkills = [];
   month : string = '';
   day : string = '';
-  myDate : string = '';
+  startDate : string = '';
+  endDate:string = '';
+  duration: string = '';
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
@@ -53,6 +55,7 @@ export class TaskEditPage {
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   taskId = this.curUserToken.uid;
   created = true;
+  photoUrl = '';
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -88,7 +91,7 @@ export class TaskEditPage {
         this.descriptionHolder = doc.data().TaskDescription;
         this.locationHolder = doc.data().Location;
         this.compensationHolder = doc.data().Compensation;
-        this.myDate = ("2017-"+doc.data().month+"-"+doc.data().day);
+        //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         this.skill = doc.data().Skill;
         for (const field in this.skill) {
           if (this.skill[field]) {
@@ -124,10 +127,6 @@ export class TaskEditPage {
 
 
   updateTask(){
-    console.log("my date is ", this.myDate);
-    var date = this.myDate.split('-');
-    this.month = date[1];
-    this.day = date[2];
     for (const i in this.skillinterface)
     {
       if (this.csSkills.indexOf(i) > -1 ||
@@ -145,17 +144,20 @@ export class TaskEditPage {
     console.log("skill", this.skill);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.set({
-        TaskName : this.taskCreateForm.value.taskName,
-        TaskId : this.taskId,
-        TaskDescription : this.taskCreateForm.value.taskDescription,
-        Location : this.taskCreateForm.value.location,
-        Compensation : this.taskCreateForm.value.compensation,
-        Skill : this.skill,
-        EndMonth : this.month,
-        EndDay : this.day,
-        Complete : false,
+        taskName : this.taskCreateForm.value.taskName,
+        taskId : this.taskId,
+        taskDescription : this.taskCreateForm.value.taskDescription,
+        location : this.taskCreateForm.value.location,
+        compensation : this.taskCreateForm.value.compensation,
+        wantedskill : this.skill,
+        startDate : this.startDate,
+        endDate : this.endDate,
+        duration : this.duration,
+        complete : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
+        photoUrl : this.photoUrl,
+
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
@@ -163,17 +165,6 @@ export class TaskEditPage {
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
       console.log("this is the data", doc.data().taskName);
-      /*this.task = new TaskObjectProvider(
-                  doc.data().taskName,
-                  5,
-                  "right now",
-                  this.month + " " + this.day,
-                  doc.data().taskDescription,
-                  "unused",
-                  this.skill,
-                  false,
-                  this.curUserToken.uid
-      );*/
       console.log("the task", this.task);
       //this.navCtrl.push( some page here);
     });
@@ -182,7 +173,6 @@ export class TaskEditPage {
       let userRef = this.db.collection('users').doc(this.curUserToken.uid);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
-
           userRef.update({
             taskCount : newCount,
           });
@@ -227,8 +217,6 @@ export class TaskEditPage {
     this.pictureChanged = true;
     return actionsheet.present();
   }
-
-
 
   takePicture() {
     const loading = this.loadingCtrl.create();

@@ -43,6 +43,7 @@ export class EditProfilePage {
   sciSkills = [];
   econSkills = [];
   langSkills = [];
+  helper = false;
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -172,6 +173,7 @@ export class EditProfilePage {
         zipCode : this.editProfileForm.value.zipCode,
         skill : this.skill,
         taskCount : this.CURRENT_USER.taskCount,
+        isHelper : this.helper,
       });
 
 
