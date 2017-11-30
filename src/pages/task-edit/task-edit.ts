@@ -92,6 +92,8 @@ export class TaskEditPage {
         this.descriptionHolder = doc.data().taskDescription;
         this.locationHolder = doc.data().location;
         this.compensationHolder = doc.data().compensation;
+        this.startDate = doc.data().startDate;
+        this.endDate = doc.data().endDate;
         for (const i in doc.data().wantedSkills)
         {
           console.log('in task-edit constructor i is', i);
