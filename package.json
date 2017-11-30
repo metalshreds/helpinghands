@@ -71,7 +71,7 @@
     "angular2-template-loader": "^0.6.2",
     "codecov": "^3.0.0",
     "html-loader": "^0.5.1",
-    "ionic": "3.18.0",
+    "ionic": "3.19.0",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine": "^2.8.0",
     "jasmine-core": "^2.8.0",
