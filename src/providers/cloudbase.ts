@@ -75,5 +75,28 @@ export class cloudProvider {
     // });
   }
 
+  addUserToTaskList = function(taskId : string, subPath : string, userId : string, firstName : string, lastName : string)
+  {
+    var docRef = this.db.collection('tasks').doc(taskId).collection(subPath).doc(userId);
+    docRef.set({'userName' : firstName + ' ' + lastName});
+  }
+
+
+  removeUserFromTasklist = function(taskId : string, subPath : string, userId)
+  {
+      this.db.collection("tasks").doc(taskId).collection(subPath).doc(userId).delete().then(function() {
+          console.log("user removed!");
+      }).catch(function(error) {
+          console.error("Error removing document: ", error);
+      });
+  }
+  removeTaskFromUser = function(userId : string, subPath : string, taskId : string)
+  {
+      this.db.collection("users").doc(userId).collection(subPath).doc(taskId).delete().then(function() {
+        console.log("task removed!");
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+  }
 
 }

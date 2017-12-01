@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
-import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
@@ -69,8 +68,7 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    public datePicker: DatePicker,
-    public clouldModule : cloudProvider,
+    public cloudModule : cloudProvider,
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -173,7 +171,7 @@ export class TaskEditPage {
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
-    this.clouldModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
     //add index to this task file
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
@@ -309,18 +307,5 @@ export class TaskEditPage {
       this.navCtrl.setRoot(ProfilePage);
     }
   }
-
-  // <button ion-button (click)="pickADate()">pick a date</button>
-  // pickADate(){
-  //   this.datePicker.show({
-  //     date: new Date(),
-  //     mode: 'date',
-  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-  //   }).then(
-  //     date => console.log('Got date: ', date),
-  //     err => console.log('Error occurred while getting date: ', err)
-  //   );
-  // }
-
 }
 

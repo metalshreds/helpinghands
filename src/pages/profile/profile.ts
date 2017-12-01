@@ -98,7 +98,7 @@ export class ProfilePage {
                 taskRef.get().then(taskDoc =>{
                     console.log('task doc is ',taskDoc.data());
                     //create task and push into array
-
+                    //TODO change the following hard coding
                     var task = new TaskObjectProvider(
                       taskDoc.data()['taskName'],
                       sdoc.id,
