@@ -44,8 +44,8 @@ export class TaskEditPage {
   month : string = '';
   day : string = '';
   startDate : string = '';
-  endDate:string = '';
-  duration: string = '';
+  endDate: string = '';
+  duration: number = 0;
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
@@ -170,7 +170,6 @@ export class TaskEditPage {
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
         photoUrl : this.photoUrl,
-
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
@@ -200,15 +199,28 @@ export class TaskEditPage {
         index.saveObject(user);
       });
     }
-
-    this.navCtrl.push(ProfilePage);
+    this.task = new TaskObjectProvider(
+      this.taskCreateForm.value.taskName,
+      this.taskId,
+      this.duration,
+      this.startDate,
+      this.endDate,
+      this.taskCreateForm.value.taskDescription,
+      this.skillHolder,
+      false,
+      this.curUserToken.displayName,
+      this.curUserToken.uid,
+      this.taskCreateForm.value.location
+    );
+    this.navCtrl.push(TaskViewPage, {
+      'task' : this.task
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TaskEditPage');
   }
 
-  /*
   changePicture() {
     const actionsheet = this.actionsheetCtrl.create({
       title: 'upload picture',
@@ -270,12 +282,14 @@ export class TaskEditPage {
       alert(error);
     });
   }
-  */
 
   completeTask() {
     //TODO
     // mark this task as completed, update record in firebase
-
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.update({
+      completed : true
+    });
     // jump to rating page.
     // this.navCtrl.push(RatingPage);
     let popover = this.popoverCtrl.create(CommentPopover);
