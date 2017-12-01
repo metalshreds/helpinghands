@@ -17,13 +17,17 @@
 
 
 <ion-content padding>
+  <div *ngIf = "noPendingTask">
+    <h1>
+      No pending task available. 
+    </h1>
+  </div>
 
   <ion-list>
-    <button ion-item *ngFor="let task of tasks" (click)="taskClicked($event, task)">
+    <button ion-item *ngFor="let task of CURRENT_USER.pendingTask" (click)="taskClicked($event, task)">
 
-      <h1>{{task.name}}</h1>
-      <h2>{{task.timeStart}}</h2>
-      <h3>Expected to last {{task.timeDuration}} hours</h3>
+      <h1>{{task.taskName}}</h1>
+      
     </button>
   </ion-list>
 
