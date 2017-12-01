@@ -43,6 +43,8 @@ export class EditProfilePage {
   sciSkills = [];
   econSkills = [];
   langSkills = [];
+  helper = false;
+  displaySkill = [];
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -81,6 +83,23 @@ export class EditProfilePage {
               //  in userProvider obeject and users node.
               this.CURRENT_USER[field] = doc.data()[field];
           }
+          for (const i in this.CURRENT_USER.skills)
+          {
+            if (this.CURRENT_USER.skills[i] == true)
+              this.displaySkill.push(i);
+          }
+          for(const j in this.displaySkill)
+          {
+            this.csSkills.push(this.displaySkill[j]);
+          }
+          
+          this.csSkills = this.displaySkill;
+          this.mechSkills = this.displaySkill;
+          this.artSkills = this.displaySkill;
+          this.sciSkills = this.displaySkill;
+          this.econSkills = this.displaySkill;
+          this.langSkills = this.displaySkill;
+          this.helper = this.CURRENT_USER.isHelper;
         }
       })
       .catch(err => {
@@ -135,9 +154,9 @@ export class EditProfilePage {
     }
     else if(this.curUserToken)
     {
+      console.log('csskill is ', this.csSkills);
       for (const i in this.skillInterface)
       {
-        console.log("i is ", i)
         if (this.csSkills.indexOf(i) > -1 ||
           this.mechSkills.indexOf(i) > -1 ||
           this.artSkills.indexOf(i) > -1 ||
@@ -170,8 +189,10 @@ export class EditProfilePage {
         firstName : this.editProfileForm.value.firstName,
         introduction : this.editProfileForm.value.introduction,
         zipCode : this.editProfileForm.value.zipCode,
-        skill : this.skill,
+        skills : this.skill,
         taskCount : this.CURRENT_USER.taskCount,
+        isHelper : this.helper,
+        userId : this.curUserToken.uid,
       });
 
 

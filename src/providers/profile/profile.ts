@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TaskObjectProvider } from '../task-object/task-object'; //provider
+import  * as firebase  from 'firebase';
+import 'firebase/firestore';
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
 
 /*
   Generated class for the ProfileProvider provider.
@@ -11,6 +14,7 @@ import { TaskObjectProvider } from '../task-object/task-object'; //provider
 */
 @Injectable()
 export class ProfileProvider {
+  db = firebase.firestore();
   public email: string;  //type string
   public password: string;
   public userId: string;
@@ -19,16 +23,18 @@ export class ProfileProvider {
   public introduction: string;
   public zipCode : string;
   public phone : number;
-  //interests: string[];
-  public skill = new Object();
-  public oTask : Array<TaskObjectProvider> = [];
+  public skills = new Object();
   public ownedTask : TaskObjectProvider[] = [];
   public blockListTask: TaskObjectProvider[] = [];
   public confirmTask: TaskObjectProvider[] = [];
   public pendingTask: TaskObjectProvider[] = [];
+  public participateTask: TaskObjectProvider[] = [];
   public travelRadius : number;
   public taskCount : number;
   public photoUrl : string;
+  public isHelper : boolean;
+  public rating : number;
+
   constructor(
     lastName : string,
     firstName : string,
@@ -46,7 +52,7 @@ export class ProfileProvider {
     this.userId = uid;
     this.email = email;
     this.introduction = introduction;
-    this.skill = skills;
+    this.skills = skills;
     this.zipCode = zipCode;
     this.phone = phone;
     this.travelRadius = travelRadius;
@@ -69,5 +75,6 @@ export class ProfileProvider {
 //TODO update a new task (doesn't return)
 
 //TODO method to retrieve user info
+
 
 }

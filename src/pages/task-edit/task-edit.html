@@ -121,8 +121,12 @@
 
     <ion-item>
       <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="myDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+    </ion-item>
 
+    <ion-item>
+      <ion-icon name='timer' item-start>   </ion-icon>
+      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
 
     <ion-item>

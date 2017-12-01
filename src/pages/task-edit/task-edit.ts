@@ -15,6 +15,13 @@ import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
+import { RatingPage } from '../rating/rating';
+/**
+ * Generated class for the TaskEditPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage()
 @Component({
@@ -33,9 +40,12 @@ export class TaskEditPage {
   sciSkills = [];
   econSkills = [];
   langSkills = [];
+  skillHolder = [];
   month : string = '';
   day : string = '';
-  myDate : string = '';
+  startDate : string = '';
+  endDate:string = '';
+  duration: string = '';
   skillinterface = new skill();
   chosenPicture: any;
   pictureChanged = false;
@@ -48,6 +58,7 @@ export class TaskEditPage {
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   taskId = this.curUID;
   created = true;
+  photoUrl = '';
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -68,42 +79,57 @@ export class TaskEditPage {
       compensation : [''],
     });
 
-    let userRef = this.db.collection('users').doc(this.curUID);
-    if(this.navParams.get('taskID') != undefined) {
+    let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+    if(this.navParams.get('taskId') != undefined) {
       this.created = false;
-      this.taskId = this.navParams.get('taskID');
+      this.taskId = this.navParams.get('taskId');
       let taskRef = this.db.collection('tasks').doc(this.taskId);
       taskRef.get().then(doc=>{
-        this.nameHolder = doc.data().TaskName;
-        this.descriptionHolder = doc.data().TaskDescription;
-        this.locationHolder = doc.data().Location;
-        this.compensationHolder = doc.data().Compensation;
-        this.myDate = ("2017-"+doc.data().month+"-"+doc.data().day);
-        this.skill = doc.data().Skill;
-        for (const field in this.skill) {
-          if (this.skill[field]) {
-            if (field == "Programming" || field == "Excel" || field == "Hardware") {
-              this.csSkills.push(field);
-            }
-            else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
-              this.mechSkills.push(field);
-            }
-            else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
-              this.artSkills.push(field);
-            }
-            else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
-              this.sciSkills.push(field);
-            }
-            else if (field == "Management" || field == "Accounting" || field == "Economics") {
-              this.econSkills.push(field);
-            }
-            else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
-              field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
-              field == "OtherLang") {
-              this.langSkills.push(field);
-            }
-          }
+        this.nameHolder = doc.data().taskName;
+        this.descriptionHolder = doc.data().taskDescription;
+        this.locationHolder = doc.data().location;
+        this.compensationHolder = doc.data().compensation;
+        this.startDate = doc.data().startDate;
+        this.endDate = doc.data().endDate;
+        for (const i in doc.data().wantedSkills)
+        {
+          console.log('in task-edit constructor i is', i);
+          if (doc.data().wantedSkills[i] == true)
+            this.skillHolder.push(i);
         }
+        this.csSkills = this.skillHolder;
+        this.mechSkills = this.skillHolder;
+        this.artSkills = this.skillHolder;
+        this.sciSkills = this.skillHolder;
+        this.econSkills = this.skillHolder;
+        this.langSkills = this.skillHolder;
+        //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
+        // this.skill = doc.data().wantedSkill;
+
+        // for (const field in this.skill) {
+        //   if (this.skill[field]) {
+        //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
+        //       this.csSkills.push(field);
+        //     }d
+        //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
+        //       this.mechSkills.push(field);
+        //     }
+        //     else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
+        //       this.artSkills.push(field);
+        //     }
+        //     else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
+        //       this.sciSkills.push(field);
+        //     }
+        //     else if (field == "Management" || field == "Accounting" || field == "Economics") {
+        //       this.econSkills.push(field);
+        //     }
+        //     else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
+        //       field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
+        //       field == "OtherLang") {
+        //       this.langSkills.push(field);
+        //     }
+        //   }
+        // }
       });
     } else {
       userRef.get().then(doc=>{
@@ -114,10 +140,6 @@ export class TaskEditPage {
 
 
   updateTask(){
-    console.log("my date is ", this.myDate);
-    var date = this.myDate.split('-');
-    this.month = date[1];
-    this.day = date[2];
     for (const i in this.skillinterface)
     {
       if (this.csSkills.indexOf(i) > -1 ||
@@ -135,48 +157,48 @@ export class TaskEditPage {
     console.log("skill", this.skill);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.set({
-        TaskName : this.taskCreateForm.value.taskName,
-        TaskId : this.taskId,
-        TaskDescription : this.taskCreateForm.value.taskDescription,
-        Location : this.taskCreateForm.value.location,
-        Compensation : this.taskCreateForm.value.compensation,
-        Skill : this.skill,
-        EndMonth : this.month,
-        EndDay : this.day,
-        Complete : false,
+        taskName : this.taskCreateForm.value.taskName,
+        taskId : this.taskId,
+        taskDescription : this.taskCreateForm.value.taskDescription,
+        location : this.taskCreateForm.value.location,
+        compensation : this.taskCreateForm.value.compensation,
+        wantedSkills : this.skill,
+        startDate : this.startDate,
+        endDate : this.endDate,
+        duration : this.duration,
+        completed : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
+        photoUrl : this.photoUrl,
+
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
-    this.clouldModule.addTaskToList(this.curUID, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    this.clouldModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    //add index to this task file
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
-      console.log("this is the data", doc.data().taskName);
-      /*this.task = new TaskObjectProvider(
-                  doc.data().taskName,
-                  5,
-                  "right now",
-                  this.month + " " + this.day,
-                  doc.data().taskDescription,
-                  "unused",
-                  this.skill,
-                  false,
-                  this.curUID
-      );*/
-      console.log("the task", this.task);
-      //this.navCtrl.push( some page here);
+      var task = doc.data();
+      task.objectID = task.taskId;
+      tIndex.saveObject(task);
     });
+    //if its the first time create this task, incease creator's task count by 1
+    //  and update it in database.
     if(this.created ==true )
     {
       let userRef = this.db.collection('users').doc(this.curUID);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
-
           userRef.update({
             taskCount : newCount,
           });
         });
+      userRef.get().then(doc=>{
+        let index = this.client.initIndex('users');
+        var user = doc.data();
+        user.objectID = user.userId;
+        index.saveObject(user);
+      });
     }
 
     this.navCtrl.push(ProfilePage);
@@ -186,6 +208,7 @@ export class TaskEditPage {
     console.log('ionViewDidLoad TaskEditPage');
   }
 
+  /*
   changePicture() {
     const actionsheet = this.actionsheetCtrl.create({
       title: 'upload picture',
@@ -218,8 +241,6 @@ export class TaskEditPage {
     return actionsheet.present();
   }
 
-
-
   takePicture() {
     const loading = this.loadingCtrl.create();
 
@@ -249,8 +270,14 @@ export class TaskEditPage {
       alert(error);
     });
   }
+  */
 
   completeTask() {
+    //TODO
+    // mark this task as completed, update record in firebase
+
+    // jump to rating page.
+    // this.navCtrl.push(RatingPage);
     let popover = this.popoverCtrl.create(CommentPopover);
   }
 

@@ -26,7 +26,8 @@ import {isNullOrUndefined} from "util";
 
 export class CompletedPage {
 
-  tasks: Array<TaskObjectProvider> = [];
+  // ownedTasks: Array<string> = [];
+  completedTasks: Array<TaskObjectProvider> = [];
   skills: Array<boolean>;
   curUserToken = this.AFcurUser.auth.currentUser;
   CURRENT_USER = {} as ProfileProvider;
@@ -50,101 +51,54 @@ export class CompletedPage {
 
   loadCompletedTasks(){
 
-
-    /** Testing getting list of owned tasks**/
-    // console.log('current user: ', this.curUserToken.uid );
-    // this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
-    //   ownedTasks.forEach( (doc)=>{
-    //     let task = new TaskObjectProvider(
-    //       doc.data()['taskName'],
-    //       doc.data()['timeDuration'],
-    //       doc.data()['timeStart'],
-    //       doc.data()['taskDescription'],
-    //       doc.data()['timeEnd'],
-    //       doc.data()['wantedSkills'],
-    //       doc.data()['completed'],
-    //       doc.data()['ownerUserId']
-    //     );
-    //
-    //     console.log("log task:", task);
-    //
-    //   });
-    // });
-
-
-    /** Get completed tasks for current owner  **/
-    var self = this; //This is needed because "this" loses context inside next "function"
-    // this.db.collection("tasks").get().then(function(querySnapshot) {
-    // this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then(function(task) {
-    //   task.forEach(function(doc) {
-    //     console.log(doc.id, " => ", doc.data());
-    //     //Create new task for each doc
-    //     let task = new TaskObjectProvider(
-    //       doc.data()['taskName'],
-    //       doc.data()['timeDuration'],
-    //       doc.data()['timeStart'],
-    //       doc.data()['taskDescription'],
-    //       doc.data()['timeEnd'],
-    //       doc.data()['wantedSkills'],
-    //       doc.data()['completed'],
-    //       doc.data()['ownerUserId']
-    //     );
-
-
+    /** Get list of owned tasks from user  **/
     this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
-      ownedTasks.forEach( (doc)=>{
-        console.log('display doc: ', doc);
-        let task = new TaskObjectProvider(
-          doc.data()['taskName'],
-          doc.data()['timeDuration'],
-          doc.data()['timeStart'],
-          doc.data()['TaskDescription'],
-          doc.data()['timeEnd'],
-          doc.data()['wantedSkills'],
-          doc.data()['Complete'],
-          doc.data()['ownerUserId']
-        );
-        // console.log("complete: ", doc.data()['Complete']);
-        console.log("log task:", task);
+      ownedTasks.forEach((doc) => {
+        console.log("owned task doc: ", doc.id);
 
-
-        task.setTaskId(doc.data()['taskId']);
-
-        if (task.complete == true /*&& self.curUserToken.uid == task.ownerUserId */)
-        { self.tasks.push(task); }
-        //this.completedTasks.push(doc);
-
-
-        /* Print out owners name*/
+        /** taskOwner Placeholder **/
         let taskOwner: string = 'Task Owner\'s Name';
-        console.log(doc.data()['ownerUserId']);
-        console.log(task.ownerUserId);
 
-        /** Get owners name **/
-        if( typeof task.ownerUserId  !== 'undefined'){
 
-          var userRef = self.db.collection("users").doc(task.ownerUserId);
-          userRef.get().then(function(doc) {
-            if (doc.exists) {
-              console.log("Document has data: ", doc.data());
-              taskOwner = doc.data()['firstName'] + ' ' + doc.data()['lastName'];
-              // Store ownerID --> ownerName in dictionary
-              console.log('taskId: ', task.getTaskId(), 'taskOwner', taskOwner);
-              self.taskOwnerDict[task.getTaskId()] = taskOwner;
-            } else {
-              console.log("No such document!");
-              taskOwner = 'No Owner';
+        // Task id Retrieved, Find completed tasks
+        this.db.collection("tasks").doc(doc.id).get().then((ownedTasks) => {
+
+          /** store only completed tasks**/
+          console.log('Complete: ', ownedTasks.data()['completed'] );
+          if (ownedTasks.data()['completed'] == true) {
+            //TODO Update firebase AND task-object AND user object fields to use camelCase with initial lower case
+            let task = new TaskObjectProvider(
+              ownedTasks.data()['taskName'],
+              ownedTasks.data()['taskId'],
+              ownedTasks.data()['timeDuration'],
+              ownedTasks.data()['timeStart'],
+              ownedTasks.data()['timeEnd'],
+              ownedTasks.data()['taskDescription'],
+              ownedTasks.data()['wantedSkills'],
+              ownedTasks.data()['completed'],
+              ownedTasks.data()['owner'],
+              ownedTasks.data()['ownerUserId'],
+              ownedTasks.data()['location']
+            );
+
+            task.setTaskId(ownedTasks.data()['taskId']);
+
+            // Set owner
+            if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
+              task.setOwnerName(ownedTasks.data()['ownerName']);
             }
-          }).catch(function(error) {
-            console.log("Error getting document:", error);
-            taskOwner = error;
-          });
-        } //END get owners Name
 
-      }); //END .then function
-    });
+            this.completedTasks.push(task);
+            console.log('completed task added: ', task);
 
-  }
+          } //End of IF statement ownedTasks.complete
+        }).catch(function (error) { // catch error getting tasks
+          console.log("Error getting document:", error);
+          taskOwner = error;
+        });
+      }); //END ownedTask.ForEach
+    }); //END .then
+  } // END of loadCompletedTasks
 
 
   //navigates to taskview page if task clicked

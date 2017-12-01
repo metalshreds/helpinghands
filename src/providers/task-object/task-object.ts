@@ -12,48 +12,57 @@ export class TaskObjectProvider {
   public ownerName : string;
 
   //Time
-  public timeDuration : number;     //duration of the task
-  public timeStart : string;          //start time of the task
-  public timeEnd: string;
+  public duration : number;     //duration of the task
+  public startDate : string;          //start time of the task
+  public endDate: string;
 
   //Skills and status
-  public wantedSkill = new Object();  //skill set of the task
-  public complete: boolean;           //flag that indicates the completion of the task
+  public wantedSkills = new Object();  //skill set of the task
+  public completed: boolean;           //flag that indicates the completion of the task
   public ownerComment: string = '';            // comment on quality of helper
   public helpers: string[] = [];  //store participator's user id
   public appliedHelpers: string[] = [];  //store applicant user id
+  public location: string;
+  public compensation: number;
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
   public taskDescription : string;       //brief intro/background of this task
-
+  public photoUrl: string;
   /*constructor doesn't need helpers[] and appliedhelpers[]
   / as input because the those list are empty when we construct
   / a task object.
   */
   constructor(taskName: string,
+              taskId : string,
               timeDuration : number,
               timeStart : string,
-              taskDescription : string,
               timeEnd : string,
+              taskDescription : string,
               wantedSkill : string[],
               complete : boolean,
               owner : string,
+              ownerUserId : string,
+              location : string,
   ) {
     this.taskName = taskName;
-    this.timeDuration = timeDuration;
-    this.timeStart = timeStart;
+    this.taskId = taskId;
+    this.duration = timeDuration;
+    this.startDate = timeStart;
     this.taskDescription = taskDescription;
-    this.timeEnd = timeEnd;
-    this.wantedSkill = wantedSkill;
-    this.complete = complete;
-    this.ownerUserId = owner;
-
+    this.endDate = timeEnd;
+    this.wantedSkills = wantedSkill;
+    this.completed = complete;
+    this.ownerUserId = ownerUserId;
+    this.ownerName = owner;
   }
 
   //FUNCTIONS
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
+
+  setOwnerName(ownerName: string){this.ownerName = ownerName;}
+  getOwnerName(){return this.ownerName};
 
   /*this function is used to set the helpers list
   / of a newly constructed task.
