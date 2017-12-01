@@ -168,6 +168,7 @@ export class TaskEditPage {
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
         photoUrl : this.photoUrl,
+        comment : '',
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
@@ -294,6 +295,7 @@ export class TaskEditPage {
   }
 
   deleteTask() {
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.delete().then(doc=>{console.log("I'm here.")});
     this.navCtrl.push(ProfilePage);
