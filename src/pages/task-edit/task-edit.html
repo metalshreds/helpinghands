@@ -120,11 +120,17 @@
     <ion-item></ion-item>
 
     <ion-item>
+      <ion-label style="color: black">
+        Start Date
+      </ion-label>
       <ion-icon name='timer' item-start>   </ion-icon>
       <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
 
     <ion-item>
+      <ion-label style="color: black">
+        Completed by
+      </ion-label>
       <ion-icon name='timer' item-start>   </ion-icon>
       <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
@@ -164,7 +170,7 @@
     <button ion-button style="background-color: red" block (click)="goBack()">Discard Changes</button>
     <button ion-button style="background-color: #2ec95c" block (click)="updateTask()">Save Changes</button>
     <div *ngIf="!created">
-      <button ion-button style="background-color: blue" block (click)="completeTask()">This task is completed</button>
+      <button ion-button style="background-color: blue" block (click)="completeTask($event)">This task is completed</button>
       <button ion-button style="background-color: black" block (click)="deleteTask()">Delete this task</button>
     </div>
   </ion-list>

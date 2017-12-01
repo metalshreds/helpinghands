@@ -283,27 +283,30 @@ export class TaskEditPage {
     });
   }
 
-  completeTask() {
+  completeTask($event) {
     //TODO
     // mark this task as completed, update record in firebase
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.update({
-      completed : true
-    });
     // jump to rating page.
     // this.navCtrl.push(RatingPage);
-    let popover = this.popoverCtrl.create(CommentPopover);
+    console.log("It's running the method");
+    let popover = this.popoverCtrl.create(CommentPopover, {
+      'taskId': this.taskId
+    });
+    popover.present();
   }
 
   deleteTask() {
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.delete().then(doc=>{console.log("I'm here.")});
     this.navCtrl.push(ProfilePage);
   }
 
   goBack() {
-    if(this.navParams.get('taskID') != undefined) {
+    if(this.navParams.get('taskId') != undefined) {
+      console.log("popping");
       this.navCtrl.pop();
     } else {
-      this.navCtrl.push(ProfilePage);
+      this.navCtrl.setRoot(ProfilePage);
     }
   }
 
