@@ -123,7 +123,7 @@ export class TaskViewPage {
 
     //add user id to appliedhelper list of the task
     this.cloud.addUserToTaskList(selectedTaskId, 'appliedHelpers', this.curUserToken.uid, this.CURRENT_USER.firstName, this.CURRENT_USER.lastName);
-    
+   
   } 
 
   //TODO what to do if task owner clicks a user?
