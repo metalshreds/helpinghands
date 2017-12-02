@@ -108,7 +108,7 @@ export class TaskEditPage {
         //   if (this.skill[field]) {
         //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
         //       this.csSkills.push(field);
-        //     }d
+        //     }
         //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
         //       this.mechSkills.push(field);
         //     }
@@ -132,6 +132,8 @@ export class TaskEditPage {
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
+        let d = new Date();
+        this.startDate = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
       })
     }
   }

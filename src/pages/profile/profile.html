@@ -25,33 +25,63 @@
     <img [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
   </div>
 
-
   <ion-grid style="height: 100%">
-
 
     <ion-row>
       <ion-col>
-        <ion-item text-wrap padding>
+
+        <!--<ion-item text-wrap padding>-->
         <p class="intro">{{CURRENT_USER.introduction}}</p>
-        </ion-item>
+        <!--</ion-item>-->
 
-        <h3>Skills</h3>
+        <h3>My Skills</h3>
+        <div *ngIf="hasCS">
+          <ion-label>Computer Science</ion-label>
+          <ion-item *ngFor = "let skill of csSkills">
+          {{skill}}
+          </ion-item>
+        </div>
 
-
-            <ion-item *ngFor = "let skill of displaySkill">
+        <div *ngIf="hasMech">
+          <ion-label>Mechanical</ion-label>
+          <ion-item *ngFor = "let skill of mechSkills">
             {{skill}}
-            </ion-item>
+          </ion-item>
+        </div>
 
+        <div *ngIf="hasArt">
+          <ion-label>Art</ion-label>
+          <ion-item *ngFor = "let skill of artSkills">
+            {{skill}}
+          </ion-item>
+        </div>
 
+        <div *ngIf="hasSci">
+          <ion-label>Natural Sciences</ion-label>
+          <ion-item *ngFor = "let skill of sciSkills">
+            {{skill}}
+          </ion-item>
+        </div>
 
+        <div *ngIf="hasEcon">
+          <ion-label>Economics</ion-label>
+          <ion-item *ngFor = "let skill of econSkills">
+            {{skill}}
+          </ion-item>
+        </div>
 
-
-
+        <div *ngIf="hasLang">
+          <ion-label>Language</ion-label>
+          <ion-item *ngFor = "let skill of langSkills">
+            {{skill}}
+          </ion-item>
+        </div>
 
         <h3 padding-top="15px">Portfolio</h3>
         <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
-          <button ion-item  (click)="taskClicked($event, task)">{{task.taskName}}</button>
+          <button ion-button class="profile-Task" (click)="taskClicked($event, task)">{{task.taskName}}</button>
         </ion-item>
+
       </ion-col>
     </ion-row>
 

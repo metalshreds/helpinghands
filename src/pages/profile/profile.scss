@@ -23,9 +23,11 @@ page-profile {
 
   .avatarCol{
     background-color: $secondary-color;
-
   }
 
+  .intro{
+    color: black;
+  }
   .editImageButton {
     text-align: center;
     float:right;

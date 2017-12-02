@@ -28,6 +28,18 @@ export class ProfilePage {
   curUserToken = this.AFcurUser.currentUser;
   userPhotoUrl;
   displaySkill  = [];
+  csSkills = [];
+  hasCS = false;
+  mechSkills = [];
+  hasMech = false;
+  artSkills = [];
+  hasArt = false;
+  sciSkills = [];
+  hasSci = false;
+  econSkills = [];
+  hasEcon = false;
+  langSkills = [];
+  hasLang = false;
   db = firebase.firestore();
   profileOwner;
   CURRENT_USER = {} as ProfileProvider;
@@ -70,9 +82,35 @@ export class ProfilePage {
           for (const i in this.CURRENT_USER.skills)
           {
             if (this.CURRENT_USER.skills[i] == true)
-              this.displaySkill.push(i);
+              if (i == "Programming" || i == "Excel" || i == "Hardware") {
+                this.csSkills.push(i);
+              }
+              else if (i == "Welding" || i == "Mechanic" || i == "Soldering" || i == "Drafting") {
+                this.mechSkills.push(i);
+              }
+              else if (i == "GraphicDesign" || i == "Photography" || i == "DrawingandPainting") {
+                this.artSkills.push(i);
+              }
+              else if (i == "Bio" || i == "Physics" || i == "Chem" || i == "Agriculture") {
+                this.sciSkills.push(i);
+              }
+              else if (i == "Management" || i == "Accounting" || i == "Economics") {
+                this.econSkills.push(i);
+              }
+              else if (i == "Spanish" || i == "Japanese" || i == "German" || i == "Mandarin" ||
+                i == "Cantonese" || i == "Portuguese" || i == "Russian" || i == "English" ||
+                i == "OtherLang") {
+                this.langSkills.push(i);
+              }
           }
-          console.log(this.displaySkill);
+          this.hasCS = this.csSkills.length > 0;
+          this.hasMech = this.mechSkills.length > 0;
+          this.hasArt = this.artSkills.length > 0;
+          this.hasSci = this.sciSkills.length > 0;
+          this.hasEcon = this.econSkills.length > 0;
+          this.hasLang = this.langSkills.length > 0;
+          console.log(this.csSkills);
+          console.log(this.hasCS);
 
             this._zone.run(()=>{
               this.userPhotoUrl = this.CURRENT_USER.photoUrl;
@@ -121,7 +159,32 @@ export class ProfilePage {
           })
         });
       });
-
+      // for (const field in this.displaySkill) {
+      //   console.log(field);
+      //   if (field == "Programming" || field == "Excel" || field == "Hardware") {
+      //     this.csSkills.push(field);
+      //   }
+      //   else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
+      //     this.mechSkills.push(field);
+      //   }
+      //   else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
+      //     this.artSkills.push(field);
+      //   }
+      //   else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
+      //     this.sciSkills.push(field);
+      //   }
+      //   else if (field == "Management" || field == "Accounting" || field == "Economics") {
+      //     this.econSkills.push(field);
+      //   }
+      //   else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
+      //     field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
+      //     field == "OtherLang") {
+      //     this.langSkills.push(field);
+      //   }
+      // }
+      console.log(this.csSkills);
+      console.log(this.displaySkill);
+      console.log(this.hasCS);
   }
 
 

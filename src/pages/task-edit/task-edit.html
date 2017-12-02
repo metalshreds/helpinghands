@@ -121,18 +121,10 @@
 
     <ion-item>
       <ion-label style="color: black">
-        Start Date
-      </ion-label>
-      <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label style="color: black">
         Completed by
       </ion-label>
       <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -140,30 +132,15 @@
       <ion-label style="color: black">
         Location
       </ion-label>
-      <ion-input formControlName = "location" type="text" value={{locationHolder}}></ion-input>
+      <ion-input formControlName = "location" placeholder="Zipcode" type="number" value={{locationHolder}}></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name='call' item-start></ion-icon>
-      <ion-label style="color: black">
-        Contact via
-      </ion-label>
-      <ion-select [(ngModel)]="media" [ngModelOptions]="{standalone: true}">
-        <ion-option>Email</ion-option>
-        <ion-option>Phone</ion-option>
-        <ion-option>Face to Face</ion-option>
-      </ion-select>
-    </ion-item>
-
-
-    <ion-item>
-
       <ion-label style="color: black">
         Compensation
       </ion-label>
       <ion-icon name='cash' item-start></ion-icon>
       <ion-input formControlName = "compensation" type="number" placeholder="" value={{compensationHolder}}></ion-input>
-      <ion-toggle checked="false"></ion-toggle>
     </ion-item>
 
   </form>
