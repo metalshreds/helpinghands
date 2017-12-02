@@ -32,7 +32,6 @@ export class ProfilePage {
   profileOwner;
   CURRENT_USER = {} as ProfileProvider;
   currTask : TaskObjectProvider;
-  //db = firebase.firestore();
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               //private AFcurUser: AngularFireAuth,
@@ -121,7 +120,6 @@ export class ProfilePage {
           })
         });
       });
-
   }
 
 

@@ -6,7 +6,7 @@ import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
-import { AngularFireAuth } from "angularfire2/auth"
+import { AngularFireAuth } from "angularfire2/auth";
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
@@ -15,6 +15,7 @@ import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
+import { DashboardPage } from '../dashboard/dashboard';
 /**
  * Generated class for the TaskEditPage page.
  *
@@ -57,6 +58,8 @@ export class TaskEditPage {
   taskId = this.curUserToken.uid;
   created = true;
   photoUrl = '';
+  completed = true;
+  data = new Object();
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -68,7 +71,7 @@ export class TaskEditPage {
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
     public datePicker: DatePicker,
-    public clouldModule : cloudProvider, 
+    public clouldModule : cloudProvider,
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -106,7 +109,7 @@ export class TaskEditPage {
         this.langSkills = this.skillHolder;
         //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         // this.skill = doc.data().wantedSkill;
-        
+
         // for (const field in this.skill) {
         //   if (this.skill[field]) {
         //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
@@ -170,6 +173,7 @@ export class TaskEditPage {
         completed : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
+        ownerComment: '',
         photoUrl : this.photoUrl,
 
     });
@@ -263,7 +267,28 @@ export class TaskEditPage {
   }
 
   completeTask() {
-    let popover = this.popoverCtrl.create(CommentPopover);
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.set({
+      taskName : this.taskCreateForm.value.taskName,
+      taskId : this.taskId,
+      taskDescription : this.taskCreateForm.value.taskDescription,
+      location : this.taskCreateForm.value.location,
+      compensation : this.taskCreateForm.value.compensation,
+      wantedSkills : this.skill,
+      startDate : this.startDate,
+      endDate : this.endDate,
+      duration : this.duration,
+      completed : true,
+      ownerName : this.curUserToken.displayName,
+      ownerUserId : this.curUserToken.uid,
+      ownerComment: " ",
+      photoUrl : this.photoUrl,
+
+    });
+    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
+    popover.present();
+    this.navCtrl.push(DashboardPage);
+
   }
 
   deleteTask() {

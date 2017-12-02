@@ -8,7 +8,7 @@
 
     <ion-buttons end *ngIf="profileOwner">
       <button ion-button (click)="goToEditProfile($event)">
-        <ion-icon name = "create" color="dark"></ion-icon>
+        <ion-icon name = "create"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -16,13 +16,14 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="content">
 
 
   <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
   <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
   <div class="avatar avatarCol">
-    <img [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
+    <img padding [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
+
   </div>
 
 
@@ -32,26 +33,33 @@
     <ion-row>
       <ion-col>
         <ion-item text-wrap padding>
-        <p class="intro">{{CURRENT_USER.introduction}}</p>
+        <p style="color:black"class="intro">{{CURRENT_USER.introduction}}</p>
         </ion-item>
-
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <h3>Skills</h3>
 
 
             <ion-item *ngFor = "let skill of displaySkill">
             {{skill}}
             </ion-item>
+      </ion-col>
 
 
+    </ion-row>
 
 
+    <ion-row>
+      <ion-col >
+        <h3 padding-top="15px">Portfolio({{CURRENT_USER.taskCount}})</h3>
+
+          <button  text wrap *ngFor = "let task of CURRENT_USER.ownedTask" class = "item"ion-item (click)="taskClicked($event, task)">
+            {{task.taskName}} -- {{task.ownerComment}}
+          </button>
 
 
-
-        <h3 padding-top="15px">Portfolio</h3>
-        <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
-          <button ion-item  (click)="taskClicked($event, task)">{{task.taskName}}</button>
-        </ion-item>
       </ion-col>
     </ion-row>
 
