@@ -66,20 +66,18 @@ export class PendingPage {
                   taskDoc.data()['location']
                 );      
               this.CURRENT_USER.invitedTask.push(task);
-              this.eliminateDup.push(task.taskId)
+              this.eliminateDup.push(task.taskId);
+              if(this.eliminateDup.length != 0)
+              {
+                this.noPendingTask = false;
+              }
+              else{
+                this.noPendingTask = true;
+              }
               }
           });
         }
       }
-      console.log("Array is ", this.eliminateDup, " and length is ", this.eliminateDup['length']);
-      if(this.eliminateDup['length'] != 0)
-      {
-        this.noPendingTask = false;
-      }
-      else{
-        this.noPendingTask = true;
-      }
-      console.log("no task is1 ", this.noPendingTask);
     });
 
     var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask')
@@ -109,18 +107,16 @@ export class PendingPage {
               );      
             this.CURRENT_USER.invitedTask.push(task);
             this.eliminateDup.push(task.taskId)
+            if(this.eliminateDup.length != 0)
+            {
+              this.noPendingTask = false;
+            }
+            else{
+              this.noPendingTask = true;
+            }
           });
         }
       }
-      
-      if(this.eliminateDup.length != 0)
-      {
-        this.noPendingTask = false;
-      }
-      else{
-        this.noPendingTask = true;
-      }
-      console.log("no task is2 ", this.noPendingTask);
     });
 
   }
