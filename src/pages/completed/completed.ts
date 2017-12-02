@@ -70,13 +70,13 @@ export class CompletedPage {
             let task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
               ownedTasks.data()['taskId'],
-              ownedTasks.data()['timeDuration'],
-              ownedTasks.data()['timeStart'],
-              ownedTasks.data()['timeEnd'],
+              ownedTasks.data()['duration'],
+              ownedTasks.data()['startDate'],
+              ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['wantedSkills'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['owner'],
+              ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
             );

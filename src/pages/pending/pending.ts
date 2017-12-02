@@ -26,7 +26,8 @@ export class PendingPage {
   db = firebase.firestore();
   noPendingTask = true;
   eliminateDup = [];   //acts like a map
-  constructor(public navCtrl: NavController, 
+
+  constructor(public navCtrl: NavController,
               public navParams: NavParams)
   {
     this.CURRENT_USER.invitedTask = [];
@@ -39,7 +40,7 @@ export class PendingPage {
       {
         console.log('on pending observer2 ', querySnapshot.docs[i].id);
         console.log('on pending observer2 ', querySnapshot.docs[i].data());
-        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)  
+        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
         {
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
           taskRef.get().then(taskDoc =>{
@@ -64,7 +65,7 @@ export class PendingPage {
                   taskDoc.data()['owner'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
-                );      
+                );
               this.CURRENT_USER.invitedTask.push(task);
               this.eliminateDup.push(task.taskId);
               if(this.eliminateDup.length != 0)
@@ -85,7 +86,7 @@ export class PendingPage {
     {
       for(const i in querySnapshot.docs)
       {
-        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)  
+        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
         {
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
           taskRef.get().then(taskDoc =>{
@@ -104,7 +105,7 @@ export class PendingPage {
                 taskDoc.data()['owner'],
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
-              );      
+              );
             this.CURRENT_USER.invitedTask.push(task);
             this.eliminateDup.push(task.taskId)
             if(this.eliminateDup.length != 0)

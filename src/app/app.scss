@@ -20,24 +20,99 @@
 
 /* Main app color scheme */
 
-$primary-color: #19afdc;
-$secondary-color: #39acdc;
+$prim-color: #b03626;
 
-/* Task Colors */
+$prim-light: #F38678;
+$prim-med: #CD5646;
+$prim-dark: #8E1B0C;
+$prim-xdark: #640C00;
 
-$task-completed: #99dc85;
-$task-pending: #dcd575;
-$task-suggested: #dc9593;
 
-$card-bg: #f4f4f5;
+/* Task Card Colors */
+$task-confirmed: #5bde99;
+$task-pending: #f9d462; //ffcb71
+$task-suggested: #85c8d6;
+$task-completed: #d5d5d5;
 
-.task-completed {
- background-color: $task-completed;
-}
+$card-bg: #f0f0f1;
+$card-border: #cbcbcb;
+$card-border-header: #a9a9a9;
 
+
+/** USAGE OF VARS**/
+//Card content background
 ion-card-content, .card-item{
   background-color: $card-bg;
 }
+
+// GENERAL CARD START
+ion-card-content, .card-item{
+  background-color: $card-bg;
+}
+
+.card-title-md {
+  padding: 8px;
+}
+
+.label-md{
+  margin: 6px 8px 6px 0px;
+}
+
+.item-md ion-icon[item-left], .item-md ion-icon[item-right], .item-md ion-icon[item-start], .item-md ion-icon[item-end]{
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.item-md ion-icon[item-left] + .item-inner, .item-md ion-icon[item-left] + .item-input, .item-md ion-icon[item-start] + .item-inner, .item-md ion-icon[item-start] + .item-input{
+
+  margin-left: 4px;
+}
+
+ion-app.md [padding], ion-app.md [padding] .scroll-content{
+ padding: 0px;
+}
+
+.item-block{
+  min-height: 5rem;
+}
+
+.card-content-md{
+  border: 1px solid $card-border;
+}
+
+ion-card {
+  display: block;
+}
+// GENERAL CARD END
+
+
+/// DASHBOARD CARD COLORS
+.task-completed {
+  background-color: $task-completed;
+  border: 1px solid $card-border-header;
+}
+
+.task-pending{
+  background-color: $task-pending;
+  border: 1px solid $card-border-header;
+}
+
+.task-suggested {
+  background-color: $task-suggested;
+  border: 1px solid $card-border-header;
+}
+
+.task-confirmed{
+  background-color: $task-confirmed;
+  border: 1px solid $card-border-header;
+}
+
+
+// LOGIN BUTTONS
+
+
+
 
 
 /* Other Colors */
