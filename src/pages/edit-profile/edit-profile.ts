@@ -36,6 +36,16 @@ export class EditProfilePage {
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   skillInterface = new skill();
+  csSkillInterface = ['Programming', 'Excel', 'Hardware'];
+  mechSkillInterface = ["Welding",
+                        "Mechanic",
+                        "Soldering",
+                        "Drafting",];
+  artSkillInterface = ["Graphic Design","Photography","Drawing and Painting"];
+  sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
+  econSkillInterface = ["Management", "Accounting", "Economics"];
+  langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
+                        "Russian", "English", "OtherLang"];
   skill =  new Object();
   csSkills = [];
   mechSkills = [];
@@ -45,6 +55,9 @@ export class EditProfilePage {
   langSkills = [];
   helper = false;
   displaySkill = [];
+  csSkillOption = [
+    'Programming', 'Excel', 'Hardware'
+  ]
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -88,17 +101,30 @@ export class EditProfilePage {
             if (this.CURRENT_USER.skills[i] == true)
               this.displaySkill.push(i);
           }
+          var tmpCsSkill = [], tmpMechSkill = [], tmpArtSkill = [];
+          var tmpSciSkill = [],tmpEconSkill = [], tmpLangSkill = [];
           for(const j in this.displaySkill)
           {
-            this.csSkills.push(this.displaySkill[j]);
+            if(this.csSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpCsSkill.push(this.displaySkill[j]);
+            else if(this.mechSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpMechSkill.push(this.displaySkill[j]);
+            else if(this.artSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpArtSkill.push(this.displaySkill[j]);
+            else if(this.sciSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpSciSkill.push(this.displaySkill[j]);
+            else if(this.econSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpEconSkill.push(this.displaySkill[j]);
+            else if(this.langSkillInterface.indexOf(this.displaySkill[j]) >= 0)
+              tmpLangSkill.push(this.displaySkill[j]);
+
           }
-          
-          this.csSkills = this.displaySkill;
-          this.mechSkills = this.displaySkill;
-          this.artSkills = this.displaySkill;
-          this.sciSkills = this.displaySkill;
-          this.econSkills = this.displaySkill;
-          this.langSkills = this.displaySkill;
+          this.csSkills = tmpCsSkill;
+          this.mechSkills = tmpMechSkill;
+          this.artSkills = tmpArtSkill;
+          this.sciSkills = tmpSciSkill;
+          this.econSkills = tmpEconSkill;
+          this.langSkills = tmpLangSkill;
           this.helper = this.CURRENT_USER.isHelper;
         }
       })
