@@ -41,7 +41,7 @@ export class EditProfilePage {
                         "Mechanic",
                         "Soldering",
                         "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","Drawing and Painting"];
+  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",

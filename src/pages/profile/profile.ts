@@ -101,10 +101,10 @@ export class ProfilePage {
                     //TODO change the following hard coding
                     var task = new TaskObjectProvider(
                       taskDoc.data()['taskName'],
-                      sdoc.id,
-                      0,
-                      '10',
-                      '0',
+                      taskDoc.data()['taskId'],
+                      taskDoc.data()['duration'],
+                      taskDoc.data()['startTime'],
+                      taskDoc.data()['endTime'],
                       taskDoc.data()['taskDescription'],
                       taskDoc.data()['wantedSkill'],
                       taskDoc.data()['complete'],
