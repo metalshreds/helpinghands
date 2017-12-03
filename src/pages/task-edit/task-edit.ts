@@ -137,6 +137,7 @@ export class TaskEditPage {
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
+
       })
     }
   }
@@ -187,9 +188,12 @@ export class TaskEditPage {
       tIndex.saveObject(task);
     });
     //if its the first time create this task, incease creator's task count by 1
-    //  and update it in database.
+    //  and update it in database. Also adds the task to the user's pending
+    // list
     if(this.created ==true )
     {
+      this.cloudModule.addTaskToList(this.curUserToken.uid, 'pendingTask',
+        this.taskId,this.taskCreateForm.value.taskName);
       let userRef = this.db.collection('users').doc(this.curUserToken.uid);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
@@ -276,22 +280,8 @@ export class TaskEditPage {
 
   completeTask() {
     let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.set({
-      taskName : this.taskCreateForm.value.taskName,
-      taskId : this.taskId,
-      taskDescription : this.taskCreateForm.value.taskDescription,
-      location : this.taskCreateForm.value.location,
-      compensation : this.taskCreateForm.value.compensation,
-      wantedSkills : this.skill,
-      startDate : this.startDate,
-      endDate : this.endDate,
-      duration : this.duration,
-      completed : true,
-      ownerName : this.curUserToken.displayName,
-      ownerUserId : this.curUserToken.uid,
-      ownerComment: " ",
-      photoUrl : this.photoUrl,
-
+    taskRef.update({
+      completed : true
     });
     let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
     popover.present();

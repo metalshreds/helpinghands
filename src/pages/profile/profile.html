@@ -30,34 +30,56 @@
   <ion-grid style="height: 100%">
 
 
-    <ion-row>
+    <ion-row >
       <ion-col>
         <ion-item text-wrap padding>
         <p style="color:black"class="intro">{{CURRENT_USER.introduction}}</p>
         </ion-item>
       </ion-col>
     </ion-row>
+    <h3>Skills</h3>
     <ion-row>
-      <ion-col>
-        <h3>Skills</h3>
+
+      <ion-col align-self: flex-start *ngFor = "let skill of displaySkill">
 
 
-            <ion-item *ngFor = "let skill of displaySkill">
-            {{skill}}
-            </ion-item>
+
+              <ion-item>{{skill}}</ion-item>
+
       </ion-col>
-
 
     </ion-row>
 
 
     <ion-row>
       <ion-col >
-        <h3 padding-top="15px">Portfolio({{CURRENT_USER.taskCount}})</h3>
 
-          <button  text wrap *ngFor = "let task of CURRENT_USER.ownedTask" class = "item"ion-item (click)="taskClicked($event, task)">
-            {{task.taskName}} -- {{task.ownerComment}}
-          </button>
+        <h3 padding-top="15px">Portfolio({{CURRENT_USER.taskCount}})</h3>
+        <ion-list class = "list">
+
+
+
+
+            <ion-card *ngFor = "let task of CURRENT_USER.ownedTask" (click)="taskClicked($event, task)">
+
+              <ion-card-content style="background-color: white">
+
+                  <ion-card-title>
+                    <button ion-item *ngIf="!task.completed">
+                      {{task.taskName}} | Review: {{task.ownerComment}}
+                    </button>
+                  </ion-card-title>
+
+
+              </ion-card-content>
+            </ion-card>
+
+
+
+        </ion-list>
+
+
+
 
 
       </ion-col>
