@@ -17,7 +17,7 @@
 
   <button *ngIf="showEditButton" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask.taskId)' >Edit</button>
 
-  <button *ngIf="!showRequestButton" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request</button>
+  <button *ngIf="showRequestButton" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request</button>
 
   <ion-item>
     <div *ngIf ="selectedTask">

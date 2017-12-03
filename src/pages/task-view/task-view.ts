@@ -8,7 +8,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {ProfileProvider} from "../../providers/profile/profile";
 import firebase from 'firebase';
 import {TaskObjectProvider} from "../../providers/task-object/task-object";
-
+import { cloudProvider } from "../../providers/cloudbase";
 /**
  * Generated class for the TaskViewPage page.
  *
@@ -40,6 +40,7 @@ export class TaskViewPage {
     public navParams: NavParams,
     private AFcurUser: AngularFireAuth,
     public app: App,
+    public cloud : cloudProvider,
   ) {
     this.selectedTask = navParams.get('task');
 
@@ -114,13 +115,16 @@ export class TaskViewPage {
   }
 
   //TODO move task to curr users pending and what for task owner?
-  requestTaskClicked(event, selectedTaskId, selectedTask_owner){
+  requestTaskClicked(event, selectedTaskId){
     alert("Task Requested");
 
-    //add task id to user's list of pending tasks
+    //add task id to user's list of pending tasks. 
+    this.cloud.addTaskToList(this.curUserToken.uid, 'appliedTask', selectedTaskId, this.selectedTask.taskName);
 
-    //add user id to list of people who have requested to do a task
-  }
+    //add user id to appliedhelper list of the task
+    this.cloud.addUserToTaskList(selectedTaskId, 'appliedHelpers', this.curUserToken.uid, this.CURRENT_USER.firstName, this.CURRENT_USER.lastName);
+   
+  } 
 
   //TODO what to do if task owner clicks a user?
   suggestedUserClicked(event, user, selectedTask_owner, selectedTask){

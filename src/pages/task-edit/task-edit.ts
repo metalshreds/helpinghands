@@ -11,11 +11,11 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
-import { DatePicker } from "@ionic-native/date-picker"
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
 import { DashboardPage } from '../dashboard/dashboard';
+import { RatingPage } from '../rating/rating';
 /**
  * Generated class for the TaskEditPage page.
  *
@@ -58,8 +58,6 @@ export class TaskEditPage {
   taskId = this.curUserToken.uid;
   created = true;
   photoUrl = '';
-  completed = true;
-  data = new Object();
   constructor(
     public formBuilder : FormBuilder,
     private AFcurUser : AngularFireAuth,
@@ -70,8 +68,7 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    public datePicker: DatePicker,
-    public clouldModule : cloudProvider,
+    public cloudModule : cloudProvider,
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -95,6 +92,8 @@ export class TaskEditPage {
         this.descriptionHolder = doc.data().taskDescription;
         this.locationHolder = doc.data().location;
         this.compensationHolder = doc.data().compensation;
+        this.startDate = doc.data().startDate;
+        this.endDate = doc.data().endDate;
         for (const i in doc.data().wantedSkills)
         {
           console.log('in task-edit constructor i is', i);
@@ -114,7 +113,7 @@ export class TaskEditPage {
         //   if (this.skill[field]) {
         //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
         //       this.csSkills.push(field);
-        //     }
+        //     }d
         //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
         //       this.mechSkills.push(field);
         //     }
@@ -179,13 +178,16 @@ export class TaskEditPage {
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
-    this.clouldModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
+    //add index to this task file
     taskRef.get().then(doc=>{
       let tIndex = this.client.initIndex('tasks');
-      console.log("this is the data", doc.data().taskName);
-      console.log("the task", this.task);
-      //this.navCtrl.push( some page here);
+      var task = doc.data();
+      task.objectID = task.taskId;
+      tIndex.saveObject(task);
     });
+    //if its the first time create this task, incease creator's task count by 1
+    //  and update it in database.
     if(this.created ==true )
     {
       let userRef = this.db.collection('users').doc(this.curUserToken.uid);
@@ -195,6 +197,12 @@ export class TaskEditPage {
             taskCount : newCount,
           });
         });
+      userRef.get().then(doc=>{
+        let index = this.client.initIndex('users');
+        var user = doc.data();
+        user.objectID = user.userId;
+        index.saveObject(user);
+      });
     }
 
     this.navCtrl.push(ProfilePage);

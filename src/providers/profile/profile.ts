@@ -25,8 +25,10 @@ export class ProfileProvider {
   public phone : number;
   public skills = new Object();
   public ownedTask : TaskObjectProvider[] = [];
-  public blockListTask: TaskObjectProvider[] = [];
-  public confirmTask: TaskObjectProvider[] = [];
+  public blockListTask : TaskObjectProvider[] = [];
+  public confirmedTask : TaskObjectProvider[] = [];
+  public appliedTask : TaskObjectProvider[] = [];
+  public invitedTask : TaskObjectProvider[] = []; 
   public pendingTask: TaskObjectProvider[] = [];
   public participateTask: TaskObjectProvider[] = [];
   public travelRadius : number;
