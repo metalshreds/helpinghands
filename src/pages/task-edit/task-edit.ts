@@ -198,7 +198,7 @@ export class TaskEditPage {
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
         photoUrl : this.photoUrl,
-        comment : '',
+        ownerComment : '',
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
