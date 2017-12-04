@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
-  PopoverController, ViewController } from 'ionic-angular';
+  PopoverController} from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
 import { AngularFireAuth } from "angularfire2/auth"
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
+import { DashboardPage } from '../dashboard/dashboard';
 import { RatingPage } from '../rating/rating';
 /**
  * Generated class for the TaskEditPage page.
@@ -43,28 +44,26 @@ export class TaskEditPage {
   month : string = '';
   day : string = '';
   startDate : string = '';
-  endDate:string = '';
-  duration: string = '';
+  endDate: string = '';
+  duration: number = 0;
   skillinterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
-  mechSkillInterface = ["Welding",
-                        "Mechanic",
-                        "Soldering",
-                        "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["Graphic Design","Photography","DrawingAndPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-                        "Russian", "English", "OtherLang"];
+                        "Russian", "English", "OtherLanguage"];
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
+  curUID = this.curUserToken.uid;
   taskCreateForm : FormGroup;
   task = {} as TaskObjectProvider;
   user = {} as ProfileProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid;
+  taskId = this.curUID;
   created = true;
   photoUrl = '';
   constructor(
@@ -77,7 +76,7 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    public cloudModule : cloudProvider, 
+    public cloudModule : cloudProvider,
   ) {
     this.taskCreateForm = formBuilder.group ({
       taskName : [''],
@@ -85,11 +84,6 @@ export class TaskEditPage {
       location : [''],
       compensation : [''],
     });
-
-
-
-
-
 
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     if(this.navParams.get('taskId') != undefined) {
@@ -135,12 +129,12 @@ export class TaskEditPage {
         this.langSkills = tmpLangSkill;
         //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         // this.skill = doc.data().wantedSkill;
-        
+
         // for (const field in this.skill) {
         //   if (this.skill[field]) {
         //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
         //       this.csSkills.push(field);
-        //     }d
+        //     }
         //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
         //       this.mechSkills.push(field);
         //     }
@@ -164,6 +158,8 @@ export class TaskEditPage {
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
+        let d = new Date();
+        this.startDate = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
       })
     }
   }
@@ -199,8 +195,8 @@ export class TaskEditPage {
         completed : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
+        ownerComment: '',
         photoUrl : this.photoUrl,
-
     });
     console.log("task name input is ", this.taskCreateForm.value.taskName);
     //add this task to current user's ownedtask
@@ -213,9 +209,12 @@ export class TaskEditPage {
       tIndex.saveObject(task);
     });
     //if its the first time create this task, incease creator's task count by 1
-    //  and update it in database.
+    //  and update it in database. Also adds the task to the user's pending
+    // list
     if(this.created ==true )
     {
+      this.cloudModule.addTaskToList(this.curUserToken.uid, 'pendingTask',
+        this.taskId,this.taskCreateForm.value.taskName);
       let userRef = this.db.collection('users').doc(this.curUserToken.uid);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
@@ -230,8 +229,22 @@ export class TaskEditPage {
         index.saveObject(user);
       });
     }
-
-    this.navCtrl.push(ProfilePage);
+    this.task = new TaskObjectProvider(
+      this.taskCreateForm.value.taskName,
+      this.taskId,
+      this.duration,
+      this.startDate,
+      this.endDate,
+      this.taskCreateForm.value.taskDescription,
+      this.skillHolder,
+      false,
+      this.curUserToken.displayName,
+      this.curUserToken.uid,
+      this.taskCreateForm.value.location
+    );
+    this.navCtrl.push(TaskViewPage, {
+      'task' : this.task
+    });
   }
 
   ionViewDidLoad() {
@@ -301,37 +314,24 @@ export class TaskEditPage {
   }
 
   completeTask() {
-    //TODO
-    // mark this task as completed, update record in firebase
-    
-    // jump to rating page.
-    // this.navCtrl.push(RatingPage);
-    let popover = this.popoverCtrl.create(CommentPopover);
+    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
+    popover.present();
   }
 
   deleteTask() {
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.delete().then(doc=>{console.log("I'm here.")});
     this.navCtrl.push(ProfilePage);
   }
 
   goBack() {
-    if(this.navParams.get('taskID') != undefined) {
+    if(this.navParams.get('taskId') != undefined) {
+      console.log("popping");
       this.navCtrl.pop();
     } else {
-      this.navCtrl.push(ProfilePage);
+      this.navCtrl.setRoot(ProfilePage);
     }
   }
-
-  // <button ion-button (click)="pickADate()">pick a date</button>
-  // pickADate(){
-  //   this.datePicker.show({
-  //     date: new Date(),
-  //     mode: 'date',
-  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-  //   }).then(
-  //     date => console.log('Got date: ', date),
-  //     err => console.log('Error occurred while getting date: ', err)
-  //   );
-  // }
-
 }
 
