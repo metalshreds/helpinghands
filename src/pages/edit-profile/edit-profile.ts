@@ -353,24 +353,4 @@ export class EditProfilePage {
         console.log("no pic chosen, something is wrong");
       }
   }
-
-  /*
-  /  this function will find user node using userId and return value
-  /  of the node
-   */
-  getUserProfile = function(userId : string, profile) : any
-  {
-    var user;
-    var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value', function(snapshot)         // read node value once use firebase API
-    {
-      user = snapshot.val()                                               //return node value.
-      profile(user);
-      return user;
-    })
-  }
-
-
-
-
 }

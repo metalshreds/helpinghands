@@ -27,72 +27,31 @@
     <!--</ion-content>-->
 
 <ion-header>
-
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Confirmed</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content padding>
-
-  <ion-list>
-
-    <ion-card>
-      <button ion-item *ngFor="let task of this.CURRENT_USER.confirmedTask" (click) = 'taskClicked($event, task)'>
-
-        <ion-item class="task-">
-          <ion-avatar item-start>
-            <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
-          </ion-avatar>
-          <h2>{{task.ownerName}}</h2>
-
-          <p>Starts On: {{task.startDate}} </p>
-        </ion-item>
-
-        <ion-card-content>
-          <ion-item class="card-item">
-            <ion-icon name="checkmark" item-start large></ion-icon>
-            <ion-card-title>
-              {{task.taskName}}
-            </ion-card-title>
-          </ion-item>
-
-          <ion-item class="card-item">
-            <ion-icon name="stopwatch" item-start large></ion-icon>
-            <h2>{{task.startDate}}</h2>
-            <p>Expected to last {{task.duration}} hours</p>
-          </ion-item>
-
-
-          <!--<ion-row>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="thumbs-up"></ion-icon>-->
-          <!--<div>Rate : 5.0 / 5.0 </div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="text"></ion-icon>-->
-          <!--<div>Comments</div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col center text-center>-->
-          <!--<ion-note>-->
-          <!--11h ago-->
-          <!--</ion-note>-->
-          <!--</ion-col>-->
-          <!--</ion-row>-->
-
-        </ion-card-content>
-      </button>
-    </ion-card>
-
-  </ion-list>
-
-</ion-content>
-
+    
+      <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Pending</ion-title>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    
+    <ion-content padding>
+      <div *ngIf = "noConfirmedTask">
+        <h1>
+          No confirmed task available. 
+        </h1>
+      </div>
+    
+      <ion-list>
+        <button ion-item *ngFor="let task of CURRENT_USER.confirmedTask" (click)="taskClicked($event, task)">
+    
+          <h1>{{task.taskName}}</h1>
+          
+        </button>
+      </ion-list>
+    
+    </ion-content>
+    
