@@ -16,6 +16,7 @@ import { NgZone } from "@angular/core";
 
 
 @Component({
+  selector: 'app',
   templateUrl: './app.html'    //TODO change app.html's content. currently it has sidebar created.
 })
 export class HelpingHands {

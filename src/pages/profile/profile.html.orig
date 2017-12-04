@@ -15,9 +15,13 @@
 </ion-header>
 
 
+<<<<<<< HEAD
+<ion-content>
+=======
 <ion-content class="content">
 
 
+>>>>>>> master
   <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
   <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
   <div class="avatar avatarCol">
@@ -28,6 +32,21 @@
 
     <ion-row>
       <ion-col>
+<<<<<<< HEAD
+        <ion-item text-wrap padding>
+        <p class="intro">{{CURRENT_USER.introduction}}</p>
+        </ion-item>
+        <h3>Skills</h3>
+
+            <ion-item *ngFor = "let skill of displaySkill">
+            {{skill}}
+            </ion-item>
+
+        <h3 padding-top="15px">Portfolio</h3>
+        <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
+          <button ion-item  (click)="taskClicked($event, task)">{{task.taskName}}</button>
+        </ion-item>
+=======
 
         <!--<ion-item text-wrap padding>-->
         <p class="intro">{{CURRENT_USER.introduction}}</p>
@@ -109,6 +128,7 @@
             </div>
           </ion-item>
         </ion-list>
+>>>>>>> master
       </ion-col>
     </ion-row>
 

@@ -50,20 +50,26 @@
   <!-- INVITED USERS LIST  -->
   <ion-list>
     <ion-card>
+
+
       <button ion-item *ngFor="let task of CURRENT_USER.invitedTask" (click) = 'taskClicked($event, task)'>
 
         <ion-item class="task-pending">
           <ion-avatar item-start>
             <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
           </ion-avatar>
+
           <h2>{{task.ownerName}}</h2>
+          <ion-icon name="checkmark" item-end large></ion-icon>
+          <ion-icon name="trash" item-end large style="margin--right:10px; margin-left:10px;"></ion-icon>
+
 
           <p>Starts On: {{task.startDate}} </p>
         </ion-item>
 
         <ion-card-content>
           <ion-item class="card-item">
-            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-icon name="calendar" item-start large></ion-icon>
             <ion-card-title>
               {{task.taskName}}
             </ion-card-title>
