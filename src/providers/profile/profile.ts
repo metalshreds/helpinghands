@@ -28,7 +28,7 @@ export class ProfileProvider {
   public blockListTask : TaskObjectProvider[] = [];
   public confirmedTask : TaskObjectProvider[] = [];
   public appliedTask : TaskObjectProvider[] = [];
-  public invited : TaskObjectProvider[] = []; 
+  public invitedTask : TaskObjectProvider[] = []; 
   public pendingTask: TaskObjectProvider[] = [];
   public participateTask: TaskObjectProvider[] = [];
   public travelRadius : number;

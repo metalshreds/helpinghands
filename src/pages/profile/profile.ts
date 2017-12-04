@@ -43,8 +43,6 @@ export class ProfilePage {
   db = firebase.firestore();
   profileOwner;
   CURRENT_USER = {} as ProfileProvider;
-  currTask : TaskObjectProvider;
-  //db = firebase.firestore();
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               //private AFcurUser: AngularFireAuth,
@@ -139,17 +137,22 @@ export class ProfilePage {
                     //TODO change the following hard coding
                     var task = new TaskObjectProvider(
                       taskDoc.data()['taskName'],
-                      sdoc.id,
-                      0,
-                      '10',
-                      '0',
+                      taskDoc.data()['taskId'],
+                      taskDoc.data()['duration'],
+                      taskDoc.data()['startTime'],
+                      taskDoc.data()['endTime'],
                       taskDoc.data()['taskDescription'],
-                      taskDoc.data()['wantedSkill'],
+                      taskDoc.data()['wantedSkills'],
                       taskDoc.data()['complete'],
                       taskDoc.data()['owner'],
                       taskDoc.data()['ownerUserId'],
                       taskDoc.data()['location']
                     );
+                  for(const field in taskDoc.data())
+                  {
+                    task[field] = taskDoc.data()[field];
+                  }
+
                   this.CURRENT_USER.ownedTask.push(task);
 
 
@@ -198,32 +201,11 @@ export class ProfilePage {
   }
 
   taskClicked(event, task){
-    console.log("TASK TO PUSH IS: " + task);
-    //var currTask: TaskObjectProvider;
-    // var taskRef = this.db.collection('tasks').doc(task);
-    // taskRef.get()
-    //   .then(doc => {
-    //     if (!doc.exists) {
-    //       console.log('No such document!');
-    //     } else {
-    //       console.log('Document data:', doc.data());
-    //       for(const field in doc.data())
-    //       {
-    //         //have to be careful that we have to store exactly same property
-    //         //  in userProvider obeject and users node.
-    //         this.currTask[field] = doc.data()[field];
-    //         console.log('TAsk in prfile: ' + this.currTask[field]);
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('Error getting document', err);
-    //   });
+    console.log("TASK TO PUSH IS: " + task.taskId);
+    console.log("about to push said task!!!");
     this.navCtrl.push(TaskViewPage, {
       task: task
     });
-
   }
-
 
 }

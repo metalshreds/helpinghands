@@ -22,13 +22,14 @@ import { cloudProvider } from "../../providers/cloudbase";
   templateUrl: 'task-view.html'
 })
 export class TaskViewPage {
+  elimilateDup = [];
   requestedUsers = {};
-  suggestedUsers = {};
+  suggestedUsers = [];
+  querySkill = [];
   curUserToken = this.AFcurUser.auth.currentUser;
   selectedTask: TaskObjectProvider;
   CURRENT_USER = {} as ProfileProvider;
   TASK_OWNER = {} as ProfileProvider;
-  isTaskCompleted = false;
   userIsTaskOwner = false;
   showEditButton = false;
   showRequestButton = false;
@@ -44,29 +45,57 @@ export class TaskViewPage {
   ) {
     this.selectedTask = navParams.get('task');
 
-    console.log("Selected task" + this.selectedTask);
     //TODO is this the correct way to check if they are the same user?
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
-    console.log("selectedTask.ownerUserId is ", this.selectedTask.ownerUserId)
-    var userRef = this.db.collection('users').doc(this.curUserToken.uid);
-    userRef.get()
-      .then(doc => {
-        if (!doc.exists) {
-          console.log('No such document!');
-        } else {
-          console.log('Document data:', doc.data());
-          for(const field in doc.data())
-          {
-            //have to be careful that we have to store exactly same property
-            //  in userProvider obeject and users node.
-            this.CURRENT_USER[field] = doc.data()[field];
-            console.log('Current user: ' + this.CURRENT_USER[field]);
-          }
+
+    //TODO trying to get suggetsed users list
+    this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
+      console.log('in suggst page user doc is ', doc.data());
+      for(const field in doc.data())
+      {
+        console.log("Current user: " + field + " = " + doc.data()[field]);
+        this.CURRENT_USER[field] = doc.data()[field];
+      }
+      console.log("after first for loop!");
+      for(const skill in this.selectedTask.wantedSkills){
+        console.log("skill: " + skill);
+      }
+      for (const i in this.selectedTask.wantedSkills)
+      {
+        console.log("in second for, const in wantd skills is: " + i);
+        if (this.selectedTask.wantedSkills[i] == true)
+        {
+          console.log("wanted skill was true! in if");
+          this.querySkill.push(i);
+          this.db.collection('users').where('skills.'+i, '==', true).get()
+            .then(doc=>{
+              doc.forEach(user =>{
+                console.log("@@@@@@@@@@@@@@IN WHERE I NEED TO BE");
+                var userObject = {} as ProfileProvider;
+                var skill = [];
+                for(const field in user.data())
+                {
+                  userObject[field] = user.data()[field];
+                }
+                //put keys of wantedSkills map in a array for display purpose
+                for (const i in userObject.skills)
+                {
+                  if (userObject.skills[i] == true)
+                    skill.push(i);
+                }
+                userObject['skillSet'] = skill;
+                //push in result array if this task is not completed
+                if(this.elimilateDup.indexOf(userObject.userId) < 0
+                  && (userObject.userId != this.curUserToken.uid) )
+                {
+                  this.elimilateDup.push(userObject.userId);
+                  this.suggestedUsers.push(userObject);
+                }
+              })
+            })
         }
-      })
-      .catch(err => {
-        console.log('Error getting document', err);
-      });
+      }
+    });
 
     var taskOwnerRef = this.db.collection('users').doc(this.selectedTask.ownerUserId.toString());
     taskOwnerRef.get().then(doc=>{
@@ -86,9 +115,11 @@ export class TaskViewPage {
     }).catch(err => {
       console.log('Error getting document', err);
     });
+    this.setButtons();
+  }
 
-
-    if(this.isTaskCompleted){
+  setButtons(){
+    if(this.selectedTask.completed){
       this.showEditButton = false;
       this.showRequestButton = false;
     }else{
@@ -104,7 +135,6 @@ export class TaskViewPage {
   editTaskClicked(event, selectedTaskID){
     this.navCtrl.push(TaskEditPage, {
       taskId: selectedTaskID
-      //taskID: "yP7n3Tv1WPNXL6T27GiAeWjPupu23"
     });
   }
 
@@ -118,16 +148,21 @@ export class TaskViewPage {
   requestTaskClicked(event, selectedTaskId){
     alert("Task Requested");
 
-    //add task id to user's list of pending tasks. 
+    //add task id to user's list of pending tasks.
     this.cloud.addTaskToList(this.curUserToken.uid, 'appliedTask', selectedTaskId, this.selectedTask.taskName);
 
     //add user id to appliedhelper list of the task
     this.cloud.addUserToTaskList(selectedTaskId, 'appliedHelpers', this.curUserToken.uid, this.CURRENT_USER.firstName, this.CURRENT_USER.lastName);
-    
-  } 
+  }
 
   //TODO what to do if task owner clicks a user?
-  suggestedUserClicked(event, user, selectedTask_owner, selectedTask){
+  suggestedUserClicked(event, user){
     //add task id to user's pending
+  }
+
+  appliedHelperClicked(event, helper){
+    this.navCtrl.push(ProfilePage, {
+      userId: helper
+    });
   }
 }

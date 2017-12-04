@@ -46,6 +46,16 @@ export class TaskEditPage {
   endDate: string = '';
   duration: number = 0;
   skillinterface = new skill();
+  csSkillInterface = ['Programming', 'Excel', 'Hardware'];
+  mechSkillInterface = ["Welding",
+                        "Mechanic",
+                        "Soldering",
+                        "Drafting",];
+  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
+  econSkillInterface = ["Management", "Accounting", "Economics"];
+  langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
+                        "Russian", "English", "OtherLang"];
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
@@ -95,12 +105,30 @@ export class TaskEditPage {
           if (doc.data().wantedSkills[i] == true)
             this.skillHolder.push(i);
         }
-        this.csSkills = this.skillHolder;
-        this.mechSkills = this.skillHolder;
-        this.artSkills = this.skillHolder;
-        this.sciSkills = this.skillHolder;
-        this.econSkills = this.skillHolder;
-        this.langSkills = this.skillHolder;
+        var tmpCsSkill = [], tmpMechSkill = [], tmpArtSkill = [];
+        var tmpSciSkill = [],tmpEconSkill = [], tmpLangSkill = [];
+        for(const j in this.skillHolder)
+        {
+          if(this.csSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpCsSkill.push(this.skillHolder[j]);
+          else if(this.mechSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpMechSkill.push(this.skillHolder[j]);
+          else if(this.artSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpArtSkill.push(this.skillHolder[j]);
+          else if(this.sciSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpSciSkill.push(this.skillHolder[j]);
+          else if(this.econSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpEconSkill.push(this.skillHolder[j]);
+          else if(this.langSkillInterface.indexOf(this.skillHolder[j]) >= 0)
+            tmpLangSkill.push(this.skillHolder[j]);
+
+        }
+        this.csSkills = tmpCsSkill;
+        this.mechSkills = tmpMechSkill;
+        this.artSkills = tmpArtSkill;
+        this.sciSkills = tmpSciSkill;
+        this.econSkills = tmpEconSkill;
+        this.langSkills = tmpLangSkill;
         //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         // this.skill = doc.data().wantedSkill;
 
