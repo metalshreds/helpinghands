@@ -22,6 +22,7 @@ import {TaskObjectProvider} from "../../providers/task-object/task-object";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  shownGroup = "";
   profile;
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
@@ -190,6 +191,18 @@ export class ProfilePage {
       console.log(this.hasCS);
   }
 
+  toggleGroup(group) {
+    console.log("This is the group"+group)
+    if (this.isGroupShown(group)) {
+      this.shownGroup = "";
+    } else {
+      this.shownGroup = group;
+    }
+  };
+
+  isGroupShown(group) {
+    return this.shownGroup == group;
+  };
 
   expandPic(){
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});

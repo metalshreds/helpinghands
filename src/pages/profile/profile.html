@@ -36,50 +36,77 @@
 
         <h3>My Skills</h3>
         <div *ngIf="hasCS">
-          <ion-label>Computer Science</ion-label>
-          <ion-item *ngFor = "let skill of csSkills">
-          {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('cs')">Computer Science
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('cs') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('cs')">
+            <ion-item *ngFor = "let skill of csSkills">
+            {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <div *ngIf="hasMech">
-          <ion-label>Mechanical</ion-label>
-          <ion-item *ngFor = "let skill of mechSkills">
-            {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('mech')">Mechanical
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('mech') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('mech')">
+            <ion-item *ngFor = "let skill of mechSkills">
+              {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <div *ngIf="hasArt">
-          <ion-label>Art</ion-label>
-          <ion-item *ngFor = "let skill of artSkills">
-            {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('art')">Art
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('art') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('art')">
+            <ion-item *ngFor = "let skill of artSkills">
+              {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <div *ngIf="hasSci">
-          <ion-label>Natural Sciences</ion-label>
-          <ion-item *ngFor = "let skill of sciSkills">
-            {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('sci')">Natural Sciences
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('sci') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('sci')">
+            <ion-item *ngFor = "let skill of sciSkills">
+              {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <div *ngIf="hasEcon">
-          <ion-label>Economics</ion-label>
-          <ion-item *ngFor = "let skill of econSkills">
-            {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('econ')">Economics
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('econ') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('econ')">
+            <ion-item *ngFor = "let skill of econSkills">
+              {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <div *ngIf="hasLang">
-          <ion-label>Language</ion-label>
-          <ion-item *ngFor = "let skill of langSkills">
-            {{skill}}
-          </ion-item>
+          <ion-label (click)="toggleGroup('lang')">Language
+            <ion-icon style="float: right" color="success" item-right [name]="isGroupShown('lang') ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon>
+          </ion-label>
+          <div *ngIf="isGroupShown('lang')">
+            <ion-item *ngFor = "let skill of langSkills">
+              {{skill}}
+            </ion-item>
+          </div>
         </div>
 
         <h3 padding-top="15px">Portfolio</h3>
         <ion-item text-wrap *ngFor = "let task of CURRENT_USER.ownedTask">
-          <button ion-button class="profile-Task" (click)="taskClicked($event, task)">{{task.taskName}}</button>
+          <button ion-button class="profile-Task" (click)="taskClicked($event, task)">
+            <p>{{task.taskName}}</p>
+            <p>{{task.ownerComment}}</p>
+          </button>
         </ion-item>
 
       </ion-col>
