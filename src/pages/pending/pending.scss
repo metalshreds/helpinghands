@@ -4,3 +4,24 @@ page-pending {
 
 
 
+.accept-reject-buttons {
+
+  min-height: 4.4rem;
+  min-width: 4.4rem;
+
+}
+
+
+.acc_rej_icon{
+  min-height: 4.4rem;
+  min-width: 4.4rem;
+
+}
+
+.card-header-md + .card-content-md, .card-md .item + .card-content-md {
+  padding: 0px;
+}
+
+button{
+  padding:0px;
+}
