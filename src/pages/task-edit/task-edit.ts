@@ -14,6 +14,7 @@ import { skill } from '../../interface/skills'
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
+import { DashboardPage } from '../dashboard/dashboard';
 import { RatingPage } from '../rating/rating';
 /**
  * Generated class for the TaskEditPage page.
@@ -197,6 +198,7 @@ export class TaskEditPage {
         completed : false,
         ownerName : this.curUserToken.displayName,
         ownerUserId : this.curUserToken.uid,
+        ownerComment: '',
         photoUrl : this.photoUrl,
         ownerComment : '',
     });
@@ -211,10 +213,13 @@ export class TaskEditPage {
       tIndex.saveObject(task);
     });
     //if its the first time create this task, incease creator's task count by 1
-    //  and update it in database.
+    //  and update it in database. Also adds the task to the user's pending
+    // list
     if(this.created ==true )
     {
-      let userRef = this.db.collection('users').doc(this.curUID);
+      this.cloudModule.addTaskToList(this.curUserToken.uid, 'pendingTask',
+        this.taskId,this.taskCreateForm.value.taskName);
+      let userRef = this.db.collection('users').doc(this.curUserToken.uid);
       userRef.get().then(doc=>{
         let newCount = doc.data().taskCount + 1;
           userRef.update({
@@ -312,16 +317,10 @@ export class TaskEditPage {
     });
   }
 
-  completeTask($event) {
-    //TODO
-    // mark this task as completed, update record in firebase
-    // jump to rating page.
-    // this.navCtrl.push(RatingPage);
-    console.log("It's running the method");
-    let popover = this.popoverCtrl.create(CommentPopover, {
-      'taskId': this.taskId
-    });
+  completeTask() {
+    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
     popover.present();
+    this.navCtrl.push(DashboardPage);
   }
 
   deleteTask() {

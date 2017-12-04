@@ -8,7 +8,7 @@
 
     <ion-buttons end *ngIf="profileOwner">
       <button ion-button (click)="goToEditProfile($event)">
-        <ion-icon name = "create" color="dark"></ion-icon>
+        <ion-icon name = "create"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -16,13 +16,14 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="content">
 
 
   <h2 class="title avatarCol" >{{CURRENT_USER.firstName}}  {{CURRENT_USER.lastName}}</h2>
   <p  style="text-align: center" class="email avatarCol" >{{CURRENT_USER.email}}</p>
   <div class="avatar avatarCol">
-    <img [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
+    <img padding [src]="chosenPicture" onerror="this.src='assets/icon/logo-login.png'" />
+
   </div>
 
   <ion-grid style="height: 100%">
@@ -108,7 +109,6 @@
             <p>{{task.ownerComment}}</p>
           </button>
         </ion-item>
-
       </ion-col>
     </ion-row>
 
