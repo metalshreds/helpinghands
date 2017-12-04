@@ -48,15 +48,12 @@ export class TaskEditPage {
   duration: number = 0;
   skillinterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
-  mechSkillInterface = ["Welding",
-                        "Mechanic",
-                        "Soldering",
-                        "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["Graphic Design","Photography","DrawingAndPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-                        "Russian", "English", "OtherLang"];
+                        "Russian", "English", "OtherLanguage"];
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
@@ -319,7 +316,6 @@ export class TaskEditPage {
   completeTask() {
     let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
     popover.present();
-    this.navCtrl.push(DashboardPage);
   }
 
   deleteTask() {

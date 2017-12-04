@@ -26,6 +26,7 @@ page-profile {
 
   .intro{
     color: black;
+    text-align: center;
   }
   .editImageButton {
     text-align: center;
@@ -66,8 +67,10 @@ page-profile {
     border-bottom: 0px;
   }
 
-
-
+  .task-text{
+    font-size: 15px;
+    text-align: center;
+  }
 }
 
 

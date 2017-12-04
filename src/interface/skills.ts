@@ -11,11 +11,11 @@ export class skill{
 
   GraphicDesign: string;
   Photography: string;
-  DrawingandPainting: string;
+  DrawingAndPainting: string;
 
-  Bio: string;
+  Biology: string;
   Physics: string;
-  Chem: string;
+  Chemistry: string;
   Agriculture: string;
 
 
@@ -32,7 +32,7 @@ export class skill{
 	Portuguese: string;
 	Russian: string;
 	English: string;
-	OtherLang: string;
+	OtherLanguage: string;
 
   constructor(){
     this.Programming = 'Programming';
@@ -46,11 +46,11 @@ export class skill{
 
     this.GraphicDesign = "Graphic Design";
     this.Photography = "Photography";
-    this.DrawingandPainting = "Drawing and Painting";
+    this.DrawingAndPainting = "Drawing and Painting";
 
-    this.Bio = "Biology";
+    this.Biology = "Biology";
     this.Physics = "Physics";
-    this.Chem = "Chemistry";
+    this.Chemistry = "Chemistry";
     this.Agriculture = "Agriculture";
 
     this.Management = "Management";
@@ -65,6 +65,6 @@ export class skill{
     this.Portuguese = "Portuguese";
     this.Russian = "Russian";
     this.English = "English";
-    this.OtherLang = "OtherLang";
+    this.OtherLanguage = "OtherLanguage";
   };
 }

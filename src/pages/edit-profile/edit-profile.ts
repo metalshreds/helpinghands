@@ -37,15 +37,12 @@ export class EditProfilePage {
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   skillInterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
-  mechSkillInterface = ["Welding",
-                        "Mechanic",
-                        "Soldering",
-                        "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["GraphicDesign","Photography","DrawingAndPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-                        "Russian", "English", "OtherLang"];
+                        "Russian", "English", "OtherLanguage"];
   skill =  new Object();
   csSkills = [];
   mechSkills = [];
@@ -55,9 +52,6 @@ export class EditProfilePage {
   langSkills = [];
   helper = false;
   displaySkill = [];
-  csSkillOption = [
-    'Programming', 'Excel', 'Hardware'
-  ]
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
