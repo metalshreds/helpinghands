@@ -39,7 +39,7 @@ export class ConfirmedPage {
   getConfirmedList()
   {
     console.log('in pending page user uid is ', this.curUserToken.uid);
-    var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('comfirmedTask');
+    var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask');
     docRef.get().then(doc=>{
       if(doc.empty)
       {
@@ -47,7 +47,7 @@ export class ConfirmedPage {
         this.noConfirmedTask = true;
       }
       doc.forEach(sdoc=>{
-        this.db.collection('users').doc(this.curUserToken.uid).collection('comfirmedTask').doc(sdoc.id).
+        this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask').doc(sdoc.id).
           get().then(doc =>{  
             var taskRef = this.db.collection('tasks').doc(sdoc.id);
             taskRef.get().then(taskDoc =>{
