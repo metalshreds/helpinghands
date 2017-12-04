@@ -242,7 +242,7 @@ export class TaskEditPage {
       this.curUserToken.uid,
       this.taskCreateForm.value.location
     );
-    this.navCtrl.push(TaskViewPage, {
+    this.navCtrl.setRoot(TaskViewPage, {
       'task' : this.task
     });
   }
@@ -322,7 +322,7 @@ export class TaskEditPage {
     this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.delete().then(doc=>{console.log("I'm here.")});
-    this.navCtrl.push(ProfilePage);
+    this.navCtrl.setRoot(ProfilePage);
   }
 
   goBack() {
