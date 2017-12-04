@@ -21,7 +21,6 @@
           <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
         </ion-avatar>
         <h2>{{task.ownerName}}</h2>
-
         <p>Starts On: {{task.startDate}} </p>
       </ion-item>
 
@@ -35,8 +34,8 @@
 
       <ion-item class="card-item">
         <ion-icon name="stopwatch" item-start large></ion-icon>
-        <h2>{{task.startDate}}</h2>
-        <p>Expected to last {{task.duration}} hours</p>
+        <h2>Expected to last: {{task.duration}}</h2>
+        <p> Compensation: ${{task.compensation}}</p>
       </ion-item>
 
 

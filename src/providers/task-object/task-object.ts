@@ -64,6 +64,8 @@ export class TaskObjectProvider {
   setOwnerName(ownerName: string){this.ownerName = ownerName;}
   getOwnerName(){return this.ownerName};
 
+  setCompensation(compensation: number){ this.compensation = compensation;}
+  getCompensation(){ return this.compensation;}
   /*this function is used to set the helpers list
   / of a newly constructed task.
   / possible usage: construct a task object based

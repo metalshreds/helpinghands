@@ -82,11 +82,16 @@ export class CompletedPage {
             );
 
             task.setTaskId(ownedTasks.data()['taskId']);
-
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
               task.setOwnerName(ownedTasks.data()['ownerName']);
             }
+
+            //Set compensation
+            if (typeof ownedTasks.data()['compensation'] !== 'undefined') {
+              task.setCompensation(ownedTasks.data()['compensation']);
+            }
+
 
             this.completedTasks.push(task);
             console.log('completed task added: ', task);
