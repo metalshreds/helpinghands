@@ -28,31 +28,33 @@
       <h4>Start Time: {{selectedTask.timeStart}}</h4>
       <h4>End Time: {{selectedTask.timeEnd}}</h4>
       <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
-      <!--<h2>Compensation: {{CURRENT_TASK.Compensation}}</h2>-->
-      <!--<h2>Location: {{CURRENT_TASK.Location}}</h2>-->
+      <h2>Compensation: {{selectedTask.compensation}}</h2>
+      <h2>Location: {{selectedTask.location}}</h2>
     </div>
   </ion-item>
 
   <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
-  <!--<ion-item>-->
-  <!--<div *ngIf="showEditButton">-->
-  <!--<h4 ion-text="Users Requesting to Help"> </h4>-->
-  <!--</div>-->
-  <!--<ion-list>-->
-  <!--<h4 *ngFor="let user of requestedUsers">-->
-  <!--{{user}}-->
-  <!--</h4>-->
-  <!--</ion-list>-->
-  <!--</ion-item>-->
+  <ion-item *ngIf="showEditButton">
+    <ion-title>Applied Helpers</ion-title>
+    <ion-list >
+      <ion-item *ngFor="let helper of appliedHelpers">
+        <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
+        <button ion-button (click)="acceptAppliedHelper($event, helper)">Accept</button>
+        <button ion-button (click)="rejectAppliedHelper($event, helper)">Reject</button>
+      </ion-item>
+    </ion-list>
+  </ion-item>
 
   <!--this is the place to show -->
-  <!--<ion-item>-->
-  <!--<ion-list *ng-show="userIsTaskOwner">-->
-  <!--<button ion-item *ngFor="let user of suggestedUsers" (click) = 'suggestedUserClicked($event, user, TASK_OWNER, CURRENT_TASK.id)'>-->
-  <!--<h1>{{user}}</h1>-->
-  <!--</button>-->
-  <!--</ion-list>-->
-  <!--</ion-item>-->
+  <ion-item *ngIf="showEditButton">
+    <ion-title>Suggested Helpers</ion-title>
+    <ion-list >
+      <ion-item  *ngFor="let user of suggestedUsers">
+        <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
+        <button ion-button (click)="requestUserClicked($event, user)">Request</button>
+      </ion-item>
+    </ion-list>
+  </ion-item>
 
 
 
