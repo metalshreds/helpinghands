@@ -48,8 +48,9 @@ export class TaskViewPage {
 
     //TODO is this the correct way to check if they are the same user?
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
-
-    //TODO trying to get suggetsed users list
+    if(this.userIsTaskOwner)
+    {
+          //TODO trying to get suggetsed users list
     this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
       console.log('in suggst page user doc is ', doc.data());
       for(const field in doc.data())
@@ -105,7 +106,9 @@ export class TaskViewPage {
         }
       }
     });
+    }
 
+    
     var taskOwnerRef = this.db.collection('users').doc(this.selectedTask.ownerUserId.toString());
     taskOwnerRef.get().then(doc=>{
       if (!doc.exists) {
@@ -125,6 +128,8 @@ export class TaskViewPage {
       console.log('Error getting document', err);
     });
 
+
+    //TODO change this to observer.
     console.log("RIGHT BEFORE APPLIED HELPERS");
     var docRef = this.db.collection('tasks').doc(this.selectedTask.taskId).collection('appliedHelpers');
     docRef.get().then(doc=>{
@@ -215,6 +220,7 @@ export class TaskViewPage {
 
     this.cloud.addUserToTaskList(this.selectedTask.taskId.toString(), 'helpers', helper.userId, helper.firstName, helper.lastName);
     this.cloud.addTaskToList(helper.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
+    //we want to add this task to current_user's confirm list?
     this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
     alert(helper.firstName + " " + helper.lastName +" Accepted");
   }

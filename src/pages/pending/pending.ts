@@ -26,6 +26,9 @@ export class PendingPage {
   db = firebase.firestore();
   noPendingTask = true;
   eliminateDup = [];   //acts like a map
+
+  //TODO handle cases that eliminates
+  //when click into a task that I applied, the request button shouldn't be there.
   constructor(public navCtrl: NavController, 
               public navParams: NavParams)
   {
