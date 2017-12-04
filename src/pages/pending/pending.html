@@ -16,23 +16,24 @@
   <ion-list>
     <ion-card ion-item *ngFor="let task of CURRENT_USER.invitedTask">
 
-      <button style="width:100%;" (click) = 'taskClicked($event, task)'>
-        <ion-item class="task-pending">
+
+    <ion-item class="task-pending">
+      <!--<button style="width:100%;" (click) = 'taskClicked($event, task)'>-->
           <ion-avatar item-start>
             <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
           </ion-avatar>
-
           <h2>{{task.ownerName}}</h2>
-          <button  (click) = 'taskClicked($event, task)' item-end large class="accept-reject-buttons" clear="true">
-            <ion-icon class="acc_rej_icon" name="checkmark" clear></ion-icon>
-          </button>
-          <button  (click) = 'taskClicked($event, task)' item-end large class="accept-reject-buttons">
-            <ion-icon class="acc_rej_icon" name="trash" ></ion-icon>
-          </button>
           <p>Starts On: {{task.startDate}} </p>
-        </ion-item>
-      </button>
+      <!--</button>-->
+        <!--<button   class="accept-reject-buttons" clear="true"clearInput="true">-->
+            <ion-icon class="acc_rej_icon" name="checkmark" (click) = 'taskClicked($event, task)' item-end large></ion-icon>
+        <!--</button>-->
 
+        <!--<button   class="accept-reject-buttons" clearInput="true">-->
+            <ion-icon  class="acc_rej_icon" name="trash" (click) = 'taskClicked($event, task)' item-end large ></ion-icon>
+        <!--</button>-->
+
+    </ion-item>
 
         <ion-card-content>
           <button  style="height: 100%; width: 100%" (click) = 'taskClicked($event, task)'>
@@ -71,9 +72,7 @@
 
       </button>
         </ion-card-content>
-
     </ion-card>
-
   </ion-list>
 
 
