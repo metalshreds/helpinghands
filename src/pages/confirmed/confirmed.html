@@ -24,7 +24,7 @@
       </div>
     
       <ion-list>
-        <button ion-item *ngFor="let task of CURRENT_USER.pendingTask" (click)="taskClicked($event, task)">
+        <button ion-item *ngFor="let task of CURRENT_USER.confirmedTask" (click)="taskClicked($event, task)">
     
           <h1>{{task.taskName}}</h1>
           
