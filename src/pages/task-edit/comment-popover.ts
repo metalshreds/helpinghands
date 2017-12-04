@@ -2,41 +2,50 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
   PopoverController, ViewController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import firebase from 'firebase';
+import { CompletedPage } from '../completed/completed';
+import { DashboardPage } from '../dashboard/dashboard';
+import { ProfilePage } from '../profile/profile';
+import { FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   template: `
-  <ion-label>Would you like to leave a comment?</ion-label>
-  <ion-input type="text" [(ngModel)] = 'comment' placeholder='Comment' value={{comment.value}}> </ion-input>
-  <button ion-button style="background-color: red" (click)="close()">Cancel</button>
-  <button ion-button style="background-color: #2ec95c" (click)="updateComment()">Continue</button>
+  <ion-content>
+    <form [formGroup] = "commentForm" novalidate>
+    <ion-label>Would you like to leave a comment?</ion-label>
+    <ion-textarea formControlName = "comment" placeholder="Comment goes here..." value=""></ion-textarea>
+    </form>
+    <button ion-button style="background-color: red" (click)="close()">Cancel</button>
+    <button ion-button style="background-color: #2ec95c" (click)="save()">Continue</button>  
+  </ion-content>
   `
 })
 
 export class CommentPopover {
+  commentForm : FormGroup;
   db = firebase.firestore();
-  taskId: string = '';
-  comment: string = '';
   constructor(
     public viewCtrl: ViewController,
-    public navParams: NavParams
-    ) {
-
-
-  }
-
-  updateComment(){
-    this.taskId = this.navParams.get('taskId');
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.update({
-      completed: true,
-      ownerComment: this.comment
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder : FormBuilder,
+  ) {
+    this.commentForm = formBuilder.group({
+      comment : ['']
     });
-    this.viewCtrl.dismiss();
   }
 
-  close(){
+  save() {
+    let taskId = this.navParams.get('taskId');
+    let taskRef = this.db.collection('tasks').doc(taskId);
+    console.log(this.commentForm.value.comment);
+    taskRef.update({
+      completed : true,
+      // comment : comment,
+    });
+    this.navCtrl.push(ProfilePage);
+  }
+  close() {
     this.viewCtrl.dismiss();
   }
 }

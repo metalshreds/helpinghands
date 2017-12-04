@@ -163,6 +163,32 @@ export class ProfilePage {
           })
         });
       });
+      // for (const field in this.displaySkill) {
+      //   console.log(field);
+      //   if (field == "Programming" || field == "Excel" || field == "Hardware") {
+      //     this.csSkills.push(field);
+      //   }
+      //   else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
+      //     this.mechSkills.push(field);
+      //   }
+      //   else if (field == "GraphicDesign" || field == "Photography" || field == "DrawingandPainting") {
+      //     this.artSkills.push(field);
+      //   }
+      //   else if (field == "Bio" || field == "Physics" || field == "Chem" || field == "Agriculture") {
+      //     this.sciSkills.push(field);
+      //   }
+      //   else if (field == "Management" || field == "Accounting" || field == "Economics") {
+      //     this.econSkills.push(field);
+      //   }
+      //   else if (field == "Spanish" || field == "Japanese" || field == "German" || field == "Mandarin" ||
+      //     field == "Cantonese" || field == "Portuguese" || field == "Russian" || field == "English" ||
+      //     field == "OtherLang") {
+      //     this.langSkills.push(field);
+      //   }
+      // }
+      console.log(this.csSkills);
+      console.log(this.displaySkill);
+      console.log(this.hasCS);
   }
 
   toggleGroup(group) {
