@@ -28,18 +28,20 @@
       <h4>Start Time: {{selectedTask.timeStart}}</h4>
       <h4>End Time: {{selectedTask.timeEnd}}</h4>
       <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
-      <!--<h2>Compensation: {{CURRENT_TASK.Compensation}}</h2>-->
-      <!--<h2>Location: {{CURRENT_TASK.Location}}</h2>-->
+      <h2>Compensation: {{selectedTask.compensation}}</h2>
+      <h2>Location: {{selectedTask.location}}</h2>
     </div>
   </ion-item>
 
   <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
   <ion-item *ngIf="showEditButton">
-    <ion-title>Users Requesting to Help</ion-title>
+    <ion-title>Applied Helpers</ion-title>
     <ion-list >
-      <button ion-item *ngFor="let helper of selectedTask.appliedHelpers" (click) = 'appliedHelperClicked($event, helper)'>{{helper}}</button>
-      <!--<button (click)="">Accept</button>-->
-      <!--<button (click)="">Reject</button>-->
+      <ion-item *ngFor="let helper of appliedHelpers">
+        <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
+        <button ion-button (click)="acceptAppliedHelper($event, helper)">Accept</button>
+        <button ion-button (click)="rejectAppliedHelper($event, helper)">Reject</button>
+      </ion-item>
     </ion-list>
   </ion-item>
 
@@ -47,9 +49,10 @@
   <ion-item *ngIf="showEditButton">
     <ion-title>Suggested Helpers</ion-title>
     <ion-list >
-      <button ion-item *ngFor="let user of suggestedUsers" (click) = 'suggestedUserClicked($event, user)'>{{user.firstName}} {{user.lastName}}</button>
-      <!--<button (click)="">Accept</button>-->
-      <!--<button (click)="">Reject</button>-->
+      <ion-item  *ngFor="let user of suggestedUsers">
+        <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
+        <button ion-button (click)="requestUserClicked($event, user)">Request</button>
+      </ion-item>
     </ion-list>
   </ion-item>
 
