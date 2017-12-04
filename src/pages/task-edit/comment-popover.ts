@@ -7,10 +7,12 @@ import firebase from 'firebase';
 
 @Component({
   template: `
-  <ion-label>Would you like to leave a comment?</ion-label>
+  <ion-label style="text-align: center;">Would you like to leave a comment?</ion-label>
   <ion-input type="text" [(ngModel)] = 'comment' placeholder='Comment' value={{comment.value}}> </ion-input>
-  <button ion-button style="background-color: red" (click)="close()">Cancel</button>
-  <button ion-button style="background-color: #2ec95c" (click)="updateComment()">Continue</button>
+  <div style="text-align: center">  
+    <button ion-button style="background-color: red" (click)="close()">Cancel</button>
+    <button ion-button style="background-color: #2ec95c" (click)="updateComment()">Continue</button>
+  </div>
   `
 })
 

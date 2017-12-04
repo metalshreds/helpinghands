@@ -54,7 +54,7 @@
     <ion-row>
       <ion-col >
 
-        <h3 padding-top="15px">Portfolio({{CURRENT_USER.taskCount}})</h3>
+        <h3 padding-top="15px">Portfolio({{CURRENT_USER.taskCount - 1}})</h3>
         <ion-list class = "list">
 
 
@@ -65,8 +65,8 @@
               <ion-card-content style="background-color: white">
 
                   <ion-card-title>
-                    <button ion-item *ngIf="!task.completed">
-                      {{task.taskName}} | Review: {{task.ownerComment}}
+                    <button ion-item >
+                      {{task.taskName}}
                     </button>
                   </ion-card-title>
 
