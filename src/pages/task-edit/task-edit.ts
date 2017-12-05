@@ -1,20 +1,25 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
-  PopoverController, ViewController } from 'ionic-angular';
+  PopoverController, AlertController} from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
 import { AngularFireAuth } from "angularfire2/auth"
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { taskNameValidator } from '../../validators/taskNameValidator';
+import { descriptionValidator } from '../../validators/descriptionValidator';
+import { zipValidator } from '../../validators/zipValidator';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
 import { TaskViewPage } from "../task-view/task-view"
 import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
+import { DashboardPage } from '../dashboard/dashboard';
 import { RatingPage } from '../rating/rating';
+import {MyTasksPage} from "../my-tasks/my-tasks";
 /**
  * Generated class for the TaskEditPage page.
  *
@@ -43,28 +48,26 @@ export class TaskEditPage {
   month : string = '';
   day : string = '';
   startDate : string = '';
-  endDate:string = '';
+  endDate: string = '';
   duration: string = '';
   skillinterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
-  mechSkillInterface = ["Welding",
-                        "Mechanic",
-                        "Soldering",
-                        "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["Graphic Design","Photography","DrawingAndPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-                        "Russian", "English", "OtherLang"];
+                        "Russian", "English", "OtherLanguage"];
   chosenPicture: any;
   pictureChanged = false;
   curUserToken = this.AFcurUser.auth.currentUser;
+  curUID = this.curUserToken.uid;
   taskCreateForm : FormGroup;
   task = {} as TaskObjectProvider;
   user = {} as ProfileProvider;
   db = firebase.firestore();
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
-  taskId = this.curUserToken.uid;
+  taskId = this.curUID;
   created = true;
   photoUrl = '';
   constructor(
@@ -77,19 +80,15 @@ export class TaskEditPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    public cloudModule : cloudProvider, 
+    public cloudModule : cloudProvider,
+    public alertCtrl : AlertController,
   ) {
     this.taskCreateForm = formBuilder.group ({
-      taskName : [''],
-      taskDescription : [''],
-      location : [''],
+      taskName : ['', Validators.compose([taskNameValidator.isValid, Validators.required])],
+      taskDescription : ['', Validators.compose([descriptionValidator.isValid, Validators.required])],
+      location : ['', Validators.compose([zipValidator.isValid, Validators.required])],
       compensation : [''],
     });
-
-
-
-
-
 
     let userRef = this.db.collection('users').doc(this.curUserToken.uid);
     if(this.navParams.get('taskId') != undefined) {
@@ -125,7 +124,6 @@ export class TaskEditPage {
             tmpEconSkill.push(this.skillHolder[j]);
           else if(this.langSkillInterface.indexOf(this.skillHolder[j]) >= 0)
             tmpLangSkill.push(this.skillHolder[j]);
-
         }
         this.csSkills = tmpCsSkill;
         this.mechSkills = tmpMechSkill;
@@ -135,12 +133,12 @@ export class TaskEditPage {
         this.langSkills = tmpLangSkill;
         //this.startDate = ("2017-"+doc.data().month+"-"+doc.data().day);
         // this.skill = doc.data().wantedSkill;
-        
+
         // for (const field in this.skill) {
         //   if (this.skill[field]) {
         //     if (field == "Programming" || field == "Excel" || field == "Hardware") {
         //       this.csSkills.push(field);
-        //     }d
+        //     }
         //     else if (field == "Welding" || field == "Mechanic" || field == "Soldering" || field == "Drafting") {
         //       this.mechSkills.push(field);
         //     }
@@ -164,78 +162,168 @@ export class TaskEditPage {
     } else {
       userRef.get().then(doc=>{
         this.taskId += doc.data().taskCount.toString();
+        let d = new Date();
+        this.startDate = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
       })
     }
   }
 
 
   updateTask(){
-    for (const i in this.skillinterface)
-    {
-      if (this.csSkills.indexOf(i) > -1 ||
+    if (!this.taskCreateForm.controls.taskName.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid task name',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(!this.taskCreateForm.controls.taskDescription.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid description with at most 300 characters',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(this.endDate.length == 0) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a date you would like the task to be completed by',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(!this.taskCreateForm.controls.location.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid zipcode',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else {
+      for (const i in this.skillinterface) {
+        if (this.csSkills.indexOf(i) > -1 ||
           this.mechSkills.indexOf(i) > -1 ||
           this.artSkills.indexOf(i) > -1 ||
           this.sciSkills.indexOf(i) > -1 ||
           this.econSkills.indexOf(i) > -1 ||
-          this.langSkills.indexOf(i) > -1)
-      {
-        this.skill[i] = true;
+          this.langSkills.indexOf(i) > -1) {
+          this.skill[i] = true;
+        }
+        else
+          this.skill[i] = false;
       }
-      else
-        this.skill[i] = false;
-    }
-    console.log("skill", this.skill);
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.set({
-        taskName : this.taskCreateForm.value.taskName,
-        taskId : this.taskId,
-        taskDescription : this.taskCreateForm.value.taskDescription,
-        location : this.taskCreateForm.value.location,
-        compensation : this.taskCreateForm.value.compensation,
-        wantedSkills : this.skill,
-        startDate : this.startDate,
-        endDate : this.endDate,
-        duration : this.duration,
-        completed : false,
-        ownerName : this.curUserToken.displayName,
-        ownerUserId : this.curUserToken.uid,
-        photoUrl : this.photoUrl,
+      console.log("skill", this.skill);
+      if (this.duration.length == 0) {
+        this.duration = '0';
+      }
 
-    });
-    console.log("task name input is ", this.taskCreateForm.value.taskName);
-    //add this task to current user's ownedtask
-    this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
-    //add index to this task file
-    taskRef.get().then(doc=>{
-      let tIndex = this.client.initIndex('tasks');
-      var task = doc.data();
-      task.objectID = task.taskId;
-      tIndex.saveObject(task);
-    });
-    //if its the first time create this task, incease creator's task count by 1
-    //  and update it in database.
-    if(this.created ==true )
-    {
-      let userRef = this.db.collection('users').doc(this.curUserToken.uid);
-      userRef.get().then(doc=>{
-        let newCount = doc.data().taskCount + 1;
+      this.compensationHolder = this.taskCreateForm.value.compensation;
+      if (this.compensationHolder.length == 0) {
+        this.compensationHolder = '0';
+      }
+
+      let taskRef = this.db.collection('tasks').doc(this.taskId);
+      taskRef.set({
+        taskName: this.taskCreateForm.value.taskName,
+        taskId: this.taskId,
+        taskDescription: this.taskCreateForm.value.taskDescription,
+        location: this.taskCreateForm.value.location,
+        compensation: this.compensationHolder,
+        wantedSkills: this.skill,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        duration: this.duration,
+        completed: false,
+        ownerName: this.curUserToken.displayName,
+        ownerUserId: this.curUserToken.uid,
+        ownerComment: '',
+        photoUrl: this.photoUrl,
+      });
+      console.log("task name input is ", this.taskCreateForm.value.taskName);
+      //add this task to current user's ownedtask
+      this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId, this.taskCreateForm.value.taskName);
+      //add index to this task file
+      taskRef.get().then(doc => {
+        let tIndex = this.client.initIndex('tasks');
+        var task = doc.data();
+        task.objectID = task.taskId;
+        tIndex.saveObject(task);
+      });
+      //if its the first time create this task, incease creator's task count by 1
+      //  and update it in database. Also adds the task to the user's pending
+      // list
+      if (this.created == true) {
+        let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+        userRef.get().then(doc => {
+          let newCount = doc.data().taskCount + 1;
           userRef.update({
-            taskCount : newCount,
+            taskCount: newCount,
           });
         });
-      userRef.get().then(doc=>{
-        let index = this.client.initIndex('users');
-        var user = doc.data();
-        user.objectID = user.userId;
-        index.saveObject(user);
+        userRef.get().then(doc => {
+          let index = this.client.initIndex('users');
+          var user = doc.data();
+          user.objectID = user.userId;
+          index.saveObject(user);
+        });
+      }
+      this.task = new TaskObjectProvider(
+        this.taskCreateForm.value.taskName,
+        this.taskId,
+        Number(this.duration),
+        this.startDate,
+        this.endDate,
+        this.taskCreateForm.value.taskDescription,
+        false,
+        this.curUserToken.displayName,
+        this.curUserToken.uid,
+        this.taskCreateForm.value.location
+      );
+
+      this.task.setCompensation(Number(this.compensationHolder));
+      this.task.setWantedSkill(this.skill);
+      this.task.setAppliedHelperList([]);
+      this.task.setAppliedHelpers([]);
+      this.task.setOwnerComment(" ");
+      this.navCtrl.push(TaskViewPage, {
+        'task': this.task
       });
     }
-
-    this.navCtrl.push(ProfilePage);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TaskEditPage');
+  }
+
+    completeTask() {
+    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
+    popover.present();
+  }
+
+  deleteTask() {
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', this.taskId);
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.delete().then(doc=>{console.log("I'm here.")});
+    this.navCtrl.setRoot(DashboardPage).then(()=>{
+      this.navCtrl.push(MyTasksPage);
+    });
+  }
+
+  goBack() {
+    if(this.navParams.get('taskId') != undefined) {
+      console.log("popping");
+      this.navCtrl.pop();
+    } else {
+      this.navCtrl.setRoot(ProfilePage);
+    }
   }
 
   changePicture() {
@@ -299,39 +387,6 @@ export class TaskEditPage {
       alert(error);
     });
   }
-
-  completeTask() {
-    //TODO
-    // mark this task as completed, update record in firebase
-    
-    // jump to rating page.
-    // this.navCtrl.push(RatingPage);
-    let popover = this.popoverCtrl.create(CommentPopover);
-  }
-
-  deleteTask() {
-    this.navCtrl.push(ProfilePage);
-  }
-
-  goBack() {
-    if(this.navParams.get('taskID') != undefined) {
-      this.navCtrl.pop();
-    } else {
-      this.navCtrl.push(ProfilePage);
-    }
-  }
-
-  // <button ion-button (click)="pickADate()">pick a date</button>
-  // pickADate(){
-  //   this.datePicker.show({
-  //     date: new Date(),
-  //     mode: 'date',
-  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-  //   }).then(
-  //     date => console.log('Got date: ', date),
-  //     err => console.log('Error occurred while getting date: ', err)
-  //   );
-  // }
 
 }
 

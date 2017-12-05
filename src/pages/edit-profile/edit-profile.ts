@@ -37,15 +37,12 @@ export class EditProfilePage {
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6', {protocol: 'https:'});
   skillInterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
-  mechSkillInterface = ["Welding",
-                        "Mechanic",
-                        "Soldering",
-                        "Drafting",];
-  artSkillInterface = ["Graphic Design","Photography","DrawingandPainting"];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["GraphicDesign","Photography","DrawingAndPainting"];
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-                        "Russian", "English", "OtherLang"];
+                        "Russian", "English", "OtherLanguage"];
   skill =  new Object();
   csSkills = [];
   mechSkills = [];
@@ -55,9 +52,6 @@ export class EditProfilePage {
   langSkills = [];
   helper = false;
   displaySkill = [];
-  csSkillOption = [
-    'Programming', 'Excel', 'Hardware'
-  ]
   //constructor of the page.
   constructor(
     private AFcurUser: AngularFireAuth,
@@ -201,7 +195,7 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
-        this.CURRENT_USER.taskCount);
+        this.CURRENT_USER.taskCount, this.CURRENT_USER.photoUrl, this.CURRENT_USER.isHelper);
 
 
       console.log("newUser is ", newUser);
@@ -359,24 +353,4 @@ export class EditProfilePage {
         console.log("no pic chosen, something is wrong");
       }
   }
-
-  /*
-  /  this function will find user node using userId and return value
-  /  of the node
-   */
-  getUserProfile = function(userId : string, profile) : any
-  {
-    var user;
-    var userRef = firebase.database().ref('user/' + userId);            //get a node reference with path specified by userId
-    userRef.once('value', function(snapshot)         // read node value once use firebase API
-    {
-      user = snapshot.val()                                               //return node value.
-      profile(user);
-      return user;
-    })
-  }
-
-
-
-
 }

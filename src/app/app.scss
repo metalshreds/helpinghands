@@ -17,27 +17,44 @@
 
 
 
-
 /* Main app color scheme */
 
-$primary-color: #19afdc;
-$secondary-color: #39acdc;
-
-/* Task Colors */
-
-$task-completed: #99dc85;
-$task-pending: #dcd575;
-$task-suggested: #dc9593;
-
-$card-bg: #f4f4f5;
-
-.task-completed {
- background-color: $task-completed;
-}
-
-ion-card-content, .card-item{
-  background-color: $card-bg;
-}
+$prim-color: #b03626;
 
 
-/* Other Colors */
+$prim-xlight: #F38678;
+$prim-light: #F38678;
+$prim-med: #CD5646;
+$prim-dark: #8E1B0C;
+$prim-xdark: #290600;
+
+
+/* Task Card Colors */
+$task-confirmed: #5bde99;
+$task-pending: #f9d462; //ffcb71
+$task-suggested: #85c8d6;
+$task-completed: #d5d5d5;
+
+$card-bg: #f0f0f1;
+$card-border: #cbcbcb;
+$card-border-header: #a9a9a9;
+
+//
+//$toolbar-background: #ae0606;
+//$tabs-background: #ae0606;
+//$tabs-md-tab-color-inactive: #ffffff;
+//$item-ios-divider-color: #ae0606;
+
+
+$toolbar-background: $prim-light;
+$tabs-background: $prim-color;
+$tabs-md-tab-color-inactive: #ffffff;
+$item-ios-divider-color: $prim-color;
+
+
+/** Nav Bar  **/
+.toolbar-background { background-color: $toolbar-background; }
+//.tabs-background {background: $prim-light;}
+//.items-ios-divider-color{color: $prim-light;}
+
+

@@ -28,9 +28,10 @@ export class ProfileProvider {
   public blockListTask : TaskObjectProvider[] = [];
   public confirmedTask : TaskObjectProvider[] = [];
   public appliedTask : TaskObjectProvider[] = [];
-  public invitedTask : TaskObjectProvider[] = []; 
+  public invitedTask : TaskObjectProvider[] = [];
   public pendingTask: TaskObjectProvider[] = [];
   public participateTask: TaskObjectProvider[] = [];
+  public completedTask : TaskObjectProvider[] = [];
   public travelRadius : number;
   public taskCount : number;
   public photoUrl : string;
@@ -48,6 +49,9 @@ export class ProfileProvider {
     phone : number,
     travelRadius : number,
     taskCount: number,
+    photoUrl : string,
+    isHelper : boolean,
+
   ) {
     this.lastName = lastName;
     this.firstName = firstName;
@@ -59,12 +63,34 @@ export class ProfileProvider {
     this.phone = phone;
     this.travelRadius = travelRadius;
     this.taskCount = taskCount;
-    this.photoUrl = null;
+    this.photoUrl = photoUrl;
+    this.isHelper = isHelper;
   }
 
-  /*
-  /
-   */
+  setAppliedTask(list)
+  {
+    this.appliedTask = list;
+  }
+  setOwnedTask(list)
+  {
+    this.ownedTask = list;
+  }
+  setConfirmedTask(list)
+  {
+    this.confirmedTask = list;
+  }
+  setInvitedTask(list)
+  {
+    this.invitedTask = list;
+  }
+  setPendingTask(list)
+  {
+    this.pendingTask = list;
+  }
+  setCompletedTask(list)
+  {
+    this.completedTask = list;
+  }
 
 //TODO method to retrieve user info
 

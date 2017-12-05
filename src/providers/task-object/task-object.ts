@@ -24,6 +24,7 @@ export class TaskObjectProvider {
   public appliedHelpers: string[] = [];  //store applicant user id
   public location: string;
   public compensation: number;
+
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
@@ -39,7 +40,6 @@ export class TaskObjectProvider {
               timeStart : string,
               timeEnd : string,
               taskDescription : string,
-              wantedSkill : string[],
               complete : boolean,
               owner : string,
               ownerUserId : string,
@@ -49,21 +49,34 @@ export class TaskObjectProvider {
     this.taskId = taskId;
     this.duration = timeDuration;
     this.startDate = timeStart;
-    this.taskDescription = taskDescription;
     this.endDate = timeEnd;
-    this.wantedSkills = wantedSkill;
+    this.taskDescription = taskDescription;
     this.completed = complete;
     this.ownerUserId = ownerUserId;
     this.ownerName = owner;
+    this.location = location;
   }
 
   //FUNCTIONS
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
 
+  setWantedSkill(skillSet){
+    this.wantedSkills = skillSet;
+  }
+  setHelperArray(helper)
+  {
+    this.helpers = helper;
+  }
+  setAppliedHelpers(applicant)
+  {
+    this.appliedHelpers = applicant;
+  }
   setOwnerName(ownerName: string){this.ownerName = ownerName;}
   getOwnerName(){return this.ownerName};
 
+  setCompensation(compensation: number){ this.compensation = compensation;}
+  getCompensation(){ return this.compensation;}
   /*this function is used to set the helpers list
   / of a newly constructed task.
   / possible usage: construct a task object based

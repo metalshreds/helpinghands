@@ -7,7 +7,15 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>TaskView</ion-title>
+    <ion-buttons end *ngIf="showEditButton">
+      <button ion-button (click)="editTaskClicked($event, selectedTask.taskId)">
+        <ion-icon name = "create"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -15,31 +23,31 @@
 
 <ion-content padding>
 
-  <button *ngIf="showEditButton" ion-button class="edit-pencil" (click)='editTaskClicked($event, selectedTask.taskId)' >Edit</button>
-
-  <button *ngIf="showRequestButton" ion-button class="edit-pencil" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request</button>
-
   <ion-item>
     <div *ngIf ="selectedTask">
       <h1 class = "task-name">{{selectedTask.taskName}}</h1>
       <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button></h4>
       <h4 class="task-summary wrap">{{selectedTask.taskDescription}}</h4>
       <h4> </h4>
-      <h4>Start Time: {{selectedTask.timeStart}}</h4>
-      <h4>End Time: {{selectedTask.timeEnd}}</h4>
-      <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
-      <!--<h2>Compensation: {{CURRENT_TASK.Compensation}}</h2>-->
-      <!--<h2>Location: {{CURRENT_TASK.Location}}</h2>-->
+      <h4>Start Time: {{selectedTask.startDate}}</h4>
+      <h4>End Time: {{selectedTask.endDate}}</h4>
+      <h4>Estimated Length: {{selectedTask.duration}} hours</h4>
+      <h2>Compensation: {{selectedTask.compensation}}</h2>
+      <h2>Location: {{selectedTask.location}}</h2>
     </div>
   </ion-item>
 
+  <button *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
+
   <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
   <ion-item *ngIf="showEditButton">
-    <ion-title>Users Requesting to Help</ion-title>
+    <ion-title>Applied Helpers</ion-title>
     <ion-list >
-      <button ion-item *ngFor="let helper of selectedTask.appliedHelpers" (click) = 'appliedHelperClicked($event, helper)'>{{helper}}</button>
-      <!--<button (click)="">Accept</button>-->
-      <!--<button (click)="">Reject</button>-->
+      <ion-item *ngFor="let helper of appliedHelpers">
+        <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
+        <button ion-button (click)="acceptAppliedHelper($event, helper)">Accept</button>
+        <button ion-button (click)="rejectAppliedHelper($event, helper)">Reject</button>
+      </ion-item>
     </ion-list>
   </ion-item>
 
@@ -47,9 +55,10 @@
   <ion-item *ngIf="showEditButton">
     <ion-title>Suggested Helpers</ion-title>
     <ion-list >
-      <button ion-item *ngFor="let user of suggestedUsers" (click) = 'suggestedUserClicked($event, user)'>{{user.firstName}} {{user.lastName}}</button>
-      <!--<button (click)="">Accept</button>-->
-      <!--<button (click)="">Reject</button>-->
+      <ion-item  *ngFor="let user of suggestedUsers">
+        <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
+        <button ion-button (click)="requestUserClicked($event, user)">Request</button>
+      </ion-item>
     </ion-list>
   </ion-item>
 

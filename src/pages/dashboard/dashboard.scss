@@ -1,3 +1,91 @@
 page-dashboard {
 
 }
+
+/** TAB MODIFICATIONS **/
+
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: $prim-xdark;
+}
+
+.tabs-md .tab-button {
+  color: $prim-xdark;
+  background-color: $prim-xlight;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+  color: $prim-xdark;
+  background-color: $prim-light;
+}
+
+.tabs-md .tab-button{
+
+}
+
+/** CARD MODIFICATIONS **/
+ion-card-content, .card-item{
+  background-color: $card-bg;
+}
+
+ion-card-content, .card-item{
+  background-color: $card-bg;
+}
+
+.card-title-md {
+  padding: 8px;
+}
+
+.label-md{
+  margin: 6px 8px 6px 0px;
+}
+
+.item-md ion-icon[item-left], .item-md ion-icon[item-right], .item-md ion-icon[item-start], .item-md ion-icon[item-end]{
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.item-md ion-icon[item-left] + .item-inner, .item-md ion-icon[item-left] + .item-input, .item-md ion-icon[item-start] + .item-inner, .item-md ion-icon[item-start] + .item-input{
+
+  margin-left: 4px;
+}
+
+ion-app.md [padding], ion-app.md [padding] .scroll-content{
+  padding: 0px;
+}
+
+.item-block{
+  min-height: 5rem;
+}
+
+.card-content-md{
+  border: 1px solid $card-border;
+}
+
+ion-card {
+  display: block;
+}
+
+
+
+/** CARD MODIFICATIONS **/
+.task-completed {
+  background-color: $task-completed;
+  border: 1px solid $card-border-header;
+}
+
+.task-pending{
+  background-color: $task-pending;
+  border: 1px solid $card-border-header;
+}
+
+.task-suggested {
+  background-color: $task-suggested;
+  border: 1px solid $card-border-header;
+}
+
+.task-confirmed{
+  background-color: $task-confirmed;
+  border: 1px solid $card-border-header;
+}
+

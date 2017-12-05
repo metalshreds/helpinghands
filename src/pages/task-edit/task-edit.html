@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Edit Task<ion-icon name="brush"></ion-icon> </ion-title>
+    <ion-title>Edit Task <ion-icon name="brush"></ion-icon></ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -25,12 +25,12 @@
           <ion-input formControlName = "taskName" type = "text" value={{nameHolder}}> </ion-input>
         </ion-item>
 
-    <button ion-button (click)="changePicture()" block>Add a Picture</button>
+    <!--<button ion-button (click)="changePicture()" block>Add a Picture</button>-->
 
     <ion-item>
       <ion-label style="color: black" floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
+      <ion-textarea formControlName = "taskDescription" rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
     </ion-item>
 
     <ion-item>
@@ -70,7 +70,7 @@
       <ion-select [(ngModel)]="artSkills" [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
         <ion-option value="GraphicDesign">Graphic Design</ion-option>
         <ion-option value="Photography">Photography</ion-option>
-        <ion-option value="DrawingandPainting">Drawing and Painting</ion-option>
+        <ion-option value="DrawingAndPainting">Drawing and Painting</ion-option>
       </ion-select>
     </ion-item>
 
@@ -80,9 +80,9 @@
         Natural Sciences
       </ion-label>
       <ion-select [(ngModel)]="sciSkills"  [ngModelOptions]="{standalone: true}" multiple="true" cancelText="Cancel" okText="Save">
-        <ion-option value="Bio">Biology</ion-option>
+        <ion-option value="Biology">Biology</ion-option>
         <ion-option value="Physics">Physics</ion-option>
-        <ion-option value="Chem">Chemistry</ion-option>
+        <ion-option value="Chemistry">Chemistry</ion-option>
         <ion-option value="Agriculture">Agriculture</ion-option>
       </ion-select>
     </ion-item>
@@ -113,20 +113,16 @@
         <ion-option value="Portuguese">Portuguese</ion-option>
         <ion-option value="Russian">Russian</ion-option>
         <ion-option value="Spanish">Spanish</ion-option>
-        <ion-option value="OtherLang">Other</ion-option>
+        <ion-option value="OtherLanguage">Other</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item></ion-item>
-
     <ion-item>
+      <ion-label style="color: black">
+        Completed by
+      </ion-label>
       <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name='timer' item-start>   </ion-icon>
-      <ion-datetime displayFormat="MMM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
     </ion-item>
 
     <ion-item>
@@ -134,37 +130,30 @@
       <ion-label style="color: black">
         Location
       </ion-label>
-      <ion-input formControlName = "location" type="text" value={{locationHolder}}></ion-input>
+      <ion-input formControlName = "location" placeholder="Zipcode" type="number" value={{locationHolder}}></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-icon name='call' item-start></ion-icon>
+      <ion-icon name="clock" item-start></ion-icon>
       <ion-label style="color: black">
-        Contact via
+        Estimated task duration
       </ion-label>
-      <ion-select [(ngModel)]="media" [ngModelOptions]="{standalone: true}">
-        <ion-option>Email</ion-option>
-        <ion-option>Phone</ion-option>
-        <ion-option>Face to Face</ion-option>
-      </ion-select>
+      <ion-input [(ngModel)]="duration" [ngModelOptions]="{standalone: true}" placeholder="in hours" type="number" value={{duration}}></ion-input>
     </ion-item>
 
-
     <ion-item>
-
       <ion-label style="color: black">
         Compensation
       </ion-label>
       <ion-icon name='cash' item-start></ion-icon>
-      <ion-input formControlName = "compensation" type="number" placeholder="" value={{compensationHolder}}></ion-input>
-      <ion-toggle checked="false"></ion-toggle>
+      <ion-input formControlName = "compensation" type="number" placeholder="Amount in $" value={{compensationHolder}}></ion-input>
     </ion-item>
 
   </form>
     <button ion-button style="background-color: red" block (click)="goBack()">Discard Changes</button>
     <button ion-button style="background-color: #2ec95c" block (click)="updateTask()">Save Changes</button>
     <div *ngIf="!created">
-      <button ion-button style="background-color: blue" block (click)="completeTask()">This task is completed</button>
+      <button ion-button style="background-color: blue" block (click)="completeTask($event)">This task is completed</button>
       <button ion-button style="background-color: black" block (click)="deleteTask()">Delete this task</button>
     </div>
   </ion-list>
