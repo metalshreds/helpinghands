@@ -62,12 +62,15 @@ export class PendingPage {
                   taskDoc.data()['startTime'],
                   taskDoc.data()['endTime'],
                   taskDoc.data()['taskDescription'],
-                  taskDoc.data()['wantedSkill'],
                   taskDoc.data()['complete'],
-                  taskDoc.data()['owner'],
+                  taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
                 );
+                task.setWantedSkill(taskDoc.data()['wantedSkills']);
+                task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+                task.setAppliedHelpers(taskDoc.data()['helpers']);
+                task.setOwnerComment(taskDoc.data()['owerComment']);
               this.CURRENT_USER.appliedTask.push(task);
               this.eliminateDup.push(task.taskId);
               if(this.eliminateDup.length != 0)
@@ -102,14 +105,17 @@ export class PendingPage {
                 taskDoc.data()['startTime'],
                 taskDoc.data()['endTime'],
                 taskDoc.data()['taskDescription'],
-                taskDoc.data()['wantedSkill'],
                 taskDoc.data()['complete'],
-                taskDoc.data()['owner'],
+                taskDoc.data()['ownerName'],
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
               );
+              task.setWantedSkill(taskDoc.data()['wantedSkills']);
+              task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+              task.setAppliedHelpers(taskDoc.data()['helpers']);
+              task.setOwnerComment(taskDoc.data()['owerComment']);
             this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId)
+            this.eliminateDup.push(task.taskId);
             if(this.eliminateDup.length != 0)
             {
               this.noPendingTask = false;
@@ -121,7 +127,7 @@ export class PendingPage {
         }
       }
     });
-    
+
   }
 
   ionViewDidLoad() {

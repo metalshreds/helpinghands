@@ -16,15 +16,12 @@ import { IonicPage, NavController } from 'ionic-angular';
   templateUrl: 'dashboard.html'
 })
 export class DashboardPage {
-  
+
   confirmedRoot = 'ConfirmedPage';
   pendingRoot = 'PendingPage';
   suggestedRoot = 'SuggestedPage';
   completedRoot = 'CompletedPage';
-  
-  
-  
-
+  myTasksRoot = 'MyTasksPage';
 
   constructor(public navCtrl: NavController) {}
 

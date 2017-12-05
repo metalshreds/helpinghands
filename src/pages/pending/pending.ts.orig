@@ -27,13 +27,7 @@ export class PendingPage {
   noPendingTask = true;
   eliminateDup = [];   //acts like a map
 
-<<<<<<< HEAD
   constructor(public navCtrl: NavController,
-=======
-  //TODO handle cases that eliminates
-  //when click into a task that I applied, the request button shouldn't be there.
-  constructor(public navCtrl: NavController, 
->>>>>>> master
               public navParams: NavParams)
   {
     this.CURRENT_USER.invitedTask = [];

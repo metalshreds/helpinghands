@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Edit Task<ion-icon name="brush"></ion-icon> </ion-title>
+    <ion-title>Edit Task <ion-icon name="brush"></ion-icon></ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -30,7 +30,7 @@
     <ion-item>
       <ion-label style="color: black" floating>Task Description</ion-label>
       <ion-icon name='leaf' item-start></ion-icon>
-      <ion-textarea formControlName = "taskDescription"rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
+      <ion-textarea formControlName = "taskDescription" rows="5" type="text" value={{descriptionHolder}}></ion-textarea>
     </ion-item>
 
     <ion-item>
@@ -117,8 +117,6 @@
       </ion-select>
     </ion-item>
 
-    <ion-item></ion-item>
-
     <ion-item>
       <ion-label style="color: black">
         Completed by
@@ -136,11 +134,19 @@
     </ion-item>
 
     <ion-item>
+      <ion-icon name="clock" item-start></ion-icon>
+      <ion-label style="color: black">
+        Estimated task duration
+      </ion-label>
+      <ion-input [(ngModel)]="duration" [ngModelOptions]="{standalone: true}" placeholder="in hours" type="number" value={{duration}}></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-label style="color: black">
         Compensation
       </ion-label>
       <ion-icon name='cash' item-start></ion-icon>
-      <ion-input formControlName = "compensation" type="number" placeholder="" value={{compensationHolder}}></ion-input>
+      <ion-input formControlName = "compensation" type="number" placeholder="Amount in $" value={{compensationHolder}}></ion-input>
     </ion-item>
 
   </form>

@@ -40,7 +40,6 @@ export class TaskObjectProvider {
               timeStart : string,
               timeEnd : string,
               taskDescription : string,
-              wantedSkill : string[],
               complete : boolean,
               owner : string,
               ownerUserId : string,
@@ -52,16 +51,27 @@ export class TaskObjectProvider {
     this.startDate = timeStart;
     this.taskDescription = taskDescription;
     this.endDate = timeEnd;
-    this.wantedSkills = wantedSkill;
     this.completed = complete;
     this.ownerUserId = ownerUserId;
     this.ownerName = owner;
+    this.location = location;
   }
 
   //FUNCTIONS
   setTaskId(taskId: string){ this.taskId = taskId; }
   getTaskId(){ return this.taskId; }
 
+  setWantedSkill(skillSet){
+    this.wantedSkills = skillSet;
+  }
+  setHelperArray(helper)
+  {
+    this.helpers = helper;
+  }
+  setAppliedHelpers(applicant)
+  {
+    this.appliedHelpers = applicant;
+  }
   setOwnerName(ownerName: string){this.ownerName = ownerName;}
   getOwnerName(){return this.ownerName};
 

@@ -34,7 +34,7 @@ export class ProfilePage {
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-    "Russian", "English", "OtherLanguage"];
+                        "Russian", "English", "OtherLanguage"];
   displaySkill  = [];
   csSkills = [];
   hasCS = false;
@@ -145,19 +145,21 @@ export class ProfilePage {
                       taskDoc.data()['startTime'],
                       taskDoc.data()['endTime'],
                       taskDoc.data()['taskDescription'],
-                      taskDoc.data()['wantedSkills'],
                       taskDoc.data()['complete'],
-                      taskDoc.data()['owner'],
+                      taskDoc.data()['ownerName'],
                       taskDoc.data()['ownerUserId'],
                       taskDoc.data()['location']
-                    );
+                    );      
+                    task.setWantedSkill(taskDoc.data()['wantedSkills']);
+                    task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+                    task.setAppliedHelpers(taskDoc.data()['helpers']);
+                    task.setOwnerComment(taskDoc.data()['owerComment']);
                   for(const field in taskDoc.data())
                   {
                     task[field] = taskDoc.data()[field];
                   }
 
                   this.CURRENT_USER.completedTask.push(task);
-
 
                 });
 
