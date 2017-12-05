@@ -113,7 +113,6 @@ export class CompletedPage {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });
-
   }
 
 }

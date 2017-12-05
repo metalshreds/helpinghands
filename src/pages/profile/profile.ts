@@ -34,7 +34,7 @@ export class ProfilePage {
   sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
   econSkillInterface = ["Management", "Accounting", "Economics"];
   langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
-    "Russian", "English", "OtherLanguage"];
+                        "Russian", "English", "OtherLanguage"];
   displaySkill  = [];
   csSkills = [];
   hasCS = false;
@@ -160,7 +160,6 @@ export class ProfilePage {
                   }
 
                   this.CURRENT_USER.completedTask.push(task);
-
 
                 });
 

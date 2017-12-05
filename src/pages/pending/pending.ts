@@ -29,7 +29,7 @@ export class PendingPage {
 
   //TODO handle cases that eliminates
   //when click into a task that I applied, the request button shouldn't be there.
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams)
   {
     this.CURRENT_USER.invitedTask = [];
@@ -67,7 +67,7 @@ export class PendingPage {
                   taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
-                );      
+                );
                 task.setWantedSkill(taskDoc.data()['wantedSkills']);
                 task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
                 task.setAppliedHelpers(taskDoc.data()['helpers']);
@@ -110,13 +110,13 @@ export class PendingPage {
                 taskDoc.data()['ownerName'],
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
-              );      
+              );
               task.setWantedSkill(taskDoc.data()['wantedSkills']);
               task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
               task.setAppliedHelpers(taskDoc.data()['helpers']);
               task.setOwnerComment(taskDoc.data()['owerComment']);
             this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId)
+            this.eliminateDup.push(task.taskId);
             if(this.eliminateDup.length != 0)
             {
               this.noPendingTask = false;
@@ -129,49 +129,44 @@ export class PendingPage {
       }
     });
 
-    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask')
-    var invObserver = invitedQuery.onSnapshot(querySnapshot=>
-    {
-      for(const i in querySnapshot.docs)
-      {
-        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)  
-        {
-          var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
-          taskRef.get().then(taskDoc =>{
-              console.log('task doc is ',taskDoc.data());
-              //create task and push into array
-              //TODO change the following hard coding
-              var task = new TaskObjectProvider(
-                taskDoc.data()['taskName'],
-                taskDoc.data()['taskId'],
-                taskDoc.data()['duration'],
-                taskDoc.data()['startTime'],
-                taskDoc.data()['endTime'],
-                taskDoc.data()['taskDescription'],
-                taskDoc.data()['complete'],
-                taskDoc.data()['ownerName'],
-                taskDoc.data()['ownerUserId'],
-                taskDoc.data()['location']
-              );      
-              task.setWantedSkill(taskDoc.data()['wantedSkills']);
-              task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
-              task.setAppliedHelpers(taskDoc.data()['helpers']);
-              task.setOwnerComment(taskDoc.data()['owerComment']);
-              
-            this.CURRENT_USER.pendingTask.push(task);
-            console.log('task being pushed in pending page', task);
-            this.eliminateDup.push(task.taskId)
-            if(this.eliminateDup.length != 0)
-            {
-              this.noPendingTask = false;
-            }
-            else{
-              this.noPendingTask = true;
-            }
-          });
-        }
-      }
-    });
+    // var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask')
+    // var invObserver = invitedQuery.onSnapshot(querySnapshot=>
+    // {
+    //   for(const i in querySnapshot.docs)
+    //   {
+    //     if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
+    //     {
+    //       var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
+    //       taskRef.get().then(taskDoc =>{
+    //           console.log('task doc is ',taskDoc.data());
+    //           //create task and push into array
+    //           //TODO change the following hard coding
+    //           var task = new TaskObjectProvider(
+    //             taskDoc.data()['taskName'],
+    //             taskDoc.data()['taskId'],
+    //             taskDoc.data()['duration'],
+    //             taskDoc.data()['startTime'],
+    //             taskDoc.data()['endTime'],
+    //             taskDoc.data()['taskDescription'],
+    //             taskDoc.data()['wantedSkill'],
+    //             taskDoc.data()['complete'],
+    //             taskDoc.data()['owner'],
+    //             taskDoc.data()['ownerUserId'],
+    //             taskDoc.data()['location']
+    //           );
+    //         this.CURRENT_USER.invitedTask.push(task);
+    //         this.eliminateDup.push(task.taskId)
+    //         if(this.eliminateDup.length != 0)
+    //         {
+    //           this.noPendingTask = false;
+    //         }
+    //         else{
+    //           this.noPendingTask = true;
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
 
   }
 
