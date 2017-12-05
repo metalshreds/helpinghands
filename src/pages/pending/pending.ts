@@ -34,7 +34,8 @@ export class PendingPage {
   {
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
-    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask');
+    this.CURRENT_USER.pendingTask = [];
+    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask')
     var observer = query.onSnapshot(querySnapshot=>
     {
       console.log('on pending observer1 ', querySnapshot);
@@ -62,13 +63,16 @@ export class PendingPage {
                   taskDoc.data()['startTime'],
                   taskDoc.data()['endTime'],
                   taskDoc.data()['taskDescription'],
-                  taskDoc.data()['wantedSkill'],
                   taskDoc.data()['complete'],
-                  taskDoc.data()['owner'],
+                  taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
                 );
-              this.CURRENT_USER.invitedTask.push(task);
+                task.setWantedSkill(taskDoc.data()['wantedSkills']);
+                task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+                task.setAppliedHelpers(taskDoc.data()['helpers']);
+                task.setOwnerComment(taskDoc.data()['owerComment']);
+              this.CURRENT_USER.appliedTask.push(task);
               this.eliminateDup.push(task.taskId);
               if(this.eliminateDup.length != 0)
               {
@@ -109,14 +113,17 @@ export class PendingPage {
                 taskDoc.data()['startTime'],
                 taskDoc.data()['endTime'],
                 taskDoc.data()['taskDescription'],
-                taskDoc.data()['wantedSkill'],
                 taskDoc.data()['complete'],
-                taskDoc.data()['owner'],
+                taskDoc.data()['ownerName'],
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
               );
+              task.setWantedSkill(taskDoc.data()['wantedSkills']);
+              task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+              task.setAppliedHelpers(taskDoc.data()['helpers']);
+              task.setOwnerComment(taskDoc.data()['owerComment']);
             this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId)
+            this.eliminateDup.push(task.taskId);
             if(this.eliminateDup.length != 0)
             {
               this.noPendingTask = false;
@@ -129,44 +136,44 @@ export class PendingPage {
       }
     });
 
-    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask');
-    var invObserver = invitedQuery.onSnapshot(querySnapshot=>
-    {
-      for(const i in querySnapshot.docs)
-      {
-        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
-        {
-          var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
-          taskRef.get().then(taskDoc =>{
-              console.log('task doc is ',taskDoc.data());
-              //create task and push into array
-              //TODO change the following hard coding
-              var task = new TaskObjectProvider(
-                taskDoc.data()['taskName'],
-                taskDoc.data()['taskId'],
-                taskDoc.data()['duration'],
-                taskDoc.data()['startTime'],
-                taskDoc.data()['endTime'],
-                taskDoc.data()['taskDescription'],
-                taskDoc.data()['wantedSkill'],
-                taskDoc.data()['complete'],
-                taskDoc.data()['owner'],
-                taskDoc.data()['ownerUserId'],
-                taskDoc.data()['location']
-              );
-            this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId)
-            if(this.eliminateDup.length != 0)
-            {
-              this.noPendingTask = false;
-            }
-            else{
-              this.noPendingTask = true;
-            }
-          });
-        }
-      }
-    });
+    // var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask')
+    // var invObserver = invitedQuery.onSnapshot(querySnapshot=>
+    // {
+    //   for(const i in querySnapshot.docs)
+    //   {
+    //     if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
+    //     {
+    //       var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
+    //       taskRef.get().then(taskDoc =>{
+    //           console.log('task doc is ',taskDoc.data());
+    //           //create task and push into array
+    //           //TODO change the following hard coding
+    //           var task = new TaskObjectProvider(
+    //             taskDoc.data()['taskName'],
+    //             taskDoc.data()['taskId'],
+    //             taskDoc.data()['duration'],
+    //             taskDoc.data()['startTime'],
+    //             taskDoc.data()['endTime'],
+    //             taskDoc.data()['taskDescription'],
+    //             taskDoc.data()['wantedSkill'],
+    //             taskDoc.data()['complete'],
+    //             taskDoc.data()['owner'],
+    //             taskDoc.data()['ownerUserId'],
+    //             taskDoc.data()['location']
+    //           );
+    //         this.CURRENT_USER.invitedTask.push(task);
+    //         this.eliminateDup.push(task.taskId)
+    //         if(this.eliminateDup.length != 0)
+    //         {
+    //           this.noPendingTask = false;
+    //         }
+    //         else{
+    //           this.noPendingTask = true;
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
 
   }
 

@@ -94,6 +94,13 @@
           <!--</ion-note>-->
           <!--</ion-col>-->
           <!--</ion-row>-->
+<<<<<<< HEAD
+
+        </button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+=======
         </ion-card-content>
       </button>
     </ion-card>
@@ -141,5 +148,6 @@
     </ion-list>
 
 
+>>>>>>> 72a0e9558f7e5ff361069c17b77d158ebaa2ce49
 </ion-content>
 

@@ -59,6 +59,7 @@ export class TaskViewPage {
         this.CURRENT_USER[field] = doc.data()[field];
       }
       console.log("after first for loop!");
+      console.log('current task is ', this.selectedTask);
       for(const skill in this.selectedTask.wantedSkills){
         console.log("skill: " + skill);
       }
@@ -84,7 +85,9 @@ export class TaskViewPage {
                   user.data()['zipCode'],
                   user.data()['phone'],
                   user.data()['travelRadius'],
-                  user.data()['taskCount']
+                  user.data()['taskCount'],
+                  user.data()['photoUrl'],
+                  user.data()['isHelper']
                 );
                 //put keys of wantedSkills map in a array for display purpose
                 for (const i in userObject.skills)
@@ -129,7 +132,7 @@ export class TaskViewPage {
     });
 
 
-    //TODO change this to observer.
+    
     console.log("RIGHT BEFORE APPLIED HELPERS");
     var docRef = this.db.collection('tasks').doc(this.selectedTask.taskId).collection('appliedHelpers');
     docRef.get().then(doc=>{
@@ -153,7 +156,9 @@ export class TaskViewPage {
               userDoc.data()['zipCode'],
               userDoc.data()['phone'],
               userDoc.data()['travelRadius'],
-              userDoc.data()['taskCount']
+              userDoc.data()['taskCount'],
+              userDoc.data()['photoUrl'],
+              userDoc.data()['isHelper']
             );
             for(const field in userDoc.data())
             {

@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,
   Platform, ActionSheetController, LoadingController,
-  PopoverController} from 'ionic-angular';
+  PopoverController, AlertController} from 'ionic-angular';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import { CameraProvider } from '../../providers/camera';
 import { CommentPopover } from "./comment-popover";
 import { AngularFireAuth } from "angularfire2/auth"
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { taskNameValidator } from '../../validators/taskNameValidator';
+import { descriptionValidator } from '../../validators/descriptionValidator';
+import { zipValidator } from '../../validators/zipValidator';
 import * as algoliasearch from 'algoliasearch';
 import firebase from 'firebase';
 import { skill } from '../../interface/skills'
@@ -16,6 +19,7 @@ import { ProfilePage } from "../profile/profile"
 import { cloudProvider } from '../../providers/cloudbase';
 import { DashboardPage } from '../dashboard/dashboard';
 import { RatingPage } from '../rating/rating';
+import {MyTasksPage} from "../my-tasks/my-tasks";
 /**
  * Generated class for the TaskEditPage page.
  *
@@ -45,7 +49,7 @@ export class TaskEditPage {
   day : string = '';
   startDate : string = '';
   endDate: string = '';
-  duration: number = 0;
+  duration: string = '';
   skillinterface = new skill();
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
   mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
@@ -77,11 +81,12 @@ export class TaskEditPage {
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
     public cloudModule : cloudProvider,
+    public alertCtrl : AlertController,
   ) {
     this.taskCreateForm = formBuilder.group ({
-      taskName : [''],
-      taskDescription : [''],
-      location : [''],
+      taskName : ['', Validators.compose([taskNameValidator.isValid, Validators.required])],
+      taskDescription : ['', Validators.compose([descriptionValidator.isValid, Validators.required])],
+      location : ['', Validators.compose([zipValidator.isValid, Validators.required])],
       compensation : [''],
     });
 
@@ -119,7 +124,6 @@ export class TaskEditPage {
             tmpEconSkill.push(this.skillHolder[j]);
           else if(this.langSkillInterface.indexOf(this.skillHolder[j]) >= 0)
             tmpLangSkill.push(this.skillHolder[j]);
-
         }
         this.csSkills = tmpCsSkill;
         this.mechSkills = tmpMechSkill;
@@ -166,89 +170,160 @@ export class TaskEditPage {
 
 
   updateTask(){
-    for (const i in this.skillinterface)
-    {
-      if (this.csSkills.indexOf(i) > -1 ||
+    if (!this.taskCreateForm.controls.taskName.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid task name',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(!this.taskCreateForm.controls.taskDescription.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid description with at most 300 characters',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(this.endDate.length == 0) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a date you would like the task to be completed by',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else if(!this.taskCreateForm.controls.location.valid) {
+      const alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'Please enter a valid zipcode',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    else {
+      for (const i in this.skillinterface) {
+        if (this.csSkills.indexOf(i) > -1 ||
           this.mechSkills.indexOf(i) > -1 ||
           this.artSkills.indexOf(i) > -1 ||
           this.sciSkills.indexOf(i) > -1 ||
           this.econSkills.indexOf(i) > -1 ||
-          this.langSkills.indexOf(i) > -1)
-      {
-        this.skill[i] = true;
+          this.langSkills.indexOf(i) > -1) {
+          this.skill[i] = true;
+        }
+        else
+          this.skill[i] = false;
       }
-      else
-        this.skill[i] = false;
-    }
-    console.log("skill", this.skill);
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.set({
-        taskName : this.taskCreateForm.value.taskName,
-        taskId : this.taskId,
-        taskDescription : this.taskCreateForm.value.taskDescription,
-        location : this.taskCreateForm.value.location,
-        compensation : this.taskCreateForm.value.compensation,
-        wantedSkills : this.skill,
-        startDate : this.startDate,
-        endDate : this.endDate,
-        duration : this.duration,
-        completed : false,
-        ownerName : this.curUserToken.displayName,
-        ownerUserId : this.curUserToken.uid,
+      console.log("skill", this.skill);
+      if (this.duration.length == 0) {
+        this.duration = '0';
+      }
+
+      this.compensationHolder = this.taskCreateForm.value.compensation;
+      if (this.compensationHolder.length == 0) {
+        this.compensationHolder = '0';
+      }
+
+      let taskRef = this.db.collection('tasks').doc(this.taskId);
+      taskRef.set({
+        taskName: this.taskCreateForm.value.taskName,
+        taskId: this.taskId,
+        taskDescription: this.taskCreateForm.value.taskDescription,
+        location: this.taskCreateForm.value.location,
+        compensation: this.compensationHolder,
+        wantedSkills: this.skill,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        duration: this.duration,
+        completed: false,
+        ownerName: this.curUserToken.displayName,
+        ownerUserId: this.curUserToken.uid,
         ownerComment: '',
-        photoUrl : this.photoUrl,
-    });
-    console.log("task name input is ", this.taskCreateForm.value.taskName);
-    //add this task to current user's ownedtask
-    this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId,this.taskCreateForm.value.taskName);
-    //add index to this task file
-    taskRef.get().then(doc=>{
-      let tIndex = this.client.initIndex('tasks');
-      var task = doc.data();
-      task.objectID = task.taskId;
-      tIndex.saveObject(task);
-    });
-    //if its the first time create this task, incease creator's task count by 1
-    //  and update it in database. Also adds the task to the user's pending
-    // list
-    if(this.created ==true )
-    {
-      this.cloudModule.addTaskToList(this.curUserToken.uid, 'pendingTask',
-        this.taskId,this.taskCreateForm.value.taskName);
-      let userRef = this.db.collection('users').doc(this.curUserToken.uid);
-      userRef.get().then(doc=>{
-        let newCount = doc.data().taskCount + 1;
+        photoUrl: this.photoUrl,
+      });
+      console.log("task name input is ", this.taskCreateForm.value.taskName);
+      //add this task to current user's ownedtask
+      this.cloudModule.addTaskToList(this.curUserToken.uid, 'ownedTask', this.taskId, this.taskCreateForm.value.taskName);
+      //add index to this task file
+      taskRef.get().then(doc => {
+        let tIndex = this.client.initIndex('tasks');
+        var task = doc.data();
+        task.objectID = task.taskId;
+        tIndex.saveObject(task);
+      });
+      //if its the first time create this task, incease creator's task count by 1
+      //  and update it in database. Also adds the task to the user's pending
+      // list
+      if (this.created == true) {
+        let userRef = this.db.collection('users').doc(this.curUserToken.uid);
+        userRef.get().then(doc => {
+          let newCount = doc.data().taskCount + 1;
           userRef.update({
-            taskCount : newCount,
+            taskCount: newCount,
           });
         });
-      userRef.get().then(doc=>{
-        let index = this.client.initIndex('users');
-        var user = doc.data();
-        user.objectID = user.userId;
-        index.saveObject(user);
+        userRef.get().then(doc => {
+          let index = this.client.initIndex('users');
+          var user = doc.data();
+          user.objectID = user.userId;
+          index.saveObject(user);
+        });
+      }
+      this.task = new TaskObjectProvider(
+        this.taskCreateForm.value.taskName,
+        this.taskId,
+        Number(this.duration),
+        this.startDate,
+        this.endDate,
+        this.taskCreateForm.value.taskDescription,
+        false,
+        this.curUserToken.displayName,
+        this.curUserToken.uid,
+        this.taskCreateForm.value.location
+      );
+
+      this.task.setCompensation(Number(this.compensationHolder));
+      this.task.setWantedSkill(this.skill);
+      this.task.setAppliedHelperList([]);
+      this.task.setAppliedHelpers([]);
+      this.task.setOwnerComment(" ");
+      this.navCtrl.push(TaskViewPage, {
+        'task': this.task
       });
     }
-    this.task = new TaskObjectProvider(
-      this.taskCreateForm.value.taskName,
-      this.taskId,
-      this.duration,
-      this.startDate,
-      this.endDate,
-      this.taskCreateForm.value.taskDescription,
-      this.skillHolder,
-      false,
-      this.curUserToken.displayName,
-      this.curUserToken.uid,
-      this.taskCreateForm.value.location
-    );
-    this.navCtrl.push(TaskViewPage, {
-      'task' : this.task
-    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TaskEditPage');
+  }
+
+    completeTask() {
+    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
+    popover.present();
+  }
+
+  deleteTask() {
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', this.taskId);
+    let taskRef = this.db.collection('tasks').doc(this.taskId);
+    taskRef.delete().then(doc=>{console.log("I'm here.")});
+    this.navCtrl.setRoot(DashboardPage).then(()=>{
+      this.navCtrl.push(MyTasksPage);
+    });
+  }
+
+  goBack() {
+    if(this.navParams.get('taskId') != undefined) {
+      console.log("popping");
+      this.navCtrl.pop();
+    } else {
+      this.navCtrl.setRoot(ProfilePage);
+    }
   }
 
   changePicture() {
@@ -313,26 +388,5 @@ export class TaskEditPage {
     });
   }
 
-  completeTask() {
-    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
-    popover.present();
-  }
-
-  deleteTask() {
-    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
-    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', this.taskId);
-    let taskRef = this.db.collection('tasks').doc(this.taskId);
-    taskRef.delete().then(doc=>{console.log("I'm here.")});
-    this.navCtrl.push(ProfilePage);
-  }
-
-  goBack() {
-    if(this.navParams.get('taskId') != undefined) {
-      console.log("popping");
-      this.navCtrl.pop();
-    } else {
-      this.navCtrl.setRoot(ProfilePage);
-    }
-  }
 }
 

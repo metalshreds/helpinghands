@@ -195,7 +195,7 @@ export class EditProfilePage {
       var newUser = new ProfileProvider(this.editProfileForm.value.lastName,
         this.editProfileForm.value.firstName, this.curUserToken.uid, this.curUserToken.email, this.editProfileForm.value.introduction,
         this.skill, this.editProfileForm.value.zipCode, this.editProfileForm.value.phone, this.editProfileForm.value.travelRadius,
-        this.CURRENT_USER.taskCount);
+        this.CURRENT_USER.taskCount, this.CURRENT_USER.photoUrl, this.CURRENT_USER.isHelper);
 
 
       console.log("newUser is ", newUser);
