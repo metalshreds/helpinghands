@@ -17,7 +17,7 @@
 <ion-content padding>
   <ion-list>
     <ion-card>
-      <button ion-item *ngFor="let task of myTasks" (click) = 'taskClicked($event, task)'>
+      <button ion-item *ngFor="let task of this.myTasks" (click) = 'taskClicked($event, task)'>
         <ion-item class="task-own">
           <ion-avatar item-start>
             <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">

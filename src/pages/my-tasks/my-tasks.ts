@@ -75,7 +75,7 @@ export class MyTasksPage {
     }); //END .then
   } // END of loadMyTasks
 
-  taskClicked(task) {
+  taskClicked(event, task) {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });
