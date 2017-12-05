@@ -49,8 +49,8 @@ export class TaskObjectProvider {
     this.taskId = taskId;
     this.duration = timeDuration;
     this.startDate = timeStart;
-    this.taskDescription = taskDescription;
     this.endDate = timeEnd;
+    this.taskDescription = taskDescription;
     this.completed = complete;
     this.ownerUserId = ownerUserId;
     this.ownerName = owner;

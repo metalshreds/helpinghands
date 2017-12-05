@@ -29,9 +29,9 @@
       <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button></h4>
       <h4 class="task-summary wrap">{{selectedTask.taskDescription}}</h4>
       <h4> </h4>
-      <h4>Start Time: {{selectedTask.timeStart}}</h4>
-      <h4>End Time: {{selectedTask.timeEnd}}</h4>
-      <h4>Estimated Length: {{selectedTask.timeDuration}} hours</h4>
+      <h4>Start Time: {{selectedTask.startDate}}</h4>
+      <h4>End Time: {{selectedTask.endDate}}</h4>
+      <h4>Estimated Length: {{selectedTask.duration}} hours</h4>
       <h2>Compensation: {{selectedTask.compensation}}</h2>
       <h2>Location: {{selectedTask.location}}</h2>
     </div>
