@@ -29,12 +29,12 @@ export class PendingPage {
 
   //TODO handle cases that eliminates
   //when click into a task that I applied, the request button shouldn't be there.
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams)
   {
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
-    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask')
+    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask');
     var observer = query.onSnapshot(querySnapshot=>
     {
       console.log('on pending observer1 ', querySnapshot);
@@ -83,7 +83,7 @@ export class PendingPage {
       }
     });
 
-    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask')
+    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask');
     var invObserver = invitedQuery.onSnapshot(querySnapshot=>
     {
       for(const i in querySnapshot.docs)
@@ -91,7 +91,14 @@ export class PendingPage {
         if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
         {
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
+
           taskRef.get().then(taskDoc =>{
+
+            if(!taskDoc.exists)
+            {
+              console.log('in pending.ts/reading doc from invited failed, looking for doc: ', querySnapshot.docs[i].id, 'from user: ', );
+            }
+
               console.log('task doc is ',taskDoc.data());
               //create task and push into array
               //TODO change the following hard coding
@@ -122,12 +129,12 @@ export class PendingPage {
       }
     });
 
-    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask')
+    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('pendingTask');
     var invObserver = invitedQuery.onSnapshot(querySnapshot=>
     {
       for(const i in querySnapshot.docs)
       {
-        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)  
+        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
         {
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
           taskRef.get().then(taskDoc =>{
@@ -146,7 +153,7 @@ export class PendingPage {
                 taskDoc.data()['owner'],
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
-              );      
+              );
             this.CURRENT_USER.invitedTask.push(task);
             this.eliminateDup.push(task.taskId)
             if(this.eliminateDup.length != 0)

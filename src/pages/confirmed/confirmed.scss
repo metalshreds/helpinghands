@@ -1,3 +1,32 @@
 page-confirmed {
 
 }
+
+.accept-reject-buttons {
+
+  //min-height: 4.4rem;
+  //min-width: 4.4rem;
+  background-color: transparent;
+}
+
+
+.acc_rej_icon{
+  min-height: 3rem;
+  //min-width: 3rem;
+}
+
+.card-header-md + .card-content-md, .card-md .item + .card-content-md {
+  padding: 0px;
+}
+
+.item-md.item-block .item-inner{
+  padding-right: 0px;
+}
+
+.item-md{
+  padding-left: 10px;
+}
+
+button{
+  padding:0px;
+}
