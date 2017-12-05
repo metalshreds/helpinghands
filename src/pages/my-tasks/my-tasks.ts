@@ -1,56 +1,32 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TaskObjectProvider} from "../../providers/task-object/task-object";
-import { TaskViewPage} from "../task-view/task-view";
-import { AngularFireDatabase } from "angularfire2/database";
-import { ProfileProvider} from "../../providers/profile/profile";
+import { TaskObjectProvider } from "../../providers/task-object/task-object";
+import { TaskViewPage } from "../task-view/task-view";
 import firebase from 'firebase';
-import {AngularFireAuth} from "angularfire2/auth";
-import { cloudProvider } from '../../providers/cloudbase';
-import {isDefined, noUndefined} from "@angular/compiler/src/util";
-import {isNullOrUndefined} from "util";
-
-
-/**
- * Generated class for the CompletedPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AngularFireAuth } from "angularfire2/auth";
 
 @IonicPage()
 @Component({
-  selector: 'page-completed',
-  templateUrl: 'completed.html',
+  selector: 'page-my-tasks',
+  templateUrl: 'my-tasks.html',
 })
-
-export class CompletedPage {
-
-  // ownedTasks: Array<string> = [];
-  completedTasks: Array<TaskObjectProvider> = [];
-  skills: Array<boolean>;
+export class MyTasksPage {
+  myTasks: TaskObjectProvider[] = [];
   curUserToken = this.AFcurUser.auth.currentUser;
-  CURRENT_USER = {} as ProfileProvider;
   db = firebase.firestore();
-
-  taskOwnerDict = {};
-
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private AFdatabase: AngularFireDatabase,
-              public AFcurUser: AngularFireAuth,
-  ) {
-      // Wait for view to load to generate list of tasks
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public AFcurUser: AngularFireAuth,) {
   }
-
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CompletedPage');
-    this.loadCompletedTasks();
+    console.log('ionViewDidLoad MyTasksPage');
+    this.loadMyTasks();
   }
 
-  loadCompletedTasks(){
-
+  loadMyTasks(){
+    console.log("I'm loading up");
     /** Get list of owned tasks from user  **/
     this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
       ownedTasks.forEach((doc) => {
@@ -65,7 +41,7 @@ export class CompletedPage {
 
           /** store only completed tasks**/
           console.log('Complete: ', ownedTasks.data()['completed'] );
-          if (ownedTasks.data()['completed'] == true) {
+          if (ownedTasks.data()['completed'] == false) {
             //TODO Update firebase AND task-object AND user object fields to use camelCase with initial lower case
             let task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
@@ -88,7 +64,7 @@ export class CompletedPage {
               task.setOwnerName(ownedTasks.data()['ownerName']);
             }
 
-            this.completedTasks.push(task);
+            this.myTasks.push(task);
             console.log('completed task added: ', task);
 
           } //End of IF statement ownedTasks.complete
@@ -98,14 +74,11 @@ export class CompletedPage {
         });
       }); //END ownedTask.ForEach
     }); //END .then
-  } // END of loadCompletedTasks
+  } // END of loadMyTasks
 
-
-  //navigates to taskview page if task clicked
-  taskClicked(event, task) {
+  taskClicked(task) {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });
   }
-
 }
