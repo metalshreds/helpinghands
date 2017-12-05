@@ -24,6 +24,7 @@ export class TaskObjectProvider {
   public appliedHelpers: string[] = [];  //store applicant user id
   public location: string;
   public compensation: number;
+
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
