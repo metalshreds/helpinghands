@@ -23,14 +23,14 @@ export class SuggestedPage {
   CURRENT_USER = {} as ProfileProvider;
   db = firebase.firestore();
   querySkill = [];
-  suggestTasks = [];
+  suggestedTasks = [];
   elimilateDup = [];
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              ) 
+              )
               {
-                
+
               }
 
   ionViewDidLoad() {
@@ -72,7 +72,7 @@ export class SuggestedPage {
                   && (taskObject.ownerUserId != this.curUserToken.uid) )
               {
                 this.elimilateDup.push(taskObject.taskId);
-                this.suggestTasks.push(taskObject);
+                this.suggestedTasks.push(taskObject);
               }
             })
           })

@@ -70,23 +70,28 @@ export class CompletedPage {
             let task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
               ownedTasks.data()['taskId'],
-              ownedTasks.data()['timeDuration'],
-              ownedTasks.data()['timeStart'],
-              ownedTasks.data()['timeEnd'],
+              ownedTasks.data()['duration'],
+              ownedTasks.data()['startDate'],
+              ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['wantedSkills'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['owner'],
+              ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
             );
 
             task.setTaskId(ownedTasks.data()['taskId']);
-
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
               task.setOwnerName(ownedTasks.data()['ownerName']);
             }
+
+            //Set compensation
+            if (typeof ownedTasks.data()['compensation'] !== 'undefined') {
+              task.setCompensation(ownedTasks.data()['compensation']);
+            }
+
 
             this.completedTasks.push(task);
             console.log('completed task added: ', task);

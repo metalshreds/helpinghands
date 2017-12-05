@@ -1,9 +1,3 @@
-<!--
-  Generated template for the CompletedPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -17,16 +11,6 @@
 
 <ion-content padding>
 
-  <!--<ion-list>-->
-    <!--<button ion-item *ngFor="let task of tasks" (click) = 'taskClicked($event, task)'>-->
-
-      <!--<h1>{{task.name}}</h1>-->
-      <!--<h2>{{task.timeStart}}</h2>-->
-      <!--<h3>Expected to last {{task.timeDuration}} hours</h3>-->
-    <!--</button>-->
-  <!--</ion-list>-->
-
-
   <ion-list>
 
   <ion-card>
@@ -36,10 +20,8 @@
         <ion-avatar item-start>
           <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
         </ion-avatar>
-        <!--<h2>{{task.ownerUserId}}</h2>-->
-        <h2>{{task.getOwnerName()}}</h2>
-
-        <p>November 5, 1955</p>
+        <h2>{{task.ownerName}}</h2>
+        <p>Starts On: {{task.startDate}} </p>
       </ion-item>
 
     <ion-card-content>
@@ -52,29 +34,30 @@
 
       <ion-item class="card-item">
         <ion-icon name="stopwatch" item-start large></ion-icon>
-        <h2>{{task.timeStart}}</h2>
-        <p>Expected to last {{task.timeDuration}} hours</p>
+        <h2>Expected to last: {{task.duration}}</h2>
+        <p> Compensation: ${{task.compensation}}</p>
       </ion-item>
 
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>Rate : 5.0 / 5.0 </div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>Comments</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
+
+      <!--<ion-row>-->
+        <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+            <!--<ion-icon name="thumbs-up"></ion-icon>-->
+            <!--<div>Rate : 5.0 / 5.0 </div>-->
+          <!--</button>-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+            <!--<ion-icon name="text"></ion-icon>-->
+            <!--<div>Comments</div>-->
+          <!--</button>-->
+        <!--</ion-col>-->
+        <!--<ion-col center text-center>-->
+          <!--<ion-note>-->
+            <!--11h ago-->
+          <!--</ion-note>-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
 
     </ion-card-content>
     </button>

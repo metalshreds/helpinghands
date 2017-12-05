@@ -49,14 +49,14 @@ page-login {
     border-radius: 30px;
     font-size: 0.9em;
     border: 1px solid #fff;
-    background-color: #39acdc;
+    background-color: $prim-med;
   }
   .sign-up-button {
     width: 100%;
     border-radius: 30px;
     font-size: 0.9em;
     border: 1px solid #fff;
-    background-color: #19afdc;
+    background-color: $prim-color;
   }
   .reset-pw-button {
     width: 100%;
@@ -64,7 +64,7 @@ page-login {
     font-size: 0.9em;
     border: 1px solid #fff;
 
-    background-color: #39acdc;
+    background-color: $prim-med;
   }
   /*
   .invalid{

@@ -4,7 +4,9 @@ import { IonicPage, NavController, NavParams,
   PopoverController, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import firebase from 'firebase';
-import { DashboardPage } from '../dashboard/dashboard'
+import { DashboardPage } from '../dashboard/dashboard';
+import { ProfilePage } from '../profile/profile';
+import { App } from 'ionic-angular';
 
 @Component({
   template: `
@@ -24,7 +26,8 @@ export class CommentPopover {
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public App : App
     ) {
 
 
@@ -37,8 +40,9 @@ export class CommentPopover {
       completed: true,
       ownerComment: this.comment
     });
-    this.navCtrl.push(DashboardPage);
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss().then(()=> {
+      this.App.getRootNav().setRoot(DashboardPage);
+    });
   }
 
   close(){

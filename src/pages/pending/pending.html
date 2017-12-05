@@ -1,9 +1,4 @@
-<!--
-  Generated template for the PendingPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -15,25 +10,125 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  <div *ngIf = "noPendingTask">
-    <h1>
-      No pending task available. 
-    </h1>
-  </div>
 
+  <!-- INVITED USERS LIST  -->
   <ion-list>
-    <button ion-item *ngFor="let task of CURRENT_USER.invitedTask" (click)="taskClicked($event, task)">
+    <ion-card ion-item *ngFor="let task of CURRENT_USER.invitedTask">
 
-      <h1>{{task.taskName}}</h1>
-      
-    </button>
-    <button ion-item *ngFor="let task of CURRENT_USER.appliedTask" (click)="taskClicked($event, task)">
-      
-      <h1>{{task.taskName}}</h1>
-            
-    </button>
+
+    <ion-item class="task-pending">
+      <!--<button style="width:100%;" (click) = 'taskClicked($event, task)'>-->
+          <ion-avatar item-start>
+            <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
+          </ion-avatar>
+          <h2>{{task.ownerName}}</h2>
+          <p>Starts On: {{task.startDate}} </p>
+      <!--</button>-->
+        <!--<button   class="accept-reject-buttons" clear="true"clearInput="true">-->
+            <ion-icon class="acc_rej_icon" name="checkmark" (click) = 'taskClicked($event, task)' item-end large></ion-icon>
+        <!--</button>-->
+
+        <!--<button   class="accept-reject-buttons" clearInput="true">-->
+            <ion-icon  class="acc_rej_icon" name="trash" (click) = 'taskClicked($event, task)' item-end large ></ion-icon>
+        <!--</button>-->
+
+    </ion-item>
+
+        <ion-card-content>
+          <button  style="height: 100%; width: 100%" (click) = 'taskClicked($event, task)'>
+          <ion-item class="card-item">
+            <ion-icon name="calendar" item-start large></ion-icon>
+            <ion-card-title>
+              {{task.taskName}}
+            </ion-card-title>
+          </ion-item>
+
+          <ion-item class="card-item">
+            <ion-icon name="stopwatch" item-start large></ion-icon>
+            <h2>{{task.startDate}}</h2>
+            <p>Expected to last {{task.duration}} hours</p>
+          </ion-item>
+
+          <!--<ion-row>-->
+          <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+          <!--<ion-icon name="thumbs-up"></ion-icon>-->
+          <!--<div>Rate : 5.0 / 5.0 </div>-->
+          <!--</button>-->
+          <!--</ion-col>-->
+          <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+          <!--<ion-icon name="text"></ion-icon>-->
+          <!--<div>Comments</div>-->
+          <!--</button>-->
+          <!--</ion-col>-->
+          <!--<ion-col center text-center>-->
+          <!--<ion-note>-->
+          <!--11h ago-->
+          <!--</ion-note>-->
+          <!--</ion-col>-->
+          <!--</ion-row>-->
+
+      </button>
+        </ion-card-content>
+    </ion-card>
   </ion-list>
 
+
+  <!-- INVITED USERS LIST  -->
+  <ion-list>
+    <ion-card>
+      <button ion-item *ngFor="let task of CURRENT_USER.appliedTask" (click) = 'taskClicked($event, task)'>
+
+        <ion-item class="task-pending">
+          <ion-avatar item-start>
+            <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
+          </ion-avatar>
+          <h2>{{task.ownerName}}</h2>
+
+          <p>Starts On: {{task.startDate}} </p>
+        </ion-item>
+
+        <ion-card-content>
+          <ion-item class="card-item">
+            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-card-title>
+              {{task.taskName}}
+            </ion-card-title>
+          </ion-item>
+
+          <ion-item class="card-item">
+            <ion-icon name="stopwatch" item-start large></ion-icon>
+            <h2>{{task.startDate}}</h2>
+            <p>Expected to last {{task.duration}} hours</p>
+          </ion-item>
+
+          <!--<ion-row>-->
+          <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+          <!--<ion-icon name="thumbs-up"></ion-icon>-->
+          <!--<div>Rate : 5.0 / 5.0 </div>-->
+          <!--</button>-->
+          <!--</ion-col>-->
+          <!--<ion-col>-->
+          <!--<button ion-button icon-left clear small>-->
+          <!--<ion-icon name="text"></ion-icon>-->
+          <!--<div>Comments</div>-->
+          <!--</button>-->
+          <!--</ion-col>-->
+          <!--<ion-col center text-center>-->
+          <!--<ion-note>-->
+          <!--11h ago-->
+          <!--</ion-note>-->
+          <!--</ion-col>-->
+          <!--</ion-row>-->
+        </ion-card-content>
+      </button>
+    </ion-card>
+
+  </ion-list>
+
+
 </ion-content>
+
