@@ -56,7 +56,10 @@ export class MyTasksPage {
               ownedTasks.data()['location'],
             );
 
-            task.setTaskId(ownedTasks.data()['taskId']);
+            task.setWantedSkill(ownedTasks.data()['wantedSkills']);
+            task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
+            task.setAppliedHelpers(ownedTasks.data()['helpers']);
+            task.setOwnerComment(ownedTasks.data()['owerComment']);
 
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {

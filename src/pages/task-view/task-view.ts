@@ -47,6 +47,8 @@ export class TaskViewPage {
     this.selectedTask = navParams.get('task');
 
     //TODO is this the correct way to check if they are the same user?
+    console.log('1', this.selectedTask.ownerUserId );
+    console.log('2',this.curUserToken.uid);
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
     if(this.userIsTaskOwner)
     {
