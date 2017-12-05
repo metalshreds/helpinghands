@@ -102,7 +102,7 @@ export class PendingPage {
             {
               console.log('in pending.ts/reading doc from invited failed, looking for doc: ', querySnapshot.docs[i].id, 'from user: ', );
             }
-
+            else{
               console.log('task doc is ',taskDoc.data());
               //create task and push into array
               //TODO change the following hard coding
@@ -122,14 +122,15 @@ export class PendingPage {
               task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
               task.setAppliedHelpers(taskDoc.data()['helpers']);
               task.setOwnerComment(taskDoc.data()['owerComment']);
-            this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId);
-            if(this.eliminateDup.length != 0)
-            {
-              this.noPendingTask = false;
-            }
-            else{
-              this.noPendingTask = true;
+              this.CURRENT_USER.invitedTask.push(task);
+              this.eliminateDup.push(task.taskId);
+              if(this.eliminateDup.length != 0)
+              {
+                this.noPendingTask = false;
+              }
+              else{
+                this.noPendingTask = true;
+              }
             }
           });
         }
