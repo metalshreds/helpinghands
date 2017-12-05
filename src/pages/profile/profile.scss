@@ -5,9 +5,6 @@ page-profile {
     font-size: 0.9em;
   }
 
-  ion-item:placeholder-shown {
-
-  }
 
   .title {
 
@@ -25,9 +22,12 @@ page-profile {
   .avatarCol{
     background-color: #ea6262;
     margin-top: 0px;
-
   }
 
+  .intro{
+    color: black;
+    text-align: center;
+  }
   .editImageButton {
     text-align: center;
     float:right;
@@ -67,8 +67,10 @@ page-profile {
     border-bottom: 0px;
   }
 
-
-
+  .task-text{
+    font-size: 15px;
+    text-align: center;
+  }
 }
 
 

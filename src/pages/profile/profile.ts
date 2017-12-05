@@ -22,12 +22,32 @@ import {TaskObjectProvider} from "../../providers/task-object/task-object";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  shownGroup = "";
   profile;
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
   userPhotoUrl;
+  csSkillInterface = ['Programming', 'Excel', 'Hardware'];
+  mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
+  artSkillInterface = ["GraphicDesign","Photography","DrawingAndPainting"];
+  sciSkillInterface = ["Biology", "Physics","Chemistry","Agriculture"];
+  econSkillInterface = ["Management", "Accounting", "Economics"];
+  langSkillInterface = ["Spanish", "Japanese", "German", "Mandarin", "Cantonese","Portuguese",
+    "Russian", "English", "OtherLanguage"];
   displaySkill  = [];
+  csSkills = [];
+  hasCS = false;
+  mechSkills = [];
+  hasMech = false;
+  artSkills = [];
+  hasArt = false;
+  sciSkills = [];
+  hasSci = false;
+  econSkills = [];
+  hasEcon = false;
+  langSkills = [];
+  hasLang = false;
   db = firebase.firestore();
   profileOwner;
   CURRENT_USER = {} as ProfileProvider;
@@ -42,7 +62,7 @@ export class ProfilePage {
     console.log( "param is", navParams.get('userId'));
     this.CURRENT_USER.userId = (navParams.get('userId'))? navParams.get('userId') : this.curUserToken.uid;
     console.log("cu id is ", this.CURRENT_USER.userId);
-    this.CURRENT_USER.ownedTask = [];
+    this.CURRENT_USER.completedTask = [];
     if(this.CURRENT_USER.userId == this.curUserToken.uid)
     {
       this.profileOwner = true;
@@ -65,12 +85,33 @@ export class ProfilePage {
             //  in userProvider obeject and users node.
             this.CURRENT_USER[field] = doc.data()[field];
           }
+          console.log(this.CURRENT_USER.skills);
           for (const i in this.CURRENT_USER.skills)
           {
-            if (this.CURRENT_USER.skills[i] == true)
-              this.displaySkill.push(i);
+            console.log(i);
+            if(this.CURRENT_USER.skills[i] == true) {
+              if (this.csSkillInterface.indexOf(i) >= 0)
+                this.csSkills.push(i);
+              else if (this.mechSkillInterface.indexOf(i) >= 0)
+                this.mechSkills.push(i);
+              else if (this.artSkillInterface.indexOf(i) >= 0)
+                this.artSkills.push(i);
+              else if (this.sciSkillInterface.indexOf(i) >= 0)
+                this.sciSkills.push(i);
+              else if (this.econSkillInterface.indexOf(i) >= 0)
+                this.econSkills.push(i);
+              else if (this.langSkillInterface.indexOf(i) >= 0)
+                this.langSkills.push(i);
+            }
           }
-          console.log(this.displaySkill);
+          this.hasCS = this.csSkills.length > 0;
+          this.hasMech = this.mechSkills.length > 0;
+          this.hasArt = this.artSkills.length > 0;
+          this.hasSci = this.sciSkills.length > 0;
+          this.hasEcon = this.econSkills.length > 0;
+          this.hasLang = this.langSkills.length > 0;
+          console.log(this.csSkills);
+          console.log(this.hasCS);
 
             this._zone.run(()=>{
               this.userPhotoUrl = this.CURRENT_USER.photoUrl;
@@ -85,12 +126,12 @@ export class ProfilePage {
 
       //following code block pull the ownedlist from user node specified user ID, and push the name of the each
       //  task into current user's ownedlist.
-      var docRef = this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask');
+      var docRef = this.db.collection('users').doc(this.CURRENT_USER.userId).collection('completedTask');
       docRef.get().then(doc=>{
         doc.forEach(sdoc=>{
-          this.db.collection('users').doc(this.CURRENT_USER.userId).collection('ownedTask').doc(sdoc.id).
+          this.db.collection('users').doc(this.CURRENT_USER.userId).collection('completedTask').doc(sdoc.id).
             get().then(doc =>{
-              console.log("this is ", this.CURRENT_USER.ownedTask);
+              console.log("this is ", this.CURRENT_USER.completedTask);
                 //TODO
                 var taskRef = this.db.collection('tasks').doc(sdoc.id);
                 taskRef.get().then(taskDoc =>{
@@ -115,17 +156,28 @@ export class ProfilePage {
                     task[field] = taskDoc.data()[field];
                   }
 
-                  this.CURRENT_USER.ownedTask.push(task);
+                  this.CURRENT_USER.completedTask.push(task);
 
 
                 });
-              //this.CURRENT_USER.ownedTask.push(doc.data().taskName);
 
           })
         });
       });
   }
 
+  toggleGroup(group) {
+    console.log("This is the group"+group)
+    if (this.isGroupShown(group)) {
+      this.shownGroup = "";
+    } else {
+      this.shownGroup = group;
+    }
+  };
+
+  isGroupShown(group) {
+    return this.shownGroup == group;
+  };
 
   expandPic(){
     this.photoviewer.show(this.userPhotoUrl, this.curUserToken.displayName ,{share : false});

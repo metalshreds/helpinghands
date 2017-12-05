@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams,
   PopoverController, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import firebase from 'firebase';
+import { DashboardPage } from '../dashboard/dashboard'
 
 @Component({
   template: `
@@ -19,29 +20,28 @@ import firebase from 'firebase';
 export class CommentPopover {
   db = firebase.firestore();
   taskId: string = '';
-  comment: string = ''
+  comment: string = '';
   constructor(
     public viewCtrl: ViewController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public navCtrl: NavController
     ) {
 
 
   }
 
-
-
   updateComment(){
     this.taskId = this.navParams.get('taskId');
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.update({
+      completed: true,
       ownerComment: this.comment
-
     });
+    this.navCtrl.push(DashboardPage);
     this.viewCtrl.dismiss();
   }
 
   close(){
-
     this.viewCtrl.dismiss();
   }
 }
