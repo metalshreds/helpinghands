@@ -24,6 +24,7 @@ export class TaskObjectProvider {
   public appliedHelpers: string[] = [];  //store applicant user id
   public location: string;
   public compensation: number;
+
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
@@ -74,6 +75,8 @@ export class TaskObjectProvider {
   setOwnerName(ownerName: string){this.ownerName = ownerName;}
   getOwnerName(){return this.ownerName};
 
+  setCompensation(compensation: number){ this.compensation = compensation;}
+  getCompensation(){ return this.compensation;}
   /*this function is used to set the helpers list
   / of a newly constructed task.
   / possible usage: construct a task object based

@@ -24,7 +24,7 @@ export class ConfirmedPage {
   CURRENT_USER = {} as ProfileProvider;
   db = firebase.firestore();
   noConfirmedTask = false;
-
+  eliminateDup = [];
   constructor(public navCtrl: NavController, 
               public navParams: NavParams)
   {
@@ -39,18 +39,25 @@ export class ConfirmedPage {
   getConfirmedList()
   {
     console.log('in pending page user uid is ', this.curUserToken.uid);
-    var docRef = this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask');
-    docRef.get().then(doc=>{
-      if(doc.empty)
+    this.CURRENT_USER.pendingTask = [];
+    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask')
+    var observer = query.onSnapshot(querySnapshot=>
+    {
+      console.log('on pending observer1 ', querySnapshot);
+      for(const i in querySnapshot.docs)
       {
-        console.log('no comfirmed Task');
-        this.noConfirmedTask = true;
-      }
-      doc.forEach(sdoc=>{
-        this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask').doc(sdoc.id).
-          get().then(doc =>{  
-            var taskRef = this.db.collection('tasks').doc(sdoc.id);
-            taskRef.get().then(taskDoc =>{
+        console.log('on pending observer2 ', querySnapshot.docs[i].id);
+        console.log('on pending observer2 ', querySnapshot.docs[i].data());
+        if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
+        {
+          var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
+          taskRef.get().then(taskDoc =>{
+              if(!taskDoc.exists)
+              {
+                console.log('in confirm.ts/reading doc from confirmedTask failed');
+              }
+              else
+              {
                 console.log('task doc is ',taskDoc.data());
                 //create task and push into array
                 //TODO change the following hard coding
@@ -71,10 +78,20 @@ export class ConfirmedPage {
                 task.setAppliedHelpers(taskDoc.data()['helpers']);
                 task.setOwnerComment(taskDoc.data()['owerComment']);
               this.CURRENT_USER.confirmedTask.push(task);
-            });
-        })
-      });
+              this.eliminateDup.push(task.taskId);
+              if(this.eliminateDup.length != 0)
+              {
+                this.noConfirmedTask = false;
+              }
+              else{
+                this.noConfirmedTask = true;
+              }
+            }
+          });
+        }
+      }
     });
+
   }
   //navigates to taskview page if task clicked
   taskClicked(event, task) {

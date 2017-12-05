@@ -89,6 +89,12 @@ export class CompletedPage {
               task.setOwnerName(ownedTasks.data()['ownerName']);
             }
 
+            //Set compensation
+            if (typeof ownedTasks.data()['compensation'] !== 'undefined') {
+              task.setCompensation(ownedTasks.data()['compensation']);
+            }
+
+
             this.completedTasks.push(task);
             console.log('completed task added: ', task);
 

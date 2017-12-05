@@ -324,6 +324,7 @@ export class TaskEditPage {
 
   deleteTask() {
     this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'ownedTask', this.taskId);
+    this.cloudModule.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', this.taskId);
     let taskRef = this.db.collection('tasks').doc(this.taskId);
     taskRef.delete().then(doc=>{console.log("I'm here.")});
     this.navCtrl.push(ProfilePage);

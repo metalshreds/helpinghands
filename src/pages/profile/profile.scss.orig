@@ -20,10 +20,14 @@ page-profile {
 
 
   .avatarCol{
+<<<<<<< HEAD
+    background-color: $prim-light;
+
+=======
     background-color: #ea6262;
     margin-top: 0px;
+>>>>>>> master
   }
-    background-color: $prim-light;
 
   .intro{
     color: black;
