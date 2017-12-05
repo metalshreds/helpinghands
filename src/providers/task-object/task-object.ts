@@ -41,8 +41,9 @@ export class TaskObjectProvider {
               timeEnd : string,
               taskDescription : string,
               complete : boolean,
-              ownerUserId : string,
               owner : string, 
+              ownerUserId : string,
+            
               location : string,
   ) {
     this.taskName = taskName;
