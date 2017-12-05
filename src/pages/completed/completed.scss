@@ -1,3 +1,11 @@
 page-completed {
 
 }
+
+.card-header-md + .card-content-md, .card-md .item + .card-content-md {
+  padding: 0px;
+}
+
+button{
+  padding:0px;
+}

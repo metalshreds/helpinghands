@@ -220,9 +220,6 @@ export class EditProfilePage {
       if(this.pictureChanged)
       {
         this.updateUserPhoto();
-        userRef.update({
-          photoUrl : this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
-        })
       }
       else //setUser's display name we will use his display name's value to decide whether lead the use to profile or login page.
       {
@@ -344,8 +341,20 @@ export class EditProfilePage {
           }).catch(function(error) {
             console.log("native update has an error");
           });
-          this.editProfileForm.reset();
-          this.navCtrl.push( ProfilePage );
+          this.db.collection('users').doc(this.curUserToken.uid).update({
+            photoUrl : this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
+          });
+          //TODO moduliraze following code maybe
+          var docRef = this.db.collection('users').doc(this.curUserToken.uid);
+          docRef.get().then(doc=>{
+            var index = this.client.initIndex('users');
+            var user = doc.data();
+            user.objectID = this.curUserToken.uid;
+            index.saveObject(user);
+            this.editProfileForm.reset();
+            this.navCtrl.push(ProfilePage);
+          })
+
         });
       }
       else

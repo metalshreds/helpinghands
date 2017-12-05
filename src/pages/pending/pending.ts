@@ -87,7 +87,7 @@ export class PendingPage {
       }
     });
 
-    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask')
+    var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask');
     var invObserver = invitedQuery.onSnapshot(querySnapshot=>
     {
       for(const i in querySnapshot.docs)
@@ -95,7 +95,14 @@ export class PendingPage {
         if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
         {
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
+
           taskRef.get().then(taskDoc =>{
+
+            if(!taskDoc.exists)
+            {
+              console.log('in pending.ts/reading doc from invited failed, looking for doc: ', querySnapshot.docs[i].id, 'from user: ', );
+            }
+            else{
               console.log('task doc is ',taskDoc.data());
               //create task and push into array
               //TODO change the following hard coding
@@ -115,14 +122,15 @@ export class PendingPage {
               task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
               task.setAppliedHelpers(taskDoc.data()['helpers']);
               task.setOwnerComment(taskDoc.data()['owerComment']);
-            this.CURRENT_USER.invitedTask.push(task);
-            this.eliminateDup.push(task.taskId);
-            if(this.eliminateDup.length != 0)
-            {
-              this.noPendingTask = false;
-            }
-            else{
-              this.noPendingTask = true;
+              this.CURRENT_USER.invitedTask.push(task);
+              this.eliminateDup.push(task.taskId);
+              if(this.eliminateDup.length != 0)
+              {
+                this.noPendingTask = false;
+              }
+              else{
+                this.noPendingTask = true;
+              }
             }
           });
         }
