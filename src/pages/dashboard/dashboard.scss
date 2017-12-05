@@ -74,8 +74,13 @@ ion-card {
   border: 1px solid $card-border-header;
 }
 
-.task-pending{
-  background-color: $task-pending;
+.task-pending-applied{
+  background-color: $task-pending-applied;
+  border: 1px solid $card-border-header;
+}
+
+.task-pending-invited{
+  background-color: $task-pending-invited;
   border: 1px solid $card-border-header;
 }
 
