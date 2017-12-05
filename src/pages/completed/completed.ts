@@ -67,21 +67,22 @@ export class CompletedPage {
           console.log('Complete: ', ownedTasks.data()['completed'] );
           if (ownedTasks.data()['completed'] == true) {
             //TODO Update firebase AND task-object AND user object fields to use camelCase with initial lower case
-            let task = new TaskObjectProvider(
+            var task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
               ownedTasks.data()['taskId'],
-              ownedTasks.data()['timeDuration'],
-              ownedTasks.data()['timeStart'],
-              ownedTasks.data()['timeEnd'],
+              ownedTasks.data()['duration'],
+              ownedTasks.data()['startTime'],
+              ownedTasks.data()['endTime'],
               ownedTasks.data()['taskDescription'],
-              ownedTasks.data()['wantedSkills'],
-              ownedTasks.data()['completed'],
-              ownedTasks.data()['owner'],
+              ownedTasks.data()['complete'],
+              ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
-            );
-
-            task.setTaskId(ownedTasks.data()['taskId']);
+            );      
+            task.setWantedSkill(ownedTasks.data()['wantedSkills']);
+            task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
+            task.setAppliedHelpers(ownedTasks.data()['helpers']);
+            task.setOwnerComment(ownedTasks.data()['owerComment']);
 
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {

@@ -56,17 +56,20 @@ export class ConfirmedPage {
                 //TODO change the following hard coding
                 var task = new TaskObjectProvider(
                   taskDoc.data()['taskName'],
-                  sdoc.id,
+                  taskDoc.data()['taskId'],
                   taskDoc.data()['duration'],
                   taskDoc.data()['startTime'],
                   taskDoc.data()['endTime'],
                   taskDoc.data()['taskDescription'],
-                  taskDoc.data()['wantedSkill'],
                   taskDoc.data()['complete'],
-                  taskDoc.data()['owner'],
+                  taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
-                );
+                );      
+                task.setWantedSkill(taskDoc.data()['wantedSkills']);
+                task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
+                task.setAppliedHelpers(taskDoc.data()['helpers']);
+                task.setOwnerComment(taskDoc.data()['owerComment']);
               this.CURRENT_USER.confirmedTask.push(task);
             });
         })

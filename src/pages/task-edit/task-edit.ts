@@ -236,12 +236,16 @@ export class TaskEditPage {
       this.startDate,
       this.endDate,
       this.taskCreateForm.value.taskDescription,
-      this.skillHolder,
       false,
       this.curUserToken.displayName,
       this.curUserToken.uid,
       this.taskCreateForm.value.location
     );
+ 
+    this.task.setWantedSkill(this.skill);
+    this.task.setAppliedHelperList([]);
+    this.task.setAppliedHelpers([]);
+    this.task.setOwnerComment(" ");
     this.navCtrl.push(TaskViewPage, {
       'task' : this.task
     });
