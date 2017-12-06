@@ -79,7 +79,6 @@ export class HelpingHands {
       { title: 'Settings', component: SettingsPage },
       // { title: 'Sign Out', component: SignoutPage},
 
-
     ]
   }
 

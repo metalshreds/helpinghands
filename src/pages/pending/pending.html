@@ -15,7 +15,7 @@
 
   <ion-list>
     <ion-card ion-item *ngFor="let task of CURRENT_USER.invitedTask">
-    <ion-item class="task-pending">
+    <ion-item class="task-pending-invited">
           <ion-avatar item-start>
             <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
           </ion-avatar>
@@ -48,7 +48,7 @@
   <!-- INVITED USERS LIST  CURRENT_USER.appliedTask  -->
   <ion-list>
     <ion-card ion-item *ngFor="let task of CURRENT_USER.appliedTask">
-      <ion-item class="task-pending">
+      <ion-item class="task-pending-applied">
         <!--<button style="width:100%;" (click) = 'taskClicked($event, task)'>-->
         <ion-avatar item-start>
           <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
