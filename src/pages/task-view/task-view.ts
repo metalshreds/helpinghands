@@ -62,7 +62,7 @@ export class TaskViewPage {
     console.log('1', this.selectedTask.ownerUserId );
     console.log('2',this.curUserToken.uid);
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
-    if(this.userIsTaskOwner)
+    if(this.userIsTaskOwner && !this.selectedTask.completed)
     {
           //TODO trying to get suggetsed users list
     this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
