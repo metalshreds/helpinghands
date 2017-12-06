@@ -25,7 +25,7 @@
 
   <ion-item>
     <div *ngIf ="selectedTask">
-      <h1 style="text-align: center">{{selectedTask.taskName}}</h1>
+      <h1 style="text-align: center" class="wrap">{{selectedTask.taskName}}</h1>
       <p class = "requesting-user">Requested by <u style="color: #3f7cc6" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</u></p>
       <p class="task-summary wrap">{{selectedTask.taskDescription}}</p>
       <br>
