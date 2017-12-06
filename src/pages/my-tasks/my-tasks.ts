@@ -50,7 +50,6 @@ export class MyTasksPage {
               ownedTasks.data()['timeStart'],
               ownedTasks.data()['timeEnd'],
               ownedTasks.data()['taskDescription'],
-              ownedTasks.data()['wantedSkills'],
               ownedTasks.data()['completed'],
               ownedTasks.data()['owner'],
               ownedTasks.data()['ownerUserId'],

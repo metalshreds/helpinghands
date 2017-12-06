@@ -4,6 +4,7 @@ import { TaskViewPage } from '../task-view/task-view';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
+import { cloudProvider } from '../../providers/cloudbase';
 
 
 /**
@@ -139,6 +140,15 @@ export class PendingPage {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });
+
+  }
+
+  taskAccepted(event, task){
+
+
+  }
+
+  taskRejected(event, task){
 
   }
 }
