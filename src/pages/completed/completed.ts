@@ -71,14 +71,15 @@ export class CompletedPage {
               ownedTasks.data()['taskName'],
               ownedTasks.data()['taskId'],
               ownedTasks.data()['duration'],
-              ownedTasks.data()['startTime'],
-              ownedTasks.data()['endTime'],
+              ownedTasks.data()['startDate'],
+              ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
-              ownedTasks.data()['complete'],
+              ownedTasks.data()['completed'],
               ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
-            );      
+            );
+            task.setCompensation(ownedTasks.data()['compensation']);
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
             task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
             task.setAppliedHelpers(ownedTasks.data()['helpers']);

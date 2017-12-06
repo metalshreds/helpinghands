@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>TaskView</ion-title>
+    <ion-title>Task View</ion-title>
     <ion-buttons end *ngIf="showEditButton">
       <button ion-button (click)="editTaskClicked($event, selectedTask.taskId)">
         <ion-icon name = "create"></ion-icon>
@@ -25,15 +25,19 @@
 
   <ion-item>
     <div *ngIf ="selectedTask">
-      <h1 class = "task-name">{{selectedTask.taskName}}</h1>
-      <h4 class = "requesting-user">Requested by <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button></h4>
-      <h4 class="task-summary wrap">{{selectedTask.taskDescription}}</h4>
-      <h4> </h4>
-      <h4>Start Time: {{selectedTask.startDate}}</h4>
-      <h4>End Time: {{selectedTask.endDate}}</h4>
-      <h4>Estimated Length: {{selectedTask.duration}} hours</h4>
-      <h2>Compensation: {{selectedTask.compensation}}</h2>
-      <h2>Location: {{selectedTask.location}}</h2>
+      <h1 style="text-align: center">{{selectedTask.taskName}}</h1>
+      <p class = "requesting-user">Requested by <u style="color: #3f7cc6" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</u></p>
+      <p class="task-summary wrap">{{selectedTask.taskDescription}}</p>
+      <br>
+      <p style="color: black">Start Time: {{selectedTask.startDate}}<br>
+      End Time: {{selectedTask.endDate}}<br>
+      Estimated Length: {{selectedTask.duration}} hours<br>
+      Compensation: ${{selectedTask.compensation}}<br>
+      Location: {{selectedTask.location}}</p>
+    </div>
+    <div *ngIf="skillsNeeded.length != 0">
+      <u style="color: black; font-size: large">Skills needed for this task</u>
+      <p style="color: black" *ngFor="let skill of skillsNeeded">{{skill}}</p>
     </div>
   </ion-item>
 
@@ -45,9 +49,10 @@
     <ion-list >
       <ion-item *ngFor="let helper of appliedHelpers">
         <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
-        <button ion-button (click)="acceptAppliedHelper($event, helper)">Accept</button>
-        <button ion-button (click)="rejectAppliedHelper($event, helper)">Reject</button>
+        <button ion-button style="background-color: #2ec95c" (click)="acceptAppliedHelper($event, helper)">Accept</button>
+        <button ion-button style="background-color: red" (click)="rejectAppliedHelper($event, helper)">Reject</button>
       </ion-item>
+      <ion-item *ngIf="appliedHelpers.length == 0">No applied helpers</ion-item>
     </ion-list>
   </ion-item>
 
@@ -57,8 +62,9 @@
     <ion-list >
       <ion-item  *ngFor="let user of suggestedUsers">
         <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
-        <button ion-button (click)="requestUserClicked($event, user)">Request</button>
+        <button ion-button style="background-color: #2ec95c" (click)="requestUserClicked($event, user)">Request this user</button>
       </ion-item>
+      <ion-item *ngIf="suggestedUsers.length == 0">No suggested helpers</ion-item>
     </ion-list>
   </ion-item>
 
