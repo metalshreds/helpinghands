@@ -292,7 +292,7 @@ export class TaskEditPage {
       this.task.setAppliedHelperList([]);
       this.task.setAppliedHelpers([]);
       this.task.setOwnerComment(" ");
-      this.navCtrl.push(TaskViewPage, {
+      this.navCtrl.setRoot(TaskViewPage, {
         'task': this.task
       });
     }
@@ -303,7 +303,10 @@ export class TaskEditPage {
   }
 
     completeTask() {
-    let popover = this.popoverCtrl.create(CommentPopover, { taskId: this.taskId});
+    let popover = this.popoverCtrl.create(CommentPopover, {
+      taskId: this.taskId,
+      taskName: this.taskCreateForm.value.taskName
+    });
     popover.present();
   }
 

@@ -37,6 +37,7 @@ export class TaskViewPage {
   showEditButton = false;
   showRequestButton = false;
   db = firebase.firestore();
+  skillsNeeded = [];
   owner_user_id = this.curUserToken.uid; //todo change this
 
   constructor(public navCtrl: NavController,
@@ -46,7 +47,14 @@ export class TaskViewPage {
               public cloud: cloudProvider,) {
 
     this.selectedTask = navParams.get('task');
+    console.log("this is the task", this.selectedTask);
     this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid);
+
+    for (const skill in this.selectedTask.wantedSkills) {
+      if (this.selectedTask.wantedSkills[skill]) {
+        this.skillsNeeded.push(skill);
+      }
+    }
 
     //TODO is this the correct way to check if they are the same user?
     console.log('1', this.selectedTask.ownerUserId );
