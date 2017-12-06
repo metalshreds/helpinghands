@@ -195,9 +195,17 @@ export class PendingPage {
     this.cloud.addTaskToList(task.ownerUserId, 'confirmedTask', task.taskId, task.taskName);
 
     //add accepting user to helper list of task
-    this.cloud.addUserToTaskList(task.taskId, 'helpers', this.curUserToken.uid,
-      curUser.get()['firstName'].toString(), curUser.get()['lastName'].toString());
-    alert("Task Accepted");
+    curUser.get().then(doc => {
+      if (doc.exists) {
+        this.cloud.addUserToTaskList(task.taskId, 'helpers', this.curUserToken.uid,
+          doc.data()['firstName'], doc.data()['lastName']);
+        alert("Task Accepted");
+      } else {
+        console.log("No such document!");
+      }
+
+    });
+
 
   }
 
