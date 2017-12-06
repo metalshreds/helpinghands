@@ -43,13 +43,18 @@
           <ion-avatar item-start>
             <img [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'">
           </ion-avatar>
+
           <h2>{{task.ownerName}}</h2>
-          <p>Starts On: {{task.startDate}} </p>
+            <p>Starts On: {{task.startDate}} </p>
+
+
+
+
         </ion-item>
 
         <ion-card-content>
           <ion-item class="card-item">
-            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-icon name="checkbox-outline" item-start large></ion-icon>
             <ion-card-title>
               {{task.taskName}}
             </ion-card-title>
@@ -59,31 +64,16 @@
             <ion-icon name="stopwatch" item-start large></ion-icon>
             <h2>Expected to last: {{task.duration}} hours</h2>
             <p> Compensation: ${{task.compensation}}</p>
+
+
           </ion-item>
 
 
-          <!--<ion-row>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="thumbs-up"></ion-icon>-->
-          <!--<div>Rate : 5.0 / 5.0 </div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="text"></ion-icon>-->
-          <!--<div>Comments</div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col center text-center>-->
-          <!--<ion-note>-->
-          <!--11h ago-->
-          <!--</ion-note>-->
-          <!--</ion-col>-->
-          <!--</ion-row>-->
 
         </ion-card-content>
       </button>
+
+      <button ion-button full color="light" *ngFor="let task of CURRENT_USER.confirmedTask" block (click)="doPrompt($event, task)">I am not going to do this task</button>
     </ion-card>
 
   </ion-list>
