@@ -31,7 +31,8 @@ export class PendingPage {
   //TODO handle cases that eliminates
   //when click into a task that I applied, the request button shouldn't be there.
   constructor(public navCtrl: NavController,
-              public navParams: NavParams)
+              public navParams: NavParams,
+              public cloud: cloudProvider)
   {
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
@@ -152,11 +153,21 @@ export class PendingPage {
   }
 
   taskAccepted(event, task){
+    //add task to confirmed for both users
+    this.cloud.addTaskToList(this.curUserToken.uid, 'confirmedTask', task.taskId, task.taskName);
+    this.cloud.addTaskToList(task.ownerUserId, 'confirmedTask', task.taskId, task.taskName);
 
+    //remove task from pending for both users
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'pendingTask', task.taskId);
+    this.cloud.removeTaskFromUser(task.ownerUserId, 'pendingTask', task.taskId)
+
+    //add accepting user to helper list of task
+    task.helpers.add(this.curUserToken.uid);
 
   }
 
   taskRejected(event, task){
-
+    //remove task from pending for rejecting user
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'pendingTask', task.taskId);
   }
 }
