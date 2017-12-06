@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
-import {AngularFireAuth} from "angularfire2/auth";
-import {ProfilePage} from "../profile/profile";
+import { AngularFireAuth} from "angularfire2/auth";
+import { ProfilePage} from "../profile/profile";
 import { EditProfilePage } from "../edit-profile/edit-profile";
-import {LoginPage} from "../login/login";
+import { LoginPage} from "../login/login";
+import { DashboardPage} from "../dashboard/dashboard";
 
 @Component({
   selector: 'page-home',
@@ -25,13 +26,9 @@ export class HomePage {
       if(user == null)
         this.navCtrl.push(LoginPage);
       else if(user.uid && !(user.displayName === null))
-        this.navCtrl.push(ProfilePage);
+        this.navCtrl.push(DashboardPage);
       else
         this.navCtrl.push(EditProfilePage);
-
     })
-
   }
-
-
 }

@@ -27,7 +27,7 @@ export class ProfilePage {
   skills : Array<boolean>;
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
-  userPhotoUrl;
+  userPhotoUrl = null;
   csSkillInterface = ['Programming', 'Excel', 'Hardware'];
   mechSkillInterface = ["Welding", "Mechanic", "Soldering", "Drafting",];
   artSkillInterface = ["GraphicDesign","Photography","DrawingAndPainting"];

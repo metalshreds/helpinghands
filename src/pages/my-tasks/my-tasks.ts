@@ -51,12 +51,16 @@ export class MyTasksPage {
               ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['ownerName'],
+              ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location'],
             );
 
-            task.setTaskId(ownedTasks.data()['taskId']);
+            task.setCompensation(ownedTasks.data()['compensation']);
+            task.setWantedSkill(ownedTasks.data()['wantedSkills']);
+            task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
+            task.setAppliedHelpers(ownedTasks.data()['helpers']);
+            task.setOwnerComment(ownedTasks.data()['owerComment']);
 
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
@@ -75,7 +79,7 @@ export class MyTasksPage {
     }); //END .then
   } // END of loadMyTasks
 
-  taskClicked(task) {
+  taskClicked(event, task) {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });

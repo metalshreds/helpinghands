@@ -21,7 +21,6 @@
 
 $prim-color: #b03626;
 
-
 $prim-xlight: #F38678;
 $prim-light: #F38678;
 $prim-med: #CD5646;
@@ -31,9 +30,12 @@ $prim-xdark: #290600;
 
 /* Task Card Colors */
 $task-confirmed: #5bde99;
-$task-pending: #f9d462; //ffcb71
+$task-pending-applied: #f9d462; //ffcb71
+$task-pending-invited: #f9a564; //ffcb71
 $task-suggested: #85c8d6;
+$task-invited : #85c8d6;
 $task-completed: #d5d5d5;
+$task-own: $prim-xlight;
 
 $card-bg: #f0f0f1;
 $card-border: #cbcbcb;

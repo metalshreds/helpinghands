@@ -1,15 +1,4 @@
-<!--<ion-header>-->
-    <!---->
-      <!--<ion-navbar>-->
-        <!--<button ion-button menuToggle>-->
-          <!--<ion-icon name="menu"></ion-icon>-->
-        <!--</button>-->
-        <!--<ion-title>Pending</ion-title>-->
-      <!--</ion-navbar>-->
-    <!---->
-    <!--</ion-header>-->
-    <!---->
-    <!---->
+
     <!--<ion-content padding>-->
       <!--<div *ngIf = "noConfirmedTask">-->
         <!--<h1>-->
@@ -26,51 +15,6 @@
       <!--</ion-list>-->
     <!--</ion-content>-->
 
-
-<!-- PREVIOUS STUFF --->
-<!--<ion-header>-->
-    <!---->
-      <!--<ion-navbar>-->
-        <!--<button ion-button menuToggle>-->
-          <!--<ion-icon name="menu"></ion-icon>-->
-        <!--</button>-->
-        <!--<ion-title>Pending</ion-title>-->
-      <!--</ion-navbar>-->
-    <!---->
-    <!--</ion-header>-->
-    <!---->
-    <!---->
-    <!--<ion-content padding>-->
-      <!--<div *ngIf = "noConfirmedTask">-->
-        <!--<h1>-->
-          <!--No confirmed task available. -->
-        <!--</h1>-->
-      <!--</div>-->
-    <!---->
-      <!--<ion-list>-->
-        <!--<button ion-item *ngFor="let task of CURRENT_USER.confirmedTask" (click)="taskClicked($event, task)">-->
-    <!---->
-          <!--<h1>{{task.taskName}}</h1>-->
-          <!---->
-        <!--</button>-->
-      <!--</ion-list>-->
-    <!---->
-    <!--</ion-content>-->
-    <!---->
-
-<!--<ion-header>-->
-
-  <!--<ion-navbar>-->
-    <!--<button ion-button menuToggle>-->
-      <!--<ion-icon name="menu"></ion-icon>-->
-    <!--</button>-->
-    <!--<ion-title>Completed</ion-title>-->
-  <!--</ion-navbar>-->
-
-<!--</ion-header>-->
-<!-- PREVIOUS STUFF --->
-
-
 <ion-header>
 
   <ion-navbar>
@@ -82,6 +26,12 @@
 
 </ion-header>
 
+    <!-- If no Tasks Found -->
+    <!--<div *ngIf = "noConfirmedTask">-->
+      <!--<h1> No confirmed task available.</h1>-->
+    <!--</div>-->
+
+    <!-- Generate List of tasks-->
 <ion-content padding>
 
   <ion-list>
@@ -112,7 +62,7 @@
 
           <ion-item class="card-item">
             <ion-icon name="stopwatch" item-start large></ion-icon>
-            <h2>Expected to last: {{task.duration}}</h2>
+            <h2>Expected to last: {{task.duration}} hours</h2>
             <p> Compensation: ${{task.compensation}}</p>
 
 

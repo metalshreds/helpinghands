@@ -29,7 +29,9 @@ export class ConfirmedPage {
   noConfirmedTask = false;
   eliminateDup = [];
   constructor(public navCtrl: NavController,
+
               public navParams: NavParams,private alertCtrl: AlertController, public cloud : cloudProvider,)
+
   {
     this.CURRENT_USER.confirmedTask = [];
   }
@@ -102,14 +104,16 @@ export class ConfirmedPage {
                   taskDoc.data()['taskName'],
                   taskDoc.data()['taskId'],
                   taskDoc.data()['duration'],
-                  taskDoc.data()['startTime'],
-                  taskDoc.data()['endTime'],
+                  taskDoc.data()['startDate'],
+                  taskDoc.data()['endDate'],
                   taskDoc.data()['taskDescription'],
-                  taskDoc.data()['complete'],
+                  taskDoc.data()['completed'],
                   taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
                 );
+
+                task.setCompensation(taskDoc.data()['compensation']);
                 task.setWantedSkill(taskDoc.data()['wantedSkills']);
                 task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
                 task.setAppliedHelpers(taskDoc.data()['helpers']);
