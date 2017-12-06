@@ -153,21 +153,25 @@ export class PendingPage {
   }
 
   taskAccepted(event, task){
+    var curUser = this.db.collection('users').doc(this.curUserToken.uid);
+
+    //remove task from invited for invited user
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
+
     //add task to confirmed for both users
     this.cloud.addTaskToList(this.curUserToken.uid, 'confirmedTask', task.taskId, task.taskName);
     this.cloud.addTaskToList(task.ownerUserId, 'confirmedTask', task.taskId, task.taskName);
 
-    //remove task from pending for both users
-    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'pendingTask', task.taskId);
-    this.cloud.removeTaskFromUser(task.ownerUserId, 'pendingTask', task.taskId)
-
     //add accepting user to helper list of task
-    task.helpers.add(this.curUserToken.uid);
+    this.cloud.addUserToTaskList(task.taskId, 'helpers', this.curUserToken.uid,
+      curUser.get()['firstName'].toString(), curUser.get()['lastName'].toString());
+    alert("Task Accepted");
 
   }
 
   taskRejected(event, task){
-    //remove task from pending for rejecting user
-    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'pendingTask', task.taskId);
+    //remove task from invited for rejecting user
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
+    alert("Task Rejected");
   }
 }
