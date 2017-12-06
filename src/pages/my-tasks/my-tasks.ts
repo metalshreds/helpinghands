@@ -58,10 +58,11 @@ export class MyTasksPage {
             task.invitedUser = [];
             task.setCompensation(ownedTasks.data()['compensation']);
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
-            this.db.collection("tasks").doc(doc.id).collection('invitedUser').get().then(doc=>{
-              if(!doc.empty)
+            this.db.collection("tasks").doc(doc.id).collection('invitedUser').onSnapshot(snapDoc=>{
+              if(!snapDoc.empty)
               {
-                doc.forEach(user=>
+                
+                snapDoc.docs.forEach(user=>
                 {
                   task.invitedUser.push(user.id);
                 })
