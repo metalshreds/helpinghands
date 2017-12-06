@@ -69,11 +69,11 @@ export class HelpingHands {
     this.pages = [
 
       { title: 'Profile', component: ProfilePage },
+      { title: 'Edit Profile', component: EditProfilePage },
       // { title: 'Home', component: HomePage },
-      // { title: 'Login', component: LoginPage },
-      // { title: 'Sign up', component: SignupPage },
+      { title: 'Login', component: LoginPage },
+      { title: 'Sign up', component: SignupPage },
       { title: 'Dashboard', component: DashboardPage },
-      // { title: 'Edit Profile', component: EditProfilePage },
       { title: 'Create Task', component: TaskEditPage },
       { title: 'Search', component: SearchPage },
       { title: 'Settings', component: SettingsPage },
