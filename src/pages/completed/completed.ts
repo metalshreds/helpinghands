@@ -79,6 +79,7 @@ export class CompletedPage {
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
             );
+            task.setCompensation(ownedTasks.data()['compensation']);
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
             task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
             task.setAppliedHelpers(ownedTasks.data()['helpers']);

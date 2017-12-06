@@ -51,11 +51,12 @@ export class MyTasksPage {
               ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['ownerName'],
+              ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location'],
             );
 
+            task.setCompensation(ownedTasks.data()['compensation']);
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
             task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
             task.setAppliedHelpers(ownedTasks.data()['helpers']);
