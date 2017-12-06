@@ -51,8 +51,8 @@ export class MyTasksPage {
               ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
+              ownedTasks.data()['ownerName'],
               ownedTasks.data()['location'],
             );
 
