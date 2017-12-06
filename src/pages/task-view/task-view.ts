@@ -11,6 +11,7 @@ import {ProfileProvider} from "../../providers/profile/profile";
 import firebase from 'firebase';
 import {TaskObjectProvider} from "../../providers/task-object/task-object";
 import {cloudProvider} from "../../providers/cloudbase";
+import {ToastController} from 'ionic-angular';
 /**
  * Generated class for the TaskViewPage page.
  *
@@ -36,84 +37,103 @@ export class TaskViewPage {
   userIsTaskOwner = false;
   showEditButton = false;
   showRequestButton = false;
+  taskIsConfirmed = false;
+  confirmedTasks:  TaskObjectProvider[] = [];
+  showHelpers = false;
   db = firebase.firestore();
+  skillsNeeded = [];
   owner_user_id = this.curUserToken.uid; //todo change this
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private AFcurUser: AngularFireAuth,
               public app: App,
-              public cloud: cloudProvider,) {
+              public cloud: cloudProvider,
+              private toastCtrl: ToastController,
+              private alertCtrl: AlertController) {
 
     this.selectedTask = navParams.get('task');
-    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid);
-
-    //TODO is this the correct way to check if they are the same user?
-    console.log('1', this.selectedTask.ownerUserId );
-    console.log('2',this.curUserToken.uid);
-    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
-    if(this.userIsTaskOwner)
-    {
-          //TODO trying to get suggetsed users list
-    this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
-      console.log('in suggst page user doc is ', doc.data());
-      for(const field in doc.data())
-      {
-        console.log("Current user: " + field + " = " + doc.data()[field]);
-        this.CURRENT_USER[field] = doc.data()[field];
-      }
-      console.log("after first for loop!");
-      console.log('current task is ', this.selectedTask);
-      for(const skill in this.selectedTask.wantedSkills){
-        console.log("skill: " + skill);
-      }
-      for (const i in this.selectedTask.wantedSkills)
-      {
-        console.log("in second for, const in wantd skills is: " + i);
-        if (this.selectedTask.wantedSkills[i] == true)
-        {
-          console.log("wanted skill was true! in if");
-          this.querySkill.push(i);
-          this.db.collection('users').where('skills.'+i, '==', true).get()
-            .then(doc=>{
-              doc.forEach(user =>{
-                console.log("@@@@@@@@@@@@@@IN WHERE I NEED TO BE");
-                var skill = [];
-                var userObject = new ProfileProvider(
-                  user.data()['lastName'],
-                  user.data()['firstName'],
-                  user.data()['userId'],
-                  user.data()['email'],
-                  user.data()['introduction'],
-                  user.data()['skills'],
-                  user.data()['zipCode'],
-                  user.data()['phone'],
-                  user.data()['travelRadius'],
-                  user.data()['taskCount'],
-                  user.data()['photoUrl'],
-                  user.data()['isHelper']
-                );
-                //put keys of wantedSkills map in a array for display purpose
-                for (const i in userObject.skills)
-                {
-                  if (userObject.skills[i] == true)
-                    skill.push(i);
-                }
-                userObject['skillSet'] = skill;
-                //push in result array if this task is not completed
-                if(this.elimilateDup.indexOf(userObject.userId) < 0
-                  && (userObject.userId != this.curUserToken.uid) )
-                {
-                  this.elimilateDup.push(userObject.userId);
-                  console.log("pushing user: " + userObject.firstName);
-                  this.suggestedUsers.push(userObject);
-                }
-              });
-          })
+    this.confirmedTasks = navParams.get("confirmedTasks")
+    console.log("CONFIRMED TASKS ARE: " + this.confirmedTasks);
+    if(typeof this.confirmedTasks != 'undefined'){
+      for(const i in this.confirmedTasks){
+        console.log("CONFIRMED TASKS AT " + i + " is " + this.confirmedTasks[i].taskName);
+        if(this.confirmedTasks[i].taskId == this.selectedTask.taskId){
+          this.taskIsConfirmed = true;
         }
       }
+    }
+    console.log("this is the task", this.selectedTask);
+    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid);
+
+    for (const skill in this.selectedTask.wantedSkills) {
+      if (this.selectedTask.wantedSkills[skill]) {
+        this.skillsNeeded.push(skill);
+      }
+    }
+
+    //TODO is this the correct way to check if they are the same user?
+    console.log('1', this.selectedTask.ownerUserId);
+    console.log('2', this.curUserToken.uid);
+    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
+    if (this.userIsTaskOwner && !this.selectedTask.completed && !this.taskIsConfirmed) {
+      //TODO trying to get suggetsed users list
+      this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=> {
+        console.log('in suggst page user doc is ', doc.data());
+        for (const field in doc.data()) {
+          console.log("Current user: " + field + " = " + doc.data()[field]);
+          this.CURRENT_USER[field] = doc.data()[field];
+        }
+        console.log("after first for loop!");
+        console.log('current task is ', this.selectedTask);
+        for (const skill in this.selectedTask.wantedSkills) {
+          console.log("skill: " + skill);
+        }
+        for (const i in this.selectedTask.wantedSkills) {
+          console.log("in second for, const in wantd skills is: " + i);
+          if (this.selectedTask.wantedSkills[i] == true) {
+            console.log("wanted skill was true! in if");
+            this.querySkill.push(i);
+            this.db.collection('users').where('skills.' + i, '==', true).get()
+              .then(doc=> {
+                doc.forEach(user => {
+                  console.log("@@@@@@@@@@@@@@IN WHERE I NEED TO BE");
+                  var skill = [];
+                  var userObject = new ProfileProvider(
+                    user.data()['lastName'],
+                    user.data()['firstName'],
+                    user.data()['userId'],
+                    user.data()['email'],
+                    user.data()['introduction'],
+                    user.data()['skills'],
+                    user.data()['zipCode'],
+                    user.data()['phone'],
+                    user.data()['travelRadius'],
+                    user.data()['taskCount'],
+                    user.data()['photoUrl'],
+                    user.data()['isHelper']
+                  );
+                  //put keys of wantedSkills map in a array for display purpose
+                  for (const i in userObject.skills) {
+                    if (userObject.skills[i] == true)
+                      skill.push(i);
+                  }
+                  userObject['skillSet'] = skill;
+                  //push in result array if this task is not completed
+                  if (this.elimilateDup.indexOf(userObject.userId) < 0
+                    && (userObject.userId != this.curUserToken.uid) && this.selectedTask.invitedUser.indexOf(userObject.userId) < 0) {
+                    this.elimilateDup.push(userObject.userId);
+                    console.log("pushing user: " + userObject.firstName);
+                    this.suggestedUsers.push(userObject);
+                  }
+                });
+              })
+          }
+        }
       });
-   }
+    }
+
+
 
     console.log("right before getting task owner");
 
@@ -179,6 +199,9 @@ export class TaskViewPage {
     if (this.selectedTask.completed) {
       this.showEditButton = false;
       this.showRequestButton = false;
+    }else if(this.taskIsConfirmed){
+      this.showEditButton = this.userIsTaskOwner;
+      this.showRequestButton = false;
     } else {
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = !this.userIsTaskOwner;
@@ -216,8 +239,19 @@ export class TaskViewPage {
     console.log("USER IN REQUEST IS: " + user);
     console.log("user id is: " + user.userId);
     this.cloud.addTaskToList(user.userId.toString(), 'invitedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
+    this.cloud.addUserToTaskList(this.selectedTask.taskId, 'invitedUser', user.userId, user.firstName, user.lastName);
     //this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'invitedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
-    alert(user.firstName + " " + user.lastName + " Requested");
+    for (const i in this.suggestedUsers) {
+      if (user.userId == this.suggestedUsers[i].userId) {
+        this.suggestedUsers.splice(Number(i), 1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: user.firstName + " " + user.lastName + " has been Requested",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 
   acceptAppliedHelper(event, helper) {
@@ -229,12 +263,63 @@ export class TaskViewPage {
     this.cloud.addTaskToList(helper.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
     //we want to add this task to current_user's confirm list?
     this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
-    alert(helper.firstName + " " + helper.lastName + " Accepted");
+    for (const i in this.appliedHelpers) {
+      if (helper.userId == this.appliedHelpers[i].userId) {
+        this.appliedHelpers.splice(Number(i), 1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: helper.firstName + " " + helper.lastName + " has been Accepted",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 
   rejectAppliedHelper(event, helper) {
     this.cloud.removeUserFromTasklist(this.selectedTask.taskId.toString(), 'appliedHelpers', helper.userId.toString());
     this.cloud.removeTaskFromUser(helper.userId.toString(), 'appliedTask', this.selectedTask.taskId.toString());
-    alert(helper.firstName + " " + helper.lastName + " Rejected");
+    for (const i in this.appliedHelpers) {
+      if (helper.userId == this.appliedHelpers[i].userId) {
+        this.appliedHelpers.splice(Number(i), 1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: helper.firstName + " " + helper.lastName + " has been Rejected",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
+  }
+
+  doPrompt(event, task) {
+    let prompt = this.alertCtrl.create({
+      title: 'Send a message',
+      message: "Enter the reason for cancelling",
+      inputs: [
+        {
+          name: 'Ex: I don\'t have time..',
+          placeholder: 'Ex: I don\'t have time..'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    this.cloud.removeUserFromTasklist(task.taskId, 'helpers', this.curUserToken.uid);
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', task.taskId.toString());
+    prompt.present();
+
   }
 }

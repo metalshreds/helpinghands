@@ -15,6 +15,7 @@
 
 <!-- Generate List of tasks-->
 <ion-content padding>
+
   <ion-list>
     <ion-card>
       <button ion-item *ngFor="let task of this.myTasks" (click) = 'taskClicked($event, task)'>
@@ -36,29 +37,9 @@
 
           <ion-item class="card-item">
             <ion-icon name="stopwatch" item-start large></ion-icon>
-            <h2>Expected to last: {{task.duration}}</h2>
+            <h2>Expected to last: {{task.duration}} hours</h2>
             <p> Compensation: ${{task.compensation}}</p>
           </ion-item>
-
-          <!--<ion-row>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="thumbs-up"></ion-icon>-->
-          <!--<div>Rate : 5.0 / 5.0 </div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col>-->
-          <!--<button ion-button icon-left clear small>-->
-          <!--<ion-icon name="text"></ion-icon>-->
-          <!--<div>Comments</div>-->
-          <!--</button>-->
-          <!--</ion-col>-->
-          <!--<ion-col center text-center>-->
-          <!--<ion-note>-->
-          <!--11h ago-->
-          <!--</ion-note>-->
-          <!--</ion-col>-->
-          <!--</ion-row>-->
 
         </ion-card-content>
       </button>

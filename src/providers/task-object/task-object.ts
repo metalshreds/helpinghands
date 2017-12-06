@@ -24,7 +24,7 @@ export class TaskObjectProvider {
   public appliedHelpers: string[] = [];  //store applicant user id
   public location: string;
   public compensation: number;
-
+  public invitedUser: string[];
   //Task
   public taskId: string;                  //task's unique id generated when during task creation
   public taskName: string;                //task's name
@@ -41,9 +41,8 @@ export class TaskObjectProvider {
               timeEnd : string,
               taskDescription : string,
               complete : boolean,
-              owner : string, 
+              owner : string,
               ownerUserId : string,
-            
               location : string,
   ) {
     this.taskName = taskName;
@@ -72,6 +71,10 @@ export class TaskObjectProvider {
   setAppliedHelpers(applicant)
   {
     this.appliedHelpers = applicant;
+  }
+  setInvitedUser(user)
+  {
+    this.invitedUser = user;
   }
   setOwnerName(ownerName: string){this.ownerName = ownerName;}
   getOwnerName(){return this.ownerName};
