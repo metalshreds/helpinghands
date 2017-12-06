@@ -83,6 +83,15 @@ export class ConfirmedPage {
     var observer = query.onSnapshot(querySnapshot=>
     {
       console.log('on pending observer1 ', querySnapshot);
+      for(const i in querySnapshot.docChanges)
+      {
+        console.log("this",querySnapshot.docChanges);
+        console.log("this",querySnapshot.docChanges[i].type);
+        if(querySnapshot.docChanges[i].type == 'removed')
+        {
+          this.CURRENT_USER.confirmedTask.splice(Number(i), 1);
+        }
+      }
       for(const i in querySnapshot.docs)
       {
         console.log('on pending observer2 ', querySnapshot.docs[i].id);

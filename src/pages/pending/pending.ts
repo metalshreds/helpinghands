@@ -39,6 +39,20 @@ export class PendingPage {
     var observer = query.onSnapshot(querySnapshot=>
     {
       console.log('on pending observer1 ', querySnapshot);
+      for(const i in querySnapshot.docChanges)
+      {
+        if(querySnapshot.docChanges[i].type == 'removed')
+        {
+          for(const x in this.CURRENT_USER.appliedTask)
+          {
+            if(this.CURRENT_USER.appliedTask[x].taskId == querySnapshot.docChanges[i].doc.id)
+            {
+              this.CURRENT_USER.appliedTask.splice(Number(x), 1);
+            }
+          }
+        }
+      }
+
       for(const i in querySnapshot.docs)
       {
         console.log('on pending observer2 ', querySnapshot.docs[i].id);
@@ -91,6 +105,24 @@ export class PendingPage {
     var invitedQuery = this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask');
     var invObserver = invitedQuery.onSnapshot(querySnapshot=>
     {
+      for(const i in querySnapshot.docChanges)
+      {
+        //console.log("this",querySnapshot.docChanges);
+        //console.log("this",querySnapshot.docChanges[i].type);
+        //console.log("before", this.CURRENT_USER.invitedTask);
+        if(querySnapshot.docChanges[i].type == 'removed')
+        {
+          for(const x in this.CURRENT_USER.invitedTask)
+          {
+            if(this.CURRENT_USER.invitedTask[x].taskId == querySnapshot.docChanges[i].doc.id)
+            {
+              this.CURRENT_USER.invitedTask.splice(Number(x), 1);
+            }
+          }
+          //console.log("after", this.CURRENT_USER.invitedTask);
+        }
+      }
+
       for(const i in querySnapshot.docs)
       {
         if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
@@ -104,9 +136,8 @@ export class PendingPage {
               console.log('in pending.ts/reading doc from invited failed, looking for doc: ', querySnapshot.docs[i].id, 'from user: ', );
             }
             else{
-              console.log('task doc is ',taskDoc.data());
+              //console.log('task doc is ',taskDoc.data());
               //create task and push into array
-              //TODO change the following hard coding
               var task = new TaskObjectProvider(
                 taskDoc.data()['taskName'],
                 taskDoc.data()['taskId'],

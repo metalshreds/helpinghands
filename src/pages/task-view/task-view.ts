@@ -11,6 +11,7 @@ import {ProfileProvider} from "../../providers/profile/profile";
 import firebase from 'firebase';
 import {TaskObjectProvider} from "../../providers/task-object/task-object";
 import {cloudProvider} from "../../providers/cloudbase";
+import { ToastController } from 'ionic-angular';
 /**
  * Generated class for the TaskViewPage page.
  *
@@ -44,7 +45,8 @@ export class TaskViewPage {
               public navParams: NavParams,
               private AFcurUser: AngularFireAuth,
               public app: App,
-              public cloud: cloudProvider,) {
+              public cloud: cloudProvider,
+              private toastCtrl: ToastController) {
 
     this.selectedTask = navParams.get('task');
     console.log("this is the task", this.selectedTask);
@@ -110,7 +112,7 @@ export class TaskViewPage {
                 userObject['skillSet'] = skill;
                 //push in result array if this task is not completed
                 if(this.elimilateDup.indexOf(userObject.userId) < 0
-                  && (userObject.userId != this.curUserToken.uid) )
+                  && (userObject.userId != this.curUserToken.uid) && this.selectedTask.invitedUser.indexOf(userObject.userId)<0)
                 {
                   this.elimilateDup.push(userObject.userId);
                   console.log("pushing user: " + userObject.firstName);
@@ -224,8 +226,21 @@ export class TaskViewPage {
     console.log("USER IN REQUEST IS: " + user);
     console.log("user id is: " + user.userId);
     this.cloud.addTaskToList(user.userId.toString(), 'invitedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
+    this.cloud.addUserToTaskList(this.selectedTask.taskId, 'invitedUser', user.userId, user.firstName, user.lastName);
     //this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'invitedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
-    alert(user.firstName + " " + user.lastName + " Requested");
+    for(const i in this.suggestedUsers)
+    {
+      if(user.userId == this.suggestedUsers[i].userId)
+      {
+        this.suggestedUsers.splice(Number(i),1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: user.firstName + " " + user.lastName + " has been Requested",
+      position : 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 
   acceptAppliedHelper(event, helper) {
@@ -237,12 +252,36 @@ export class TaskViewPage {
     this.cloud.addTaskToList(helper.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
     //we want to add this task to current_user's confirm list?
     this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
-    alert(helper.firstName + " " + helper.lastName + " Accepted");
+    for(const i in this.appliedHelpers)
+    {
+      if(helper.userId == this.appliedHelpers[i].userId)
+      {
+        this.appliedHelpers.splice(Number(i),1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: helper.firstName + " " + helper.lastName + " has been Accepted",
+      position : 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 
   rejectAppliedHelper(event, helper) {
     this.cloud.removeUserFromTasklist(this.selectedTask.taskId.toString(), 'appliedHelpers', helper.userId.toString());
     this.cloud.removeTaskFromUser(helper.userId.toString(), 'appliedTask', this.selectedTask.taskId.toString());
-    alert(helper.firstName + " " + helper.lastName + " Rejected");
+    for(const i in this.appliedHelpers)
+    {
+      if(helper.userId == this.appliedHelpers[i].userId)
+      {
+        this.appliedHelpers.splice(Number(i),1);
+      }
+    }
+    const toast = this.toastCtrl.create({
+      message: helper.firstName + " " + helper.lastName + " has been Rejected",
+      position : 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 }

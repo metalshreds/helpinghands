@@ -25,7 +25,7 @@ export class SuggestedPage {
   querySkill = [];
   suggestedTasks = [];
   eliminateDup = [];
-
+  userSkillBoolean = []; //code for KNN matching, useless now
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               )
@@ -110,6 +110,7 @@ export class SuggestedPage {
             doc.forEach(task =>{
               var taskObject = {} as TaskObjectProvider;
               var skill = [];
+              var taskSkillBoolean = []; //code for KNN matching, useless now
               for(const field in task.data())
               {
                 taskObject[field] = task.data()[field];
@@ -118,10 +119,17 @@ export class SuggestedPage {
               for (const i in taskObject.wantedSkills)
               {
                 if (taskObject.wantedSkills[i] == true)
-                    skill.push(i);
+                {
+                  skill.push(i);
+                  taskSkillBoolean.push(1); //code for KNN matching, useless now
+                }
+                else
+                {
+                  taskSkillBoolean.push(0); //code for KNN matching, useless now
+                }
               }
               taskObject['skillSet'] = skill;
-
+              taskObject['taskSkillBoolean'] = taskSkillBoolean;
               //push in result array if this task is not completed
               if(!taskObject.completed && this.eliminateDup.indexOf(taskObject.taskId) < 0
                   && (taskObject.ownerUserId != this.curUserToken.uid) )
@@ -137,6 +145,7 @@ export class SuggestedPage {
     });
   }
 
+
   doRefresh(refresher) {
     this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
       console.log('in suggst page user doc is ', doc.data());
@@ -148,6 +157,7 @@ export class SuggestedPage {
       {
         if (this.CURRENT_USER.skills[i] == true)
         {
+          this.userSkillBoolean.push(1);//code for KNN matching, useless now
           this.querySkill.push(i);
           this.db.collection('tasks').where('wantedSkills.'+i, '==', true).get()
           .then(doc=>{
@@ -165,7 +175,6 @@ export class SuggestedPage {
                     skill.push(i);
               }
               taskObject['skillSet'] = skill;
-
               //push in result array if this task is not completed
               if(!taskObject.completed && this.eliminateDup.indexOf(taskObject.taskId) < 0
                   && (taskObject.ownerUserId != this.curUserToken.uid) )
@@ -176,6 +185,10 @@ export class SuggestedPage {
               }
             })
           })
+        }
+        else
+        {
+          this.userSkillBoolean.push(0);//code for KNN matching, useless now
         }
       }
     });
