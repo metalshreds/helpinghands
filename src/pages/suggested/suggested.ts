@@ -24,13 +24,19 @@ export class SuggestedPage {
   db = firebase.firestore();
   querySkill = [];
   suggestedTasks = [];
-  elimilateDup = [];
+  eliminateDup = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               )
               {
-
+                this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask').onSnapshot(querySnapshot=>{
+                  for(const i in querySnapshot.docs)
+                  {
+                    if(this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0)
+                    {}
+                  }
+                })
               }
 
   ionViewDidLoad() {
@@ -39,6 +45,26 @@ export class SuggestedPage {
   }
   getSuggestTask()
   {
+    this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask').get()
+      .then(taskDoc=>{
+        taskDoc.forEach(doc=>{
+          this.eliminateDup.push(doc.id);
+        })
+      });
+
+    this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask').get()
+      .then(taskDoc=>{
+        taskDoc.forEach(doc=>{
+          this.eliminateDup.push(doc.id);
+        })
+      });
+
+    this.db.collection('users').doc(this.curUserToken.uid).collection('invitedTask').get()
+      .then(taskDoc=>{
+        taskDoc.forEach(doc=>{
+          this.eliminateDup.push(doc.id);
+        })
+      })
     console.log(this.curUserToken.uid);
     this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=>{
       console.log('in suggst page user doc is ', doc.data());
@@ -67,11 +93,13 @@ export class SuggestedPage {
                     skill.push(i);
               }
               taskObject['skillSet'] = skill;
+
               //push in result array if this task is not completed
-              if(!taskObject.completed && this.elimilateDup.indexOf(taskObject.taskId) < 0
+              if(!taskObject.completed && this.eliminateDup.indexOf(taskObject.taskId) < 0
                   && (taskObject.ownerUserId != this.curUserToken.uid) )
               {
-                this.elimilateDup.push(taskObject.taskId);
+                //console.log("task in suggest page", taskObject);
+                this.eliminateDup.push(taskObject.taskId);
                 this.suggestedTasks.push(taskObject);
               }
             })

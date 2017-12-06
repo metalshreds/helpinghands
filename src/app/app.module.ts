@@ -27,6 +27,8 @@ import { cloudProvider } from "../providers/cloudbase";
 import { AngularFirestoreModule} from "angularfire2/firestore";
 import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module";
 import { CommentPopover } from "../pages/task-edit/comment-popover";
+import { SettingsPage} from "../pages/settings/settings";
+import { SignoutPage} from "../pages/signout/signout";
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -43,6 +45,8 @@ import { CommentPopover } from "../pages/task-edit/comment-popover";
     ProfilePage,
     TaskEditPage,
     TaskViewPage,
+    SettingsPage,
+    SignoutPage,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,8 @@ import { CommentPopover } from "../pages/task-edit/comment-popover";
     TaskEditPage,
     TaskViewPage,
     CommentPopover,
+    SignoutPage,
+    SettingsPage,
   ],
   providers: [
     StatusBar,

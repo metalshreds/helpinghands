@@ -46,17 +46,20 @@ export class MyTasksPage {
             let task = new TaskObjectProvider(
               ownedTasks.data()['taskName'],
               ownedTasks.data()['taskId'],
-              ownedTasks.data()['timeDuration'],
-              ownedTasks.data()['timeStart'],
-              ownedTasks.data()['timeEnd'],
+              ownedTasks.data()['duration'],
+              ownedTasks.data()['startDate'],
+              ownedTasks.data()['endDate'],
               ownedTasks.data()['taskDescription'],
               ownedTasks.data()['completed'],
-              ownedTasks.data()['owner'],
+              ownedTasks.data()['ownerName'],
               ownedTasks.data()['ownerUserId'],
-              ownedTasks.data()['location']
+              ownedTasks.data()['location'],
             );
 
-            task.setTaskId(ownedTasks.data()['taskId']);
+            task.setWantedSkill(ownedTasks.data()['wantedSkills']);
+            task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
+            task.setAppliedHelpers(ownedTasks.data()['helpers']);
+            task.setOwnerComment(ownedTasks.data()['owerComment']);
 
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
@@ -75,7 +78,7 @@ export class MyTasksPage {
     }); //END .then
   } // END of loadMyTasks
 
-  taskClicked(task) {
+  taskClicked(event, task) {
     this.navCtrl.push(TaskViewPage, {
       task: task
     });

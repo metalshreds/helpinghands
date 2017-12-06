@@ -287,6 +287,7 @@ export class TaskEditPage {
         this.taskCreateForm.value.location
       );
 
+      this.task.setCompensation(Number(this.compensationHolder));
       this.task.setWantedSkill(this.skill);
       this.task.setAppliedHelperList([]);
       this.task.setAppliedHelpers([]);
