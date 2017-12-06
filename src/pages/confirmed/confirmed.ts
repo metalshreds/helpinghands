@@ -4,6 +4,8 @@ import { TaskViewPage } from '../task-view/task-view';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
+import { AlertController } from 'ionic-angular';
+import { cloudProvider } from "../../providers/cloudbase";
 
 
 /**
@@ -19,21 +21,56 @@ import * as firebase from 'firebase';
   templateUrl: 'confirmed.html',
 })
 export class ConfirmedPage {
+
   AFcurUser = firebase.auth();
   curUserToken = this.AFcurUser.currentUser;
   CURRENT_USER = {} as ProfileProvider;
   db = firebase.firestore();
   noConfirmedTask = false;
   eliminateDup = [];
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams)
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,private alertCtrl: AlertController, public cloud : cloudProvider,)
   {
     this.CURRENT_USER.confirmedTask = [];
   }
 
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfirmedPage');
     this.getConfirmedList();
+  }
+
+
+  doPrompt(event, task) {
+    let prompt = this.alertCtrl.create({
+      title: 'Send a message',
+      message: "Enter the reason for cancelling",
+      inputs: [
+        {
+          name: 'Ex: I don\'t have time..',
+          placeholder: 'Ex: I don\'t have time..'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    this.cloud.removeUserFromTasklist(task.taskId, 'helpers', this.curUserToken.uid);
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask',task.taskId.toString());
+    prompt.present();
+
   }
 
   getConfirmedList()
@@ -72,7 +109,7 @@ export class ConfirmedPage {
                   taskDoc.data()['ownerName'],
                   taskDoc.data()['ownerUserId'],
                   taskDoc.data()['location']
-                );      
+                );
                 task.setWantedSkill(taskDoc.data()['wantedSkills']);
                 task.setAppliedHelperList(taskDoc.data()['appliedHelpers']);
                 task.setAppliedHelpers(taskDoc.data()['helpers']);
@@ -93,6 +130,9 @@ export class ConfirmedPage {
     });
 
   }
+
+
+
   //navigates to taskview page if task clicked
   taskClicked(event, task) {
     this.navCtrl.push(TaskViewPage, {
@@ -101,4 +141,11 @@ export class ConfirmedPage {
 
   }
 
+
 }
+
+
+
+
+
+

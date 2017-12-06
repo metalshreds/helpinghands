@@ -38,7 +38,7 @@
         <ion-card-content>
           <button  style="height: 100%; width: 100%" (click) = 'taskClicked($event, task)'>
           <ion-item class="card-item">
-            <ion-icon name="calendar" item-start large></ion-icon>
+            <ion-icon name="pulse" item-start large></ion-icon>
             <ion-card-title>
               {{task.taskName}}
             </ion-card-title>
@@ -71,7 +71,7 @@
 
         <ion-card-content>
           <ion-item class="card-item">
-            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-icon name="pulse" item-start large></ion-icon>
             <ion-card-title>
               {{task.taskName}}
             </ion-card-title>
@@ -109,8 +109,8 @@
     <!-- INVITED USERS LIST  -->
     <ion-list>
       <ion-card ion-item *ngFor="let task of CURRENT_USER.pendingTask">
-  
-  
+
+
       <ion-item class="task-pending">
         <!--<button style="width:100%;" (click) = 'taskClicked($event, task)'>-->
             <ion-avatar item-start>
@@ -122,13 +122,13 @@
           <!--<button   class="accept-reject-buttons" clear="true"clearInput="true">-->
               <ion-icon class="acc_rej_icon" name="checkmark" (click) = 'taskClicked($event, task)' item-end large></ion-icon>
           <!--</button>-->
-  
+
           <!--<button   class="accept-reject-buttons" clearInput="true">-->
               <ion-icon  class="acc_rej_icon" name="trash" (click) = 'taskClicked($event, task)' item-end large ></ion-icon>
           <!--</button>-->
-  
+
       </ion-item>
-  
+
           <ion-card-content>
             <button  style="height: 100%; width: 100%" (click) = 'taskClicked($event, task)'>
             <ion-item class="card-item">
@@ -137,7 +137,7 @@
                 {{task.taskName}}
               </ion-card-title>
             </ion-item>
-  
+
             <ion-item class="card-item">
               <ion-icon name="stopwatch" item-start large></ion-icon>
               <h2>{{task.startDate}}</h2>
