@@ -82,6 +82,8 @@
     </div>
   </ion-item>
 
+  <button *ngIf="taskIsConfirmed" ion-button full color="light" block (click)="doPrompt($event, selectedTask)">I am not going to do this task</button>
+
   <button full *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
   <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
