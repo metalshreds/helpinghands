@@ -142,7 +142,7 @@ export class PendingPage {
                 taskDoc.data()['taskName'],
                 taskDoc.data()['taskId'],
                 taskDoc.data()['duration'],
-                taskDoc.data()['startTime'],
+                taskDoc.data()['startDate'],
                 taskDoc.data()['endTime'],
                 taskDoc.data()['taskDescription'],
                 taskDoc.data()['complete'],
