@@ -45,24 +45,38 @@
 <ion-content padding>
 
     <div [ngSwitch]="SearchResult">
-        
+
         <ion-list *ngSwitchCase="'User'">
           <button ion-item *ngFor="let item of items" (click) = 'userClicked(item.userId)'>
             {{item.firstName}} {{ item.lastName }}
             {{item.skillset}}
-            {{item.userId}} 
+            {{item.userId}}
           </button>
         </ion-list>
-        
-        <ion-list *ngSwitchCase="'Task'">
-          <button ion-item *ngFor="let task of resultTasks" (click)='taskClicked(task)'>
-              {{task.taskName}}
-              {{task.skillset}}
-              {{task.taskId}}
-          </button>
-        </ion-list>
-    
-    
+
+      <ion-list *ngSwitchCase="'Task'">
+        <ion-item-sliding  *ngFor="let task of resultTasks" (click)='taskClicked(task)'>
+
+        <button ion-item>
+          {{task.taskName}}
+          {{task.skillset}}
+          {{task.taskId}}
+        </button>
+
+          <ion-item-options side="left">
+            <button ion-button (click)="favorite(item)">Request task</button>
+            <button ion-button color="danger" (click)="share(item)">More imformation</button>
+          </ion-item-options>
+
+          <ion-item-options side="right">
+            <button ion-button (click)="unread(item)">Unread</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+
+
+
     </div>
 
 

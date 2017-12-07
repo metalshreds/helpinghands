@@ -23,25 +23,63 @@
 
 <ion-content padding>
 
+
+
+  <ion-list no-border>
+
+    <ion-item>
+      <ion-icon name='body' item-start></ion-icon>
+      Task: {{selectedTask.taskName}}
+    </ion-item>
+    <ion-item>
+      Requested by: <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event,
+       selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='leaf' item-start></ion-icon>
+       Task Description: {{selectedTask.taskDescription}}
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='timer' item-start></ion-icon>
+      Start Time: {{selectedTask.startDate}}|
+      End Time: {{selectedTask.endDate}}
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='leaf' item-start></ion-icon>
+      Estimated Length: {{selectedTask.duration}} hours
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-icon name='cash' item-start></ion-icon>
+      Compensation: {{selectedTask.compensation}} hours
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='pin' item-start></ion-icon>
+      Location: {{selectedTask.location}}
+    </ion-item>
+    <ion-item>
+
+    </ion-item>
+
+
+  </ion-list>
+
   <ion-item>
-    <div *ngIf ="selectedTask">
-      <h1 style="text-align: center" class="wrap">{{selectedTask.taskName}}</h1>
-      <p class = "requesting-user">Requested by <u style="color: #3f7cc6" (click)="userClicked($event, selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</u></p>
-      <p class="task-summary wrap">{{selectedTask.taskDescription}}</p>
-      <br>
-      <p style="color: black">Start Time: {{selectedTask.startDate}}<br>
-      End Time: {{selectedTask.endDate}}<br>
-      Estimated Length: {{selectedTask.duration}} hours<br>
-      Compensation: ${{selectedTask.compensation}}<br>
-      Location: {{selectedTask.location}}</p>
-    </div>
     <div *ngIf="skillsNeeded.length != 0">
       <u style="color: black; font-size: large">Skills needed for this task</u>
       <p style="color: black" *ngFor="let skill of skillsNeeded">{{skill}}</p>
     </div>
   </ion-item>
 
-  <button *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
+  <button *ngIf="taskIsConfirmed" ion-button full color="light" block (click)="doPrompt($event, selectedTask)">I am not going to do this task</button>
+
+  <button full *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
   <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
   <ion-item *ngIf="showEditButton">
@@ -67,6 +105,7 @@
       <ion-item *ngIf="suggestedUsers.length == 0">No suggested helpers</ion-item>
     </ion-list>
   </ion-item>
+
 
 
 

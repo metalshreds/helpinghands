@@ -11,6 +11,15 @@
 
 <ion-content padding>
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <ion-list>
 
     <ion-card>
@@ -27,7 +36,7 @@
 
         <ion-card-content>
           <ion-item class="card-item">
-            <ion-icon name="checkmark" item-start large></ion-icon>
+            <ion-icon name="hand" item-start large></ion-icon>
             <ion-card-title>
               {{task.taskName}}
             </ion-card-title>

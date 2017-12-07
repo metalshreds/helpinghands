@@ -1,16 +1,27 @@
 page-pending {
+  .accept-reject-buttons {
+    //min-height: 4.4rem;
+    //min-width: 4.4rem;
+    background-color: transparent;
+  }
 
+
+  .acc_rej_icon{
+    min-height: 3rem;
+    color: black;
+    padding: 10px;
+    height: 100%;
+    //min-width: 3rem;
+  }
+
+  .buttons{
+    background: transparent;
+    text-align: center;
+    height: 75%;
+    outline: none;
+    //box-shadow: none;
+  }
 }
 
-.accept-reject-buttons {
-  //min-height: 4.4rem;
-  //min-width: 4.4rem;
-  background-color: transparent;
-}
 
-
-.acc_rej_icon{
-  min-height: 3rem;
-  //min-width: 3rem;
-}
 
