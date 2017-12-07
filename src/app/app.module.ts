@@ -29,6 +29,7 @@ import { CommentPopoverModule } from "../pages/task-edit/comment-popover.module"
 import { CommentPopover } from "../pages/task-edit/comment-popover";
 import { SettingsPage} from "../pages/settings/settings";
 import { SignoutPage} from "../pages/signout/signout";
+import { IntroductionPage} from "../pages/introduction/introduction";
 
 //import { emailValidator} from "../validators/emailValidator";
 
@@ -47,6 +48,7 @@ import { SignoutPage} from "../pages/signout/signout";
     TaskViewPage,
     SettingsPage,
     SignoutPage,
+    IntroductionPage,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +76,7 @@ import { SignoutPage} from "../pages/signout/signout";
     CommentPopover,
     SignoutPage,
     SettingsPage,
+    IntroductionPage,
   ],
   providers: [
     StatusBar,

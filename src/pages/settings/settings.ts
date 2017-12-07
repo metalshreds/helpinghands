@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { AngularFireAuth} from "angularfire2/auth";
 import { LoginPage} from "../login/login";
+import { IntroductionPage} from "../introduction/introduction";
 
 /**
  * Generated class for the SettingsPage page.
@@ -29,7 +30,10 @@ export class SettingsPage {
   signOut(){
     firebase.auth().signOut();
     // this.navCtrl.push(LoginPage);
-
   }
 
+  introPage(){
+    this.navCtrl.push(IntroductionPage);
+    // this.navCtrl.push(LoginPage);
+  }
 }
