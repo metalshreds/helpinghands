@@ -11,8 +11,13 @@
 
 <ion-content padding>
 
-  <ion-list>
+  <!-- If no Tasks Found -->
+  <div *ngIf = "noTasks">
+    <h1>You have no completed tasks</h1>
+    <p>This tab will contain task that you have requested and have been completed by a helper.</p>
+  </div>
 
+  <ion-list>
   <ion-card>
     <button ion-item *ngFor="let task of completedTasks" (click) = 'taskClicked($event, task)'>
 
@@ -25,6 +30,7 @@
       </ion-item>
 
     <ion-card-content>
+
       <ion-item class="card-item">
       <ion-icon name="happy" item-start large></ion-icon>
       <ion-card-title>

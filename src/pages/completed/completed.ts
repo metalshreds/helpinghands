@@ -32,6 +32,7 @@ export class CompletedPage {
   curUserToken = this.AFcurUser.auth.currentUser;
   CURRENT_USER = {} as ProfileProvider;
   db = firebase.firestore();
+  noTasks = true;
 
   taskOwnerDict = {};
 
@@ -79,6 +80,7 @@ export class CompletedPage {
               ownedTasks.data()['ownerUserId'],
               ownedTasks.data()['location']
             );
+            this.noTasks = false;
             task.setCompensation(ownedTasks.data()['compensation']);
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
             task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);

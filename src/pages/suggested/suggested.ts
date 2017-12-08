@@ -26,12 +26,13 @@ export class SuggestedPage {
   suggestedTasks = [];
   eliminateDup = [];
   userSkillBoolean = []; //code for KNN matching, useless now
+  noTasks = true;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               )
               {
                 this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask').onSnapshot(querySnapshot=>{
-                 
+
 
                   for(const i in querySnapshot.docs)
                   {
@@ -48,6 +49,7 @@ export class SuggestedPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SuggestedPage');
     this.getSuggestTask();
+
   }
   // findTask(task)
   // {
@@ -59,7 +61,7 @@ export class SuggestedPage {
       console.log('on suggest observer1 ', querySnapshot);
       querySnapshot.forEach(doc=>{
         //console.log('on suggest observer2 ', doc);
-  
+
           if(this.eliminateDup.indexOf(doc.id) < 0)
           {
             this.eliminateDup.push(doc.id);
@@ -77,7 +79,7 @@ export class SuggestedPage {
           }
         })
       });
-   
+
 
 
     this.db.collection('users').doc(this.curUserToken.uid).collection('confirmedTask').get()
@@ -137,12 +139,14 @@ export class SuggestedPage {
                 //console.log("task in suggest page", taskObject);
                 this.eliminateDup.push(taskObject.taskId);
                 this.suggestedTasks.push(taskObject);
+                this.noTasks = false;
               }
             })
           })
         }
       }
     });
+
   }
 
 
@@ -193,7 +197,7 @@ export class SuggestedPage {
       }
     });
     refresher.complete();
-   
+
   }
 
   //navigates to taskview page if task clicked

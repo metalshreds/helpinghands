@@ -28,6 +28,7 @@ export class ConfirmedPage {
   db = firebase.firestore();
   noConfirmedTask = false;
   eliminateDup = [];
+  noTasks= true;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams, private alertCtrl: AlertController, public cloud: cloudProvider,) {
@@ -77,6 +78,8 @@ export class ConfirmedPage {
                 taskDoc.data()['ownerUserId'],
                 taskDoc.data()['location']
               );
+              //No Tasks found message disabled
+              this.noTasks = false;
 
               task.setCompensation(taskDoc.data()['compensation']);
               task.setWantedSkill(taskDoc.data()['wantedSkills']);

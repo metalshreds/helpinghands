@@ -8,13 +8,16 @@
 
 </ion-header>
 
-<!-- If no Tasks Found -->
-<!--<div *ngIf = "noConfirmedTask">-->
-<!--<h1> No confirmed task available.</h1>-->
-<!--</div>-->
 
 <!-- Generate List of tasks-->
 <ion-content padding>
+
+  <!-- If no Tasks Found -->
+  <div *ngIf = "noTasks">
+    <h1>You haven't created any tasks</h1>
+    <p>Go to the sidebar and click on "Create Task to list a new task.
+      We will automatically find qualified helpers to help you complete your task. </p>
+  </div>
 
   <ion-list>
     <ion-card>

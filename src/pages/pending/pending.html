@@ -9,8 +9,16 @@
 
 <ion-content padding>
 
+  <!-- If no Tasks Found -->
+  <div *ngIf = "noTasks">
+    <h1>You have not been invited to any tasks or have not requested to be a helper</h1>
+    <p>This tab will contain task you have been invited to, or have not applied to be a helper for any tasks.</p>
+  </div>
+
   <!-- INVITED USERS LIST CURRENT_USER.invitedTask  -->
+  <div *ngIf="invitedTasksFound">
   <h2>Invited Tasks</h2>
+  </div>
 
   <ion-list>
     <ion-card ion-item *ngFor="let task of CURRENT_USER.invitedTask">
@@ -46,7 +54,9 @@
     </ion-card>
   </ion-list>
 
+  <div *ngIf="appliedTasksFound">
   <h2>Applied Tasks</h2>
+  </div>
   <!-- INVITED USERS LIST  CURRENT_USER.appliedTask  -->
   <ion-list>
     <ion-card ion-item *ngFor="let task of CURRENT_USER.appliedTask">

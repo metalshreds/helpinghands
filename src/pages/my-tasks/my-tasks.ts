@@ -14,6 +14,7 @@ export class MyTasksPage {
   myTasks: TaskObjectProvider[] = [];
   curUserToken = this.AFcurUser.auth.currentUser;
   db = firebase.firestore();
+  noTasks = true;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -61,17 +62,19 @@ export class MyTasksPage {
             this.db.collection("tasks").doc(doc.id).collection('invitedUser').onSnapshot(snapDoc=>{
               if(!snapDoc.empty)
               {
-                
                 snapDoc.docs.forEach(user=>
                 {
                   task.invitedUser.push(user.id);
                 })
               }
-            })
+            });
+
+            //Task Found, Hide "No Tasks" Message
+            this.noTasks = false;
+
             //task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);    //useless need to rewrite
             //task.setAppliedHelpers(ownedTasks.data()['helpers']);
             task.setOwnerComment(ownedTasks.data()['owerComment']);
-
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
               task.setOwnerName(ownedTasks.data()['ownerName']);
