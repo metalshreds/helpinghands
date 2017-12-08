@@ -291,6 +291,7 @@ export class TaskEditPage {
       this.task.setWantedSkill(this.skill);
       this.task.setAppliedHelperList([]);
       this.task.setAppliedHelpers([]);
+      this.task.setInvitedUser([]);
       this.task.setOwnerComment(" ");
       this.navCtrl.setRoot(TaskViewPage, {
         'task': this.task

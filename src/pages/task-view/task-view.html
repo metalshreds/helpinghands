@@ -10,6 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+
     <ion-title>Task View</ion-title>
     <ion-buttons end *ngIf="showEditButton">
       <button ion-button (click)="editTaskClicked($event, selectedTask.taskId)">
@@ -29,8 +30,9 @@
 
     <ion-item>
       <ion-icon name='body' item-start></ion-icon>
-      Task: {{selectedTask.taskName}}
+      <h2 class="task-summary wrap">Task: {{selectedTask.taskName}}</h2>
     </ion-item>
+
     <ion-item>
       Requested by: <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event,
        selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button>
@@ -38,12 +40,12 @@
 
     <ion-item>
       <ion-icon name='leaf' item-start></ion-icon>
-       Task Description: {{selectedTask.taskDescription}}
+      <h2 class="task-summary wrap">Task Description: {{selectedTask.taskDescription}}</h2>
     </ion-item>
 
-    <ion-item>
-      <ion-icon name='timer' item-start></ion-icon>
-      Start Time: {{selectedTask.startDate}}|
+    <ion-item style="color: black">
+      <ion-icon name='timer' class="wrap" item-start></ion-icon>
+      Start Time: {{selectedTask.startDate}} <br>
       End Time: {{selectedTask.endDate}}
     </ion-item>
 

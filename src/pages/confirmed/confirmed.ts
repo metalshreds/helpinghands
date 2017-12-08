@@ -60,6 +60,7 @@ export class ConfirmedPage {
           taskRef.get().then(taskDoc => {
             if (!taskDoc.exists) {
               console.log('in confirm.ts/reading doc from confirmedTask failed');
+              this.cloud.removeTaskFromUser(this.curUserToken.uid, "confirmedTask", querySnapshot.docs[i].id);
             }
             else {
               console.log('task doc is ', taskDoc.data());
