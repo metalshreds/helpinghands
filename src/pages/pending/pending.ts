@@ -36,7 +36,7 @@ export class PendingPage {
   {
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
-    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask')
+    var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask');
     var observer = query.onSnapshot(querySnapshot=>
     {
       console.log('on pending observer1 ', querySnapshot);
@@ -184,7 +184,7 @@ export class PendingPage {
 
   }
 
-  taskAccepted(event, task){
+   taskAccepted(event, task){
     var curUser = this.db.collection('users').doc(this.curUserToken.uid);
 
     //remove task from invited for invited user

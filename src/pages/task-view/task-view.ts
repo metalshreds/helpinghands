@@ -3,15 +3,17 @@ import {
   IonicPage, NavController, NavParams,
   Platform, ActionSheetController, AlertController, App, LoadingController
 } from 'ionic-angular';
-import {TaskEditPage} from "../task-edit/task-edit";
-import {ProfilePage} from "../profile/profile";
-import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireDatabase} from "angularfire2/database";
-import {ProfileProvider} from "../../providers/profile/profile";
+import { TaskEditPage} from "../task-edit/task-edit";
+import { ProfilePage} from "../profile/profile";
+import { AngularFireAuth} from "angularfire2/auth";
+import { AngularFireDatabase} from "angularfire2/database";
+import { ProfileProvider} from "../../providers/profile/profile";
 import firebase from 'firebase';
-import {TaskObjectProvider} from "../../providers/task-object/task-object";
-import {cloudProvider} from "../../providers/cloudbase";
-import {ToastController} from 'ionic-angular';
+import { TaskObjectProvider} from "../../providers/task-object/task-object";
+import { cloudProvider} from "../../providers/cloudbase";
+import { ToastController} from 'ionic-angular';
+import { PendingPage} from "../pending/pending";
+
 /**
  * Generated class for the TaskViewPage page.
  *
@@ -43,6 +45,9 @@ export class TaskViewPage {
   db = firebase.firestore();
   skillsNeeded = [];
   owner_user_id = this.curUserToken.uid; //todo change this
+  helpers = [];
+  personIsInvitee = false;
+  showAcceptDeclineButtons = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -53,7 +58,7 @@ export class TaskViewPage {
               private alertCtrl: AlertController) {
 
     this.selectedTask = navParams.get('task');
-    this.confirmedTasks = navParams.get("confirmedTasks")
+    this.confirmedTasks = navParams.get("confirmedTasks");
     console.log("CONFIRMED TASKS ARE: " + this.confirmedTasks);
     if(typeof this.confirmedTasks != 'undefined'){
       for(const i in this.confirmedTasks){
@@ -72,10 +77,27 @@ export class TaskViewPage {
       }
     }
 
+    /** check if user viewing task is task invitee **/
+    console.log('getting invited array from task if any, ', this.selectedTask.taskId);
+    this.db.collection('tasks').doc(this.selectedTask.taskId).collection('invitedUser').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log('pushed this doc',doc.id, " with data => ", doc.data());
+        console.log('curUserToken.uid: ', this.curUserToken.uid, 'doc.id', doc.id);
+        if(this.curUserToken.uid == doc.id && !this.taskIsConfirmed){
+          this.personIsInvitee = true;
+          console.log('HEY EVERYONE!!! THIS GUY IS THE INVITEE FOR THIS TASK, see nobody cares');
+          this.setButtons();
+        }
+        this.helpers.push(doc.id);
+      });
+    }).catch(function(error) {
+      console.log("Error getting helpers of task: ", error);
+    });
+
     //TODO is this the correct way to check if they are the same user?
     console.log('1', this.selectedTask.ownerUserId);
     console.log('2', this.curUserToken.uid);
-    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid)
+    this.userIsTaskOwner = (this.selectedTask.ownerUserId == this.curUserToken.uid);
     if (this.userIsTaskOwner && !this.selectedTask.completed && !this.taskIsConfirmed) {
       //TODO trying to get suggetsed users list
       this.db.collection("users").doc(this.curUserToken.uid).get().then(doc=> {
@@ -90,7 +112,7 @@ export class TaskViewPage {
           console.log("skill: " + skill);
         }
         for (const i in this.selectedTask.wantedSkills) {
-          console.log("in second for, const in wantd skills is: " + i);
+          console.log("in second for, const in wanted skills is: " + i);
           if (this.selectedTask.wantedSkills[i] == true) {
             console.log("wanted skill was true! in if");
             this.querySkill.push(i);
@@ -132,8 +154,6 @@ export class TaskViewPage {
         }
       });
     }
-
-
 
     console.log("right before getting task owner");
 
@@ -196,13 +216,19 @@ export class TaskViewPage {
   }
 
   setButtons() {
-    if (this.selectedTask.completed) {
+    console.log('personIsThisTasksHelper: ', this.personIsInvitee);
+    if(this.personIsInvitee){
+      this.showRequestButton = false;
+      this.showAcceptDeclineButtons=true;
+      this.showEditButton = false;
+    }else if (this.selectedTask.completed) {
       this.showEditButton = false;
       this.showRequestButton = false;
     }else if(this.taskIsConfirmed){
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = false;
-    } else {
+    }
+     else {
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = !this.userIsTaskOwner;
     }
@@ -321,5 +347,36 @@ export class TaskViewPage {
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', task.taskId.toString());
     prompt.present();
 
+  }
+
+  /** ACCEPT DECLINE BUTTONS FROM PENDING PAGE  **/
+  taskAccepted(event, task){
+    console.log('event:',event, 'task: ', task, 'user: ', this.curUserToken.uid);
+    var curUser = this.db.collection('users').doc(this.curUserToken.uid);
+
+    //remove task from invited for invited user
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', this.selectedTask.taskId);
+
+    //add task to confirmed for both users
+    this.cloud.addTaskToList(this.curUserToken.uid, 'confirmedTask', this.selectedTask.taskId, this.selectedTask.taskName);
+    this.cloud.addTaskToList(this.selectedTask.ownerUserId, 'confirmedTask', this.selectedTask.taskId, this.selectedTask.taskName);
+
+    //add accepting user to helper list of task
+    curUser.get().then(doc => {
+      if (doc.exists) {
+        this.cloud.addUserToTaskList(this.selectedTask.taskId, 'helpers', this.curUserToken.uid,
+          doc.data()['firstName'], doc.data()['lastName']);
+        alert("Task Accepted");
+      } else {
+        console.log("No such document!");
+      }
+    });
+  }
+
+  taskRejected(event, task){
+    //remove task from invited for rejecting user
+    console.log('curUserToken: ', this.curUserToken.uid, 'task: ', this.selectedTask);
+    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', this.selectedTask.taskId);
+    alert("Task Rejected");
   }
 }
