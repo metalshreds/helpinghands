@@ -18,3 +18,19 @@ page-search {
         border-color: transparent;
     }
 }
+
+
+.toolbar-background{
+
+  background-color: white;
+  color: $prim-color;
+}
+
+.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+
+  border-color: $prim-color;
+}
+
+.segment-md .segment-button{
+  color: $prim-color;
+}

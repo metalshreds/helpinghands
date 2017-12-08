@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {EditProfilePage} from "../edit-profile/edit-profile";
+import {DashboardPage} from "../dashboard/dashboard";
 
 /**
  * Generated class for the IntroductionPage page.
@@ -21,6 +22,7 @@ export class IntroductionPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IntroductionPage');
+    // this.navCtrl.setRoot(DashboardPage);
   }
 
   editProfile(){
