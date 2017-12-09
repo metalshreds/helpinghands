@@ -68,6 +68,7 @@ export class PendingPage {
               if(!taskDoc.exists)
               {
                 console.log('in pending.ts/reading doc from appliedTask failed');
+                this.cloud.removeTaskFromUser(this.curUserToken.uid, "appliedTask", querySnapshot.docs[i].id);
               }
               else
               {
@@ -141,6 +142,7 @@ export class PendingPage {
             if(!taskDoc.exists)
             {
               console.log('in pending.ts/reading doc from invited failed, looking for doc: ', querySnapshot.docs[i].id, 'from user: ', );
+              this.cloud.removeTaskFromUser(this.curUserToken.uid, "invitedTask", querySnapshot.docs[i].id);
             }
             else{
               //console.log('task doc is ',taskDoc.data());

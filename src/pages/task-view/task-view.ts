@@ -281,12 +281,12 @@ export class TaskViewPage {
   }
 
   acceptAppliedHelper(event, helper) {
-    this.cloud.removeUserFromTasklist(this.selectedTask.taskId.toString(), 'appliedHelpers', helper.userId.toString());
-    this.cloud.removeTaskFromUser(helper.userId.toString(), 'appliedTask', this.selectedTask.taskId.toString());
+    this.cloud.removeUserFromTasklist(this.selectedTask.taskId, 'appliedHelpers', helper.userId);
+    this.cloud.removeTaskFromUser(helper.userId, 'appliedTask', this.selectedTask.taskId);
 
 
-    this.cloud.addUserToTaskList(this.selectedTask.taskId.toString(), 'helpers', helper.userId, helper.firstName, helper.lastName);
-    this.cloud.addTaskToList(helper.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
+    this.cloud.addUserToTaskList(this.selectedTask.taskId, 'helpers', helper.userId, helper.firstName, helper.lastName);
+    this.cloud.addTaskToList(helper.userId, 'confirmedTask', this.selectedTask.taskId, this.selectedTask.taskName);
     //we want to add this task to current_user's confirm list?
     this.cloud.addTaskToList(this.CURRENT_USER.userId.toString(), 'confirmedTask', this.selectedTask.taskId.toString(), this.selectedTask.taskName);
     for (const i in this.appliedHelpers) {

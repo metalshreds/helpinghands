@@ -239,7 +239,7 @@ export class EditProfilePage {
           var user = doc.data();
           user.objectID = newUser.userId;
           index.saveObject(user);
-          this.navCtrl.push(ProfilePage);
+          this.navCtrl.setRoot(ProfilePage);
         })
 
 
