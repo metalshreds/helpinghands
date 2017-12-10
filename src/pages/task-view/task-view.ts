@@ -339,12 +339,15 @@ export class TaskViewPage {
           text: 'Send',
           handler: data => {
             console.log('Saved clicked');
+            this.cloud.removeUserFromTasklist(task.taskId, 'helpers', this.curUserToken.uid);
+            this.cloud.removeTaskFromUser(task.ownerUserId, 'confirmedTask',  task.taskId);
+            this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', task.taskId);
+
           }
         }
       ]
     });
-    this.cloud.removeUserFromTasklist(task.taskId, 'helpers', this.curUserToken.uid);
-    this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', task.taskId.toString());
+
     prompt.present();
 
   }
