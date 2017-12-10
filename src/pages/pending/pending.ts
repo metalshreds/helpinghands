@@ -218,7 +218,7 @@ export class PendingPage {
 
     });
 
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.pop();
   }
 
   taskRejected(event, task){
@@ -226,6 +226,6 @@ export class PendingPage {
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
     alert("Task Rejected");
 
-    this.navCtrl.push(DashboardPage);
-  }
+    this.navCtrl.pop();
+   }
 }
