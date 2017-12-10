@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { TaskViewPage } from '../task-view/task-view';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
@@ -35,7 +35,8 @@ export class PendingPage {
   //when click into a task that I applied, the request button shouldn't be there.
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public cloud: cloudProvider)
+              public cloud: cloudProvider,
+              public toastCtrl: ToastController )
   {
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
@@ -210,7 +211,12 @@ export class PendingPage {
       if (doc.exists) {
         this.cloud.addUserToTaskList(task.taskId, 'helpers', this.curUserToken.uid,
           doc.data()['firstName'], doc.data()['lastName']);
-        alert("Task Accepted");
+        const toast = this.toastCtrl.create({
+          message: "Task Accepted",
+          position: 'middle',
+          duration: 1500
+        });
+        toast.present();
       } else {
         console.log("No such document!");
       }
@@ -223,6 +229,11 @@ export class PendingPage {
   taskRejected(event, task){
     //remove task from invited for rejecting user
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
-    alert("Task Rejected");
+    const toast = this.toastCtrl.create({
+      message: "Task Rejected",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 }
