@@ -15,6 +15,7 @@ import {EditProfilePage} from "../pages/edit-profile/edit-profile";
 import { NgZone } from "@angular/core";
 import { SettingsPage} from "../pages/settings/settings";
 import { SignoutPage} from "../pages/signout/signout";
+import { IntroductionPage} from "../pages/introduction/introduction";
 
 @Component({
   selector: 'app',
@@ -79,6 +80,7 @@ export class HelpingHands {
       { title: 'Settings', component: SettingsPage },
       { title: 'Home', component: HomePage },
       // { title: 'Sign Out', component: SignoutPage},
+      { title: 'How to Use the App', component: IntroductionPage}
 
     ]
   }
