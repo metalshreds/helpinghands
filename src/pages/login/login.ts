@@ -7,7 +7,7 @@
  * Ionic pages and navigation.
  */
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController, Platform, MenuController } from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
 import { HomePage } from '../home/home';
 import { ProfilePage } from '../profile/profile';
@@ -36,13 +36,16 @@ export class LoginPage {
     //public app: App,
     public navCtrl: NavController,
     public formBuilder : FormBuilder,
-    private plt : Platform
+    private plt : Platform,
+    public menu : MenuController
   ) {
     this.loginForm = formBuilder.group({
       email : ['', Validators.compose([emailValidator.isValid])],
       password : ['',Validators.compose([Validators.required, passwordValidator.isValid])]
     });
-    this.plt.ready()
+    this.plt.ready();
+    this.menu = menu;
+    this.menu.enable(false);
   }
 
 
@@ -59,7 +62,7 @@ export class LoginPage {
       subTitle: '',
       buttons: ['OK']
     });
-    
+
     console.log(email);
     if(!this.loginForm.valid)
     {
@@ -74,6 +77,7 @@ export class LoginPage {
             //https://firebase.google.com/docs/auth/web/manage-users
             resolve('login success');
             console.log("in loging page, Cemail/Cpw", resolve);
+            this.menu.enable(true);
             this.navCtrl.push(DashboardPage);
         })
 
@@ -110,6 +114,7 @@ export class LoginPage {
   / solely for testing.
    */
   goToHome() {
+    this.menu.enable(true);
     this.navCtrl.push(HomePage);
   }
 

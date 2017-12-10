@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, App, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, App, LoadingController, MenuController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import { EditProfilePage } from "../edit-profile/edit-profile";
 import { AngularFireAuth } from "angularfire2/auth";
@@ -33,13 +33,16 @@ export class SignupPage {
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public formBuilder : FormBuilder,)
+    public formBuilder : FormBuilder,
+    public menu : MenuController)
     {
       this.signUpForm = formBuilder.group({
         email : ['', Validators.compose([emailValidator.isValid])],
         password : ['',Validators.compose([Validators.required, passwordValidator.isValid])],
         passwordRe :  ['',Validators.compose([Validators.required, passwordValidator.isValid])],
       })
+      this.menu = menu;
+      this.menu.enable(false);
     }
 
 
@@ -109,11 +112,12 @@ export class SignupPage {
               index.saveObject(user);
               return new Promise((resolve)=> {
                 resolve('sign in successfully');
+                this.menu.enable(true);
                 this.navCtrl.push(EditProfilePage);
               })
-              
+
             })
-          
+
 
           })
           .catch(function (error)        //on failure, display the error massage.
