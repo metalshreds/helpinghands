@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Tabs } from 'ionic-angular';
 import { TaskViewPage } from '../task-view/task-view';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
@@ -31,13 +31,16 @@ export class PendingPage {
   noTasks = true;
   invitedTasksFound = false;
   appliedTasksFound = false;
+  tab : Tabs;
 
   //TODO handle cases that eliminates
   //when click into a task that I applied, the request button shouldn't be there.
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public cloud: cloudProvider)
+              public cloud: cloudProvider,
+              public toastCtrl: ToastController )
   {
+    this.tab = this.navCtrl.parent;
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
     var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask');
@@ -211,19 +214,31 @@ export class PendingPage {
       if (doc.exists) {
         this.cloud.addUserToTaskList(task.taskId, 'helpers', this.curUserToken.uid,
           doc.data()['firstName'], doc.data()['lastName']);
-        alert("Task Accepted");
+        const toast = this.toastCtrl.create({
+          message: "Task Accepted",
+          position: 'middle',
+          duration: 1500
+        });
+        toast.present();
       } else {
         console.log("No such document!");
       }
 
     });
 
+    this.tab.select(2);
   }
 
   taskRejected(event, task){
     //remove task from invited for rejecting user
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
-    alert("Task Rejected");
+    const toast = this.toastCtrl.create({
+      message: "Task Rejected",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
 
-   }
+    this.tab.select(2);
+  }
 }
