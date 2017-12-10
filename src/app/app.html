@@ -11,7 +11,7 @@
           <img class = "ion-avatar" [src]="photoURL" onerror="this.src='assets/icon/logo-login.png'"/>
         </ion-avatar>
       </ion-item>
-      
+
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
