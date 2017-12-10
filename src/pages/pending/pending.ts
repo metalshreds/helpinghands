@@ -218,7 +218,7 @@ export class PendingPage {
 
     });
 
-    this.navCtrl.push(PendingPage);
+    this.navCtrl.push(DashboardPage);
   }
 
   taskRejected(event, task){
