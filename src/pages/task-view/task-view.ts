@@ -342,6 +342,7 @@ export class TaskViewPage {
             this.cloud.removeUserFromTasklist(task.taskId, 'helpers', this.curUserToken.uid);
             this.cloud.removeTaskFromUser(task.ownerUserId, 'confirmedTask',  task.taskId);
             this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', task.taskId);
+            this.navCtrl.pop();
 
           }
         }
