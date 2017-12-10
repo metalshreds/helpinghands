@@ -21,20 +21,21 @@ page-task-view {
   padding-bottom: 10px;
 }
 
-.wrap {
-  white-space: normal;
-  word-wrap: normal !important;
-}
-
 .task-summary-name{
   font-weight: bold;
 }
 
 .task-summary{
-  color: black;
-  text-align: center;
   text-wrap: normal;
-  font-size: 150%;
+  font-size: 15px;
+  color: #000000;
 }
 
+.accept-button{
+  background-color: green;
+}
+
+.decline-button{
+  background-color: $prim-color;
+}
 

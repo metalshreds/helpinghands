@@ -10,6 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+
     <ion-title>Task View</ion-title>
     <ion-buttons end *ngIf="showEditButton">
       <button ion-button (click)="editTaskClicked($event, selectedTask.taskId)">
@@ -29,8 +30,9 @@
 
     <ion-item>
       <ion-icon name='body' item-start></ion-icon>
-      Task: {{selectedTask.taskName}}
+      <h2 class="task-summary wrap">Task: {{selectedTask.taskName}}</h2>
     </ion-item>
+
     <ion-item>
       Requested by: <button ion-button class = "user-button"clear mode="ios" (click)="userClicked($event,
        selectedTask.ownerUserId)"> {{TASK_OWNER.firstName}}  {{TASK_OWNER.lastName}} --- {{TASK_OWNER.email}}</button>
@@ -38,12 +40,12 @@
 
     <ion-item>
       <ion-icon name='leaf' item-start></ion-icon>
-       Task Description: {{selectedTask.taskDescription}}
+      <h2 class="task-summary wrap">Task Description: {{selectedTask.taskDescription}}</h2>
     </ion-item>
 
-    <ion-item>
-      <ion-icon name='timer' item-start></ion-icon>
-      Start Time: {{selectedTask.startDate}}|
+    <ion-item style="color: black">
+      <ion-icon name='timer' class="wrap" item-start></ion-icon>
+      Start Time: {{selectedTask.startDate}} <br>
       End Time: {{selectedTask.endDate}}
     </ion-item>
 
@@ -63,6 +65,7 @@
       <ion-icon name='pin' item-start></ion-icon>
       Location: {{selectedTask.location}}
     </ion-item>
+<<<<<<< HEAD
 
     <ion-item>
       <ion-icon name='pin' item-start></ion-icon>
@@ -70,6 +73,8 @@
     </ion-item>
 
 
+=======
+>>>>>>> 301feb80af7d0b8bb657e7e83f320ee07552a585
     <ion-item>
 
       <div *ngIf="skillsNeeded.length != 0">
@@ -81,35 +86,25 @@
     </ion-item>
 
 
-    <button *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
-    <ion-item>
-    <ion-title>Applied Helpers</ion-title>
-      <ion-list >
-        <ion-item *ngFor="let helper of appliedHelpers">
-          <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
-          <button ion-button style="background-color: #2ec95c" (click)="acceptAppliedHelper($event, helper)">Accept</button>
-          <button ion-button style="background-color: red" (click)="rejectAppliedHelper($event, helper)">Reject</button>
-        </ion-item>
-        <ion-item *ngIf="appliedHelpers.length == 0">No applied helpers</ion-item>
-      </ion-list>
-      </ion-item>
+  </ion-list>
 
+  <ion-item>
+    <div *ngIf="skillsNeeded.length != 0">
+      <u style="color: black; font-size: large">Skills needed for this task</u>
+      <p style="color: black" *ngFor="let skill of skillsNeeded">{{skill}}</p>
+    </div>
+  </ion-item>
 
+  <button *ngIf="taskIsConfirmed" ion-button full color="light" block (click)="doPrompt($event, selectedTask)">I am not going to do this task</button>
 
-    <!--this is the place to show -->
-    <ion-item>
-      <ion-title>Suggested Helpers</ion-title>
-      <ion-list >
-        <ion-item  *ngFor="let user of suggestedUsers">
-          <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
-          <button ion-button style="background-color: #2ec95c" (click)="requestUserClicked($event, user)">Request this user</button>
-        </ion-item>
-        <ion-item *ngIf="suggestedUsers.length == 0">No suggested helpers</ion-item>
-      </ion-list>
-    </ion-item>
+  <button full *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
+  <!-- Accept/Decline Buttons -->
+  <button full *ngIf="personIsInvitee" ion-button block class="accept-button"(click)='taskAccepted($event, selectedTask.taskId)' >Accept Task</button>
+  <button full *ngIf="personIsInvitee" ion-button block class="decline-button"(click)='taskRejected($event, selectedTask.taskId)' >Decline Task</button>
 
+  <!-- -->
 
 
 

@@ -59,4 +59,7 @@ $item-ios-divider-color: $prim-color;
 //.tabs-background {background: $prim-light;}
 //.items-ios-divider-color{color: $prim-light;}
 
-
+.wrap {
+  white-space: normal;
+  word-wrap: normal !important;
+}

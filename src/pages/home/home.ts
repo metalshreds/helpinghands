@@ -6,6 +6,7 @@ import { ProfilePage} from "../profile/profile";
 import { EditProfilePage } from "../edit-profile/edit-profile";
 import { LoginPage} from "../login/login";
 import { DashboardPage} from "../dashboard/dashboard";
+import {IntroductionPage} from "../introduction/introduction";
 
 @Component({
   selector: 'page-home',
@@ -28,7 +29,7 @@ export class HomePage {
       else if(user.uid && !(user.displayName === null))
         this.navCtrl.push(DashboardPage);
       else
-        this.navCtrl.push(EditProfilePage);
+        this.navCtrl.push(IntroductionPage);
     })
   }
 }

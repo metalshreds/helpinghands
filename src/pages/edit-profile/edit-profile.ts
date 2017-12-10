@@ -239,7 +239,7 @@ export class EditProfilePage {
           var user = doc.data();
           user.objectID = newUser.userId;
           index.saveObject(user);
-          this.navCtrl.push(ProfilePage);
+          this.navCtrl.setRoot(ProfilePage);
         })
 
 
@@ -342,7 +342,7 @@ export class EditProfilePage {
             console.log("native update has an error");
           });
           this.db.collection('users').doc(this.curUserToken.uid).update({
-            photoUrl : this.curUserToken.photoURL ? this.curUserToken.photoURL : 'assets/icon/logo-login.png',
+            photoUrl : downloadURL,
           });
           //TODO moduliraze following code maybe
           var docRef = this.db.collection('users').doc(this.curUserToken.uid);

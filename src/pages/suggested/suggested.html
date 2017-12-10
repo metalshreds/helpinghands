@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button menuToggle >
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Suggested</ion-title>
@@ -10,6 +10,22 @@
 </ion-header>
 
 <ion-content padding>
+
+  <!-- If no Tasks Found -->
+  <div *ngIf = "noTasks">
+    <h1>We could not suggest any tasks</h1>
+    <p>This tab will contain task you could complete given your skill set,
+      include more skills in your profile to match more tasks.</p>
+  </div>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-list>
 
