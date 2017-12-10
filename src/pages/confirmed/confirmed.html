@@ -69,11 +69,11 @@
           </ion-item>
 
 
-
+          <button ion-button full color="light" *ngFor="let task of CURRENT_USER.confirmedTask" block (click)="doPrompt($event, task)">I am not going to do this task</button>
         </ion-card-content>
       </button>
 
-      <button ion-button full color="light" *ngFor="let task of CURRENT_USER.confirmedTask" block (click)="doPrompt($event, task)">I am not going to do this task</button>
+
     </ion-card>
 
   </ion-list>

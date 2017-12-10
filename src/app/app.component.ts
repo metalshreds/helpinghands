@@ -77,6 +77,7 @@ export class HelpingHands {
       { title: 'Create Task', component: TaskEditPage },
       { title: 'Search', component: SearchPage },
       { title: 'Settings', component: SettingsPage },
+      { title: 'Home', component: HomePage },
       // { title: 'Sign Out', component: SignoutPage},
 
     ]
