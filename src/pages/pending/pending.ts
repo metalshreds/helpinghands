@@ -5,6 +5,7 @@ import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
 import { cloudProvider } from '../../providers/cloudbase';
+import {DashboardPage} from "../dashboard/dashboard";
 
 
 /**
@@ -223,7 +224,7 @@ export class PendingPage {
 
     });
 
-
+    this.navCtrl.push(PendingPage);
   }
 
   taskRejected(event, task){
@@ -235,5 +236,7 @@ export class PendingPage {
       duration: 1500
     });
     toast.present();
+
+    this.navCtrl.push(DashboardPage);
   }
 }

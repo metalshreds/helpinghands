@@ -58,20 +58,15 @@
 
     <ion-item>
       <ion-icon name='cash' item-start></ion-icon>
-      Compensation: {{selectedTask.compensation}} hours
+      Compensation: {{selectedTask.compensation}} dollars
     </ion-item>
 
     <ion-item>
       <ion-icon name='pin' item-start></ion-icon>
       Location: {{selectedTask.location}}
     </ion-item>
-    <ion-item>
-
-    </ion-item>
-
 
   </ion-list>
-
   <ion-item>
     <div *ngIf="skillsNeeded.length != 0">
       <u style="color: black; font-size: large">Skills needed for this task</u>
@@ -89,7 +84,6 @@
 
   <!-- -->
 
-  <!--This is the place to show users who have requested to help. Not sure if the for is right?-->
   <ion-item *ngIf="showEditButton">
     <ion-title>Applied Helpers</ion-title>
     <ion-list >
@@ -113,6 +107,8 @@
       <ion-item *ngIf="suggestedUsers.length == 0">No suggested helpers</ion-item>
     </ion-list>
   </ion-item>
+
+
 
 
 
