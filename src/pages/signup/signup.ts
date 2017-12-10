@@ -47,7 +47,7 @@ export class SignupPage {
   / This function takes user inputs and pass it to firebase server
   / use firebase API. Which will create a new user in firebase.
    */
-  signUp = async function() : Promise<any> {
+  signUp = async function(email, password) : Promise<any> {
 
     if (!this.signUpForm.controls.email.valid) //prompt error message if the email address is not wisc.edu address.
     {
@@ -93,7 +93,7 @@ export class SignupPage {
        //save current frame
 
        //call create method which is provided by firebase
-       this.authp.auth.createUserWithEmailAndPassword(this.signUpForm.value.email, this.signUpForm.value.password)
+       this.authp.auth.createUserWithEmailAndPassword(email, password)
           .then(result=>{                 //on success, log returned value to the path user/userid
             var docRef = this.db.collection('users').doc(result.uid);
             docRef.set({
@@ -136,6 +136,7 @@ export class SignupPage {
   /*
   / This function takes user back to login page
    */
+   /* istanbul ignore next */
   backToLogin(){
     this.navCtrl.push(LoginPage);
   }

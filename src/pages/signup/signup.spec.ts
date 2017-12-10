@@ -108,7 +108,20 @@ describe('sign up page', () => {
         var result = error.code;
         expect(result == 'user already exist');  
     });
+
+
+
   })
+  it('test auth function', ()=>{
+    comp.signUpForm.controls['email'].setValue('szhao34@wisc.edu');
+    comp.signUpForm.controls['password'].setValue('12345678');
+    comp.authp.auth.createUserWithEmailAndPassword(comp.signUpForm.controls.email.value, comp.signUpForm.controls.password.value)
+      .catch(error =>
+      {
+        var result = error.code;
+        expect(result == 'auth/email-already-in-use');
+      });
+    });
   
 
 
