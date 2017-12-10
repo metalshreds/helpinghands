@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Tabs } from 'ionic-angular';
 import { TaskViewPage } from '../task-view/task-view';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
@@ -31,6 +31,7 @@ export class PendingPage {
   noTasks = true;
   invitedTasksFound = false;
   appliedTasksFound = false;
+  tab : Tabs;
 
   //TODO handle cases that eliminates
   //when click into a task that I applied, the request button shouldn't be there.
@@ -39,6 +40,7 @@ export class PendingPage {
               public cloud: cloudProvider,
               public toastCtrl: ToastController )
   {
+    this.tab = this.navCtrl.parent;
     this.CURRENT_USER.invitedTask = [];
     this.CURRENT_USER.appliedTask = [];
     var query = this.db.collection('users').doc(this.curUserToken.uid).collection('appliedTask');
@@ -224,7 +226,7 @@ export class PendingPage {
 
     });
 
-    this.navCtrl.push(PendingPage);
+    this.tab.select(2);
   }
 
   taskRejected(event, task){
@@ -237,6 +239,6 @@ export class PendingPage {
     });
     toast.present();
 
-    this.navCtrl.push(DashboardPage);
+    this.tab.select(2);
   }
 }
