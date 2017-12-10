@@ -48,6 +48,8 @@ export class TaskViewPage {
   helpers = [];
   personIsInvitee = false;
   showAcceptDeclineButtons = false;
+  showImNotGoingToDoThisTask = false;
+
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -168,7 +170,6 @@ export class TaskViewPage {
           //  in userProvider obeject and users node.
           this.TASK_OWNER[field] = doc.data()[field];
           console.log('Task owner:  field =  ' + field + "and value = " + this.TASK_OWNER[field]);
-
         }
       }
     }).catch(err => {
@@ -227,6 +228,7 @@ export class TaskViewPage {
     }else if(this.taskIsConfirmed){
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = false;
+      this.showImNotGoingToDoThisTask = !this.userIsTaskOwner;
     }
      else {
       this.showEditButton = this.userIsTaskOwner;
