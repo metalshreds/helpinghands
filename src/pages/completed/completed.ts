@@ -53,8 +53,8 @@ export class CompletedPage {
   loadCompletedTasks(){
 
     /** Get list of owned tasks from user  **/
-    this.db.collection("users").doc(this.curUserToken.uid).collection('ownedTask').get().then((ownedTasks)=> {
-      ownedTasks.forEach((doc) => {
+    this.db.collection("users").doc(this.curUserToken.uid).collection('completedTask').get().then((completedTask)=> {
+      completedTask.forEach((doc) => {
         console.log("owned task doc: ", doc.id);
 
         /** taskOwner Placeholder **/
