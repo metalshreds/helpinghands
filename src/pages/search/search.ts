@@ -90,15 +90,18 @@ export class SearchPage {
             {
               CURRENT_USER[field] = sdoc.data()[field];
             }
-            
+            CURRENT_USER['skillset'] = "";
             for (const i in CURRENT_USER.skills)
             {
               if (CURRENT_USER.skills[i] == true)
-                displaySkill.push(i);
+              {
+                CURRENT_USER['skillset'] += i;
+                CURRENT_USER['skillset'] += ",  ";
+              }
             }
-            CURRENT_USER['skillset'] = displaySkill;  //tmp fix
+            //CURRENT_USER['skillset'] = displaySkill;  //tmp fix
             CURRENT_USER['userId'] = sdoc.id;  //tmp fix
-            console.log(displaySkill);
+            console.log("skillset is ", CURRENT_USER['skillset']);
             this.items.push(CURRENT_USER);       
           })  
         })
@@ -108,8 +111,19 @@ export class SearchPage {
       index.search({query}).then(responses=>{
         console.log("algolia", responses.hits);
           for(const hit in responses.hits){
-                this.items.push(responses.hits[hit]);
-                console.log("this", responses.hits[hit]);
+                var CURRENT_USER = {} as ProfileProvider;
+                CURRENT_USER = responses.hits[hit];
+                CURRENT_USER['skillset'] = "";
+                for (const i in CURRENT_USER.skills)
+                {
+                  if (CURRENT_USER.skills[i] == true)
+                  {
+                    CURRENT_USER['skillset'] += i;
+                    CURRENT_USER['skillset'] += ",  ";
+                  }
+                }
+                this.items.push(CURRENT_USER);
+                console.log("this", CURRENT_USER);
           }
       })
 
@@ -163,7 +177,22 @@ export class SearchPage {
       task: task
     });
   }
+  messegeUser(userId)
+  {
 
+  }
+  viewProfile()
+  {
+
+  }
+  requestTask()
+  {
+
+  }
+  viewDtail()
+  {
+    
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
   }
