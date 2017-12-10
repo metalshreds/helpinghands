@@ -5,6 +5,7 @@ import { TaskObjectProvider } from '../../providers/task-object/task-object';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
 import { cloudProvider } from '../../providers/cloudbase';
+import {DashboardPage} from "../dashboard/dashboard";
 
 
 /**
@@ -217,12 +218,14 @@ export class PendingPage {
 
     });
 
-
+    this.navCtrl.push(PendingPage);
   }
 
   taskRejected(event, task){
     //remove task from invited for rejecting user
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', task.taskId);
     alert("Task Rejected");
+
+    this.navCtrl.push(DashboardPage);
   }
 }
