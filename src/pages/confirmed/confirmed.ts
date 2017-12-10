@@ -51,12 +51,15 @@ export class ConfirmedPage {
         console.log("this", querySnapshot.docChanges[i].type);
         if (querySnapshot.docChanges[i].type == 'removed') {
           this.CURRENT_USER.confirmedTask.splice(Number(i), 1);
+          console.log("confirm list", this.CURRENT_USER.confirmedTask);
         }
       }
       for (const i in querySnapshot.docs) {
         console.log('on pending observer2 ', querySnapshot.docs[i].id);
         console.log('on pending observer2 ', querySnapshot.docs[i].data());
-        if (this.eliminateDup.indexOf(querySnapshot.docs[i].id) < 0) {
+        if ((this.eliminateDup.indexOf(querySnapshot.docs[i].id) === -1) && 
+        (querySnapshot.docChanges[i] != undefined) &&(querySnapshot.docChanges[i].type == 'added')){
+          console.log("dup list is ", this.eliminateDup);
           var taskRef = this.db.collection('tasks').doc(querySnapshot.docs[i].id);
           taskRef.get().then(taskDoc => {
             if (!taskDoc.exists) {
