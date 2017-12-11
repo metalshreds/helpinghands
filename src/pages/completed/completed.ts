@@ -85,7 +85,8 @@ export class CompletedPage {
             task.setWantedSkill(ownedTasks.data()['wantedSkills']);
             task.setAppliedHelperList(ownedTasks.data()['appliedHelpers']);
             task.setAppliedHelpers(ownedTasks.data()['helpers']);
-            task.setOwnerComment(ownedTasks.data()['owerComment']);
+            task.setOwnerComment(ownedTasks.data()['ownerComment']);
+
 
             // Set owner
             if (typeof ownedTasks.data()['ownerName'] !== 'undefined') {
@@ -113,9 +114,8 @@ export class CompletedPage {
 
   //navigates to taskview page if task clicked
   taskClicked(event, task) {
-    this.navCtrl.push(TaskViewPage, {
-      task: task
-    });
+    this.navCtrl.push(TaskViewPage, {task: task});
+    console.log('this is the task passed to the task-view controller', task);
   }
 
 }

@@ -79,8 +79,8 @@
   <button full *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
   <!-- Accept/Decline Buttons -->
-  <button full *ngIf="personIsInvitee" ion-button block class="accept-button"(click)='taskAccepted($event, selectedTask.taskId)' >Accept Task</button>
-  <button full *ngIf="personIsInvitee" ion-button block class="decline-button"(click)='taskRejected($event, selectedTask.taskId)' >Decline Task</button>
+  <button full *ngIf="showAcceptDeclineButtons" ion-button block class="accept-button"(click)='taskAccepted($event, selectedTask.taskId)' >Accept Task</button>
+  <button full *ngIf="showAcceptDeclineButtons" ion-button block class="decline-button"(click)='taskRejected($event, selectedTask.taskId)' >Decline Task</button>
 
   <!-- -->
 

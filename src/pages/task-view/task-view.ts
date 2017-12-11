@@ -217,20 +217,26 @@ export class TaskViewPage {
   }
 
   setButtons() {
-    console.log('personIsThisTasksHelper: ', this.personIsInvitee);
-    if(this.personIsInvitee  && !this.selectedTask.completed){
+    // console.log('personIsThisTasksHelper: ', this.personIsInvitee);
+    console.log('!this.selectedTask: ', this.selectedTask, 'personIsInvitee: ', this.personIsInvitee);
+    if(!this.selectedTask.completed && this.personIsInvitee){
+      console.log('this task is not completed person is invitee');
       this.showRequestButton = false;
       this.showAcceptDeclineButtons=true;
       this.showEditButton = false;
     }else if (this.selectedTask.completed) {
+      console.log('this task is completed');
       this.showEditButton = false;
       this.showRequestButton = false;
+      this.showAcceptDeclineButtons=false;
     }else if(this.taskIsConfirmed){
+      console.log('task is confirmed');
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = false;
       this.showImNotGoingToDoThisTask = !this.userIsTaskOwner;
     }
      else {
+      console.log('last else statement');
       this.showEditButton = this.userIsTaskOwner;
       this.showRequestButton = !this.userIsTaskOwner;
     }
