@@ -22,7 +22,7 @@ export class CameraProvider {
   getImage(pictureSourceType, crop = true, quality = 100, allowEdit = true, saveToAlbum = true) {
     const options = {
       quality,
-      allowEdit,
+      allowEdit : true,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: pictureSourceType,
       encodingType: this.camera.EncodingType.PNG,

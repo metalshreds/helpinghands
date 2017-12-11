@@ -17,7 +17,7 @@
   </ion-row>
 
   <ion-row>
-    <ion-col col-10>
+    <ion-col>
   <ion-toolbar no-border-top style="background-color:white;">
       <ion-segment [(ngModel)]="SearchResult">
         <ion-segment-button selected value="User">
@@ -29,14 +29,7 @@
       </ion-segment>
     </ion-toolbar>
   </ion-col>
-  <ion-col text-left>
-    <ion-item text-left>
-      <ion-select [(ngModel)]="gaming" interface="popover">
-        <ion-option text-left selected value="deflist">Default</ion-option>
-        <ion-option text-left value="rating">Highest rate first</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-col>
+
   </ion-row>
 
 </ion-header>
@@ -47,29 +40,31 @@
     <div [ngSwitch]="SearchResult">
 
         <ion-list *ngSwitchCase="'User'">
-          <button ion-item *ngFor="let item of items" (click) = 'userClicked(item.userId)'>
-            {{item.firstName}} {{ item.lastName }}
-            {{item.skillset}}
-            {{item.userId}}
-          </button>
+          <ion-item-sliding *ngFor="let item of items" (click) = 'userClicked(item.userId)'>
+          <ion-item>
+              <ion-thumbnail item-start>
+                  <img [src]="item.photoUrl" onerror="this.src='assets/icon/logo-login.png'">
+              </ion-thumbnail>
+          <h2>{{item.firstName}} {{ item.lastName }}</h2>
+          <p>{{item.skillset}}</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="messegeUser(item)">Messege</button>
+            <button ion-button color="secondary" (click)="viewProfile(item)">View Profile</button>
+          </ion-item-options>
+        </ion-item-sliding>
         </ion-list>
 
       <ion-list *ngSwitchCase="'Task'">
         <ion-item-sliding  *ngFor="let task of resultTasks" (click)='taskClicked(task)'>
 
         <button ion-item>
-          {{task.taskName}}
-          {{task.skillset}}
-          {{task.taskId}}
+          <h2>{{task.taskName}}</h2>
+          <p>{{task.skillset}}</p>
         </button>
-
-          <ion-item-options side="left">
-            <button ion-button (click)="favorite(item)">Request task</button>
-            <button ion-button color="danger" (click)="share(item)">More imformation</button>
-          </ion-item-options>
-
           <ion-item-options side="right">
-            <button ion-button (click)="unread(item)">Unread</button>
+            <button ion-button (click)="requestTask(task)">Request Task</button>
+            <button ion-button color="secondary" (click)="viewDtail(task)">View Detail</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

@@ -4,8 +4,11 @@ import * as algoliasearch from 'algoliasearch';
 import { ProfileProvider } from '../../providers/profile/profile'
 import * as firebase from 'firebase';
 import { TaskObjectProvider } from '../../providers/task-object/task-object';
-import { ProfilePage } from '../profile/profile'
-import { TaskViewPage } from '../task-view/task-view'
+import { ProfilePage } from '../profile/profile';
+import { TaskViewPage } from '../task-view/task-view';
+import { cloudProvider} from "../../providers/cloudbase";
+import { ToastController} from 'ionic-angular';
+import { AngularFireAuth} from "angularfire2/auth";
 
 
 /**
@@ -25,9 +28,11 @@ export class SearchPage {
   SearchResult = 'User';
   client = algoliasearch('EHHE2RV41W', 'c7820526d3420ae56da74d38b535a1f6');
   userIndex = this.client.initIndex('users');
-
+  userDup = [];
+  taskDup = [];
   items;
   resultTasks;
+  curUserToken = this.AFcurUser.auth.currentUser;
   /*
   / Search page:
   / normal search : search whole word:
@@ -43,7 +48,11 @@ export class SearchPage {
   */
 
   db = firebase.firestore();
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public cloud: cloudProvider,
+              private AFcurUser: AngularFireAuth,
+              private toastCtrl: ToastController,) {
     this.initializeItems();
   }
 
@@ -51,6 +60,8 @@ export class SearchPage {
     initializeItems() {
       this.items = [];
       this.resultTasks = [];
+      this.userDup = [];
+      this.taskDup = [];
     }
 
 
@@ -83,23 +94,31 @@ export class SearchPage {
       this.db.collection('users').where('skills.'+query, '==', true ).get()
         .then((doc)=>{
           doc.forEach(sdoc=>{
-            console.log("search is ", sdoc.data());
-            var CURRENT_USER = {} as ProfileProvider;
-            var displaySkill  = [];
-            for(const field in sdoc.data())
+            if(this.userDup.indexOf(sdoc.id) < 0)
             {
-              CURRENT_USER[field] = sdoc.data()[field];
+              console.log("search is ", sdoc.data());
+              var CURRENT_USER = {} as ProfileProvider;
+              var displaySkill  = [];
+              for(const field in sdoc.data())
+              {
+                CURRENT_USER[field] = sdoc.data()[field];
+              }
+              CURRENT_USER['skillset'] = "";
+              for (const i in CURRENT_USER.skills)
+              {
+                if (CURRENT_USER.skills[i] == true)
+                {
+                  CURRENT_USER['skillset'] += " ";
+                  CURRENT_USER['skillset'] += i;
+                  CURRENT_USER['skillset'] += ",";
+                }
+              }
+              CURRENT_USER['skillset'].replace(/.$/,".");
+              //CURRENT_USER['skillset'] = displaySkill;  //tmp fix
+              CURRENT_USER['userId'] = sdoc.id;  //tmp fix
+              console.log("skillset is ", CURRENT_USER['skillset']);
+              this.items.push(CURRENT_USER);     
             }
-            
-            for (const i in CURRENT_USER.skills)
-            {
-              if (CURRENT_USER.skills[i] == true)
-                displaySkill.push(i);
-            }
-            CURRENT_USER['skillset'] = displaySkill;  //tmp fix
-            CURRENT_USER['userId'] = sdoc.id;  //tmp fix
-            console.log(displaySkill);
-            this.items.push(CURRENT_USER);       
           })  
         })
       //use algolia query do whole word search on user
@@ -108,8 +127,24 @@ export class SearchPage {
       index.search({query}).then(responses=>{
         console.log("algolia", responses.hits);
           for(const hit in responses.hits){
-                this.items.push(responses.hits[hit]);
-                console.log("this", responses.hits[hit]);
+            if(this.userDup.indexOf(responses.hits[hit].userId) < 0)
+            {
+              var CURRENT_USER = {} as ProfileProvider;
+              CURRENT_USER = responses.hits[hit];
+              CURRENT_USER['skillset'] = "";
+              for (const i in CURRENT_USER.skills)
+              {
+                if (CURRENT_USER.skills[i] == true)
+                {
+                  CURRENT_USER['skillset'] += " ";
+                  CURRENT_USER['skillset'] += i;
+                  CURRENT_USER['skillset'] += ",";
+                }
+              }
+              CURRENT_USER['skillset'].replace(/.$/,".");
+              this.items.push(CURRENT_USER);
+              console.log("this", CURRENT_USER);
+            }
           }
       })
 
@@ -117,22 +152,52 @@ export class SearchPage {
       this.db.collection('tasks').where('wantedSkills.'+query, '==', true ).get()
       .then(doc=>{
         doc.forEach(sdoc=>{
-          var taskObject = {} as TaskObjectProvider;
-          var skill = [];
-          for(const field in sdoc.data())
-          {
-            taskObject[field] = sdoc.data()[field];
+          if(this.taskDup.indexOf(sdoc.id) < 0)
+          {  
+            var skill = [];
+            let taskObject = new TaskObjectProvider(
+              sdoc.data()['taskName'],
+              sdoc.data()['taskId'],
+              sdoc.data()['duration'],
+              sdoc.data()['startDate'],
+              sdoc.data()['endDate'],
+              sdoc.data()['taskDescription'],
+              sdoc.data()['completed'],
+              sdoc.data()['ownerName'],
+              sdoc.data()['ownerUserId'],
+              sdoc.data()['location'],
+            );
+            taskObject.invitedUser = [];
+            taskObject.setCompensation(sdoc.data()['compensation']);
+            taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
+            //put keys of wantedSkills map in a array for display purpose
+            taskObject['skillset'] = '';
+            for (const i in taskObject.wantedSkills)
+            {
+              if (taskObject.wantedSkills[i] == true)
+              {
+                taskObject['skillset'] += " ";
+                taskObject['skillset'] += i;
+                taskObject['skillset'] += ",";
+              }
+            }
+            //taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
+            taskObject['skillset'].replace(/.$/,".");
+            this.db.collection("tasks").doc(taskObject.taskId).collection('invitedUser').onSnapshot(snapDoc=>{
+              if(!snapDoc.empty)
+              {
+                snapDoc.docs.forEach(user=>
+                {
+                  taskObject.invitedUser.push(user.id);
+                })
+              }
+            });
+            //push in result array if this task is not completed
+            if(!taskObject.completed)
+              this.resultTasks.push(taskObject);
+            console.log("firebase -> ", taskObject);
           }
-          //put keys of wantedSkills map in a array for display purpose
-          for (const i in taskObject.wantedSkills)
-          {
-            if (taskObject.wantedSkills[i] == true)
-                skill.push(i);
-          }
-          taskObject['skillset'] = skill;
-          //push in result array if this task is not completed
-          if(!taskObject.completed)
-            this.resultTasks.push(taskObject);
+         
         })
       })
       //do whole word search on task
@@ -140,9 +205,55 @@ export class SearchPage {
       index.search({query}).then(responses=>{
         console.log("algolia", responses.hits);
           for(const hit in responses.hits){
+            if(this.taskDup.indexOf(responses.hits[hit].taskId) < 0)
+            {
                 if(!responses.hits[hit].completed)
-                  this.resultTasks.push(responses.hits[hit]);
-                console.log("this", responses.hits[hit]);
+                {    
+                  let taskObject = new TaskObjectProvider(
+                    responses.hits[hit]['taskName'],
+                    responses.hits[hit]['taskId'],
+                    responses.hits[hit]['duration'],
+                    responses.hits[hit]['startDate'],
+                    responses.hits[hit]['endDate'],
+                    responses.hits[hit]['taskDescription'],
+                    responses.hits[hit]['completed'],
+                    responses.hits[hit]['ownerName'],
+                    responses.hits[hit]['ownerUserId'],
+                    responses.hits[hit]['location'],
+                  );
+                  taskObject.invitedUser = [];
+                  taskObject.setCompensation(responses.hits[hit]['compensation']);
+                  taskObject.setWantedSkill(responses.hits[hit]['wantedSkills']);
+                  
+                  //put keys of wantedSkills map in a array for display purpose
+                  taskObject['skillset'] = '';
+                  for (const i in taskObject.wantedSkills)
+                  {
+                    if (taskObject.wantedSkills[i] == true)
+                    {
+                      taskObject['skillset'] += " ";
+                      taskObject['skillset'] += i;
+                      taskObject['skillset'] += ",";
+                    }
+                  }
+                  //taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
+                  taskObject['skillset'].replace(/.$/,".");
+                  this.db.collection("tasks").doc(taskObject.taskId).collection('invitedUser').onSnapshot(snapDoc=>{
+                    if(!snapDoc.empty)
+                    {
+                      snapDoc.docs.forEach(user=>
+                      {
+                        taskObject.invitedUser.push(user.id);
+                      })
+                    }
+                  });
+                 // taskObject.setWantedSkill(responses.hits[hit]['wantedSkills']);
+                  taskObject['skillset'].replace(/.$/,".");
+                     this.resultTasks.push(taskObject);
+                  console.log("algori -> ", taskObject);
+                }
+                
+            }
           }
       })
     }
@@ -163,7 +274,31 @@ export class SearchPage {
       task: task
     });
   }
+  messegeUser(userId)
+  {
 
+  }
+  viewProfile(userId)
+  {
+    this.navCtrl.push(ProfilePage, {
+      userId: userId
+    });
+  }
+  requestTask(task)
+  {
+        //add task id to user's list of pending tasks.
+        //this.cloud.addTaskToList(this.curUserToken.uid, 'appliedTask', task.taskId, task.taskName);
+        let name = this.curUserToken.displayName.split(" ");
+        console.log("name is ", name);
+            //add user id to appliedhelper list of the task
+        //this.cloud.addUserToTaskList(task.taskId, 'appliedHelpers', this.curUserToken.uid, firstName, CURRENT_USER.lastName);
+  }
+  viewDtail(task)
+  {
+    this.navCtrl.push(TaskViewPage, {
+      task: task
+    });
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
   }

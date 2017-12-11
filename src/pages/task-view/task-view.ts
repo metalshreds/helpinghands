@@ -254,8 +254,13 @@ export class TaskViewPage {
 
   //TODO move task to curr users pending and what for task owner?
   requestTaskClicked(event, selectedTaskId) {
-    alert("Task Requested");
 
+    const toast = this.toastCtrl.create({
+      message: "Task Requested",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
     //add task id to user's list of pending tasks.
     this.cloud.addTaskToList(this.curUserToken.uid, 'appliedTask', selectedTaskId, this.selectedTask.taskName);
 
@@ -385,6 +390,11 @@ export class TaskViewPage {
     //remove task from invited for rejecting user
     console.log('curUserToken: ', this.curUserToken.uid, 'task: ', this.selectedTask);
     this.cloud.removeTaskFromUser(this.curUserToken.uid, 'invitedTask', this.selectedTask.taskId);
-    alert("Task Rejected");
+    const toast = this.toastCtrl.create({
+      message: "task rejected",
+      position: 'middle',
+      duration: 1500
+    });
+    toast.present();
   }
 }
