@@ -18,6 +18,13 @@ page-profile {
     margin-bottom: 0px;
   }
 
+  .image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+ }
 
   .avatarCol{
     background-color: #ea6262;
@@ -41,9 +48,13 @@ page-profile {
   }
 
   img {
-    border:0;
-    max-width:140px;
-    border-radius:50%;
+    height: 140px;
+    width: 140px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
   }
 
   //.scroll-content{
