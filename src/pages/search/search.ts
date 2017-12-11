@@ -153,13 +153,23 @@ export class SearchPage {
       .then(doc=>{
         doc.forEach(sdoc=>{
           if(this.taskDup.indexOf(sdoc.id) < 0)
-          {
-            var taskObject = {} as TaskObjectProvider;
+          {  
             var skill = [];
-            for(const field in sdoc.data())
-            {
-              taskObject[field] = sdoc.data()[field];
-            }
+            let taskObject = new TaskObjectProvider(
+              sdoc.data()['taskName'],
+              sdoc.data()['taskId'],
+              sdoc.data()['duration'],
+              sdoc.data()['startDate'],
+              sdoc.data()['endDate'],
+              sdoc.data()['taskDescription'],
+              sdoc.data()['completed'],
+              sdoc.data()['ownerName'],
+              sdoc.data()['ownerUserId'],
+              sdoc.data()['location'],
+            );
+            taskObject.invitedUser = [];
+            taskObject.setCompensation(sdoc.data()['compensation']);
+            taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
             //put keys of wantedSkills map in a array for display purpose
             taskObject['skillset'] = '';
             for (const i in taskObject.wantedSkills)
@@ -171,11 +181,23 @@ export class SearchPage {
                 taskObject['skillset'] += ",";
               }
             }
+            //taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
             taskObject['skillset'].replace(/.$/,".");
+            this.db.collection("tasks").doc(taskObject.taskId).collection('invitedUser').onSnapshot(snapDoc=>{
+              if(!snapDoc.empty)
+              {
+                snapDoc.docs.forEach(user=>
+                {
+                  taskObject.invitedUser.push(user.id);
+                })
+              }
+            });
             //push in result array if this task is not completed
             if(!taskObject.completed)
               this.resultTasks.push(taskObject);
+            console.log("firebase -> ", taskObject);
           }
+         
         })
       })
       //do whole word search on task
@@ -186,23 +208,51 @@ export class SearchPage {
             if(this.taskDup.indexOf(responses.hits[hit].taskId) < 0)
             {
                 if(!responses.hits[hit].completed)
-                {
-                  var taskObject = {} as TaskObjectProvider;
-                  taskObject = responses.hits[hit];
+                {    
+                  let taskObject = new TaskObjectProvider(
+                    responses.hits[hit]['taskName'],
+                    responses.hits[hit]['taskId'],
+                    responses.hits[hit]['duration'],
+                    responses.hits[hit]['startDate'],
+                    responses.hits[hit]['endDate'],
+                    responses.hits[hit]['taskDescription'],
+                    responses.hits[hit]['completed'],
+                    responses.hits[hit]['ownerName'],
+                    responses.hits[hit]['ownerUserId'],
+                    responses.hits[hit]['location'],
+                  );
+                  taskObject.invitedUser = [];
+                  taskObject.setCompensation(responses.hits[hit]['compensation']);
+                  taskObject.setWantedSkill(responses.hits[hit]['wantedSkills']);
+                  
+                  //put keys of wantedSkills map in a array for display purpose
                   taskObject['skillset'] = '';
-
                   for (const i in taskObject.wantedSkills)
                   {
                     if (taskObject.wantedSkills[i] == true)
                     {
+                      taskObject['skillset'] += " ";
                       taskObject['skillset'] += i;
                       taskObject['skillset'] += ",";
                     }
                   }
+                  //taskObject.setWantedSkill(sdoc.data()['wantedSkills']);
                   taskObject['skillset'].replace(/.$/,".");
-                  this.resultTasks.push(responses.hits[hit]);
+                  this.db.collection("tasks").doc(taskObject.taskId).collection('invitedUser').onSnapshot(snapDoc=>{
+                    if(!snapDoc.empty)
+                    {
+                      snapDoc.docs.forEach(user=>
+                      {
+                        taskObject.invitedUser.push(user.id);
+                      })
+                    }
+                  });
+                 // taskObject.setWantedSkill(responses.hits[hit]['wantedSkills']);
+                  taskObject['skillset'].replace(/.$/,".");
+                     this.resultTasks.push(taskObject);
+                  console.log("algori -> ", taskObject);
                 }
-                console.log("this", taskObject);
+                
             }
           }
       })
