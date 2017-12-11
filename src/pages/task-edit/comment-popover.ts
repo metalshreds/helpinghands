@@ -52,8 +52,11 @@ export class CommentPopover {
         console.log("k sup ", doc.id);
         this.cloud.removeTaskFromUser(doc.id, 'confirmedTask', this.taskId);
         this.cloud.addTaskToList(doc.id, 'completedTask', this.taskId, this.taskName);
+
       });
       this.cloud.removeTaskFromUser(this.curUserToken.uid, 'confirmedTask', this.taskId);
+      this.cloud.addTaskToList(this.curUserToken.uid, 'completedTask', this.taskId, this.taskName);
+
     });
     this.viewCtrl.dismiss().then(()=> {
       this.App.getRootNav().setRoot(DashboardPage);

@@ -74,7 +74,7 @@
     </div>
   </ion-item>
 
-  <button *ngIf="taskIsConfirmed" ion-button full color="light" block (click)="doPrompt($event, selectedTask)">I am not going to do this task</button>
+  <button *ngIf="showImNotGoingToDoThisTask" ion-button full color="light" block (click)="doPrompt($event, selectedTask)">I am not going to do this task</button>
 
   <button full *ngIf="showRequestButton" ion-button block class="request-button" (click)='requestTaskClicked($event, selectedTask.taskId, selectedTask.ownerUserId)' >Request this task</button>
 
@@ -84,6 +84,29 @@
 
   <!-- -->
 
+  <ion-item *ngIf="showEditButton">
+    <ion-title>Applied Helpers</ion-title>
+    <ion-list >
+      <ion-item *ngFor="let helper of appliedHelpers">
+        <button ion-item  (click) = 'userClicked($event, helper.userId)'>{{helper.firstName}} {{helper.lastName}}</button>
+        <button ion-button style="background-color: #2ec95c" (click)="acceptAppliedHelper($event, helper)">Accept</button>
+        <button ion-button style="background-color: red" (click)="rejectAppliedHelper($event, helper)">Reject</button>
+      </ion-item>
+      <ion-item *ngIf="appliedHelpers.length == 0">No applied helpers</ion-item>
+    </ion-list>
+  </ion-item>
+
+  <!--this is the place to show -->
+  <ion-item *ngIf="showEditButton">
+    <ion-title>Suggested Helpers</ion-title>
+    <ion-list >
+      <ion-item  *ngFor="let user of suggestedUsers">
+        <button ion-item (click) = 'userClicked($event, user.userId)'>{{user.firstName}} {{user.lastName}}</button>
+        <button ion-button style="background-color: #2ec95c" (click)="requestUserClicked($event, user)">Request this user</button>
+      </ion-item>
+      <ion-item *ngIf="suggestedUsers.length == 0">No suggested helpers</ion-item>
+    </ion-list>
+  </ion-item>
 
 
 
