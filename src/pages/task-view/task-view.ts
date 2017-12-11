@@ -218,7 +218,7 @@ export class TaskViewPage {
 
   setButtons() {
     console.log('personIsThisTasksHelper: ', this.personIsInvitee);
-    if(this.personIsInvitee){
+    if(this.personIsInvitee  && !this.selectedTask.completed){
       this.showRequestButton = false;
       this.showAcceptDeclineButtons=true;
       this.showEditButton = false;
